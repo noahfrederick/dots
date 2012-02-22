@@ -1,0 +1,12 @@
+[user]
+	name = Noah Frederick
+	email = noah@noahfrederick.com
+[merge]
+	ff = false
+[color]
+	ui = true
+[alias]
+	graph = log --graph --all --oneline --decorate
+	gph = log --graph --all --oneline --decorate --simplify-by-decoration
+[core]
+	excludesfile = ~/.gitignore-global
