@@ -2,6 +2,13 @@
 [ -z "$PS1" ] && return
 
 
+# TERM --------------------------------------------------------------
+
+case "$TERM" in
+	xterm*) TERM=xterm-256color
+esac
+
+
 # PROMPT ------------------------------------------------------------
 
 # Source script that defines __git_ps1 ()
