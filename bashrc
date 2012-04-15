@@ -45,8 +45,7 @@ if [ -f ~/bin/git-completion.bash ] ; then
 fi
 
 # Shorten long PWD
-__shortw ()
-{
+__shortw () {
     local PRE= NAME="$1" LENGTH="$2"
     [[ "$NAME" != "${NAME#$HOME/}" || -z "${NAME#$HOME}" ]] &&
         PRE+='~' NAME="${NAME#$HOME}" LENGTH=$[LENGTH-1];
@@ -57,9 +56,10 @@ __shortw ()
 COLOR_BOLD="\[\e[1m\]"
 COLOR_DEFAULT="\[\e[0m\]"
 COLOR_BLACK="\[\e[30m\]"
+COLOR_BOLD_YELLOW="\[\e[1;33m\]"
 
 # user@host cwd (gitbranch) $
-PS1="$COLOR_BOLD"'\u@\h $(__shortw "$PWD" 25)$(__git_ps1)'" \$ $COLOR_DEFAULT"
+PS1="$COLOR_BOLD"'\u@\h $(__shortw "$PWD" 25)'"$COLOR_BOLD_YELLOW"'$(__git_ps1)'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
 PS2="$COLOR_BOLD > $COLOR_DEFAULT"
 
 
