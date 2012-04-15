@@ -14,6 +14,9 @@ esac
 # Recursive ls piped through less
 alias lr='ls -lR | less'
 
+# Defaults for tree (color, show hidden, ignore version control)
+alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
+
 # Easy editing of config files
 alias nanorc="$EDITOR ~/.nanorc"
 alias bashrc="$EDITOR ~/.bashrc"
