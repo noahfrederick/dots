@@ -15,14 +15,14 @@ do
 	fi
 	
 	if [ -h $HOME/.$BASE ] ; then
-		echo "Symlink $HOME/.$BASE already exists... skipping ..."
+		echo "Skipping ~/.$BASE (symlink already exists)"
 		continue
 	elif [ -e $HOME/.$BASE ] ; then
-		echo "File $HOME/.$BASE already exists... backing up ..."
+		echo "Backing up ~/.$BASE"
 		mkdir -p $BACKUP
 		mv -v $HOME/.$BASE $BACKUP/.$BASE
 	fi
 
-	echo "Linking $FILE to $HOME/.$BASE ..."
+	echo "Linking $FILE to ~/.$BASE"
 	ln -s $FILE $HOME/.$BASE
 done
