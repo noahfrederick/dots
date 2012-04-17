@@ -8,5 +8,7 @@
 [alias]
 	graph = log --graph --all --oneline --decorate
 	gph = log --graph --all --oneline --decorate --simplify-by-decoration
+	ca = commit -a
 [core]
 	excludesfile = ~/.gitignore-global
+	whitespace = trailing-space,space-before-tab
