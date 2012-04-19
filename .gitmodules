@@ -19,3 +19,6 @@
 [submodule "vim/bundle/hemisu"]
 	path = vim/bundle/hemisu
 	url = git@github.com:noahfrederick/Hemisu.git
+[submodule "vim/bundle/change-inside-surroundings"]
+	path = vim/bundle/change-inside-surroundings
+	url = git://github.com/briandoll/change-inside-surroundings.vim.git
