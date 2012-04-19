@@ -8,6 +8,7 @@
 [alias]
 	graph = log --graph --all --oneline --decorate
 	gph = log --graph --all --oneline --decorate --simplify-by-decoration
+	c = commit
 	ca = commit -a
 [core]
 	excludesfile = ~/.gitignore-global
