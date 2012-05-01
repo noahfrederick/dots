@@ -1,6 +1,3 @@
-# Use bold text instead of reverse video text.
-set boldtext
-
 # Don't display the help lists at the bottom of the screen.
 # (Can always be toggled with M-X, i.e. ESC followed by x.)
 set nohelp
@@ -11,8 +8,8 @@ set multibuffer
 # Config file syntax
 syntax "config" "\.(nanorc|bashrc|kshrc|bash_profile)$"
 color blue  "\"(\\.|[^\"])*\"" "'(\\.|[^'])*'"
-color black "^#.*"
+color brightblack "^#.*"
 
 # Git commit message
 syntax "git" "COMMIT_EDITMSG$"
-color black "^#.*"
+color brightblack "^#.*"
