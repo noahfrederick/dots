@@ -22,3 +22,6 @@
 [submodule "vim/bundle/change-inside-surroundings"]
 	path = vim/bundle/change-inside-surroundings
 	url = git://github.com/briandoll/change-inside-surroundings.vim.git
+[submodule "vim/bundle/pathogen"]
+	path = vim/bundle/pathogen
+	url = git://github.com/tpope/vim-pathogen.git
