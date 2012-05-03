@@ -1,4 +1,6 @@
 set transparency=10
+set background=dark
+colorscheme hemisu
 
 " Set font
 set guifont=Inconsolata:h14

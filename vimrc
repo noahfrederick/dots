@@ -31,6 +31,8 @@ set backspace=indent,eol,start
 set tabstop=4
 set shiftwidth=4
 
+set modeline modelines=20
+
 if has("vms")
 	set nobackup		" do not keep a backup file, use versions instead
 else
@@ -101,8 +103,7 @@ endif
 if &t_Co > 2 || has("gui_running")
 	syntax on
 	set hlsearch
-	set background=dark
-	colorscheme hemisu
+	colorscheme noctu
 endif
 
 
