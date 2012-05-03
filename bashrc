@@ -64,8 +64,8 @@ COLOR_DEFAULT="\[\e[0m\]"
 COLOR_BLACK="\[\e[30m\]"
 COLOR_BOLD_YELLOW="\[\e[1;33m\]"
 
-# user@host cwd (gitbranch) $
-PS1="$COLOR_BOLD"'\u@\h $(__shortw "$PWD" 25)'"$COLOR_BOLD_YELLOW"'$(__git_ps1)'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
+# pwd (gitbranch) $
+PS1="$COLOR_BOLD"'$(__shortw "$PWD" 25)'"$COLOR_BOLD_YELLOW"'$(__git_ps1)'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
 PS2="$COLOR_BOLD > $COLOR_DEFAULT"
 
 
