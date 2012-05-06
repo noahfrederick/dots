@@ -121,4 +121,9 @@ hi! link vimContinue Delimiter
 hi! link vimHiAttrib Constant
 
 "}}}
+" NERDTree {{{
+hi! link NERDTreeHelp Comment
+hi! link NERDTreeExecFile String
+
+"}}}
 
