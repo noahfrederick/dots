@@ -1,52 +1,46 @@
+" vim: fdm=marker
+
+" GENERAL SETTINGS                                                             {{{
 " --------------------------------------------------------------------------------
-" GENERAL SETTINGS
-" --------------------------------------------------------------------------------
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+set nocompatible                " Disable Vi compatibility
 
-" Use UTF-8 encoding
-set encoding=utf-8
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()          " Manage plugins with pathogen.vim
 
-" Always show line numbers
-set number
+syntax on                       " Enable syntax highlighting
+filetype plugin indent on       " Enable file type detection
 
-" Highlight current line
-set cursorline
+set encoding=utf-8              " Use UTF-8 as default file encoding
+set cursorline                  " Highlight current line
+set laststatus=2                " Always show status line
+set fillchars=vert:\            " Use space for vertical split fill char
+set pastetoggle=<F2>            " Toggle paste mode (disables auto-indent etc.)
+set modeline modelines=20       " Look for modeline in first 20 lines
+set autoread                    " Reload unchanged buffer when file changes
+set history=500                 " Keep 500 lines of history
+set hidden                      " Allow unedited buffers to be hidden
 
-" Make status line always visible
-set laststatus=2
-set fillchars=vert:\ 
-set cmdheight=2
-set wildmenu
+"" Command line
+set wildmenu                    " Command line completion
+set cmdheight=2                 " Reserve two lines for command area
 
-" Toggle paste mode, which will disable things including auto-indent when you
-" want to paste text
-set pastetoggle=<F2>
+"" Whitespace
+set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
+set tabstop=4                   " Tabs count for 4 spaces
+set shiftwidth=4                " Each indent step is 4 spaces
 
-" Allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-set tabstop=4
-set shiftwidth=4
-
-set modeline modelines=20
-
-if has("vms")
-	set nobackup		" do not keep a backup file, use versions instead
-else
-	set backup		" keep a backup file
-endif
-set history=50		" keep 50 lines of command line history
+"" Swaps and backups
 " Don't store swaps in . -- store in ~/.vim/tmp/%path%to%orig.swp
 set directory=~/.vim/tmp//,.,/var/tmp
 " Don't store backups in . -- store in ~/.vim/tmp/%path%to%orig~
 set backupdir=~/.vim/tmp//,.,/var/tmp
 
-set incsearch		" do incremental searching
-set ignorecase		" searches are case-insensitive...
-set smartcase		" ...unless they contain at least one capital letter
+"" Searching
+set hlsearch                    " Highlight search matches
+set incsearch                   " Do incremental searching
+set ignorecase                  " Searches are case-insensitive...
+set smartcase                   " ...unless they contain at least one capital letter
 set listchars=tab:▸\ ,eol:¬,trail:·
 
 " In many terminal emulators the mouse works just fine, thus enable it.
@@ -54,64 +48,16 @@ if has('mouse')
 	set mouse=a
 endif
 
-
-" --------------------------------------------------------------------------------
-" PATHOGEN
-" --------------------------------------------------------------------------------
-
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-
-" --------------------------------------------------------------------------------
-" FILE TYPE SETTINGS
-" --------------------------------------------------------------------------------
-
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
-" Also load indent files, to automatically do language-dependent indenting.
-filetype plugin indent on
-
-augroup FileTypes
-	autocmd!
-
-	" For all text files set 'textwidth' to 78 characters.
-	autocmd FileType text setlocal textwidth=78
-
-	" Always use spelling for particular file types
-	autocmd FileType gitcommit setlocal spell
-
-	" Only highlight cursor line in active buffer window
-	au WinLeave * set nocursorline
-	au WinEnter * set cursorline
-augroup END
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		\ | wincmd p | diffthis
-endif
-
-
-" --------------------------------------------------------------------------------
-" SYNTAX & COLORS
-" --------------------------------------------------------------------------------
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-	syntax on
-	set hlsearch
+" Set color scheme for 16-color+ terminals
+if &t_Co >= 16 || has("gui_running")
 	colorscheme noctu
 endif
 
-
+" }}}
+" FUNCTIONS & COMMANDS                                                         {{{
 " --------------------------------------------------------------------------------
-" STATUSLINE
-" --------------------------------------------------------------------------------
 
+" Set the appearance of the status line for various modes and states
 function! <SID>SetStatusLine(mode)
 	if &ft == "nerdtree"	" NERDTree sets its own minimal statusline
 		return
@@ -137,38 +83,7 @@ function! <SID>SetStatusLine(mode)
 	let &l:statusline = mystl
 endfunc
 
-augroup StatusLineHighlight
-	autocmd!
-	au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave *
-		\ call <SID>SetStatusLine("normal")
-	au BufLeave,BufWinLeave,WinLeave,CmdwinLeave *
-		\ call <SID>SetStatusLine("inactive")
-	au InsertEnter,CursorHoldI *
-		\ call <SID>SetStatusLine("insert")
-augroup END
-
-
-" --------------------------------------------------------------------------------
-" MAPPINGS
-" --------------------------------------------------------------------------------
-
-" Disable arrow keys (training)
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
-
-" Toggle light/dark background
-nmap <Leader>b :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
-
-" Write buffer and source current file (useful when editing and testing config
-" files
-nmap <Leader>w :w<CR>:so %<CR>
-
-nmap <Leader>t :NERDTreeToggle<CR>
-
-" Show highlighting groups for current word
-nmap <Leader>p :call <SID>SynStack()<CR>
+" Show highlight group of character under cursor
 function! <SID>SynStack()
 	if !exists("*synstack")
 		return
@@ -176,14 +91,106 @@ function! <SID>SynStack()
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Press Space to turn off highlighting and clear any message already
-" displayed.
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+if !exists(":DiffOrig")
+	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		\ | wincmd p | diffthis
+endif
+
+" }}}
+" AUTOCOMMANDS                                                                 {{{
+" --------------------------------------------------------------------------------
+
+if has("autocmd")
+	augroup FileTypes
+		autocmd!
+
+		" For all text files set 'textwidth' to 78 characters.
+		autocmd FileType text setlocal textwidth=78
+
+		" Always use spelling for particular file types
+		autocmd FileType gitcommit setlocal spell
+
+		" Use 2-space indents for Ruby
+		autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+	augroup END
+
+	augroup CursorLine
+		autocmd!
+
+		" Only highlight cursor line in active buffer window
+		autocmd WinLeave * set nocursorline
+		autocmd WinEnter * set cursorline
+	augroup END
+
+	augroup StatusLineHighlight
+		autocmd!
+
+		" Set statusline for various modes and states
+		autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave *
+			\ call <SID>SetStatusLine("normal")
+		autocmd BufLeave,BufWinLeave,WinLeave,CmdwinLeave *
+			\ call <SID>SetStatusLine("inactive")
+		autocmd InsertEnter,CursorHoldI *
+			\ call <SID>SetStatusLine("insert")
+	augroup END
+endif
+
+" }}}
+" MAPPINGS                                                                     {{{
+" --------------------------------------------------------------------------------
 
 " Use ; instead of :
 nnoremap ; :
+
+" Disable arrow keys (training)
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" Turn off highlighting and clear any message already displayed.
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+" Expand %% to directory of current file in command mode
+cnoremap %% <C-R>=expand('%:h').'/'<CR>
+
+" Convenient ways to open files relative to current buffer
+nmap <Leader>ew :e %%
+nmap <Leader>es :sp %%
+nmap <Leader>ev :vsp %%
+nmap <Leader>et :tabe %%
+
+" Toggle light/dark background
+nmap <Leader>b :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
+
+" Write buffer and source current file
+nmap <Leader>w :w<CR>:so %<CR>
+
+" Toggle NERDTree open/closed
+nmap <Leader>t :NERDTreeToggle<CR>
+
+" Show highlighting groups for current word
+nmap <Leader>p :call <SID>SynStack()<CR>
+
+" Toggle invisible characters (list)
+nmap <Leader>l :set list!<CR>
+
+" Toggle line numbers
+nmap <Leader>n :set number!<CR>
+
+" Toggle spelling
+nmap <Leader>s :set spell!<CR>
+
+" Quickly edit .vimrc
+nmap <Leader>v :tabedit $MYVIMRC<CR>
+
+" Quickly bring up Vim notes
+nmap <Leader>V :tabedit ~/Documents/vim.md<CR>
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
+" }}}
