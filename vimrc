@@ -141,8 +141,9 @@ endif
 " MAPPINGS                                                                     {{{
 " --------------------------------------------------------------------------------
 
-" Use ; instead of :
-nnoremap ; :
+" Use ; instead of : to enter command-line mode
+" nnoremap ; :
+" nnoremap : ; " This causes below bindings to fail in MacVim
 
 " Disable arrow keys (training)
 noremap <Up> <nop>
@@ -150,10 +151,10 @@ noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
 
-" Turn off highlighting and clear any message already displayed.
+" Turn off highlighting and clear any message already displayed
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
-" Expand %% to directory of current file in command mode
+" Expand %% to directory of current file in command-line mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
 " Convenient ways to open files relative to current buffer
