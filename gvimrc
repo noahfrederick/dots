@@ -1,3 +1,4 @@
+" Set colors
 set transparency=10
 set background=dark
 colorscheme hemisu
