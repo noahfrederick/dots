@@ -11,9 +11,6 @@ esac
 
 # ALIASES -----------------------------------------------------------
 
-# Recursive ls piped through less
-alias lr='ls -lR | less'
-
 # Defaults for tree (color, show hidden, ignore version control)
 alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
 
@@ -24,6 +21,24 @@ alias vimrc="$EDITOR ~/.vimrc"
 
 # Use GitHub enhancements with git
 hash hub &>/dev/null && alias git=hub
+
+alias v=vim
+alias c=clear
+
+# Git abbreviations
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gp='git push'
+alias gl='git log'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gb='git branch'
+alias gch='git checkout'
+alias gpu='git pull'
+alias gcl='git clone'
 
 
 # FUNCTIONS ---------------------------------------------------------
