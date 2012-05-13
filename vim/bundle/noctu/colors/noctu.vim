@@ -3,7 +3,6 @@
 " Author:	Noah Frederick (http://noahfrederick.com/)
 " Version:	0.1.0
 " ----------------------------------------------------------
-" vim: ts=16:fdm=marker
 
 " Scheme setup {{{
 set background=dark
@@ -93,8 +92,10 @@ hi! link htmlEndTag htmlTag
 hi! link markdownHeadingRule NonText
 hi! link markdownHeadingDelimiter markdownHeadingRule
 hi! link markdownLinkDelimiter Delimiter
+hi! link markdownURLDelimiter Delimiter
 hi! link markdownLinkTextDelimiter markdownLinkDelimiter
 hi! link markdownUrl markdownLinkDelimiter
+hi! link markdownAutomaticLink markdownLinkText
 hi markdownCode	cterm=bold
 hi markdownBold	cterm=bold
 hi markdownItalic	cterm=underline
@@ -127,3 +128,4 @@ hi! link NERDTreeExecFile String
 
 "}}}
 
+" vim: ts=16:fdm=marker
