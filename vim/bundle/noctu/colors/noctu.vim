@@ -1,8 +1,8 @@
 " noctu.vim - Vim color scheme
-" ----------------------------------------------------------
+" --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.0
-" ----------------------------------------------------------
+" Version:	0.1.1
+" --------------------------------------------------------------
 
 " Scheme setup {{{
 set background=dark
@@ -48,17 +48,16 @@ hi DiffText	ctermbg=1	cterm=bold
 hi User1	ctermfg=0	ctermbg=10
 hi User2	ctermfg=0	ctermbg=9
 hi User3	ctermfg=0	ctermbg=7
-hi! link CursorColumn CursorLine
-hi! link SignColumn Normal
-hi! link WildMenu Visual
-hi! link FoldColumn SignColumn
-hi! link WarningMsg ErrorMsg
-hi! link MoreMsg Title
-hi! link Question MoreMsg
-hi! link ModeMsg MoreMsg
-hi! link TabLineFill StatusLineNC
-hi! link SpecialKey NonText
-hi! clear Ignore
+hi! link CursorColumn	CursorLine
+hi! link SignColumn	Normal
+hi! link WildMenu	Visual
+hi! link FoldColumn	SignColumn
+hi! link WarningMsg	ErrorMsg
+hi! link MoreMsg	Title
+hi! link Question	MoreMsg
+hi! link ModeMsg	MoreMsg
+hi! link TabLineFill	StatusLineNC
+hi! link SpecialKey	NonText
 
 "}}}
 " Generic syntax {{{
@@ -68,43 +67,44 @@ hi Underlined	ctermfg=4	cterm=underline
 hi Type	ctermfg=4
 hi String	ctermfg=9
 hi Keyword	ctermfg=2
-hi Todo	ctermfg=1
+hi Todo	ctermfg=1	ctermbg=NONE	cterm=bold
 hi Function	ctermfg=4
 hi Identifier	ctermfg=7	cterm=NONE
 hi Statement	ctermfg=2	cterm=bold
 hi Constant	ctermfg=5
 hi Number	ctermfg=13
 hi Special	ctermfg=5
-hi! link Operator Delimiter
-hi! link PreProc Delimiter
-hi! link Error ErrorMsg
+hi Ignore	ctermfg=0
+hi! link Operator	Delimiter
+hi! link PreProc	Delimiter
+hi! link Error	ErrorMsg
 
 "}}}
 " HTML {{{
 hi htmlTag	ctermfg=10
 hi htmlTagName	ctermfg=2
-hi! link htmlArg htmlTag
-hi! link htmlLink Underlined
-hi! link htmlEndTag htmlTag
+hi! link htmlArg	htmlTag
+hi! link htmlLink	Underlined
+hi! link htmlEndTag	htmlTag
 
 "}}}
 " Markdown {{{
-hi! link markdownHeadingRule NonText
-hi! link markdownHeadingDelimiter markdownHeadingRule
-hi! link markdownLinkDelimiter Delimiter
-hi! link markdownURLDelimiter Delimiter
-hi! link markdownLinkTextDelimiter markdownLinkDelimiter
-hi! link markdownUrl markdownLinkDelimiter
-hi! link markdownAutomaticLink markdownLinkText
+hi! link markdownHeadingRule	NonText
+hi! link markdownHeadingDelimiter	markdownHeadingRule
+hi! link markdownLinkDelimiter	Delimiter
+hi! link markdownURLDelimiter	Delimiter
+hi! link markdownLinkTextDelimiter	markdownLinkDelimiter
+hi! link markdownUrl	markdownLinkDelimiter
+hi! link markdownAutomaticLink	markdownLinkText
 hi markdownCode	cterm=bold
 hi markdownBold	cterm=bold
 hi markdownItalic	cterm=underline
 
 "}}}
 " Ruby {{{
-hi! link rubyDefine Statement
-hi! link rubyLocalVariableOrMethod Identifier
-hi! link rubyConstant Constant
+hi! link rubyDefine	Statement
+hi! link rubyLocalVariableOrMethod	Identifier
+hi! link rubyConstant	Constant
 
 "}}}
 " Git {{{
@@ -113,19 +113,25 @@ hi gitCommitSelectedType	ctermfg=10
 hi gitCommitSelectedFile	ctermfg=2
 hi gitCommitUnmergedType	ctermfg=9
 hi gitCommitUnmergedFile	ctermfg=1
-hi! link gitCommitUntrackedFile gitCommitUnmergedFile
+hi! link gitCommitUntrackedFile	gitCommitUnmergedFile
 
 "}}}
 " Vim {{{
-hi! link vimSetSep Delimiter
-hi! link vimContinue Delimiter
-hi! link vimHiAttrib Constant
+hi! link vimSetSep	Delimiter
+hi! link vimContinue	Delimiter
+hi! link vimHiAttrib	Constant
 
 "}}}
 " NERDTree {{{
-hi! link NERDTreeHelp Comment
-hi! link NERDTreeExecFile String
+hi! link NERDTreeHelp	Comment
+hi! link NERDTreeExecFile	String
+
+"}}}
+" Help {{{
+hi! link helpExample	String
+hi! link helpHeadline	Title
+hi! link helpHyperTextEntry	Statement
 
 "}}}
 
-" vim: ts=16:fdm=marker
+" vim: ts=22:fdm=marker
