@@ -1,10 +1,8 @@
 " Set colors
 set transparency=10
-set background=dark
-colorscheme hemisu
 
 " Set font
-set guifont=Inconsolata:h14
+set guifont=Inconsolata\ XL:h12
 
 " Hide toolbar and scrollbars by default
 " and use native OS X tabs.

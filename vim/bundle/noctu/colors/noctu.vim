@@ -1,7 +1,7 @@
 " noctu.vim - Vim color scheme
 " --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.1
+" Version:	0.1.2
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -16,38 +16,40 @@ let colors_name = "noctu"
 
 "}}}
 " Vim UI {{{
-hi CursorLine	ctermbg=0	cterm=NONE
-hi MatchParen	ctermfg=15	ctermbg=0
-hi Pmenu	ctermbg=0
-hi PmenuThumb	ctermbg=7
-hi PmenuSBar	ctermbg=8
-hi PmenuSel	ctermbg=4
-hi ColorColumn	ctermbg=0
-hi SpellBad	ctermbg=1
-hi SpellCap	ctermbg=3
-hi SpellRare	ctermbg=2
-hi SpellLocal	ctermbg=5
-hi NonText	ctermfg=8
-hi LineNr	ctermfg=8	ctermbg=0
-hi Visual	ctermfg=0	ctermbg=12
-hi IncSearch	ctermbg=0	ctermfg=10 " Yes, fg and bg need to be reversed for some reason.
-hi Search	ctermfg=0	ctermbg=14
-hi StatusLine	ctermfg=7	ctermbg=0	cterm=bold
-hi StatusLineNC	ctermfg=8	ctermbg=0	cterm=NONE
-hi VertSplit	ctermfg=0	ctermbg=0
-hi TabLine	ctermfg=8	ctermbg=0	cterm=NONE
-hi TabLineSel	ctermfg=7	ctermbg=0
-hi Folded	ctermfg=8	ctermbg=0
-hi Directory	ctermfg=12
-hi Title	ctermfg=3	cterm=bold
-hi ErrorMsg	ctermfg=15	ctermbg=1
-hi DiffAdd	ctermbg=2
-hi DiffChange	ctermbg=3
-hi DiffDelete	ctermbg=1
-hi DiffText	ctermbg=1	cterm=bold
-hi User1	ctermfg=0	ctermbg=10
-hi User2	ctermfg=0	ctermbg=9
-hi User3	ctermfg=0	ctermbg=7
+hi Normal	guifg=#e6e6e6	guibg=#000000
+hi Cursor	guifg=#ffffff	guibg=#005f87
+hi CursorLine	ctermbg=0	guibg=#101010	cterm=NONE
+hi MatchParen	ctermfg=15	guifg=#ffffff	ctermbg=0	guibg=#101010
+hi Pmenu	ctermbg=0	guibg=#101010
+hi PmenuThumb	ctermbg=7	guibg=#dfdfdf
+hi PmenuSBar	ctermbg=8	guibg=#546572
+hi PmenuSel	ctermfg=0	guifg=#000000	ctermbg=4	guibg=#67b0d4
+hi ColorColumn	ctermbg=0	guibg=#101010
+hi SpellBad	ctermbg=1	guisp=#ff7158
+hi SpellCap	ctermbg=3	guisp=#d6bd83
+hi SpellRare	ctermbg=2	guisp=#ceeb87
+hi SpellLocal	ctermbg=5	guisp=#b0aada
+hi NonText	ctermfg=8	guifg=#546572
+hi LineNr	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010
+hi Visual	ctermfg=0	guifg=#000000	ctermbg=12	guibg=#a4d5f3
+hi IncSearch	ctermbg=0	guibg=#000000	ctermfg=13	guifg=#b0aada " Yes, fg and bg need to be reversed for some reason.
+hi Search	ctermfg=0	guifg=#000000	ctermbg=14	guibg=#8dd4d6
+hi StatusLine	ctermfg=7	guifg=#dfdfdf	ctermbg=0	guibg=#101010	cterm=bold	gui=bold
+hi StatusLineNC	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010	cterm=NONE	gui=NONE
+hi VertSplit	ctermfg=0	guifg=#101010	ctermbg=0	guibg=#101010
+hi TabLine	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010	cterm=NONE
+hi TabLineSel	ctermfg=7	guifg=#dfdfdf	ctermbg=0	guibg=#101010
+hi Folded	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010
+hi Directory	ctermfg=12	guifg=#a4d5f3
+hi Title	ctermfg=3	guifg=#ae9b72	cterm=bold	gui=bold
+hi ErrorMsg	ctermfg=15	guifg=#ffffff	ctermbg=1	guibg=#ff2114
+hi DiffAdd	ctermbg=2	guibg=#9ab929
+hi DiffChange	ctermbg=3	guibg=#ae9b72
+hi DiffDelete	ctermbg=1	guibg=#ff2114
+hi DiffText	ctermbg=11	guibg=#d6bd83	cterm=bold	gui=bold
+hi User1	ctermfg=0	guifg=#000000	ctermbg=13	guibg=#b0aada
+hi User2	ctermfg=0	guifg=#000000	ctermbg=9	guibg=#ff7158
+hi User3	ctermfg=0	guifg=#000000	ctermbg=7	guibg=#dfdfdf
 hi! link CursorColumn	CursorLine
 hi! link SignColumn	Normal
 hi! link WildMenu	Visual
@@ -61,31 +63,35 @@ hi! link SpecialKey	NonText
 
 "}}}
 " Generic syntax {{{
-hi Delimiter	ctermfg=7
-hi Comment	ctermfg=8
-hi Underlined	ctermfg=4	cterm=underline
-hi Type	ctermfg=4
-hi String	ctermfg=9
-hi Keyword	ctermfg=2
-hi Todo	ctermfg=1	ctermbg=NONE	cterm=bold
-hi Function	ctermfg=4
-hi Identifier	ctermfg=7	cterm=NONE
-hi Statement	ctermfg=2	cterm=bold
-hi Constant	ctermfg=5
-hi Number	ctermfg=13
-hi Special	ctermfg=5
-hi Ignore	ctermfg=0
+hi Delimiter	ctermfg=7	guifg=#dfdfdf
+hi Comment	ctermfg=8	guifg=#546572
+hi Underlined	ctermfg=4	guifg=#67b0d4	cterm=underline
+hi Type	ctermfg=4	guifg=#67b0d4	gui=NONE
+hi String	ctermfg=9	guifg=#ff7158
+hi Keyword	ctermfg=2	guifg=#9ab929
+hi Todo	ctermfg=11	guifg=#d6bd83	ctermbg=NONE	guibg=NONE	cterm=bold	gui=bold
+hi Function	ctermfg=4	guifg=#67b0d4
+hi Identifier	ctermfg=7	guifg=#dfdfdf	cterm=NONE	gui=NONE
+hi Statement	ctermfg=2	guifg=#9ab929	cterm=bold	gui=bold
+hi Constant	ctermfg=5	guifg=#856fd3
+hi Number	ctermfg=12	guifg=#a4d5f3
+hi Special	ctermfg=5	guifg=#856fd3
+hi Ignore	ctermfg=0	guifg=#000000
 hi! link Operator	Delimiter
 hi! link PreProc	Delimiter
 hi! link Error	ErrorMsg
 
 "}}}
 " HTML {{{
-hi htmlTag	ctermfg=10
-hi htmlTagName	ctermfg=2
+hi htmlTag	ctermfg=10	guifg=#ceeb87
+hi htmlTagName	ctermfg=2	guifg=#9ab929
 hi! link htmlArg	htmlTag
 hi! link htmlLink	Underlined
 hi! link htmlEndTag	htmlTag
+
+"}}}
+" PHP {{{
+hi! link phpDefine	Statement
 
 "}}}
 " Markdown {{{
@@ -96,8 +102,8 @@ hi! link markdownURLDelimiter	Delimiter
 hi! link markdownLinkTextDelimiter	markdownLinkDelimiter
 hi! link markdownUrl	markdownLinkDelimiter
 hi! link markdownAutomaticLink	markdownLinkText
-hi markdownCode	cterm=bold
-hi markdownBold	cterm=bold
+hi markdownCode	cterm=bold	gui=bold
+hi markdownBold	cterm=bold	gui=bold
 hi markdownItalic	cterm=underline
 
 "}}}
@@ -108,11 +114,11 @@ hi! link rubyConstant	Constant
 
 "}}}
 " Git {{{
-hi gitCommitBranch	ctermfg=3
-hi gitCommitSelectedType	ctermfg=10
-hi gitCommitSelectedFile	ctermfg=2
-hi gitCommitUnmergedType	ctermfg=9
-hi gitCommitUnmergedFile	ctermfg=1
+hi gitCommitBranch	ctermfg=3	guifg=#ae9b72
+hi gitCommitSelectedType	ctermfg=10	guifg=#ceeb87
+hi gitCommitSelectedFile	ctermfg=2	guifg=#9ab929
+hi gitCommitUnmergedType	ctermfg=9	guifg=#ff7158
+hi gitCommitUnmergedFile	ctermfg=1	guifg=#ff2114
 hi! link gitCommitUntrackedFile	gitCommitUnmergedFile
 
 "}}}
@@ -131,6 +137,7 @@ hi! link NERDTreeExecFile	String
 hi! link helpExample	String
 hi! link helpHeadline	Title
 hi! link helpHyperTextEntry	Statement
+hi! link helpHyperTextJump	Underlined
 
 "}}}
 
