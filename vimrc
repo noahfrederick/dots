@@ -195,3 +195,10 @@ nmap <Leader>V :tabedit ~/Documents/vim.md<CR>
 inoremap <C-U> <C-G>u<C-U>
 
 " }}}
+" PLUGINS                                                                      {{{
+" --------------------------------------------------------------------------------
+
+" xptemplate key
+let g:xptemplate_key = '<Tab>'
+
+" }}}
