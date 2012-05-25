@@ -1,7 +1,5 @@
 XPTemplate priority=personal+
 
-XPTvar $PHP_TAG php
-
 XPT foreach " foreach (.. as ..) {..}
 XSET val|post=EchoIfEq(' => $', '')
 foreach ($`var^ as $`key^` => $`val`^)`$BRloop^{

@@ -114,6 +114,10 @@ if has("autocmd")
 
 		" Use 2-space indents for Ruby
 		autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+		" Use :make to check PHP syntax
+		autocmd FileType php setlocal makeprg=php\ -l\ %
+			\ errorformat=%m\ in\ %f\ on\ line\ %l
 	augroup END
 
 	augroup CursorLine
@@ -197,6 +201,11 @@ inoremap <C-U> <C-G>u<C-U>
 " }}}
 " PLUGINS                                                                      {{{
 " --------------------------------------------------------------------------------
+
+" Settings for bundled PHP plugin
+let php_noShortTags = 1         " Always use <?php
+let php_folding = 1             " Enable folding of classes/functions
+let php_htmlInStrings = 1       " Highlight HTML in PHP strings
 
 " xptemplate key
 let g:xptemplate_key = '<Tab>'
