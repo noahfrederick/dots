@@ -145,15 +145,11 @@ endif
 " MAPPINGS                                                                     {{{
 " --------------------------------------------------------------------------------
 
-" Use ; instead of : to enter command-line mode
-" nnoremap ; :
-" nnoremap : ; " This causes below bindings to fail in MacVim
-
-" Disable arrow keys (training)
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
+" Use arrow keys for buffer/tab navigation
+noremap <Up> :bprev<CR>
+noremap <Down> :bnext<CR>
+noremap <Left> :tabprev<CR>
+noremap <Right> :tabnext<CR>
 
 " Turn off highlighting and clear any message already displayed
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -162,41 +158,37 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
 " Convenient ways to open files relative to current buffer
-nmap <Leader>ew :e %%
-nmap <Leader>es :sp %%
-nmap <Leader>ev :vsp %%
-nmap <Leader>et :tabe %%
+nnoremap <Leader>ew :e %%
+nnoremap <Leader>es :sp %%
+nnoremap <Leader>ev :vsp %%
+nnoremap <Leader>et :tabe %%
 
 " Toggle light/dark background
-nmap <Leader>b :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
+nnoremap <Leader>b :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Write buffer and source current file
-nmap <Leader>w :w<CR>:so %<CR>
+nnoremap <Leader>w :w<CR>:so %<CR>
 
 " Toggle NERDTree open/closed
-nmap <Leader>t :NERDTreeToggle<CR>
+nnoremap <Leader>t :NERDTreeToggle<CR>
 
 " Show highlighting groups for current word
-nmap <Leader>p :call <SID>SynStack()<CR>
+nnoremap <Leader>p :call <SID>SynStack()<CR>
 
 " Toggle invisible characters (list)
-nmap <Leader>l :set list!<CR>
+nnoremap <Leader>l :set list!<CR>
 
 " Toggle line numbers
-nmap <Leader>n :set number!<CR>
+nnoremap <Leader>n :set number!<CR>
 
 " Toggle spelling
-nmap <Leader>s :set spell!<CR>
+nnoremap <Leader>s :set spell!<CR>
 
 " Quickly edit .vimrc
-nmap <Leader>v :tabedit $MYVIMRC<CR>
+nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 
 " Quickly bring up Vim notes
-nmap <Leader>V :tabedit ~/Documents/vim.md<CR>
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
+nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
 
 " }}}
 " PLUGINS                                                                      {{{
