@@ -1,7 +1,7 @@
 " noctu.vim - Vim color scheme
 " --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.2
+" Version:	0.1.3
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -136,8 +136,10 @@ hi! link NERDTreeExecFile	String
 " Help {{{
 hi! link helpExample	String
 hi! link helpHeadline	Title
+hi! link helpSectionDelim	Comment
 hi! link helpHyperTextEntry	Statement
 hi! link helpHyperTextJump	Underlined
+hi! link helpURL	Underlined
 
 "}}}
 
