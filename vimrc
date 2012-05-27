@@ -190,6 +190,11 @@ nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 " Quickly bring up Vim notes
 nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
 
+" Shortcuts for Session plugin
+nnoremap <Leader>so :OpenSession<CR>
+nnoremap <Leader>sc :CloseSession<CR>
+nnoremap <Leader>ss :SaveSession<CR>
+
 " }}}
 " PLUGINS                                                                      {{{
 " --------------------------------------------------------------------------------
@@ -201,5 +206,8 @@ let php_htmlInStrings = 1       " Highlight HTML in PHP strings
 
 " xptemplate key
 let g:xptemplate_key = '<Tab>'
+
+" Settings for Session plugin
+let g:session_autosave = 'yes'
 
 " }}}
