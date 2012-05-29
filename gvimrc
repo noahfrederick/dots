@@ -2,7 +2,10 @@
 set transparency=10
 
 " Set font
-set guifont=Inconsolata\ XL:h12
+set guifont=Panic\ Sans:h12
+
+" Panic Sans needs a little vertical breathing room
+set linespace=2
 
 " Hide toolbar and scrollbars by default
 " and use native OS X tabs.
