@@ -104,7 +104,7 @@ hi! link markdownUrl	markdownLinkDelimiter
 hi! link markdownAutomaticLink	markdownLinkText
 hi markdownCode	cterm=bold	gui=bold
 hi markdownBold	cterm=bold	gui=bold
-hi markdownItalic	cterm=underline
+hi markdownItalic	cterm=underline	gui=italic
 
 "}}}
 " Ruby {{{
