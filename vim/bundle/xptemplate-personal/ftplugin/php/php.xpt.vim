@@ -1,10 +1,19 @@
 XPTemplate priority=personal+
 
+XPTinclude
+	\ _common/common
+
 XPT foreach " foreach (.. as ..) {..}
 XSET val|post=EchoIfEq(' => $', '')
 foreach ($`var^ as $`key^` => $`val`^)`$BRloop^{
     `cursor^
 }
+
+XPT asso " array (.. => ..);
+array(
+    `...^'`key^' => `value^,
+    `...^
+)
 
 XPT fun " function ..( .. ) {..}
 XSET params=Void()
@@ -57,3 +66,21 @@ XPT license " /* License comment block */
  */
 
 ..XPT
+
+XPT koclassDoc " Kohana class doc block
+XSET category=ChooseStr( 'Controllers', 'Models', 'Helpers', 'Tasks', 'Tests' )
+/**
+ * `description^.
+ *
+ * @package    `package^
+ * @category   `category^
+ * @author     `$author^
+ * @copyright  `:copyright:^
+ */
+
+XPT koclass " Kohana class file
+`:koclassDoc:^
+`:class:^
+
+XPT koconfig " Kohana config file
+return `:asso:^;
