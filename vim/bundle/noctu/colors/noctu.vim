@@ -1,7 +1,7 @@
 " noctu.vim - Vim color scheme
 " --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.3
+" Version:	0.1.4
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -37,7 +37,7 @@ hi Search	ctermfg=0	guifg=#000000	ctermbg=14	guibg=#8dd4d6
 hi StatusLine	ctermfg=7	guifg=#dfdfdf	ctermbg=0	guibg=#101010	cterm=bold	gui=bold
 hi StatusLineNC	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010	cterm=NONE	gui=NONE
 hi VertSplit	ctermfg=0	guifg=#101010	ctermbg=0	guibg=#101010
-hi TabLine	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010	cterm=NONE
+hi TabLine	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010	cterm=NONE	gui=NONE
 hi TabLineSel	ctermfg=7	guifg=#dfdfdf	ctermbg=0	guibg=#101010
 hi Folded	ctermfg=8	guifg=#546572	ctermbg=0	guibg=#101010
 hi Directory	ctermfg=12	guifg=#a4d5f3
@@ -88,6 +88,11 @@ hi htmlTagName	ctermfg=2	guifg=#9ab929
 hi! link htmlArg	htmlTag
 hi! link htmlLink	Underlined
 hi! link htmlEndTag	htmlTag
+
+"}}}
+" JavaScript {{{
+hi! link javaScript	Normal
+hi! link javaScriptBraces	Delimiter
 
 "}}}
 " PHP {{{
