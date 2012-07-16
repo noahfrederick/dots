@@ -90,11 +90,6 @@ if [ -f ~/bin/bmark.sh ] ; then
 fi
 
 
-# TMUXINATOR --------------------------------------------------------
-
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-
 # COLORS ------------------------------------------------------------
 
 export CLICOLOR=1
