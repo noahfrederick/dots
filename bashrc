@@ -24,6 +24,7 @@ hash hub &>/dev/null && alias git=hub
 
 alias v=vim
 alias c=clear
+alias r=rails
 
 # Git abbreviations
 alias g='git'

@@ -31,3 +31,6 @@ export PATH="/Library/Frameworks/Python.framework/Versions/3.1/bin:${PATH}"
 
 # Git (Xcode installs older version at /usr/bin)
 export PATH="/usr/local/git/bin:${PATH}"
+
+# rbenv
+hash rbenv &>/dev/null && eval "$(rbenv init -)"
