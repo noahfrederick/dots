@@ -1,7 +1,7 @@
 " noctu.vim - Vim color scheme
 " --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.4
+" Version:	0.1.5
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -12,7 +12,7 @@ if exists("syntax_on")
 	syntax reset
 endif
 
-let colors_name = "noctu"
+let colors_name="noctu"
 
 "}}}
 " Vim UI {{{
@@ -85,7 +85,15 @@ hi! link Error	ErrorMsg
 " HTML {{{
 hi htmlTag	ctermfg=10	guifg=#ceeb87
 hi htmlTagName	ctermfg=2	guifg=#9ab929
+hi htmlBold	cterm=bold	gui=bold
+hi htmlItalic	gui=italic
+hi htmlUnderline	cterm=underline	gui=underline
+hi htmlBoldItalic	cterm=bold	gui=bold,italic
+hi htmlBoldUnderline	cterm=bold,underline	gui=bold,underline
+hi htmlUnderlineItalic	cterm=underline	gui=italic,underline
+hi htmlBoldUnderlineItalic	cterm=bold,underline	gui=bold,italic,underline
 hi! link htmlArg	htmlTag
+hi! link htmlString	htmlTagName	" Definitely more legible
 hi! link htmlLink	Underlined
 hi! link htmlEndTag	htmlTag
 
@@ -116,6 +124,8 @@ hi markdownItalic	cterm=underline	gui=italic
 hi! link rubyDefine	Statement
 hi! link rubyLocalVariableOrMethod	Identifier
 hi! link rubyConstant	Constant
+hi! link rubyInstanceVariable	Number
+hi! link rubyStringDelimiter	rubyString
 
 "}}}
 " Git {{{
