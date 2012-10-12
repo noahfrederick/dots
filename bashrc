@@ -20,7 +20,7 @@ alias bashrc="$EDITOR ~/.bashrc"
 alias vimrc="$EDITOR ~/.vimrc"
 
 # Use GitHub enhancements with git
-hash hub &>/dev/null && alias git=hub
+# hash hub &>/dev/null && alias git=hub
 
 alias v=vim
 alias c=clear
