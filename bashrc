@@ -66,7 +66,7 @@ if [ -f ~/bin/git-completion.bash ] ; then
 	GIT_PS1_SHOWSTASHSTATE=1
 fi
 
-COLOR_BOLD="\[\e[1m\]"
+COLOR_BOLD="\[\e[1;93m\]"
 COLOR_DEFAULT="\[\e[0m\]"
 COLOR_BLACK="\[\e[30m\]"
 COLOR_BOLD_YELLOW="\[\e[1;33m\]"
