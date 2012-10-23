@@ -53,6 +53,14 @@ result () {
 	fi
 }
 
+# Print PATH in readable form
+path () {
+	IFS_OLD=$IFS
+	IFS=:
+	printf "%s\n" $PATH
+	IFS=$IFS_OLD
+}
+
 
 # PROMPT ------------------------------------------------------------
 
