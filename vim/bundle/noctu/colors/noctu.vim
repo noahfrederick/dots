@@ -83,8 +83,8 @@ hi! link Error	ErrorMsg
 
 "}}}
 " HTML {{{
-hi htmlTag	ctermfg=10	guifg=#ceeb87
 hi htmlTagName	ctermfg=2	guifg=#9ab929
+hi htmlTag	ctermfg=10	guifg=#ceeb87
 hi htmlBold	cterm=bold	gui=bold
 hi htmlItalic	gui=italic
 hi htmlUnderline	cterm=underline	gui=underline
@@ -96,6 +96,15 @@ hi! link htmlArg	htmlTag
 hi! link htmlString	htmlTagName	" Definitely more legible
 hi! link htmlLink	Underlined
 hi! link htmlEndTag	htmlTag
+
+"}}}
+" XML {{{
+hi xmlTagName	ctermfg=4	guifg=#67b0d4
+hi xmlTag	ctermfg=12	guifg=#a4d5f3
+hi! link xmlString	xmlTagName
+hi! link xmlAttrib	xmlTag
+hi! link xmlEndTag	xmlTag
+hi! link xmlEqual	xmlTag
 
 "}}}
 " JavaScript {{{
