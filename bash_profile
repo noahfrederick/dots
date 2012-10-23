@@ -1,13 +1,13 @@
 # PATH --------------------------------------------------------------
 
 if [ -d ~/bin ] ; then
-	export PATH=$PATH:~/bin
+	export PATH="${PATH}:~/bin"
 fi
 
 
 # EDITOR ------------------------------------------------------------
 
-export EDITOR=/usr/bin/vim
+hash vim &>/dev/null && export EDITOR=vim
 
 
 # BASHRC ------------------------------------------------------------
@@ -19,18 +19,12 @@ fi
 
 # OTHER APPS --------------------------------------------------------
 
-# MySQL
-export PATH=$PATH:/usr/local/mysql/bin
 export FTP_PASSIVE=1
 
-# Setting PATH for Python 2.6
-export PATH="/Library/Frameworks/Python.framework/Versions/2.6/bin:${PATH}"
-
-# Setting PATH for Python 3.1
-export PATH="/Library/Frameworks/Python.framework/Versions/3.1/bin:${PATH}"
-
-# Git (Xcode installs older version at /usr/bin)
-export PATH="/usr/local/git/bin:${PATH}"
+# MySQL
+if [ -d /usr/local/mysql/bin ] ; then
+	export PATH="${PATH}:/usr/local/mysql/bin"
+fi
 
 # rbenv
 hash rbenv &>/dev/null && eval "$(rbenv init -)"
