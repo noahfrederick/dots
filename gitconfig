@@ -6,8 +6,8 @@
 [color]
 	ui = true
 [alias]
-	graph = log --graph --all --oneline --decorate
-	gph = log --graph --all --oneline --decorate --simplify-by-decoration
+	graph = log --graph --oneline --decorate
+	g = log --graph --all --oneline --decorate --simplify-by-decoration
 	c = commit
 	ca = commit -a
 [core]

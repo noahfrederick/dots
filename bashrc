@@ -40,6 +40,8 @@ alias gb='git branch'
 alias gch='git checkout'
 alias gpu='git pull'
 alias gcl='git clone'
+alias ggg='git graph'
+alias gg='git g'
 
 
 # FUNCTIONS ---------------------------------------------------------
