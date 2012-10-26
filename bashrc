@@ -67,8 +67,8 @@ path () {
 # PROMPT ------------------------------------------------------------
 
 # Source script that defines __git_ps1 ()
-if [ -f ~/bin/git-completion.bash ] ; then
-	source ~/bin/git-completion.bash
+if [ -f  /usr/local/etc/bash_completion.d/git-prompt.sh ] ; then
+	source /usr/local/etc/bash_completion.d/git-prompt.sh
 	
 	# Show a "*" next to branch name for unstaged changes, a "+"
 	# for staged changes, and a "$" for stashed changes.
@@ -85,7 +85,7 @@ COLOR_BOLD_YELLOW="\[\e[1;33m\]"
 PROMPT_DIRTRIM=2
 
 # pwd (gitbranch) $
-PS1="$COLOR_BOLD\w$COLOR_BOLD_YELLOW"'$(__git_ps1)'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
+PS1="$COLOR_BOLD\w$COLOR_BOLD_YELLOW"'$(__git_ps1 " ± %s")'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
 PS2="$COLOR_BOLD > $COLOR_DEFAULT"
 
 
