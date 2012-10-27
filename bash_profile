@@ -1,8 +1,9 @@
 # PATH --------------------------------------------------------------
 
-if [ -d ~/bin ] ; then
-	export PATH="${PATH}:~/bin"
-fi
+case ":$PATH:" in
+	*":~/bin:"*) ;;
+	*) [ -d ~/bin ] && export PATH="~/bin:${PATH}" ;;
+esac
 
 
 # EDITOR ------------------------------------------------------------
@@ -26,11 +27,6 @@ fi
 # OTHER APPS --------------------------------------------------------
 
 export FTP_PASSIVE=1
-
-# MySQL
-if [ -d /usr/local/mysql/bin ] ; then
-	export PATH="${PATH}:/usr/local/mysql/bin"
-fi
 
 # rbenv
 hash rbenv &>/dev/null && eval "$(rbenv init -)"
