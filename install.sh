@@ -2,8 +2,8 @@
 # install.sh
 # Create symlinks to config files
 
-DOTFILES=~/.dotfiles
-BACKUP=~/.dotfiles_backup
+DOTFILES=~/.dots
+BACKUP=~/.dots_backup
 
 for FILE in $DOTFILES/*
 do
