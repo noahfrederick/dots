@@ -1,0 +1,54 @@
+#
+# ALIASES
+#
+# Defaults for tree (color, show hidden, ignore version control)
+alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
+
+# Easy editing of config files
+alias nanorc="$EDITOR ~/.nanorc"
+alias bashrc="$EDITOR ~/.bashrc"
+alias vimrc="$EDITOR ~/.vimrc"
+
+# Use GitHub enhancements with git
+# hash hub &>/dev/null && alias git=hub
+
+alias v=vim
+alias c=clear
+alias r=rails
+
+# Git abbreviations
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gp='git push'
+alias gl='git log'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gb='git branch'
+alias gch='git checkout'
+alias gpu='git pull'
+alias gcl='git clone'
+alias ggg='git graph'
+alias gg='git g'
+
+#
+# FUNCTIONS
+#
+# Give visual indicator of exit status of previous command.
+result () {
+	if [ $? = 0 ]; then
+		echo -e "\033[0;32m----- Success -----\033[0m"
+	else
+		echo -e "\033[0;33m----- Failure -----\033[0m"
+	fi
+}
+
+# Print PATH in readable form
+path () {
+	IFS_OLD=$IFS
+	IFS=:
+	printf "%s\n" $PATH
+	IFS=$IFS_OLD
+}

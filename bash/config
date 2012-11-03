@@ -1,0 +1,45 @@
+#
+# RUBY
+#
+# Enable Ruby via rbenv
+hash rbenv &>/dev/null && eval "$(rbenv init -)"
+
+#
+# COMPLETION
+#
+if hash brew &>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+	source $(brew --prefix)/etc/bash_completion
+fi
+
+#
+# PROMPT
+#
+# Source script that defines __git_ps1 ()
+if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] ; then
+	source /usr/local/etc/bash_completion.d/git-prompt.sh
+	
+	# Show a "*" next to branch name for unstaged changes, a "+"
+	# for staged changes, and a "$" for stashed changes.
+	GIT_PS1_SHOWDIRTYSTATE=1
+	GIT_PS1_SHOWSTASHSTATE=1
+fi
+
+COLOR_BOLD="\[\e[1;93m\]"
+COLOR_DEFAULT="\[\e[0m\]"
+COLOR_BLACK="\[\e[30m\]"
+COLOR_BOLD_YELLOW="\[\e[1;33m\]"
+
+# Number of path components to include in \w
+PROMPT_DIRTRIM=2
+
+# pwd (gitbranch) $
+PS1="$COLOR_BOLD\w$COLOR_BOLD_YELLOW"'$(__git_ps1 " ± %s")'"$COLOR_DEFAULT$COLOR_BOLD \$ $COLOR_DEFAULT"
+PS2="$COLOR_BOLD > $COLOR_DEFAULT"
+
+#
+# BOOKMARKS
+#
+# Bookmark directories.
+if [ -f ~/bin/bmark.sh ] ; then
+	source ~/bin/bmark.sh
+fi

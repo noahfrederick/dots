@@ -1,0 +1,33 @@
+#
+# PATH
+#
+[ -d ~/bin ] && export PATH="~/bin:${PATH}"
+
+#
+# EDITOR
+#
+hash vim &>/dev/null && export EDITOR=vim
+
+#
+# TERM
+#
+case "$TERM" in
+	xterm*) TERM=xterm-256color
+esac
+
+#
+# HISTORY
+#
+# Don't put duplicate lines in the history. See bash(1) for more options.
+export HISTCONTROL=ignoredups
+
+#
+# COLORS
+#
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
+
+#
+# OTHER
+#
+export FTP_PASSIVE=1
