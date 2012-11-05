@@ -5,8 +5,10 @@
 
 set nocompatible                " Disable Vi compatibility
 
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()          " Manage plugins with pathogen.vim
+if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
+	runtime bundle/pathogen/autoload/pathogen.vim
+	call pathogen#infect()      " Manage plugins with pathogen.vim
+endif
 
 syntax on                       " Enable syntax highlighting
 filetype plugin indent on       " Enable file type detection
@@ -70,10 +72,13 @@ function! <SID>SetStatusLine(mode)
 	else
 		let histyle = ""	" inactive
 	endif
+
+	" Get Git info from vim-fugitive for current buffer (if available)
+	let mygit = exists("*fugitive#statusline") ? fugitive#statusline()[4:-2] : ""
 	
 	" Left side
 	let mystl = histyle
-	let mystl .= " %6.(#%n%)  %* %t%#StatusLineNC# %{fugitive#statusline()[4:-2]}%m%="
+	let mystl .= " %6.(#%n%)  %* %t%#StatusLineNC# ".mygit."%m%="
 
 	" Right side
 	let mystl .= "%{(&fenc==''?&enc:&fenc)}%* %{strlen(&ft)?&ft:'n/a'} "
