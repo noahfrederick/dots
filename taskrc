@@ -16,6 +16,17 @@ data.location=~/.task
 # Include US holidays
 include /usr/local/share/doc/task/rc/holidays.en-US.rc
 
+dateformat.report=a m/d/Y
+
+# Always list all projects (including those with no pending tasks)
+list.all.projects=on
+
+# Autocomplete all projects and tags
+complete.all.projects=yes
+complete.all.tags=yes
+
+default.project=personal
+
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-16.theme
 #include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-256.theme
