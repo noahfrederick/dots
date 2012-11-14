@@ -26,6 +26,25 @@ complete.all.projects=yes
 complete.all.tags=yes
 
 default.project=personal
+default.priority=M
+
+# Urgency coefficients
+urgency.project.coefficient=0
+urgency.tags.coefficient=0
+urgency.user.tag.deliverable.coefficient=5.0
+urgency.user.tag.preparedness.coefficient=4.0
+
+# Reports overrides
+report.next.columns=id,project,due.countdown,description,tags
+report.next.labels=ID,Project,Due,Description,Tags
+
+# Remotes (see 'man task-sync')
+merge.default.uri=ftp://'task@noahfrederick.com'@noahfrederick.com/
+push.default.uri=ftp://'task@noahfrederick.com'@noahfrederick.com/
+
+# Color customizations
+color.due=bold
+color.due.today=bright yellow
 
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-16.theme
