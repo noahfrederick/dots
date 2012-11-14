@@ -10,6 +10,7 @@ hash rbenv &>/dev/null && eval "$(rbenv init -)"
 if hash brew &>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
 	source $(brew --prefix)/etc/bash_completion
 fi
+hash teamocil &>/dev/null && complete -W "$(teamocil --list)" teamocil
 
 #
 # PROMPT
