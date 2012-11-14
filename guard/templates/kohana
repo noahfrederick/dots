@@ -1,0 +1,9 @@
+# Expects `tests` directory to mirror `classes` directory
+# with ClassTest.php corresponding to Class.php
+guard 'phpunit', :tests_path => 'application/tests', :cli => '--colors --bootstrap=index.php' do
+  # Watch test files
+  watch(%r{^.+Test\.php$})
+
+  # Watch library files and run their tests
+  watch(%r{^application/classes/(.+)\.php}) { |m| "application/tests/#{m[1]}Test.php" }
+end
