@@ -41,7 +41,7 @@ result () {
 	if [ $? = 0 ]; then
 		echo -e "\033[0;32m----- Success -----\033[0m"
 	else
-		echo -e "\033[0;33m----- Failure -----\033[0m"
+		echo -e "\033[0;31m----- Failure -----\033[0m"
 	fi
 }
 
