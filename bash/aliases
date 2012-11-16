@@ -33,6 +33,9 @@ alias gcl='git clone'
 alias ggg='git graph'
 alias gg='git g'
 
+# Selenium server
+alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.25.0/selenium-server-standalone-2.25.0.jar -p 4444'
+
 #
 # FUNCTIONS
 #
