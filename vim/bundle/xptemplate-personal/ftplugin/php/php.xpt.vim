@@ -30,12 +30,14 @@ class `className^` extends `parentClassName`^`$BRfun^{
 XPT method " .. function ..( .. ) {..}
 XSET params=Void()
 XSET access=ChooseStr( 'public', 'protected', 'private' )
+`:commentDoc:^
 `access^ function `fun_name^(`params^)`$BRfun^{
     `cursor^
 }
 
 XPT _method hidden " $_xSnipName function ..( .. ) {..}
 XSET params=Void()
+`:commentDoc:^
 `$_xSnipName^ function `fun_name^(`params^)`$BRfun^{
     `cursor^
 }

@@ -12,4 +12,23 @@ XPTvar $email        noah@noahfrederick.com
 " for ( ** statement ** )
 " [ ** a, b ** ]
 " { ** 'k' : 'v' ** }
-XPTvar $SParg      ''
+XPTvar $SParg    ''
+
+" if () ** {
+" else ** {
+XPTvar $BRif     \n
+
+" } ** else {
+XPTvar $BRel     \n
+
+" for () ** {
+" while () ** {
+" do ** {
+XPTvar $BRloop   \n
+
+" struct name ** {
+XPTvar $BRstc    \n
+
+" int fun() ** {
+" class name ** {
+XPTvar $BRfun    \n
