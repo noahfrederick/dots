@@ -172,13 +172,13 @@ nnoremap <Leader>et :tabe %%
 nnoremap <Leader>a :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Write buffer and source current file
-nnoremap <Leader>w :w<CR>:so %<CR>
+nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
 
 " Show highlighting groups for current word
-nnoremap <Leader>p :call <SID>SynStack()<CR>
+nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
 
 " Toggle invisible characters (list)
 nnoremap <Leader>l :set list!<CR>
