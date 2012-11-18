@@ -40,3 +40,6 @@
 [submodule "vim/bundle/html5"]
 	path = vim/bundle/html5
 	url = git://github.com/othree/html5.vim.git
+[submodule "vim/bundle/command-t"]
+	path = vim/bundle/command-t
+	url = git://git.wincent.com/command-t.git

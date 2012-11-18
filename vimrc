@@ -169,13 +169,13 @@ nnoremap <Leader>ev :vsp %%
 nnoremap <Leader>et :tabe %%
 
 " Toggle light/dark background
-nnoremap <Leader>b :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
+nnoremap <Leader>a :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Write buffer and source current file
 nnoremap <Leader>w :w<CR>:so %<CR>
 
 " Toggle NERDTree open/closed
-nnoremap <Leader>t :NERDTreeToggle<CR>
+nnoremap <Leader>r :NERDTreeToggle<CR>
 
 " Show highlighting groups for current word
 nnoremap <Leader>p :call <SID>SynStack()<CR>
@@ -199,6 +199,10 @@ nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
 nnoremap <Leader>so :OpenSession<CR>
 nnoremap <Leader>sc :CloseSession<CR>
 nnoremap <Leader>ss :SaveSession<CR>
+
+" NOTE: Command-T plug-in sets the following mappings:
+"    nnoremap <silent> <Leader>t :CommandT<CR>
+"    nnoremap <silent> <Leader>b :CommandTBuffer<CR>
 
 " }}}
 " PLUGINS                                                                      {{{
