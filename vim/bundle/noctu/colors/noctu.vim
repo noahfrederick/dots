@@ -121,6 +121,7 @@ hi! link markdownHeadingRule	NonText
 hi! link markdownHeadingDelimiter	markdownHeadingRule
 hi! link markdownLinkDelimiter	Delimiter
 hi! link markdownURLDelimiter	Delimiter
+hi! link markdownCodeDelimiter	NonText
 hi! link markdownLinkTextDelimiter	markdownLinkDelimiter
 hi! link markdownUrl	markdownLinkDelimiter
 hi! link markdownAutomaticLink	markdownLinkText
