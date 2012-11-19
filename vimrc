@@ -7,7 +7,7 @@ set nocompatible                " Disable Vi compatibility
 
 if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
 	runtime bundle/pathogen/autoload/pathogen.vim
-	call pathogen#infect()      " Manage plugins with pathogen.vim
+	call pathogen#infect()      " Manage plug-ins with pathogen.vim
 endif
 
 syntax on                       " Enable syntax highlighting
@@ -173,13 +173,10 @@ nnoremap <Leader>ev :vsp %%
 nnoremap <Leader>et :tabe %%
 
 " Toggle light/dark background
-nnoremap <Leader>a :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
+nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
-
-" Toggle NERDTree open/closed
-nnoremap <Leader>r :NERDTreeToggle<CR>
 
 " Show highlighting groups for current word
 nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
@@ -199,20 +196,31 @@ nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 " Quickly bring up Vim notes
 nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
 
-" Shortcuts for Session plugin
+" Toggle NERDTree open/closed
+nnoremap <Leader>r :NERDTreeToggle<CR>
+
+" Shortcuts for Session plug-in
 nnoremap <Leader>so :OpenSession<CR>
 nnoremap <Leader>sc :CloseSession<CR>
 nnoremap <Leader>ss :SaveSession<CR>
+
+" Shortcuts for Tabular plug-in
+nnoremap <Leader>a= :Tabularize /=<CR>
+vnoremap <Leader>a= :Tabularize /=<CR>
+nnoremap <Leader>a: :Tabularize /:\zs<CR>
+vnoremap <Leader>a: :Tabularize /:\zs<CR>
+nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
+vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 
 " NOTE: Command-T plug-in sets the following mappings:
 "    nnoremap <silent> <Leader>t :CommandT<CR>
 "    nnoremap <silent> <Leader>b :CommandTBuffer<CR>
 
 " }}}
-" PLUGINS                                                                      {{{
+" PLUG-INS                                                                      {{{
 " --------------------------------------------------------------------------------
 
-" Settings for bundled PHP plugin
+" Settings for bundled PHP plug-in
 let php_noShortTags = 1         " Always use <?php
 let php_folding = 1             " Enable folding of classes/functions
 let php_htmlInStrings = 1       " Highlight HTML in PHP strings
@@ -220,7 +228,7 @@ let php_htmlInStrings = 1       " Highlight HTML in PHP strings
 " xptemplate key
 let g:xptemplate_key = '<Tab>'
 
-" Settings for Session plugin
+" Settings for Session plug-in
 let g:session_autosave = 'yes'
 
 " }}}
