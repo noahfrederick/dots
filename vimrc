@@ -151,6 +151,9 @@ endif
 " MAPPINGS                                                                     {{{
 " --------------------------------------------------------------------------------
 
+" Enter command-line mode more easily
+noremap <Space> :
+
 " Use arrow keys for buffer/tab navigation
 noremap <Up> :bprev<CR>
 noremap <Down> :bnext<CR>
@@ -158,7 +161,7 @@ noremap <Left> :tabprev<CR>
 noremap <Right> :tabnext<CR>
 
 " Turn off highlighting and clear any message already displayed
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+nnoremap <silent> <Leader><Space> :nohlsearch<Bar>:echo<CR>
 
 " Expand %% to directory of current file in command-line mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
