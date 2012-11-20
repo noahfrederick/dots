@@ -16,8 +16,9 @@ array(
 )
 
 XPT fun " function ..( .. ) {..}
-XSET params=Void()
-function `fun_name^(`params^)`$BRfun^{
+XSET arg*|post=EchoIfEq('arg*', '')
+XSET arg*|post=ExpandIfNotEmpty(', ', 'arg*')
+function `fun_name^(`arg*^)`$BRfun^{
     `cursor^
 }
 
@@ -27,30 +28,51 @@ class `className^` extends `parentClassName`^`$BRfun^{
     `cursor^
 }
 
-XPT method " .. function ..( .. ) {..}
-XSET params=Void()
-XSET access=ChooseStr( 'public', 'protected', 'private' )
-`:commentDoc:^
-`access^ function `fun_name^(`params^)`$BRfun^{
-    `cursor^
-}
+XPT @param syn=phpComment " @param  type  \$var  Description
+@param   `p_type^  $`p_name^  `p_desc^
+
+XPT @var syn=phpComment " @var  type  \$var  Description
+@var  `p_type^  $`p_name^  `p_desc^
+
+XPT @return syn=phpComment " @return  type  Description
+@return  `r_type^  `r_desc^
+
+XPT docMethod " /* Method doc block */
+/**
+ * `description^
+ * `...^
+ * `:@param:^`...^
+ * `:@return:^
+ */
 
 XPT _method hidden " $_xSnipName function ..( .. ) {..}
-XSET params=Void()
-`:commentDoc:^
-`$_xSnipName^ function `fun_name^(`params^)`$BRfun^{
+XSET arg*|post=EchoIfEq('arg*', '')
+XSET arg*|post=ExpandIfNotEmpty(', ', 'arg*')
+`:docMethod:^
+`access^ function `fun_name^(`arg*^)`$BRfun^{
     `cursor^
 }
 
 XPT public    alias=_method
+XSET access=$_xSnipName
 XPT protected alias=_method
+XSET access=$_xSnipName
 XPT private   alias=_method
+XSET access=$_xSnipName
+XPT method    alias=_method
+XSET access=ChooseStr( 'public', 'protected', 'private' )
+
+XPT docProperty " /* Property doc block */
+/**
+ * `:@var:^
+ */
 
 XPT property " .. $.. = ..;
 XSET value=Void()
 XSET value|post=EchoIfEq(' = ', '')
 XSET access=ChooseStr( 'public', 'protected', 'private' )
-`access^ $`property_name^` = `value`^;
+`:docProperty:^
+`access^ $`p_name^` = `value`^;
 
 ..XPT
 
@@ -69,7 +91,7 @@ XPT license " /* License comment block */
 
 ..XPT
 
-XPT koclassDoc " Kohana class doc block
+XPT docKoclass " /* Kohana class doc block */
 XSET category=ChooseStr( 'Controllers', 'Models', 'Helpers', 'Tasks', 'Tests' )
 /**
  * `description^.
@@ -86,3 +108,16 @@ XPT koclass " Kohana class file
 
 XPT koconfig " Kohana config file
 return `:asso:^;
+
+XPT _phpunit hidden " \$this->$_xSnipName( .. );
+XSET arg*|post=ExpandIfNotEmpty(', ', 'arg*')
+$this->`$_xSnipName^(`arg*^);
+
+XPT assertEquals    alias=_phpunit
+XPT assertNotEquals alias=_phpunit
+XPT assertSame      alias=_phpunit
+XPT assertNotSame   alias=_phpunit
+XPT assertTrue      alias=_phpunit
+XPT assertFalse     alias=_phpunit
+XPT assertEmpty     alias=_phpunit
+XPT assertNotEmpty  alias=_phpunit
