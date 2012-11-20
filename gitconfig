@@ -6,7 +6,8 @@
 [color]
 	ui = true
 [alias]
-	graph = log --graph --oneline --decorate
+	#graph = log --graph --oneline --decorate
+	graph = log --graph --all --pretty=format:'%C(yellow)%h%Cblue%d%Creset %s %Cgreen(%cr)%Creset'
 	g = log --graph --all --oneline --decorate --simplify-by-decoration
 	c = commit
 	ca = commit -a
