@@ -1,6 +1,6 @@
-# Nox's *Nix Config Files
+# My Dotfiles
 
-My configuration files for the platforms I work on, OS X, Linux (Ubuntu), and occasionally Solaris.
+Personal configuration files for the platforms I work on (mostly OS X).
 
 
 ## Installation
