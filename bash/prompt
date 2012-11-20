@@ -1,0 +1,39 @@
+#
+# PROMPT
+#
+# Source script that defines __git_ps1 ()
+if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] ; then
+	source /usr/local/etc/bash_completion.d/git-prompt.sh
+	
+	# Show a "*" next to branch name for unstaged changes, a "+"
+	# for staged changes, and a "$" for stashed changes.
+	GIT_PS1_SHOWDIRTYSTATE=1
+	GIT_PS1_SHOWSTASHSTATE=1
+fi
+
+prompt_func () {
+	local exit_status=$?;
+
+	local PROMPTCOLOR="\[\e[1;93m\]"
+	local BOLDCOLOR="\[\e[1;33m\]"
+	local GREEN="\[\e[1;32m\]"
+	local RED="\[\e[1;31m\]"
+	local BLACK="\[\e[90m\]"
+	local NOCOLOR="\[\e[0m\]"
+
+	local PREFIX=">"
+
+	local prompt="${PROMPTCOLOR}\w${BOLDCOLOR}$(__git_ps1 ' ± %s')${NOCOLOR}"
+
+	if [ $exit_status -eq 0 ] ; then
+		PS1="${GREEN}${PREFIX} ${prompt} "
+	else
+		PS1="${RED}${PREFIX} ${prompt} "
+	fi
+
+	PS2="${BLACK}${PREFIX} ${NOCOLOR}"
+}
+
+# Number of path components to include in \w
+PROMPT_DIRTRIM=2
+PROMPT_COMMAND=prompt_func

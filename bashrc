@@ -2,5 +2,6 @@
 [ -z "$PS1" ] && return
 
 source ~/.bash/env     # Environment variables
-source ~/.bash/config  # Set prompt and other stuff
+source ~/.bash/config  # Completion and other settings
+source ~/.bash/prompt  # The prompt
 source ~/.bash/aliases # Aliases and functions
