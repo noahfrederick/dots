@@ -199,6 +199,18 @@ nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
 
+" Shortcuts for Fugitive plug-in
+nnoremap <Leader>g :Git 
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gb :Gblame<CR>
+vnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gm :Gmove 
+
 " Shortcuts for Session plug-in
 nnoremap <Leader>so :OpenSession<CR>
 nnoremap <Leader>sc :CloseSession<CR>
