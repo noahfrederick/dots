@@ -4,13 +4,11 @@
 # Defaults for tree (color, show hidden, ignore version control)
 alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
 
-# Easy editing of config files
-alias nanorc="$EDITOR ~/.nanorc"
-alias bashrc="$EDITOR ~/.bashrc"
-alias vimrc="$EDITOR ~/.vimrc"
-
-# Use GitHub enhancements with git
-# hash hub &>/dev/null && alias git=hub
+# a - Show hidden
+# h - Human-readable file sizes
+# l - Long format
+alias ll='ls -hl'
+alias la='ls -ahl'
 
 alias v=vim
 alias c=clear
@@ -19,19 +17,20 @@ alias r=rails
 # Git abbreviations
 alias g='git'
 alias ga='git add'
+alias gb='git branch'
 alias gc='git commit'
 alias gca='git commit -a'
-alias gp='git push'
-alias gl='git log'
-alias gs='git status'
+alias gcl='git clone'
+alias gco='git checkout'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias gb='git branch'
-alias gch='git checkout'
-alias gpu='git pull'
-alias gcl='git clone'
-alias ggg='git graph'
+alias gf='git fetch'
 alias gg='git g'
+alias ggg='git graph'
+alias gl='git log'
+alias gp='git push'
+alias gpu='git pull'
+alias gs='git status'
 
 # Selenium server
 alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.25.0/selenium-server-standalone-2.25.0.jar -p 4444'
