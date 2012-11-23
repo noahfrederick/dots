@@ -44,6 +44,7 @@ set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
+set gdefault                    " 'g' flag of ':substitute' is on by default
 set listchars=tab:▸\ ,eol:¬,trail:·
 
 " In many terminal emulators the mouse works just fine, thus enable it.
