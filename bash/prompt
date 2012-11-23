@@ -23,12 +23,13 @@ prompt_func () {
 
 	local PREFIX=">"
 
-	local prompt="${PROMPTCOLOR}\w${BOLDCOLOR}$(__git_ps1 ' ± %s')${NOCOLOR}"
+	local prompt="${PREFIX} ${PROMPTCOLOR}\w"
+	type -t __git_ps1 &>/dev/null && prompt="${prompt}${BOLDCOLOR}$(__git_ps1 ' ± %s')"
 
 	if [ $exit_status -eq 0 ] ; then
-		PS1="${GREEN}${PREFIX} ${prompt} "
+		PS1="${GREEN}${prompt} ${NOCOLOR}"
 	else
-		PS1="${RED}${PREFIX} ${prompt} "
+		PS1="${RED}${prompt} ${NOCOLOR}"
 	fi
 
 	PS2="${BLACK}${PREFIX} ${NOCOLOR}"
