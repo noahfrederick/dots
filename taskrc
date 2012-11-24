@@ -45,6 +45,7 @@ push.default.uri=ftp://'task@noahfrederick.com'@noahfrederick.com/
 # Color customizations
 color.due=bold
 color.due.today=bright yellow
+color.tagged=
 
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-16.theme
