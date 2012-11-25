@@ -46,3 +46,6 @@
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = git://github.com/godlygeek/tabular.git
+[submodule "vim/bundle/less"]
+	path = vim/bundle/less
+	url = git://github.com/groenewege/vim-less.git
