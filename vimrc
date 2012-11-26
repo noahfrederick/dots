@@ -34,10 +34,20 @@ set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
 
 "" Swaps and backups
-" Don't store swaps in . -- store in ~/.vim/tmp/%path%to%orig.swp
-set directory=~/.vim/tmp//,.,/var/tmp
-" Don't store backups in . -- store in ~/.vim/tmp/%path%to%orig~
-set backupdir=~/.vim/tmp//,.,/var/tmp
+if !strlen($SUDO_USER) && has("unix")
+	" Don't store swaps in . -- store in ~/.vim/tmp/%path%to%orig.swp
+	set directory=~/.vim/tmp//,.,/var/tmp
+	" Don't store backups in . -- store in ~/.vim/tmp/%path%to%orig~
+	set backupdir=~/.vim/tmp//,.,/var/tmp
+	" Create tmp/ dir if it doesn't exist
+	if !isdirectory($HOME . "/.vim/tmp") && exists("*mkdir")
+		call mkdir($HOME . "/.vim/tmp", "p", 0700)
+	endif
+else
+	set nobackup
+	set nowritebackup
+	set noswapfile
+endif
 
 "" Searching
 set hlsearch                    " Highlight search matches
