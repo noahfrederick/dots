@@ -49,3 +49,6 @@
 [submodule "vim/bundle/less"]
 	path = vim/bundle/less
 	url = git://github.com/groenewege/vim-less.git
+[submodule "vim/bundle/endwise"]
+	path = vim/bundle/endwise
+	url = git://github.com/tpope/vim-endwise.git
