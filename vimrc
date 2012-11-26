@@ -213,9 +213,6 @@ nnoremap <Leader>s :set spell!<CR>
 " Quickly edit .vimrc
 nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 
-" Quickly bring up Vim notes
-nnoremap <Leader>V :tabedit ~/Documents/vim.md<CR>
-
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
 
@@ -262,5 +259,14 @@ let g:xptemplate_key = '<Tab>'
 
 " Settings for Session plug-in
 let g:session_autosave = 'yes'
+
+" }}}
+" LOCAL VIMRC                                                                   {{{
+" --------------------------------------------------------------------------------
+
+" Local
+if filereadable(glob("~/.vimrc.local"))
+	source ~/.vimrc.local
+endif
 
 " }}}
