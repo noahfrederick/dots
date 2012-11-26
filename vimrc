@@ -68,7 +68,7 @@ endif
 
 " Set color scheme for 16-color+ terminals
 if &t_Co >= 16 || has("gui_running")
-	colorscheme noctu
+	silent! colorscheme noctu
 endif
 
 " }}}
