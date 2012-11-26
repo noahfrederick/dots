@@ -1,3 +1,4 @@
-vim/tmp
-vim/spell
-vim/sessions
+vim/.netrwhist
+vim/sessions/*
+vim/spell/*.spl
+vim/tmp/*
