@@ -23,6 +23,11 @@ set modeline modelines=20       " Look for modeline in first 20 lines
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
+set listchars=tab:▸\ ,eol:¬,trail:·
+if has("linebreak")             " Wrap lines at word boundries
+    set linebreak
+    set showbreak=...
+endif
 
 "" Command line
 set wildmenu                    " Command line completion
@@ -55,7 +60,6 @@ set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
 set gdefault                    " 'g' flag of ':substitute' is on by default
-set listchars=tab:▸\ ,eol:¬,trail:·
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -125,6 +129,7 @@ if has("autocmd")
 
 		" For all text files set 'textwidth' to 78 characters.
 		autocmd FileType text setlocal textwidth=78
+		autocmd FileType markdown setlocal textwidth=78
 
 		" Always use spelling for particular file types
 		autocmd FileType gitcommit setlocal spell
