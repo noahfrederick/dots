@@ -130,6 +130,10 @@ if has("autocmd")
 		" For all text files set 'textwidth' to 78 characters.
 		autocmd FileType text setlocal textwidth=78
 		autocmd FileType markdown setlocal textwidth=78
+		if exists("&colorcolumn")
+			autocmd Filetype text setlocal colorcolumn=+1
+			autocmd Filetype markdown setlocal colorcolumn=+1
+		endif
 
 		" Always use spelling for particular file types
 		autocmd FileType gitcommit setlocal spell
