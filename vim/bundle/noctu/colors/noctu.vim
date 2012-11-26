@@ -156,6 +156,11 @@ hi! link vimContinue	Delimiter
 hi! link vimHiAttrib	Constant
 
 "}}}
+" LESS {{{
+hi lessVariable	ctermfg=11	guifg=#d6bd83
+hi! link lessVariableValue	Normal
+
+"}}}
 " NERDTree {{{
 hi! link NERDTreeHelp	Comment
 hi! link NERDTreeExecFile	String
