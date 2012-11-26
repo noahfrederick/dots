@@ -39,7 +39,7 @@ alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.25.0/se
 # FUNCTIONS
 #
 # Give visual indicator of exit status of previous command.
-result () {
+function result () {
 	if [ $? = 0 ]; then
 		echo -e "\033[0;32m----- Success -----\033[0m"
 	else
@@ -47,10 +47,19 @@ result () {
 	fi
 }
 
-# Print PATH in readable form
-path () {
+# Print PATH in readable form.
+function path () {
 	IFS_OLD=$IFS
 	IFS=:
 	printf "%s\n" $PATH
 	IFS=$IFS_OLD
+}
+
+# Attach to existing tmux session rather than create a new one if possible.
+function tmux {
+	if [[ -n "$*" ]]; then
+		command tmux $*
+	else
+		command tmux attach -d &>/dev/null || command tmux
+	fi
 }
