@@ -175,10 +175,10 @@ endif
 noremap <Space> :
 
 " Use arrow keys for buffer/tab navigation
-noremap <Up> :bprev<CR>
-noremap <Down> :bnext<CR>
-noremap <Left> :tabprev<CR>
-noremap <Right> :tabnext<CR>
+nnoremap <Up> :bprev<CR>
+nnoremap <Down> :bnext<CR>
+nnoremap <Left> :tabprev<CR>
+nnoremap <Right> :tabnext<CR>
 
 " Turn off highlighting and clear any message already displayed
 nnoremap <silent> <Leader><Space> :nohlsearch<Bar>:echo<CR>
@@ -215,6 +215,9 @@ nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
+
+" Toggle AutoClose on/off
+nnoremap <Leader>x <Plug>ToggleAutoCloseMappings
 
 " Shortcuts for Fugitive plug-in
 nnoremap <Leader>g :Git 
