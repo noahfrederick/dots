@@ -116,6 +116,7 @@ hi! link javaScriptBraces	Delimiter
 hi phpSpecialFunction	ctermfg=5	guifg=#856fd3
 hi phpIdentifier	ctermfg=11	guifg=#d6bd83
 hi! link phpVarSelector	phpIdentifier
+hi! link phpHereDoc	String
 hi! link phpDefine	Statement
 
 "}}}
