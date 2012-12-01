@@ -195,6 +195,9 @@ nnoremap <Leader>et :tabe %%
 " Toggle light/dark background
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
+" Make current file and show results in quickfix window
+nnoremap <Leader>m :w<cr>:!clear<cr>:silent make %<cr>:cc<cr>
+
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 
