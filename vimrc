@@ -266,6 +266,9 @@ let g:xptemplate_key = '<Tab>'
 " Settings for Session plug-in
 let g:session_autosave = 'yes'
 
+" Vimwiki
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+
 " }}}
 " LOCAL VIMRC                                                                   {{{
 " --------------------------------------------------------------------------------
