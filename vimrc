@@ -269,6 +269,9 @@ let g:session_autosave = 'yes'
 " Vimwiki
 let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
 
+" Open Command-T match list at top so results don't jump around
+let g:CommandTMatchWindowAtTop = 1
+
 " }}}
 " LOCAL VIMRC                                                                   {{{
 " --------------------------------------------------------------------------------
