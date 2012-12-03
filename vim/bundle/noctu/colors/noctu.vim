@@ -75,6 +75,7 @@ hi Identifier	ctermfg=7	guifg=#dfdfdf	cterm=NONE	gui=NONE
 hi Statement	ctermfg=2	guifg=#9ab929	cterm=bold	gui=bold
 hi Constant	ctermfg=5	guifg=#856fd3
 hi Number	ctermfg=12	guifg=#a4d5f3
+hi Boolean	ctermfg=4	guifg=#67b0d4
 hi Special	ctermfg=5	guifg=#856fd3
 hi Ignore	ctermfg=0	guifg=#000000
 hi! link Operator	Delimiter
@@ -165,6 +166,13 @@ hi! link lessVariableValue	Normal
 " NERDTree {{{
 hi! link NERDTreeHelp	Comment
 hi! link NERDTreeExecFile	String
+
+"}}}
+" Vimwiki {{{
+hi! link VimwikiHeaderChar	markdownHeadingDelimiter
+hi! link VimwikiList	markdownListMarker
+hi! link VimwikiCode	markdownCode
+hi! link VimwikiCodeChar	markdownCodeDelimiter
 
 "}}}
 " Help {{{
