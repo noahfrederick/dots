@@ -69,7 +69,7 @@ hi Underlined	ctermfg=4	guifg=#67b0d4	cterm=underline
 hi Type	ctermfg=4	guifg=#67b0d4	gui=NONE
 hi String	ctermfg=9	guifg=#ff7158
 hi Keyword	ctermfg=2	guifg=#9ab929
-hi Todo	ctermfg=11	guifg=#d6bd83	ctermbg=NONE	guibg=NONE	cterm=bold	gui=bold
+hi Todo	ctermbg=11	guibg=#d6bd83	ctermfg=0	guifg=#000000	cterm=bold	gui=bold
 hi Function	ctermfg=4	guifg=#67b0d4
 hi Identifier	ctermfg=7	guifg=#dfdfdf	cterm=NONE	gui=NONE
 hi Statement	ctermfg=2	guifg=#9ab929	cterm=bold	gui=bold
