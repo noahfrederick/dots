@@ -15,7 +15,6 @@ filetype plugin indent on       " Enable file type detection
 
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set shortmess+=I                " Suppress intro message when starting Vim
-set cursorline                  " Highlight current line
 set laststatus=2                " Always show status line
 set fillchars=vert:\            " Use space for vertical split fill char
 set pastetoggle=<F2>            " Toggle paste mode (disables auto-indent etc.)
