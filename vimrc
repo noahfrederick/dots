@@ -170,17 +170,8 @@ endif
 " MAPPINGS                                                                     {{{
 " --------------------------------------------------------------------------------
 
-" Enter command-line mode more easily
-noremap <Space> :
-
-" Use arrow keys for buffer/tab navigation
-nnoremap <Up> :bprev<CR>
-nnoremap <Down> :bnext<CR>
-nnoremap <Left> :tabprev<CR>
-nnoremap <Right> :tabnext<CR>
-
 " Turn off highlighting and clear any message already displayed
-nnoremap <silent> <Leader><Space> :nohlsearch<Bar>:echo<CR>
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 " Expand %% to directory of current file in command-line mode
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
@@ -223,6 +214,7 @@ nnoremap <Leader>x <Plug>ToggleAutoCloseMappings
 
 " Shortcuts for Fugitive plug-in
 nnoremap <Leader>g :Git 
+nnoremap <Leader>gg :Git 
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gs :Gstatus<CR>
