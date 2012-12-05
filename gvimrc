@@ -1,3 +1,6 @@
+" General settings
+set cursorline
+
 " Set colors
 set transparency=10
 
