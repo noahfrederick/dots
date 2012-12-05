@@ -143,6 +143,9 @@ if has("autocmd")
 		" Use :make to check PHP syntax
 		autocmd FileType php setlocal makeprg=php\ -l\ %
 			\ errorformat=%m\ in\ %f\ on\ line\ %l
+
+		" Set the filetype for common Ruby files not ending in .rb
+		autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
 	augroup END
 
 	augroup CursorLine
