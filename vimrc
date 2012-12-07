@@ -101,7 +101,7 @@ function! <SID>SetStatusLine(mode)
 	let mystl .= " %3.l:%-3.c "
 
 	let &l:statusline = mystl
-endfunc
+endfunction
 
 " Show highlight group of character under cursor
 function! <SID>SynStack()
@@ -109,7 +109,21 @@ function! <SID>SynStack()
 		return
 	endif
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+endfunction
+
+" Follow symlink to actual file
+function! <SID>FollowSymlink()
+	" Get path of actual file"
+	let fname = resolve(expand('%:p'))
+	" Rename buffer with new path"
+	exec 'file '.fname
+	" Read file again to trigger any plugins that are context-sensitive"
+	edit
+endfunction
+
+if !exists(":FollowSymlink")
+	command FollowSymlink call <SID>FollowSymlink()
+endif
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -184,6 +198,7 @@ nnoremap <Leader>ew :e %%
 nnoremap <Leader>es :sp %%
 nnoremap <Leader>ev :vsp %%
 nnoremap <Leader>et :tabe %%
+nnoremap <Leader>el :FollowSymlink<CR>
 
 " Toggle light/dark background
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
