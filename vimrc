@@ -275,9 +275,6 @@ let g:xptemplate_key = '<Tab>'
 " Settings for Session plug-in
 let g:session_autosave = 'yes'
 
-" Prevent Vimwiki from hijacking all .md files
-let g:vimwiki_global_ext = 0
-
 " Reverse Command-T match list so best result appears at bottom
 let g:CommandTMatchWindowReverse = 1
 
