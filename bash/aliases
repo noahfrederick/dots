@@ -63,3 +63,13 @@ function tmux {
 		command tmux attach -d &>/dev/null || command tmux
 	fi
 }
+
+# Call Whitaker's Words without having to cd to its directory
+function ww () {
+	pushd ~/bin/words &>/dev/null
+	./words $*
+	popd &>/dev/null
+}
+
+# Add shortcut for English-Latin
+alias we='ww ~e'
