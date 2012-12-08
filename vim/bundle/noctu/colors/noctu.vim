@@ -1,7 +1,7 @@
 " noctu.vim - Vim color scheme
 " --------------------------------------------------------------
 " Author:	Noah Frederick (http://noahfrederick.com/)
-" Version:	0.1.5
+" Version:	0.1.6
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -149,7 +149,10 @@ hi gitCommitSelectedType	ctermfg=10	guifg=#ceeb87
 hi gitCommitSelectedFile	ctermfg=2	guifg=#9ab929
 hi gitCommitUnmergedType	ctermfg=9	guifg=#ff7158
 hi gitCommitUnmergedFile	ctermfg=1	guifg=#ff2114
+hi! link gitCommitFile  Directory
 hi! link gitCommitUntrackedFile	gitCommitUnmergedFile
+hi! link gitCommitDiscardedType	gitCommitUnmergedType
+hi! link gitCommitDiscardedFile	gitCommitUnmergedFile
 
 "}}}
 " Vim {{{
