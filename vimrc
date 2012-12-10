@@ -154,6 +154,9 @@ if has("autocmd")
     " Use 2-space indents for Ruby
     autocmd FileType ruby setlocal softtabstop=2 shiftwidth=2 expandtab
 
+    " Use 2-space indents for YAML
+    autocmd FileType yaml setlocal softtabstop=2 shiftwidth=2 expandtab
+
     " Use 2-space indents for Vimscript
     autocmd FileType vim setlocal softtabstop=2 shiftwidth=2 expandtab
 
