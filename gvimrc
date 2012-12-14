@@ -11,7 +11,6 @@ set guifont=Panic\ Sans:h12
 set linespace=2
 
 " Hide toolbar and scrollbars by default
-" and use native OS X tabs.
 " (see :help guioptions for expanation)
-set guioptions=gmte
+set guioptions=gmt
 
