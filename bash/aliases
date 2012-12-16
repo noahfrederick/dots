@@ -73,3 +73,13 @@ function ww () {
 
 # Add shortcut for English-Latin
 alias we='ww ~e'
+
+# Interactive Words shell
+function wi () {
+	echo -n "> "
+	while read line
+	do
+		ww $line
+		echo -n "> "
+	done
+}
