@@ -44,8 +44,8 @@ if !strlen($SUDO_USER) && has("unix")
   " Don't store backups in . -- store in ~/.vim/tmp/%path%to%orig~
   set backupdir=~/.vim/tmp//,.,/var/tmp
   " Create tmp/ dir if it doesn't exist
-  if !isdirectory($HOME . "/.vim/tmp") && exists("*mkdir")
-    call mkdir($HOME . "/.vim/tmp", "p", 0700)
+  if !isdirectory($HOME."/.vim/tmp") && exists("*mkdir")
+    call mkdir($HOME."/.vim/tmp", "p", 0700)
   endif
 else
   set nobackup
@@ -61,7 +61,7 @@ set smartcase                   " ...unless they contain at least one capital le
 set gdefault                    " 'g' flag of ':substitute' is on by default
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
+if has("mouse")
   set mouse=a
 endif
 
@@ -113,11 +113,11 @@ endfunction
 
 " Follow symlink to actual file
 function! <SID>FollowSymlink()
-  " Get path of actual file"
-  let fname = resolve(expand('%:p'))
-  " Rename buffer with new path"
-  exec 'file '.fname
-  " Read file again to trigger any plugins that are context-sensitive"
+  " Get path of actual file
+  let fname = resolve(expand("%:p"))
+  " Rename buffer with new path
+  exec "file ".fname
+  " Read file again to trigger any plugins that are context-sensitive
   edit
 endfunction
 
