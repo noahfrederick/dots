@@ -168,14 +168,6 @@ if has("autocmd")
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
   augroup END
 
-  augroup CursorLine
-    autocmd!
-
-    " Only highlight cursor line in active buffer window
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter * set cursorline
-  augroup END
-
   augroup StatusLineHighlight
     autocmd!
 
@@ -226,9 +218,6 @@ nnoremap <Leader>n :set number!<CR>
 
 " Toggle spelling
 nnoremap <Leader>s :set spell!<CR>
-
-" Quickly edit .vimrc
-nnoremap <Leader>v :tabedit $MYVIMRC<CR>
 
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
