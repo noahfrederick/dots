@@ -1,6 +1,14 @@
 " General settings
 set cursorline
 
+augroup CursorLine
+  autocmd!
+
+  " Only highlight cursor line in active buffer window
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter * set cursorline
+augroup END
+
 " Set colors
 set transparency=10
 
