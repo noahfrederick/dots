@@ -189,7 +189,7 @@ endif
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
-cnoremap %% <C-R>=expand('%:h').'/'<CR>
+cnoremap %% <C-r>=expand('%:h').'/'<CR>
 
 " Convenient ways to open files relative to current buffer
 nnoremap <Leader>ew :e %%
@@ -202,7 +202,7 @@ nnoremap <Leader>el :FollowSymlink<CR>
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Make current file and show results in quickfix window
-nnoremap <Leader>m :w<cr>:!clear<cr>:silent make %<cr>:cc<cr>
+nnoremap <Leader>m :w<CR>:!clear<CR>:silent make %<CR>:cc<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
