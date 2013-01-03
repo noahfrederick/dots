@@ -14,6 +14,9 @@ XPTvar $email        noah@noahfrederick.com
 " { ** 'k' : 'v' ** }
 XPTvar $SParg    ''
 
+" if ** (
+XPTvar $SPcmd    ' '
+
 " if () ** {
 " else ** {
 XPTvar $BRif     \n

@@ -3,9 +3,49 @@ XPTemplate priority=personal+
 XPTinclude
 	\ _common/common
 
+
+let s:f = g:XPTfuncs()
+
+" Infer the PSR-0 class name from file's path.
+" Example:
+"   /some/path/to/classes/HTTP/Request.php
+"   ->  HTTP_Request
+" (File must be under a "classes" or "tests" directory.)
+function! s:f.ClassNameFromPath()
+	" Get path without extension and with "_" for "/"
+	let className = expand('%:p:gs?/?_?:r')
+	" Truncate up to the last classes/tests path component
+	let className = substitute(className, '\v.*_(classes|tests)_', '', '')
+
+	return (className == '' || className =~ '^_') ? 'ClassName' : className
+endfunction
+
+" Derive class name from test class name
+" Example:
+"   HTTP_RequestTest -> HTTP_Request
+function! s:TestClassNameToClassName(className)
+	return substitute(a:className, 'Test$', '', '')
+endfunction
+
+" Derive test class name from class name
+" Example:
+"   HTTP_Request -> HTTP_RequestTest
+function! s:ClassNameToTestClassName(className)
+	return a:className.'Test'
+endfunction
+
+" Generate a generic description for test case
+function! s:f.GetTestCaseDescription()
+	let className = s:f.ClassNameFromPath()
+	let className = s:TestClassNameToClassName(className)
+	
+	return 'Test case for class '.className
+endfunction
+
+
 XPT foreach " foreach (.. as ..) {..}
 XSET val|post=EchoIfEq(' => $', '')
-foreach ($`var^ as $`key^` => $`val`^)`$BRloop^{
+foreach`$SPcmd^($`var^ as $`key^` => $`val`^)`$BRloop^{
     `cursor^
 }
 
@@ -19,12 +59,6 @@ XPT fun " function ..( .. ) {..}
 XSET arg*|post=EchoIfEq('arg*', '')
 XSET arg*|post=ExpandIfNotEmpty(', ', 'arg*')
 function `fun_name^(`arg*^)`$BRfun^{
-    `cursor^
-}
-
-XPT class " class .. extends .. { .. }
-XSET parentClassName|post=EchoIfEq(' extends parentClassName', '')
-class `className^` extends `parentClassName`^`$BRfun^{
     `cursor^
 }
 
@@ -91,8 +125,10 @@ XPT license " /* License comment block */
 
 ..XPT
 
-XPT docKoclass " /* Kohana class doc block */
+XPT class " class .. extends .. { .. }
 XSET category=ChooseStr( 'Controllers', 'Models', 'Helpers', 'Tasks', 'Tests' )
+XSET className=ClassNameFromPath()
+XSET parentClassName|post=EchoIfEq(' extends parentClassName', '')
 /**
  * `description^.
  *
@@ -100,24 +136,32 @@ XSET category=ChooseStr( 'Controllers', 'Models', 'Helpers', 'Tasks', 'Tests' )
  * @category   `category^
  * @author     `$author^
  * @copyright  `:copyright:^
- */
-
-XPT koclass " Kohana class file
-`:koclassDoc:^
-`:class:^
+ */ 
+class `className^` extends `parentClassName`^`$BRfun^{
+    `cursor^
+}
 
 XPT koconfig " Kohana config file
 return `:asso:^;
 
-XPT _phpunit hidden " \$this->$_xSnipName( .. );
+XPT _phpunitassert hidden " \$this->$_xSnipName( .. );
 XSET arg*|post=ExpandIfNotEmpty(', ', 'arg*')
 $this->`$_xSnipName^(`arg*^);
 
-XPT assertEquals    alias=_phpunit
-XPT assertNotEquals alias=_phpunit
-XPT assertSame      alias=_phpunit
-XPT assertNotSame   alias=_phpunit
-XPT assertTrue      alias=_phpunit
-XPT assertFalse     alias=_phpunit
-XPT assertEmpty     alias=_phpunit
-XPT assertNotEmpty  alias=_phpunit
+XPT assertEquals    alias=_phpunitassert
+XPT assertNotEquals alias=_phpunitassert
+XPT assertSame      alias=_phpunitassert
+XPT assertNotSame   alias=_phpunitassert
+XPT assertTrue      alias=_phpunitassert
+XPT assertFalse     alias=_phpunitassert
+XPT assertNull      alias=_phpunitassert
+XPT assertNotNull   alias=_phpunitassert
+XPT assertEmpty     alias=_phpunitassert
+XPT assertNotEmpty  alias=_phpunitassert
+XPT assertObjectHasAttribute    alias=_phpunitassert
+XPT assertObjectNotHasAttribute alias=_phpunitassert
+
+XPT unittestcase    alias=class
+XSET parentClassName=PHPUnit_Framework_TestCase
+XSET description=GetTestCaseDescription()
+XSET category=Tests
