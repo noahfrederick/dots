@@ -10,19 +10,28 @@ if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
   call pathogen#infect()        " Manage plug-ins with pathogen.vim
 endif
 
-syntax on                       " Enable syntax highlighting
-filetype plugin indent on       " Enable file type detection
+if has("autocmd")
+  filetype plugin indent on     " Enable file type detection
+endif
+if has("syntax") && !exists("g:syntax_on")
+  syntax enable                 " Enable syntax highlighting
+endif
 
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
-set fillchars=vert:\            " Use space for vertical split fill char
 set pastetoggle=<F2>            " Toggle paste mode (disables auto-indent etc.)
 set modeline modelines=20       " Look for modeline in first 20 lines
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
-set listchars=tab:▸\ ,eol:¬,trail:·
+set scrolloff=1                 " Keep a line above/below cursor visible
+set sidescrolloff=5             " Keep 5 columns left/right of cursor visible
+set fillchars=vert:\            " Use space for vertical split fill char
+set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
+if &termencoding ==# 'utf-8' || &encoding ==# 'utf-8'
+  set listchars=tab:▸\ ,eol:¬,trail:·,extends:▷,precedes:◁,nbsp:+
+endif
 if has("linebreak")             " Wrap lines at word boundries
   set linebreak
   set showbreak=...
@@ -68,6 +77,11 @@ endif
 " Set color scheme for 16-color+ terminals
 if &t_Co >= 16 || has("gui_running")
   silent! colorscheme noctu
+endif
+
+" Load matchit.vim, if a newer version isn't already installed
+if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &rtp) ==# ""
+  runtime! macros/matchit.vim
 endif
 
 " }}}
@@ -184,6 +198,9 @@ endif
 " }}}
 " MAPPINGS                                                                     {{{
 " --------------------------------------------------------------------------------
+
+" Make Y consistent with C and D
+nnoremap Y y$
 
 " Turn off highlighting and clear any message already displayed
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
