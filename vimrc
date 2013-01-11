@@ -1,5 +1,3 @@
-" vim: fdm=marker
-
 " GENERAL SETTINGS                                                             {{{
 " --------------------------------------------------------------------------------
 
@@ -11,9 +9,9 @@ if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
 endif
 
 if has("autocmd")
-  filetype plugin indent on     " Enable file type detection
+  filetype plugin indent on     " File-type detection, plug-ins, indent scripts
 endif
-if has("syntax") && !exists("g:syntax_on")
+if has("syntax")
   syntax enable                 " Enable syntax highlighting
 endif
 
@@ -21,15 +19,15 @@ set encoding=utf-8              " Use UTF-8 as default file encoding
 set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
 set pastetoggle=<F2>            " Toggle paste mode (disables auto-indent etc.)
-set modeline modelines=20       " Look for modeline in first 20 lines
+set modeline modelines=5        " Look for modeline at beginning/end of file
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
-set hidden                      " Allow unedited buffers to be hidden
+set hidden                      " Allow unwritten buffers to be hidden
 set scrolloff=1                 " Keep a line above/below cursor visible
 set sidescrolloff=5             " Keep 5 columns left/right of cursor visible
 set fillchars=vert:\            " Use space for vertical split fill char
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
-if &termencoding ==# 'utf-8' || &encoding ==# 'utf-8'
+if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   set listchars=tab:▸\ ,eol:¬,trail:·,extends:▷,precedes:◁,nbsp:+
 endif
 if has("linebreak")             " Wrap lines at word boundries
@@ -122,7 +120,7 @@ function! <SID>SynStack()
   if !exists("*synstack")
     return
   endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  echo map(synstack(line("."), col(".")), "synIDattr(v:val, 'name')")
 endfunction
 
 " Follow symlink to actual file
@@ -206,7 +204,7 @@ nnoremap Y y$
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
-cnoremap %% <C-r>=expand('%:h').'/'<CR>
+cnoremap %% <C-r>=expand("%:h")."/"<CR>
 
 " Convenient ways to open files relative to current buffer
 nnoremap <Leader>ew :e %%
@@ -239,9 +237,6 @@ nnoremap <Leader>s :set spell!<CR>
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
 
-" Toggle AutoClose on/off
-nnoremap <Leader>x <Plug>ToggleAutoCloseMappings
-
 " Shortcuts for Fugitive plug-in
 nnoremap <Leader>g :Git 
 nnoremap <Leader>gg :Git 
@@ -273,25 +268,24 @@ vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 "    nnoremap <silent> <Leader>b :CommandTBuffer<CR>
 
 " }}}
-" PLUG-INS                                                                      {{{
+" PLUG-INS                                                                     {{{
 " --------------------------------------------------------------------------------
 
 " Settings for bundled PHP plug-in
 let php_noShortTags = 1         " Always use <?php
 let php_folding = 1             " Enable folding of classes/functions
-let php_htmlInStrings = 1       " Highlight HTML in PHP strings
 
 " xptemplate key
-let g:xptemplate_key = '<Tab>'
+let g:xptemplate_key = "<Tab>"
 
 " Settings for Session plug-in
-let g:session_autosave = 'yes'
+let g:session_autosave = "yes"
 
 " Reverse Command-T match list so best result appears at bottom
 let g:CommandTMatchWindowReverse = 1
 
 " }}}
-" LOCAL VIMRC                                                                   {{{
+" LOCAL VIMRC                                                                  {{{
 " --------------------------------------------------------------------------------
 
 " Local
@@ -300,3 +294,5 @@ if filereadable(glob("~/.vimrc.local"))
 endif
 
 " }}}
+
+" vim: fdm=marker:sw=2:sts=2:et

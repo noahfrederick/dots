@@ -19,6 +19,7 @@ set guifont=Panic\ Sans:h12
 set linespace=2
 
 " Hide toolbar and scrollbars by default
-" (see :help guioptions for expanation)
+" (see :help guioptions for explanation)
 set guioptions=gmt
 
+" vim: fdm=marker:sw=2:sts=2:et
