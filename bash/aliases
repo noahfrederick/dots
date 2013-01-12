@@ -10,7 +10,7 @@ alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
 alias ll='ls -hl'
 alias la='ls -ahl'
 
-alias v=vim
+alias v="$EDITOR"
 alias c=clear
 alias r=rails
 

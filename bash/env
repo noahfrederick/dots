@@ -7,6 +7,8 @@
 # EDITOR
 #
 hash vim &>/dev/null && export EDITOR=vim
+# Prefer MacVim's bundled vim, which has clipboard support
+hash mvim &>/dev/null && export EDITOR='mvim -v'
 
 #
 # TERM
