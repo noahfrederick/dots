@@ -11,6 +11,9 @@
 	g = log --graph --all --oneline --decorate --simplify-by-decoration
 	c = commit
 	ca = commit -a
+	ctags = !.git/hooks/ctags
 [core]
 	excludesfile = ~/.gitignore-global
 	whitespace = trailing-space,space-before-tab
+[init]
+	templatedir = ~/.git_template
