@@ -225,15 +225,6 @@ nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 " Show highlighting groups for current word
 nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
 
-" Toggle invisible characters (list)
-nnoremap <Leader>l :set list!<CR>
-
-" Toggle line numbers
-nnoremap <Leader>n :set number!<CR>
-
-" Toggle spelling
-nnoremap <Leader>s :set spell!<CR>
-
 " Toggle NERDTree open/closed
 nnoremap <Leader>r :NERDTreeToggle<CR>
 
