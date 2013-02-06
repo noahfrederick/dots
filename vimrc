@@ -225,11 +225,7 @@ nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 " Show highlighting groups for current word
 nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
 
-" Toggle NERDTree open/closed
-nnoremap <Leader>r :NERDTreeToggle<CR>
-
 " Shortcuts for Fugitive plug-in
-nnoremap <Leader>g :Git 
 nnoremap <Leader>gg :Git 
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
@@ -240,11 +236,6 @@ nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>gb :Gblame<CR>
 vnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove 
-
-" Shortcuts for Session plug-in
-nnoremap <Leader>so :OpenSession<CR>
-nnoremap <Leader>sc :CloseSession<CR>
-nnoremap <Leader>ss :SaveSession<CR>
 
 " Shortcuts for Tabular plug-in
 nnoremap <Leader>a= :Tabularize /=<CR>
@@ -268,9 +259,6 @@ let php_folding = 1             " Enable folding of classes/functions
 
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
-
-" Settings for Session plug-in
-let g:session_autosave = "yes"
 
 " Reverse Command-T match list so best result appears at bottom
 let g:CommandTMatchWindowReverse = 1
