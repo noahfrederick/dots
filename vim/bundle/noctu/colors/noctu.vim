@@ -20,7 +20,7 @@ hi Normal	guifg=#e6e6e6	guibg=#000000
 hi Cursor	guifg=#ffffff	guibg=#005f87
 hi CursorLine	ctermbg=0	guibg=#101010	cterm=NONE
 hi MatchParen	ctermfg=15	guifg=#ffffff	ctermbg=11	guibg=#101010
-hi Pmenu	ctermbg=0	guibg=#101010
+hi Pmenu	ctermfg=15	guifg=#ffffff	ctermbg=0	guibg=#101010
 hi PmenuThumb	ctermbg=7	guibg=#dfdfdf
 hi PmenuSBar	ctermbg=8	guibg=#546572
 hi PmenuSel	ctermfg=0	guifg=#000000	ctermbg=4	guibg=#67b0d4
