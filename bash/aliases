@@ -33,7 +33,7 @@ alias gpu='git pull'
 alias gs='git status'
 
 # Selenium server
-alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.29.0/selenium-server-standalone-2.29.0.jar -p 4444'
+alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.30.0/selenium-server-standalone-2.30.0.jar -p 4444'
 
 #
 # FUNCTIONS
