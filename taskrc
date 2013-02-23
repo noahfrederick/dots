@@ -11,7 +11,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/.task
+data.location=~/Dropbox/Taskwarrior
 
 # Include US holidays
 include /usr/local/share/doc/task/rc/holidays.en-US.rc
