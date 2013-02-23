@@ -56,7 +56,7 @@ function path () {
 }
 
 # Attach to existing tmux session rather than create a new one if possible.
-function tmux {
+function tmux () {
 	if [[ -n "$*" ]]; then
 		command tmux $*
 	else

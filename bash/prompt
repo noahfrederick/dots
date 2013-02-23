@@ -11,7 +11,7 @@ if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] ; then
 	GIT_PS1_SHOWSTASHSTATE=1
 fi
 
-prompt_func () {
+function prompt_func () {
 	local exit_status=$?;
 
 	local PROMPTCOLOR="\[\e[1;93m\]"
