@@ -58,3 +58,6 @@
 [submodule "vim/bundle/bundler"]
 	path = vim/bundle/bundler
 	url = git://github.com/tpope/vim-bundler.git
+[submodule "vim/bundle/noctu"]
+	path = vim/bundle/noctu
+	url = git@github.com:noahfrederick/vim-noctu.git
