@@ -88,21 +88,43 @@ endif
 
 " Status line
 function! <SID>StatusLine(mode)
-  if a:mode > 1
-    exec 'setlocal statusline =%'.a:mode.'*'
-    return
+  if a:mode < 1
+    let c1 = 0
+    let c2 = 0
+  elseif &ft == ""
+    let c1 = 4
+    let c2 = 9
+  elseif &ft == "gitcommit"
+    let c1 = 1
+    let c2 = 6
+  else
+    let c1 = 0
+    let c2 = 5
+  endif
+
+  " Set simple status line for certain buffers
+  if bufname("") == "GoToFile"
+    let simple = 1
+  else
+    let simple = 0
   endif
 
   " Status line: buffer filename git modified = encoding filetype line:col
-  exec 'setlocal statusline =%'.a:mode.'*'
-  setlocal statusline +=\ %6.(#%n%)\ \ %*
-  setlocal statusline +=\ %t
-  setlocal statusline +=\ %{exists(\"*fugitive#statusline\")?fugitive#statusline()[4:-2]:\"\"}
-  setlocal statusline +=%m%=
-  setlocal statusline +=%{strlen(&fenc)?&enc:&fenc}%*
-  setlocal statusline +=\ %{strlen(&ft)?&ft:\"n/a\"}
-  exec 'setlocal statusline +=\ %'.a:mode.'*'
-  setlocal statusline +=\ %3.l:%-3.c\ 
+  let &l:statusline = ''
+
+  if simple == 0
+    let &l:statusline .= '%'.c2.'*'
+    let &l:statusline .= ' %6.(#%n%)  '
+  endif
+  let &l:statusline .= '%'.c1.'* %t'
+  let &l:statusline .= ' %{exists("*fugitive#statusline")?fugitive#statusline()[4:-2]:""}'
+  let &l:statusline .= '%m%='
+  let &l:statusline .= '%{strlen(&fenc)?&enc:&fenc}'
+  let &l:statusline .= ' %{strlen(&ft)?&ft:"n/a"} '
+  if simple == 0
+    let &l:statusline .= '%'.c2.'*'
+    let &l:statusline .= ' %3.l:%-3.c '
+  endif
 endfunction
 
 " Show highlight group of character under cursor
@@ -175,9 +197,6 @@ if has("autocmd")
 
     autocmd WinEnter,BufEnter * call <SID>StatusLine(1)
     autocmd WinLeave,BufLeave * call <SID>StatusLine(0)
-
-    " Set Command-T's status line
-    autocmd WinEnter,BufEnter GoToFile call <SID>StatusLine(2)
   augroup END
 endif
 
