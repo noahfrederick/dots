@@ -86,33 +86,23 @@ endif
 " FUNCTIONS & COMMANDS                                                         {{{
 " --------------------------------------------------------------------------------
 
-" Set the appearance of the status line for various modes and states
-function! <SID>SetStatusLine(mode)
-  if &ft == "nerdtree"	" NERDTree sets its own minimal statusline
+" Status line
+function! <SID>StatusLine(mode)
+  if a:mode > 1
+    exec 'setlocal statusline =%'.a:mode.'*'
     return
   endif
 
-  if a:mode == "normal"
-    let histyle = "%3*"
-  elseif a:mode == "insert"
-    let histyle = "%2*"
-  else
-    let histyle = ""	" inactive
-  endif
-
-  " Get Git info from vim-fugitive for current buffer (if available)
-  let mygit = exists("*fugitive#statusline") ? fugitive#statusline()[4:-2] : ""
-
-  " Left side
-  let mystl = histyle
-  let mystl .= " %6.(#%n%)  %* %t%#StatusLineNC# ".mygit."%m%="
-
-  " Right side
-  let mystl .= "%{(&fenc==''?&enc:&fenc)}%* %{strlen(&ft)?&ft:'n/a'} "
-  let mystl .= histyle
-  let mystl .= " %3.l:%-3.c "
-
-  let &l:statusline = mystl
+  " Status line: buffer filename git modified = encoding filetype line:col
+  exec 'setlocal statusline =%'.a:mode.'*'
+  setlocal statusline +=\ %6.(#%n%)\ \ %*
+  setlocal statusline +=\ %t
+  setlocal statusline +=\ %{exists(\"*fugitive#statusline\")?fugitive#statusline()[4:-2]:\"\"}
+  setlocal statusline +=%m%=
+  setlocal statusline +=%{strlen(&fenc)?&enc:&fenc}%*
+  setlocal statusline +=\ %{strlen(&ft)?&ft:\"n/a\"}
+  exec 'setlocal statusline +=\ %'.a:mode.'*'
+  setlocal statusline +=\ %3.l:%-3.c\ 
 endfunction
 
 " Show highlight group of character under cursor
@@ -180,16 +170,14 @@ if has("autocmd")
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
   augroup END
 
-  augroup StatusLineHighlight
+  augroup StatusLine
     autocmd!
 
-    " Set statusline for various modes and states
-    autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave *
-          \ call <SID>SetStatusLine("normal")
-    autocmd BufLeave,BufWinLeave,WinLeave,CmdwinLeave *
-          \ call <SID>SetStatusLine("inactive")
-    autocmd InsertEnter,CursorHoldI *
-          \ call <SID>SetStatusLine("insert")
+    autocmd WinEnter,BufEnter * call <SID>StatusLine(1)
+    autocmd WinLeave,BufLeave * call <SID>StatusLine(0)
+
+    " Set Command-T's status line
+    autocmd WinEnter,BufEnter GoToFile call <SID>StatusLine(2)
   augroup END
 endif
 
