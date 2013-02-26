@@ -7,5 +7,5 @@ fun! s:f.year(...) "{{{
   return strftime('%Y')
 endfunction "}}}
 
-XPT copyright " (c) 2012 Noah Frederick
-(c) `year()^ `$author^
+XPT copyright " © 2013 Noah Frederick
+© `year()^ `$author^
