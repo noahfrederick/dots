@@ -244,6 +244,10 @@ nnoremap <Leader>gb :Gblame<CR>
 vnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove 
 
+" Git Gutter plug-in complements Fugitive
+nnoremap <Leader>gu :ToggleGitGutter<CR>
+nnoremap <Leader>gh :ToggleGitGutterLineHighlights<CR>
+
 " Shortcuts for Tabular plug-in
 nnoremap <Leader>a= :Tabularize /=<CR>
 vnoremap <Leader>a= :Tabularize /=<CR>
