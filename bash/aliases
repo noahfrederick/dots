@@ -13,6 +13,7 @@ alias la='ls -ahl'
 alias v="$EDITOR"
 alias c=clear
 alias r=rails
+alias t=task
 
 # Git abbreviations
 alias g='git'
