@@ -67,3 +67,6 @@
 [submodule "vim/bundle/liquid"]
 	path = vim/bundle/liquid
 	url = git://github.com/tpope/vim-liquid.git
+[submodule "vim/bundle/markdown-folding"]
+	path = vim/bundle/markdown-folding
+	url = git://github.com/nelstrom/vim-markdown-folding.git
