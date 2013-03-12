@@ -25,6 +25,7 @@ set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unwritten buffers to be hidden
 set scrolloff=1                 " Keep a line above/below cursor visible
 set sidescrolloff=5             " Keep 5 columns left/right of cursor visible
+set helpheight=1000             " Maximize help window vertically
 set fillchars=vert:\            " Use space for vertical split fill char
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
