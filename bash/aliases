@@ -14,9 +14,14 @@ alias v="$EDITOR"
 alias c=clear
 alias r=rails
 alias t=task
+function o () {
+	open ${@:-'.'}
+}
 
 # Git abbreviations
-alias g='git'
+function g () {
+	git ${@:-status --short}
+}
 alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
