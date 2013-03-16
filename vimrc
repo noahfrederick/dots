@@ -168,10 +168,6 @@ if has("autocmd")
     " For all text files set 'textwidth' to 78 characters.
     autocmd FileType text setlocal textwidth=78
     autocmd FileType markdown setlocal textwidth=78
-    if exists("&colorcolumn")
-      autocmd Filetype text setlocal colorcolumn=+1
-      autocmd Filetype markdown setlocal colorcolumn=+1
-    endif
 
     " Always use spelling for particular file types
     autocmd FileType gitcommit setlocal spell
@@ -256,6 +252,11 @@ nnoremap <Leader>a: :Tabularize /:\zs<CR>
 vnoremap <Leader>a: :Tabularize /:\zs<CR>
 nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
+
+" Unimpaired.vim-like toggles
+nnoremap [oo :set colorcolumn=+1<CR>
+nnoremap ]oo :set colorcolumn=0<CR>
+nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
 " NOTE: Command-T plug-in sets the following mappings:
 "    nnoremap <silent> <Leader>t :CommandT<CR>
