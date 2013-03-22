@@ -35,17 +35,21 @@ urgency.user.tag.deliverable.coefficient=5.0
 urgency.user.tag.preparedness.coefficient=4.0
 
 # Reports overrides
-report.next.columns=id,project,due.countdown,urgency,description,tags
-report.next.labels=ID,Project,Due,Urg,Description,Tags
+report.next.columns=id,project,due.countdown,priority,urgency,description,tags
+report.next.labels=ID,Project,Due,P,Urg,Description,Tags
 
 # Remotes (see 'man task-sync')
 merge.default.uri=ftp://'task@noahfrederick.com'@noahfrederick.com/
 push.default.uri=ftp://'task@noahfrederick.com'@noahfrederick.com/
 
 # Color customizations
+color.recurring=color13
 color.due=bold
-color.due.today=bright yellow
+color.due.today=color11
+color.overdue=color9
 color.tagged=
+color.active=color0 on color2
+color.alternate=on color0
 
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-16.theme
