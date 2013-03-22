@@ -1,4 +1,3 @@
-# [Created by task 2.1.2 10/26/2012 15:52:02]
 # Taskwarrior program configuration file.
 # For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
 # 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
@@ -50,16 +49,4 @@ color.overdue=color9
 color.tagged=
 color.active=color0 on color2
 color.alternate=on color0
-
-# Color theme (uncomment one to use)
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-16.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/light-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-16.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-red-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-green-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-blue-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-violets-256.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-yellow-green.theme
-#include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-gray-256.theme
 
