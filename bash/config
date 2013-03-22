@@ -16,6 +16,6 @@ hash teamocil &>/dev/null && complete -W "$(teamocil --list)" teamocil
 # BOOKMARKS
 #
 # Bookmark directories.
-if [ -f ~/bin/bmark.sh ] ; then
+if [ -f ~/bin/bmark.sh ]; then
 	source ~/bin/bmark.sh
 fi
