@@ -68,6 +68,15 @@ set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
 set gdefault                    " 'g' flag of ':substitute' is on by default
 
+let &statusline = ""
+let &statusline .= " %6.(#%n%)  \u27E9"
+let &statusline .= " %t"
+let &statusline .= ' %{exists("*fugitive#statusline")?fugitive#statusline()[4:-2]:""}'
+let &statusline .= "%m%="
+let &statusline .= "%{strlen(&fenc)?&enc:&fenc} \u27E8"
+let &statusline .= ' %{strlen(&ft)?&ft:"n/a"}'
+let &statusline .= " \u27E8 %3.l:%-3.c "
+
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has("mouse")
   set mouse=a
@@ -86,47 +95,6 @@ endif
 " }}}
 " FUNCTIONS & COMMANDS                                                         {{{
 " --------------------------------------------------------------------------------
-
-" Status line
-function! <SID>StatusLine(mode)
-  if a:mode < 1
-    let c1 = 0
-    let c2 = 0
-  elseif &ft == ""
-    let c1 = 4
-    let c2 = 9
-  elseif &ft == "gitcommit"
-    let c1 = 1
-    let c2 = 6
-  else
-    let c1 = 0
-    let c2 = 5
-  endif
-
-  " Set simple status line for certain buffers
-  if bufname("") == "GoToFile"
-    let simple = 1
-  else
-    let simple = 0
-  endif
-
-  " Status line: buffer filename git modified = encoding filetype line:col
-  let &l:statusline = ''
-
-  if simple == 0
-    let &l:statusline .= '%'.c2.'*'
-    let &l:statusline .= ' %6.(#%n%)  '
-  endif
-  let &l:statusline .= '%'.c1.'* %t'
-  let &l:statusline .= ' %{exists("*fugitive#statusline")?fugitive#statusline()[4:-2]:""}'
-  let &l:statusline .= '%m%='
-  let &l:statusline .= '%{strlen(&fenc)?&enc:&fenc}'
-  let &l:statusline .= ' %{strlen(&ft)?&ft:"n/a"} '
-  if simple == 0
-    let &l:statusline .= '%'.c2.'*'
-    let &l:statusline .= ' %3.l:%-3.c '
-  endif
-endfunction
 
 " Show highlight group of character under cursor
 function! <SID>SynStack()
@@ -187,13 +155,6 @@ if has("autocmd")
 
     " Set the filetype for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
-  augroup END
-
-  augroup StatusLine
-    autocmd!
-
-    autocmd WinEnter,BufEnter * call <SID>StatusLine(1)
-    autocmd WinLeave,BufLeave * call <SID>StatusLine(0)
   augroup END
 endif
 
