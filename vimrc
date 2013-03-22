@@ -29,7 +29,7 @@ set helpheight=1000             " Maximize help window vertically
 set fillchars=vert:\            " Use space for vertical split fill char
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  set listchars=tab:▸\ ,eol:¬,trail:·,extends:▷,precedes:◁,nbsp:+
+  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u00b7,extends:\u25b7,precedes:\u25c1,nbsp:+"
 endif
 if has("linebreak")             " Wrap lines at word boundries
   set linebreak
