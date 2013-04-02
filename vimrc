@@ -183,6 +183,7 @@ nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark"
 
 " Make current file and show results in quickfix window
 nnoremap <Leader>m :w<CR>:!clear<CR>:silent make %<CR>:cc<CR>
+nnoremap <Leader>d :Dispatch<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
