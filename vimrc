@@ -11,7 +11,7 @@ endif
 if has("autocmd")
   filetype plugin indent on     " File-type detection, plug-ins, indent scripts
 endif
-if has("syntax")
+if has("syntax") && !exists("g:syntax_on")
   syntax enable                 " Enable syntax highlighting
 endif
 
@@ -29,7 +29,7 @@ set helpheight=1000             " Maximize help window vertically
 set fillchars=vert:\            " Use space for vertical split fill char
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u00b7,extends:\u25b7,precedes:\u25c1,nbsp:+"
+  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
 endif
 if has("linebreak")             " Wrap lines at word boundries
   set linebreak
@@ -41,6 +41,8 @@ set wildmenu                    " Command line completion
 set cmdheight=2                 " Reserve two lines for command area
 
 "" Whitespace
+set autoindent
+set smarttab
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
