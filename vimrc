@@ -132,12 +132,12 @@ endif
 " --------------------------------------------------------------------------------
 
 if has("autocmd")
-  augroup FileTypes
+  augroup FileTypeOptions
     autocmd!
 
     " For all text files set 'textwidth' to 78 characters.
     autocmd FileType text setlocal textwidth=78
-    autocmd FileType markdown setlocal textwidth=78
+    autocmd FileType markdown setlocal textwidth=78 | silent! compiler pandoc
 
     " Always use spelling for particular file types
     autocmd FileType gitcommit setlocal spell
@@ -183,8 +183,8 @@ nnoremap <Leader>el :FollowSymlink<CR>
 " Toggle light/dark background
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
-" Make current file and show results in quickfix window
-nnoremap <Leader>m :w<CR>:!clear<CR>:silent make %<CR>:cc<CR>
+" Make
+nnoremap <Leader>m :w<CR>:silent make<CR>:cc<CR>
 nnoremap <Leader>d :Dispatch<CR>
 
 " Write buffer and source current file
