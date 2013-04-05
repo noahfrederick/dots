@@ -27,13 +27,16 @@ set scrolloff=1                 " Keep a line above/below cursor visible
 set sidescrolloff=5             " Keep 5 columns left/right of cursor visible
 set helpheight=1000             " Maximize help window vertically
 set fillchars=vert:\            " Use space for vertical split fill char
-set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
-if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
-endif
 if has("linebreak")             " Wrap lines at word boundries
   set linebreak
   set showbreak=...
+endif
+set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
+if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
+  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
+  if has("linebreak")
+    let &showbreak = "\u21aa"
+  endif
 endif
 
 "" Command line
@@ -157,6 +160,14 @@ if has("autocmd")
 
     " Set the filetype for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
+  augroup END
+
+  highlight! link TrailingWhitespace Error
+  augroup TrailingWhiteSpace
+    autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
+    autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
+    autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
+    autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
   augroup END
 endif
 
