@@ -20,6 +20,9 @@ function o () {
 	open ${@:-'.'}
 }
 
+# Never leave empty window when setting up tmux session
+alias teamocil='teamocil --here'
+
 # Git abbreviations
 function g () {
 	git ${@:-status --short}
