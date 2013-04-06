@@ -76,3 +76,6 @@
 [submodule "vim/bundle/dispatch"]
 	path = vim/bundle/dispatch
 	url = git://github.com/tpope/vim-dispatch.git
+[submodule "vim/bundle/sleuth"]
+	path = vim/bundle/sleuth
+	url = git://github.com/tpope/vim-sleuth.git

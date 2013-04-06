@@ -51,7 +51,6 @@ set cmdheight=2                 " Reserve two lines for command area
 
 "" Whitespace
 set autoindent
-set smarttab
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
