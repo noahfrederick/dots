@@ -39,6 +39,12 @@ if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   endif
 endif
 
+if has("unnamedplus")
+  set clipboard=unnamedplus
+else
+  set clipboard=unnamed
+endif
+
 "" Command line
 set wildmenu                    " Command line completion
 set cmdheight=2                 " Reserve two lines for command area
