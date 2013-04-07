@@ -28,7 +28,7 @@ set scrolloff=1                 " Keep a line above/below cursor visible
 set sidescrolloff=5             " Keep 5 columns left/right of cursor visible
 set helpheight=1000             " Maximize help window vertically
 set fillchars=vert:\            " Use space for vertical split fill char
-if has("linebreak")             " Wrap lines at word boundries
+if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
   set showbreak=...
 endif
@@ -121,7 +121,7 @@ function! <SID>FollowSymlink()
   let fname = resolve(expand("%:p"))
   " Rename buffer with new path
   exec "file ".fname
-  " Read file again to trigger any plugins that are context-sensitive
+  " Read file again to trigger any plug-ins that are context-sensitive
   edit
 endfunction
 
@@ -164,7 +164,7 @@ if has("autocmd")
     autocmd FileType php setlocal makeprg=php\ -l\ %
           \ errorformat=%m\ in\ %f\ on\ line\ %l
 
-    " Set the filetype for common Ruby files not ending in .rb
+    " Set the file type for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
   augroup END
 
