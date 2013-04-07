@@ -16,6 +16,7 @@ if has("syntax") && !exists("g:syntax_on")
 endif
 
 set encoding=utf-8              " Use UTF-8 as default file encoding
+set spelllang=en_us             " Language and region to use for spellchecking
 set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
 set pastetoggle=<F2>            " Toggle paste mode (disables auto-indent etc.)
