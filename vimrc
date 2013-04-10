@@ -55,6 +55,7 @@ set autoindent
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
+set shiftround                  " Round indent to multiple of 'shiftwidth'
 
 "" Swaps and backups
 if !strlen($SUDO_USER) && has("unix")
