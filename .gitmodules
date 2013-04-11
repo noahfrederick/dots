@@ -85,3 +85,6 @@
 [submodule "vim/bundle/ragtag"]
 	path = vim/bundle/ragtag
 	url = git://github.com/tpope/vim-ragtag.git
+[submodule "vim/bundle/delimitMate"]
+	path = vim/bundle/delimitMate
+	url = git://github.com/Raimondi/delimitMate.git

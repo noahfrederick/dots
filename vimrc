@@ -165,6 +165,12 @@ if has("autocmd")
     autocmd FileType php setlocal makeprg=php\ -l\ %
           \ errorformat=%m\ in\ %f\ on\ line\ %l
 
+    " Append semicolon to end of line in insert mode
+    autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ;; <Esc>A;
+
+    " Automatically complete closing tags
+    autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
+
     " Set the file type for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
   augroup END
@@ -202,8 +208,8 @@ nnoremap <Leader>el :FollowSymlink<CR>
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Make
-nnoremap <Leader>m :w<CR>:silent make<CR>:cc<CR>
-nnoremap <Leader>d :Dispatch<CR>
+nnoremap <Leader>mm :w<CR>:silent make<CR>:cc<CR>
+nnoremap <Leader>md :Dispatch<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
@@ -235,6 +241,10 @@ vnoremap <Leader>a: :Tabularize /:\zs<CR>
 nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 
+" Shortcuts for delimitMate
+nnoremap <Leader>dd :DelimitMateSwitch<CR>
+nnoremap <Leader>dr :DelimitMateReload<CR>
+
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
 nnoremap ]oo :set colorcolumn=0<CR>
@@ -257,6 +267,11 @@ let g:xptemplate_key = "<Tab>"
 
 " Reverse Command-T match list so best result appears at bottom
 let g:CommandTMatchWindowReverse = 1
+
+" delimitMate settings
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_balance_matchpairs = 1
 
 " }}}
 " LOCAL VIMRC                                                                  {{{
