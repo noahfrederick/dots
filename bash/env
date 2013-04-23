@@ -8,6 +8,14 @@ if hash brew &>/dev/null && [ -d $(brew --prefix josegonzalez/php/php54)/bin ]; 
 fi
 
 #
+# DIRECTORIES
+#
+export DOCS="$HOME/Documents"
+export PROJECTS="$HOME/projects"
+export WEBSITES="$HOME/Sites"
+export BLOG="$WEBSITES/noahfrederick.com/jekyll"
+
+#
 # EDITOR
 #
 hash vim &>/dev/null && export EDITOR=vim
