@@ -11,6 +11,7 @@ fi
 # DIRECTORIES
 #
 export DOCS="$HOME/Documents"
+export NOTES="$DOCS/logbook"
 export PROJECTS="$HOME/projects"
 export WEBSITES="$HOME/Sites"
 export BLOG="$WEBSITES/noahfrederick.com/jekyll"
