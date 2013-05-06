@@ -49,4 +49,6 @@ color.overdue=color9
 color.tagged=
 color.active=color0 on color2
 color.alternate=on color0
+color.blocking=color7
+color.blocked=color8
 
