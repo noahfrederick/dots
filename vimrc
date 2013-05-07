@@ -278,7 +278,7 @@ nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
 
 nnoremap <Leader><CR> *<C-o>
-noremap <BS> %
+map <BS> %
 
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
