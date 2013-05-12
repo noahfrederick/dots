@@ -206,8 +206,8 @@ nnoremap Y y$
 
 noremap <Down> <C-w>+
 noremap <Up> <C-w>-
-noremap <Left> <C-w>>
-noremap <Right> <C-w><
+noremap <Left> <C-w><
+noremap <Right> <C-w>>
 
 " Turn off highlighting and clear any message already displayed
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
