@@ -89,6 +89,7 @@ function! skeleton#Load(type, filename)
   call skeleton#Replace("DATE", strftime("%a, %d %b %Y"))
   call skeleton#Replace("YEAR", strftime("%Y"))
 
+  normal! zn
   $ delete
   if line('$') > &lines
     1
