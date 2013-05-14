@@ -129,14 +129,31 @@ if !exists(":FollowSymlink")
   command FollowSymlink call <SID>FollowSymlink()
 endif
 
-function! <SID>NewPost(args)
+" Create a new Jekyll post in _drafts/
+function! <SID>PostNew(args)
   let g:template_title = a:args
-  let file = "$BLOG/_posts/" . strftime("%Y-%m-%d") . "-" . tolower(substitute(a:args, " ", "-", "g")) . ".md"
+  let file = "$BLOG/_drafts/" . tolower(substitute(a:args, "\\W\\+", "-", "g")) . ".md"
   exec "e!" . file
+  set filetype=liquid
 endfunction
 
-if !exists(":NewPost")
-  command -nargs=1 NewPost call <SID>NewPost("<args>")
+" Move the current draft into _posts/ and prepend date to filename
+function! <SID>PostPublish()
+  if expand("%:p:h") !~# '/_drafts$'
+    echoerr "This does not appear to be a draft blog post"
+    return
+  endif
+  write
+  " Note: relies on eunuch-:Move command
+  exec "Move $BLOG/_posts/" . strftime("%Y-%m-%d") . "-" . expand("%:p:t")
+endfunction
+
+if !exists(":PostNew")
+  command -nargs=1 PostNew call <SID>PostNew("<args>")
+endif
+
+if !exists(":PostPublish")
+  command PostPublish call <SID>PostPublish()
 endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -299,8 +316,7 @@ nnoremap <Space>N :e $DOCS/vim.md<CR>
 nnoremap <Space>R :e Rakefile<CR>
 nnoremap <Space>V :e $MYVIMRC<CR>
 nnoremap <Space>bb :CtrlP $BLOG<CR>
-nnoremap <Space>bg :!cd $BLOG && rake build && cd -<CR>
-nnoremap <Space>bn :NewPost<Space>
+nnoremap <Space>bd :CtrlP $BLOG/_drafts<CR>
 nnoremap <Space>bp :CtrlP $BLOG/_posts<CR>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlP $DOCS<CR>
