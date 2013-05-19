@@ -35,7 +35,7 @@ if has("linebreak")             " Wrap lines at word boundaries
 endif
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &fillchars = "vert:\u2502" | hi! VertSplit ctermbg=NONE
+  let &fillchars = "vert:\u2502" | hi! VertSplit ctermbg=NONE guibg=NONE
   let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
   if has("linebreak")
     let &showbreak = "\u21aa"
