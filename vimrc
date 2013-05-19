@@ -185,6 +185,7 @@ if has("autocmd")
     " Append semicolon or comma to end of line in insert mode
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ;; <Esc>A;
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ,, <Esc>A,
+    autocmd FileType php,ruby inoremap <buffer> >> <Esc>A<Space>=><Space>
 
     " Automatically complete closing tags
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
@@ -285,6 +286,8 @@ nnoremap <Leader>a: :Tabularize /:\zs<CR>
 vnoremap <Leader>a: :Tabularize /:\zs<CR>
 nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
+nnoremap <Leader>ar :Tabularize rocket<CR>
+vnoremap <Leader>ar :Tabularize rocket<CR>
 
 " Shortcuts for delimitMate
 nnoremap <Leader>dd :DelimitMateSwitch<CR>
