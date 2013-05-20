@@ -330,8 +330,6 @@ nnoremap <Space>kv :CtrlP application/classes/View<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
 nnoremap <Space>p :CtrlP $PROJECTS<CR>
 nnoremap <Space>v :CtrlP $HOME/.vim<CR>
-nnoremap <Space>wn :CtrlP $WEBSITES/noahfrederick.com<CR>
-nnoremap <Space>ww :CtrlP $WEBSITES<CR>
 
 " }}}
 " PLUG-INS                                                                     {{{
