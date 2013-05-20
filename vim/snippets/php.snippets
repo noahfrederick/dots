@@ -1,0 +1,64 @@
+# php.snippets - Snippets for php file type
+
+snippet "cl(ass)?" "class" !br
+class ${1:`!v PathToClassName(expand("%"))`}${2: extends ${3:`!v PathToParentClassName(expand("%"))`}} {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet "f(un)?" "function" !br
+${1:public }function ${2:fun_name}(${3})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet if "if (condition) { }" !b
+if (${1:/* condition */})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet else "else { }" !b
+else
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet for "for" !b
+for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet foreach "foreach" !b
+foreach ($${1:variable} as $${2:key} => $${3:value})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet while "while (condition) { }" !b
+while (${1:/* condition */})
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet do "do" !b
+do
+{
+	${VISUAL}$0
+}
+while (${1:/* condition */});
+endsnippet
+
+snippet doc "doc comment" !b
+/**
+ * $1
+ */
+endsnippet
+

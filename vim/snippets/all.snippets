@@ -1,0 +1,18 @@
+# all.snippets - Global snippets
+
+snippet author "Author's name" !
+`!v system('git config --get user.name')[0:-2]`
+endsnippet
+
+snippet email "Author's email" !
+`!v system('git config --get user.email')[0:-2]`
+endsnippet
+
+snippet date "Current date" !
+`!v strftime('%B %e, %Y')`
+endsnippet
+
+snippet "copy(right)?" "Copyright notice" !r
+© `!v strftime('%Y')` `!v system('git config --get user.name')[0:-2]`
+endsnippet
+

@@ -340,6 +340,13 @@ nnoremap <Space>v :CtrlP $HOME/.vim<CR>
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
 
+" UltiSnip settings
+let g:UltiSnipsExpandTrigger = "<Tab>"
+let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+let g:UltiSnipsSnippetDir = "~/.vim/snippets"
+let g:UltiSnipsSnippetDirectories = ["snippets"]
+
 " Reverse Command-T match list so best result appears at bottom
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 12
