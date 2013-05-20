@@ -52,10 +52,7 @@ function! skeleton#Load(type, filename)
   if ! skeleton#ReadTemplate(substitute(fnamemodify(a:filename, ':h:t'), '\W', '_', 'g').".".template)
     " Look for generic template with extension
     if ! skeleton#ReadTemplate("skel.".template)
-      " Look for template without extension
-      if ! skeleton#ReadTemplate(template)
-        return
-      endif
+      return
     endif
   endif
 
@@ -100,17 +97,27 @@ endfunction
 
 
 function! skeleton#ReadTemplate(filename)
-  if filereadable(expand("~/.vim/templates/".a:filename))
-    let template = "~/.vim/templates/".a:filename
-  else
+  let b:template_file = "~/.vim/templates/".a:filename
+  if !filereadable(expand(b:template_file))
     return 0
   endif
   let cpopts = &cpoptions
   set cpoptions-=a
-  silent exe "0r ".template
+  silent execute "0r ".b:template_file
   let &cpoptions = cpopts
   return 1
 endfunction
+
+
+function! skeleton#EditCurrentTemplate()
+  if !exists("b:template_file")
+    echoerr "No template is associated with this buffer"
+    return
+  endif
+  execute "e ".b:template_file
+endfunction
+
+command! SkelEdit call skeleton#EditCurrentTemplate()
 
 
 function! skeleton#Replace(placeholder, replacement)
