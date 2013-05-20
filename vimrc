@@ -178,10 +178,6 @@ if has("autocmd")
     " Always use spelling for particular file types
     autocmd FileType gitcommit setlocal spell
 
-    " Use :make to check PHP syntax
-    autocmd FileType php setlocal makeprg=php\ -l\ %
-          \ errorformat=%m\ in\ %f\ on\ line\ %l
-
     " Append semicolon or comma to end of line in insert mode
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ;; <Esc>A;
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ,, <Esc>A,
@@ -340,9 +336,6 @@ nnoremap <Space>ww :CtrlP $WEBSITES<CR>
 " }}}
 " PLUG-INS                                                                     {{{
 " --------------------------------------------------------------------------------
-
-" Settings for bundled PHP plug-in
-let php_noShortTags = 1         " Always use <?php
 
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
