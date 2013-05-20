@@ -48,9 +48,11 @@ else
   set clipboard=unnamed
 endif
 
-"" Command line
+"" Command line and completion
 set wildmenu                    " Command line completion
 set cmdheight=2                 " Reserve two lines for command area
+set completeopt+=longest        " Only insert longest common string
+set pumheight=8                 " Limit height of popup menu
 
 "" Whitespace
 set autoindent
@@ -349,6 +351,11 @@ let g:ctrlp_extensions = ['tag']
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_balance_matchpairs = 1
+
+" Supertab settings
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
 
 " }}}
 " LOCAL VIMRC                                                                  {{{
