@@ -12,12 +12,12 @@ let g:loaded_skeleton = 1
 
 augroup Skeleton
   autocmd!
-  autocmd BufNewFile * call skeleton#LoadByFilename(expand("<amatch>"))
-  autocmd FileType   * call skeleton#LoadByFiletype(expand("<amatch>"), expand("<afile>"))
+  autocmd BufNewFile * call s:LoadByFilename(expand("<amatch>"))
+  autocmd FileType   * call s:LoadByFiletype(expand("<amatch>"), expand("<afile>"))
 augroup END
 
 
-function! skeleton#LoadByFilename(filename)
+function! s:LoadByFilename(filename)
   let ext = fnamemodify(a:filename, ':e')
   if ext == ''
     let ext = (fnamemodify(a:filename, ':t'))
@@ -25,11 +25,11 @@ function! skeleton#LoadByFilename(filename)
   if ext =~ '['
     return
   endif
-  call skeleton#Load(ext, a:filename)
+  call s:Load(ext, a:filename)
 endfunction
 
 
-function! skeleton#LoadByFiletype(type, filename)
+function! s:LoadByFiletype(type, filename)
   if a:type == "python"
     let ext = "py"
   elseif a:type == "ruby"
@@ -37,11 +37,11 @@ function! skeleton#LoadByFiletype(type, filename)
   else
     let ext = a:type
   endif
-  call skeleton#Load(ext, a:filename)
+  call s:Load(ext, a:filename)
 endfunction
 
 
-function! skeleton#Load(type, filename)
+function! s:Load(type, filename)
   " Abort if buffer is non-empty or file already exists
   if ! (line("$") == 1 && getline("$") == "") || filereadable(a:filename)
     return
@@ -49,9 +49,9 @@ function! skeleton#Load(type, filename)
 
   let template = a:type
   " Look for template named after containing directory with extension
-  if ! skeleton#ReadTemplate(substitute(fnamemodify(a:filename, ':h:t'), '\W', '_', 'g').".".template)
+  if ! s:ReadTemplate(substitute(fnamemodify(a:filename, ':h:t'), '\W', '_', 'g').".".template)
     " Look for generic template with extension
-    if ! skeleton#ReadTemplate("skel.".template)
+    if ! s:ReadTemplate("skel.".template)
       return
     endif
   endif
@@ -78,13 +78,13 @@ function! skeleton#Load(type, filename)
     endif
   endif
 
-  call skeleton#Replace("EMAIL", g:template_email)
-  call skeleton#Replace("AUTHOR", g:template_author)
-  call skeleton#Replace("FILENAME", filename)
-  call skeleton#Replace("BASENAME", basename)
-  call skeleton#Replace("TITLE", title)
-  call skeleton#Replace("DATE", strftime("%a, %d %b %Y"))
-  call skeleton#Replace("YEAR", strftime("%Y"))
+  call s:Replace("EMAIL", g:template_email)
+  call s:Replace("AUTHOR", g:template_author)
+  call s:Replace("FILENAME", filename)
+  call s:Replace("BASENAME", basename)
+  call s:Replace("TITLE", title)
+  call s:Replace("DATE", strftime("%a, %d %b %Y"))
+  call s:Replace("YEAR", strftime("%Y"))
 
   normal! zn
   $ delete
@@ -92,11 +92,11 @@ function! skeleton#Load(type, filename)
     1
   endif
 
-  call skeleton#Replace("CURSOR", "")
+  call s:Replace("CURSOR", "")
 endfunction
 
 
-function! skeleton#ReadTemplate(filename)
+function! s:ReadTemplate(filename)
   let b:template_file = "~/.vim/templates/".a:filename
   if !filereadable(expand(b:template_file))
     return 0
@@ -109,7 +109,7 @@ function! skeleton#ReadTemplate(filename)
 endfunction
 
 
-function! skeleton#EditCurrentTemplate()
+function! s:EditCurrentTemplate()
   if !exists("b:template_file")
     echoerr "No template is associated with this buffer"
     return
@@ -117,10 +117,10 @@ function! skeleton#EditCurrentTemplate()
   execute "e ".b:template_file
 endfunction
 
-command! SkelEdit call skeleton#EditCurrentTemplate()
+command! SkelEdit call s:EditCurrentTemplate()
 
 
-function! skeleton#Replace(placeholder, replacement)
+function! s:Replace(placeholder, replacement)
   silent! execute '%s/@'.a:placeholder.'@/'.a:replacement.'/g'
 endfunction
 
