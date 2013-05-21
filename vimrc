@@ -226,7 +226,7 @@ noremap <Left> <C-w><
 noremap <Right> <C-w>>
 
 " Turn off highlighting and clear any message already displayed
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
 cnoremap %% <C-r>=expand("%:h")."/"<CR>
