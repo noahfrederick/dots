@@ -1,6 +1,30 @@
 # php.snippets - Snippets for php file type
 
+snippet q "Variable assignment" !b
+$$1 = $2;
+endsnippet
+
+snippet d "Define constant" !b
+define('${1:NAME}', ${2:value});
+endsnippet
+
+snippet "ar(rray)?" "$var = array();" br
+$${1:arr} = array($2);
+endsnippet
+
+snippet "ar(rray)?" "array()" r
+array($1)
+endsnippet
+
 snippet "cl(ass)?" "class" !br
+/**
+ * ${4:Description}.
+ *
+ * @package    ${5:`!v snippet_helper#ProjectTitle()`}
+ * @category   ${6:Models}
+ * @author     `!v snippet_helper#Author()`
+ * @copyright  © `!v strftime('%Y')` `!v snippet_helper#Author()`
+ */
 class ${1:`!v PathToClassName(expand("%"))`}${2: extends ${3:`!v PathToParentClassName(expand("%"))`}} {
 	${VISUAL}$0
 }

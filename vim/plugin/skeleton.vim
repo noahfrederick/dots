@@ -58,31 +58,13 @@ function! s:Load(type, filename)
 
   let filename = fnamemodify(a:filename, ':t')
   let basename = fnamemodify(a:filename, ':t:r')
-  let name     = substitute(basename, '\C\(\l\)\(\u\|\d\)', '\1_\l\2', 'g')
-  let name     = substitute(name, '^.', '\u&', 'g')
-  if !exists("g:template_title")
-    let title  = substitute(name, '_\(.\)', ' \u\1', 'g')
-  else
-    let title  = g:template_title
-    unlet g:template_title
-  endif
-  let name     = substitute(name, '_\(.\)', ' \1', 'g')
 
-  if !exists("g:template_email")
-    let g:template_email = system('git config --get user.email')[0:-2]
-  endif
-  if !exists("g:template_author")
-    let g:template_author = system('git config --get user.name')[0:-2]
-    if g:template_author == ""
-      let g:template_author = exists("$USER") ? $USER : ""
-    endif
-  endif
-
-  call s:Replace("EMAIL", g:template_email)
-  call s:Replace("AUTHOR", g:template_author)
+  call s:Replace("EMAIL", snippet_helper#Email())
+  call s:Replace("AUTHOR", snippet_helper#Author())
   call s:Replace("FILENAME", filename)
   call s:Replace("BASENAME", basename)
-  call s:Replace("TITLE", title)
+  call s:Replace("TITLE", snippet_helper#Title(basename))
+  call s:Replace("PROJECT_TITLE", snippet_helper#ProjectTitle())
   call s:Replace("DATE", strftime("%a, %d %b %Y"))
   call s:Replace("YEAR", strftime("%Y"))
 
