@@ -131,6 +131,14 @@ if !exists(":FollowSymlink")
   command FollowSymlink call <SID>FollowSymlink()
 endif
 
+function! <SID>StripTrailingWhitespace()
+  let l:saved_search = @/
+  let l:saved_pos = getpos('.')
+  %s/\s\+$//e
+  call setpos('.', l:saved_pos)
+  let @/ = l:saved_search
+endfunction
+
 " Create a new Jekyll post in _drafts/
 function! <SID>PostNew(args)
   let g:template_title = a:args
@@ -248,11 +256,11 @@ nnoremap <Leader>md :Dispatch<CR>
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 
 " Source selection or current line
-vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection."<CR>
-nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line."<CR>
+vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
+nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
-" Clean trailing whitespace
-nnoremap <Leader>W mz:%s/\s\+$//<CR>:let @/=""<CR>`z
+" Remove trailing whitespace
+nnoremap <Leader>W :call <SID>StripTrailingWhitespace()<CR>:echomsg "Removed trailing whitespace"<CR>
 
 " Re-indent entire buffer
 nnoremap <Leader>= mzgg=G`z
