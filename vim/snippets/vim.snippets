@@ -16,5 +16,6 @@ snippet "(g?)sub" "substitute()" r
 substitute(${1:target}, "${2:pattern}", "${3:`!p snip.rv = match.group(1)`}")
 endsnippet
 
-# TODO
-#   command!
+snippet cmd "command" b
+command${1:!} ${2:-nargs=${3:01*?+} }${4:-complete=${5:augroup|buffer|...} }${6:-range${7:=%N} }${8:-count=${9:N} }${10:-bang }${11:-bar }${12:-register }${13:-buffer }${14:CommandName} ${15:...}
+endsnippet
