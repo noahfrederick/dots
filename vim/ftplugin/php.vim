@@ -15,6 +15,14 @@ let b:php_source_prefixes = [
   \ 'lib/',
   \ ]
 
+let b:php_source_segments = [
+  \ ['/tests/', 'Tests'],
+  \ ['/Controller/', 'Controllers'],
+  \ ['/Model/', 'Models'],
+  \ ['/Task/', 'Tasks'],
+  \ ['/View/', 'Views'],
+  \ ]
+
 " Infer the PSR-0 class name from file's path.
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
@@ -58,6 +66,16 @@ function! GetTestCaseDescription()
   let className = TestClassNameToClassName(className)
 
   return 'Test case for class '.className
+endfunction
+
+" Derive class category from file's path
+function! PathToClassCategory(path)
+  for [segment, category] in b:php_source_segments
+    if stridx(a:path, l:segment) != -1
+      return l:category
+    endif
+  endfor
+  return "Helpers"
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et

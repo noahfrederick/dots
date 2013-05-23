@@ -1,0 +1,201 @@
+# php_phpunit.snippets - Snippets for php file type (PHPUnit)
+
+#
+# Test Method
+#
+snippet test "PHPUnit test method" b
+/**
+${1: * @expectedException ${2:Exception}}
+${2: * @expectedExceptionMessage "${3:Message}"}
+${3: * @expectedExceptionCode ${4:0}}
+ */
+public function test${10:Name}($11)
+{
+	$0
+}
+endsnippet
+
+#
+# Mocks and Stubs
+#
+snippet mock "PHPUnit getMock()"
+$this->getMock('${2:Class}', array('${3:method}'));
+endsnippet
+
+snippet mock "PHPUnit getMock()" !b
+$${1:mock} = $this->getMock('${2:Class}', array('${3:method}'));
+endsnippet
+
+snippet expects "PHPUnit expects" b
+$${1:mockObject}->expects(${2:<times>})
+	->method('${3:methodName}')
+	->with(${4:<parameterConstraints>})
+	->will($this->returnValue(${5:<returnValue>}));
+endsnippet
+
+snippet once "PHPUnit $this->once()"
+$this->once()
+endsnippet
+
+snippet any "PHPUnit $this->any()"
+$this->any()
+endsnippet
+
+#
+# Assertions
+#
+snippet assert "PHPUnit assertArrayHasKey()" b
+$this->assertArray${10:Not}HasKey('${2:expected}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertClassHasAttribute()" b
+$this->assertClass${10:Not}HasAttribute('${2:expected}', '${1:Class}');
+endsnippet
+
+snippet assert "PHPUnit assertClassHasStaticAttribute()" b
+$this->assertClass${10:Not}HasStaticAttribute('${2:expected}', '${1:Class}');
+endsnippet
+
+snippet assert "PHPUnit assertContains()" b
+$this->assert${10:Not}Contains(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertContainsOnly()" b
+$this->assert${10:Not}ContainsOnly(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertCount()" b
+$this->assert${10:Not}Count(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertEmpty()" b
+$this->assert${10:Not}Empty($${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertEqualXMLStructure()" b
+$this->assert${10:Not}EqualXMLStructure($${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertEquals()" b
+$this->assert${10:Not}Equals(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertFalse()" b
+$this->assertFalse($${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertFileEquals()" b
+$this->assertFile${10:Not}Equals('${2:expected}', '${1:actual}');
+endsnippet
+
+snippet assert "PHPUnit assertFileExists()" b
+$this->assertFile${10:Not}Exists('${1:path}');
+endsnippet
+
+snippet assert "PHPUnit assertGreaterThan()" b
+$this->assertGreaterThan(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertGreaterThanOrEqual()" b
+$this->assertGreaterThanOrEqual(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertInstanceOf()" b
+$this->assert${10:Not}InstanceOf('${2:ExpectedClass}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertInternalType()" b
+$this->assert${10:Not}InternalType('${2:expected}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertLessThan()" b
+$this->assertLessThan(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertLessThanOrEqual()" b
+$this->assertLessThanOrEqual(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertNull()" b
+$this->assert${10:Not}Null($${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertObjectHasAttribute()" b
+$this->assertObject${10:Not}HasAttribute('${2:expected}', $${1:object});
+endsnippet
+
+snippet assert "PHPUnit assertRegExp()" b
+$this->assert${10:Not}RegExp('${2:/regex/}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertStringMatchesFormat()" b
+$this->assertString${10:Not}MatchesFormat('${2:expected}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertStringMatchesFormatFile()" b
+$this->assertString${10:Not}MatchesFormatFile('${2:path}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertSame()" b
+$this->assert${10:Not}Same(${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertSelectCount()" b
+$this->assertSelectCount('${2:selector}', ${3:$count}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertSelectEquals()" b
+$this->assertSelectEquals('${2:selector}', '${3:content}', ${4:$count}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertSelectRegExp()" b
+$this->assertSelectRegExp('${2:selector}', '${3:pattern}', ${4:$count}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertStringEndsWith()" b
+$this->assertStringEnds${10:Not}With('${2:expected}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertStringEqualsFile()" b
+$this->assertString${10:Not}EqualsFile('${2:path}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertStringStartsWith()" b
+$this->assertStringStarts${10:Not}With('${2:expected}', $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertTag()" b
+$this->assert${10:Not}Tag($${2:expected}, $${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertThat()" b
+$this->assertThat($${1:actual}, $this->${2:constraint()});
+endsnippet
+
+snippet assert "PHPUnit assertTrue()" b
+$this->assertTrue($${1:actual});
+endsnippet
+
+snippet assert "PHPUnit assertXmlFileEqualsXmlFile()" b
+$this->assertXmlFile${10:Not}EqualsXmlFile('${2:expected}', '${1:actual}');
+endsnippet
+
+snippet assert "PHPUnit assertXmlStringEqualsXmlFile()" b
+$this->assertXmlString${10:Not}EqualsXmlFile('${2:expected}', '${1:actual}');
+endsnippet
+
+snippet assert "PHPUnit assertXmlStringEqualsXmlString()" b
+$this->assertXmlString${10:Not}EqualsXmlString('${2:expected}', '${1:actual}');
+endsnippet
+
+#
+# Marks
+#
+snippet mark "PHPUnit markTestIncomplete()" b
+$this->markTestIncomplete($1);
+endsnippet
+
+snippet mark "PHPUnit markTestSkipped()" b
+$this->markTestSkipped($1);
+endsnippet
+

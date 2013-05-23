@@ -1,0 +1,20 @@
+# vim.snippets - Snippets for vim file type
+
+snippet gvar "Global / configuration variable" b
+if !exists("g:${1:var}")
+	let g:$1 = $2
+endif
+endsnippet
+
+snippet "f(un)?" "function" !br
+function! ${1:function_name}(${2})
+	${VISUAL}$0
+endfunction
+endsnippet
+
+snippet "(g?)sub" "substitute()" r
+substitute(${1:target}, "${2:pattern}", "${3:`!p snip.rv = match.group(1)`}")
+endsnippet
+
+# TODO
+#   command!
