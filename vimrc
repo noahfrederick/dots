@@ -372,6 +372,18 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
 
+" :help supertab-completionchaining
+if has("autocmd")
+  augroup SuperTabRC
+    autocmd!
+    autocmd FileType *
+      \ if exists("*SuperTabChain") && &omnifunc != '' |
+      \   call SuperTabChain(&omnifunc, "<c-p>") |
+      \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+      \ endif
+  augroup END
+endif
+
 " }}}
 " LOCAL VIMRC                                                                  {{{
 " --------------------------------------------------------------------------------
