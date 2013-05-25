@@ -214,6 +214,7 @@ if has("autocmd")
 
   highlight! link TrailingWhitespace Error
   augroup TrailingWhiteSpace
+    autocmd!
     autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
