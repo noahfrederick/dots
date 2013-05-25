@@ -94,3 +94,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/speeddating"]
+	path = vim/bundle/speeddating
+	url = git://github.com/tpope/vim-speeddating.git
