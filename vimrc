@@ -199,6 +199,10 @@ if has("autocmd")
     " Do not wrap lines in the QuickFix window
     autocmd FileType qf setlocal nowrap
 
+    " Set format options for Apache config files
+    autocmd FileType apache setlocal comments=:# commentstring=#\ %s
+      \ formatoptions-=t formatoptions+=croql
+
     " Set the file type for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
   augroup END
