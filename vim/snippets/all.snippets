@@ -1,18 +1,22 @@
 # all.snippets - Global snippets
 
-snippet author "Author's name" !
+snippet author "Author's name"
 `!v snippet_helper#Author()`
 endsnippet
 
-snippet email "Author's email" !
+snippet email "Author's email"
 `!v snippet_helper#Email()`
 endsnippet
 
-snippet date "Current date" !
+snippet date "Current date (%Y-%m-%d)"
+`!v strftime('%Y-%m-%d')`
+endsnippet
+
+snippet Date "Current date (%B %e, %Y)"
 `!v strftime('%B %e, %Y')`
 endsnippet
 
-snippet "copy(right)?" "Copyright notice" !r
+snippet "copy(right)?" "Copyright notice" r
 © `!v strftime('%Y')` `!v snippet_helper#Author()`
 endsnippet
 
