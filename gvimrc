@@ -8,7 +8,7 @@ set guifont=Panic\ Sans:h13
 set linespace=2
 
 " Hide toolbar and scrollbars by default
-" (see :help guioptions for explanation)
+" (see :help 'guioptions')
 set guioptions=gmt
 
 set visualbell
