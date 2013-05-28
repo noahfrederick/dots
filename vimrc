@@ -203,7 +203,7 @@ if has("autocmd")
       \ formatoptions-=t formatoptions+=croql
 
     " Set the file type for common Ruby files not ending in .rb
-    autocmd BufRead,BufNewFile {Gemfile,Rakefile} set filetype=ruby
+    autocmd BufRead,BufNewFile {Rakefile} set filetype=ruby
   augroup END
 
   set cursorline
