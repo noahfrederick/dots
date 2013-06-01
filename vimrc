@@ -322,12 +322,12 @@ nnoremap <Space>. :CtrlP .<CR>
 nnoremap <Space>~ :CtrlP $HOME<CR>
 nnoremap <Space>, :CtrlPTag<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
-nnoremap <Space>G :e $HOME/.gvimrc<CR>
+nnoremap <Space>G :e $HOME/.dots/gvimrc<CR>
 nnoremap <Space>L :e $HOME/.vimrc.local<CR>
 nnoremap <Space>M :e Makefile<CR>
 nnoremap <Space>N :e $DOCS/vim.md<CR>
 nnoremap <Space>R :e Rakefile<CR>
-nnoremap <Space>V :e $MYVIMRC<CR>
+nnoremap <Space>V :e $HOME/.dots/vimrc<CR>
 nnoremap <Space>bb :CtrlP $BLOG<CR>
 nnoremap <Space>bd :CtrlP $BLOG/_drafts<CR>
 nnoremap <Space>bp :CtrlP $BLOG/_posts<CR>
