@@ -349,6 +349,8 @@ nnoremap <Space>v :CtrlP $HOME/.vim<CR>
 " PLUG-INS                                                                     {{{
 " --------------------------------------------------------------------------------
 
+let g:netrw_banner = 0
+
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
 
