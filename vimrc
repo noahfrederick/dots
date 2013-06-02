@@ -139,10 +139,10 @@ function! <SID>StripTrailingWhitespace()
 endfunction
 
 " Create a new Jekyll post in _drafts/
-function! <SID>PostNew(args)
-  let g:template_title = a:args
-  let file = "$BLOG/_drafts/" . tolower(substitute(a:args, "\\W\\+", "-", "g")) . ".md"
-  exec "e!" . file
+function! <SID>PostNew(title, bang)
+  let g:template_title = a:title
+  let file = "$BLOG/_drafts/" . tolower(substitute(a:title, "\\W\\+", "-", "g")) . ".md"
+  exec "e" . a:bang . " " . fnameescape(file)
   set filetype=liquid
 endfunction
 
@@ -157,13 +157,8 @@ function! <SID>PostPublish()
   exec "Move $BLOG/_posts/" . strftime("%Y-%m-%d") . "-" . expand("%:p:t")
 endfunction
 
-if !exists(":PostNew")
-  command -nargs=1 PostNew call <SID>PostNew("<args>")
-endif
-
-if !exists(":PostPublish")
-  command PostPublish call <SID>PostPublish()
-endif
+command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
+command! -bar PostPublish call <SID>PostPublish()
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
