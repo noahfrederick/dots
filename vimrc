@@ -160,6 +160,8 @@ endfunction
 command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
 command! -bar PostPublish call <SID>PostPublish()
 
+command! -bang Today exec "e<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
+
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 if !exists(":DiffOrig")

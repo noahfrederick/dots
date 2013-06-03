@@ -37,9 +37,6 @@
 [submodule "vim/bundle/endwise"]
 	path = vim/bundle/endwise
 	url = git://github.com/tpope/vim-endwise.git
-[submodule "vim/bundle/logbook"]
-	path = vim/bundle/logbook
-	url = git@github.com:noahfrederick/vim-logbook.git
 [submodule "vim/bundle/git"]
 	path = vim/bundle/git
 	url = git://github.com/tpope/vim-git.git
