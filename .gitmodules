@@ -91,3 +91,6 @@
 [submodule "vim/bundle/speeddating"]
 	path = vim/bundle/speeddating
 	url = git://github.com/tpope/vim-speeddating.git
+[submodule "vim/bundle/sparkup"]
+	path = vim/bundle/sparkup
+	url = git://github.com/kogakure/vim-sparkup.git
