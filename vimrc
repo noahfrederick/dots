@@ -187,7 +187,7 @@ if has("autocmd")
     " Append semicolon or comma to end of line in insert mode
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ;; <Esc>A;
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ,, <Esc>A,
-    autocmd FileType php,ruby inoremap <buffer> >> <Esc>A<Space>=><Space>
+    autocmd FileType php,ruby inoremap <buffer> >> <Space>=><Space>
 
     " Automatically complete closing tags
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
