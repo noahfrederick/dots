@@ -1,11 +1,14 @@
 #
 # PATH
 #
-[ -d ~/bin ] && export PATH="~/bin:${PATH}"
+function pathadd () {
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		export PATH="$1${PATH:+":$PATH"}"
+	fi
+}
 
-if hash brew &>/dev/null && [ -d $(brew --prefix josegonzalez/php/php54)/bin ]; then
-	export PATH="$(brew --prefix josegonzalez/php/php54)/bin:${PATH}"
-fi
+hash brew &>/dev/null && pathadd "$(brew --prefix josegonzalez/php/php54)/bin"
+pathadd ~/bin
 
 #
 # DIRECTORIES
@@ -20,8 +23,6 @@ export BLOG="$WEBSITES/noahfrederick.com/jekyll"
 # EDITOR
 #
 hash vim &>/dev/null && export EDITOR=vim
-# Prefer MacVim's bundled vim, which has clipboard support
-hash mvim &>/dev/null && export EDITOR='mvim -v'
 
 #
 # TERM
