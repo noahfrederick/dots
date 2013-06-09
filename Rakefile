@@ -9,30 +9,42 @@ desc "Link dotfiles into user's home directory"
 task :link do
   replace_all = false
 
+  special_locations = {
+    "bin"  => File.join(ENV['HOME'], "bin"),
+    "fish" => File.join(ENV['HOME'], ".config", "fish")
+  }
+
   Dir['*'].each do |file|
     next if %w[Rakefile README.md].include? file
 
-    if File.exist?(File.join(ENV['HOME'], ".#{file}"))
-      if File.identical? file, File.join(ENV['HOME'], ".#{file}")
-        puts "Already linked ~/.#{file}"
+    # Some files should be linked to special destinations
+    dest = if special_locations.has_key?(file)
+             special_locations[file]
+           else
+             File.join(ENV['HOME'], ".#{file}")
+           end
+
+    if File.exist?(dest)
+      if File.identical? file, dest
+        puts "Already linked #{dest}"
       elsif replace_all
-        replace_file file
+        replace_file file, dest
       else
-        print "Overwrite ~/.#{file} [ynaq]? "
+        print "Overwrite #{dest} [ynaq]? "
         case $stdin.gets.chomp
         when 'y'
-          replace_file file
+          replace_file file, dest
         when 'a'
           replace_all = true
-          replace_file file
+          replace_file file, dest
         when 'q'
           exit
         else
-          puts "Skipping ~/.#{file}"
+          puts "Skipping #{dest}"
         end
       end
     else
-      link_file file
+      link_file file, dest
     end
   end
 end
@@ -42,12 +54,12 @@ task :submodule_update do
   system 'git submodule update --init'
 end
 
-def replace_file file
-  system %Q{rm -rf "$HOME/.#{file}"}
-  link_file file
+def replace_file file, dest
+  system %Q{rm -rf "#{dest}"}
+  link_file file, dest
 end
 
-def link_file file
-  puts "Linking ~/.#{file}"
-  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+def link_file file, dest
+  puts "Linking #{dest}"
+  system %Q{ln -s "$PWD/#{file}" "#{dest}"}
 end
