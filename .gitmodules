@@ -94,3 +94,6 @@
 [submodule "vim/bundle/sparkup"]
 	path = vim/bundle/sparkup
 	url = git://github.com/kogakure/vim-sparkup.git
+[submodule "vim/bundle/fish"]
+	path = vim/bundle/fish
+	url = git://github.com/dag/vim-fish.git

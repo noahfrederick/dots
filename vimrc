@@ -18,6 +18,10 @@ if &t_Co >= 16
   silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
 endif
 
+if &shell =~# "fish$"
+  set shell=sh                  " Ensure shell is POSIX compatible
+endif
+
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set spelllang=en_us             " Language and region to use for spellchecking
 set shortmess+=I                " Suppress intro message when starting Vim
@@ -198,6 +202,10 @@ if has("autocmd")
     " Set format options for Apache config files
     autocmd FileType apache setlocal comments=:# commentstring=#\ %s
       \ formatoptions-=t formatoptions+=croql
+
+    " Set options for fish scripts
+    autocmd FileType fish silent! compiler fish
+    autocmd FileType fish setlocal textwidth=78 foldmethod=expr
 
     " Set the file type for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Rakefile} set filetype=ruby
