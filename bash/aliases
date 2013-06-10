@@ -11,6 +11,7 @@ alias ll='ls -hl'
 alias la='ls -ahl'
 
 alias v="$EDITOR"
+alias vs="$EDITOR -S"
 alias c=clear
 alias r=rails
 alias t=task
