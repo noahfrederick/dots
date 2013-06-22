@@ -2,7 +2,13 @@
 
 snippet well "HTML <div class='well'>" !b
 <div class="well">
-	$0
+	${VISUAL}$0
+</div>
+endsnippet
+
+snippet alert "HTML <div class='alert'>" !b
+<div class="alert${1: alert-block}">
+	${VISUAL}$0
 </div>
 endsnippet
 
@@ -10,8 +16,652 @@ snippet btn "HTML <a class='btn'>"
 <a class="btn${1: btn-primary}" href="${2:#}">${3:$2}</a>
 endsnippet
 
+snippet submit "HTML <input type='submit'>" !
+<input class="btn${1: btn-primary}" type="submit" value="${2:Submit}" />
+endsnippet
+
+snippet table "HTML <table>" !b
+<table class="table${1: table-condensed}">
+	<thead>
+		<tr>
+			<th>$2</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>$0
+		</tr>
+	</tbody>
+</table>
+endsnippet
+
+#
+# Labels and badges
+#
+
+snippet label "Bootstrap <span class='label'>" !
+<span class="label${1: label-info}">${VISUAL}$0</span>
+endsnippet
+
+snippet badge "Bootstrap <span class='badge'>" !
+<span class="badge${1: badge-info}">${VISUAL}$0</span>
+endsnippet
+
+#
+# Forms
+#
+
+snippet input "Input with Label" !b
+<div class="control-group">
+	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
+	<div class="controls">
+		<input type="${3:text}" name="${4:$2}" value="$5"${6: id="${7:$2}"} />
+	</div>
+</div>
+endsnippet
+
+snippet checkbox "Checkbox input" !b
+<div class="control-group">
+	<div class="controls">
+		<label class="${3:checkbox}" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">
+			<input type="$3" name="${4:$2}" value="$5"${6: id="${7:$2}"} />
+			$1
+		</label>
+	</div>
+</div>
+endsnippet
+
+# Radio same as above
+
+snippet textarea "Textarea with Label" !b
+<div class="control-group">
+	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
+	<div class="controls">
+		<textarea name="${3:$2}" id="${4:$2}" rows="${5:8}" cols="${6:40}">$0</textarea>
+	</div>
+</div>
+endsnippet
+
+snippet select "Select with Label" !b
+<div class="control-group">
+	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
+	<div class="controls">
+		<select name="${3:$2}" id="${4:$2}">
+			<option${9: value="${10:option1}"}>${11:$10}</option>
+			$0
+		</select>
+	</div>
+</div>
+endsnippet
+
+snippet form "HTML <form>" !b
+<form class="form-horizontal" action="${1:#}" method="${2:post}" accept-charset="utf-8">
+	$0
+</form>
+endsnippet
+
+#
+# Icons
+#
+snippet icon "Bootstrap icon: icon-glass"
+<i class="icon-glass${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-music"
+<i class="icon-music${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-search"
+<i class="icon-search${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-envelope"
+<i class="icon-envelope${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-heart"
+<i class="icon-heart${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-star"
+<i class="icon-star${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-star-empty"
+<i class="icon-star-empty${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-user"
+<i class="icon-user${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-film"
+<i class="icon-film${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-th-large"
+<i class="icon-th-large${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-th"
+<i class="icon-th${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-th-list"
+<i class="icon-th-list${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-ok"
+<i class="icon-ok${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-remove"
+<i class="icon-remove${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-zoom-in"
+<i class="icon-zoom-in${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-zoom-out"
+<i class="icon-zoom-out${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-off"
+<i class="icon-off${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-signal"
+<i class="icon-signal${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-cog"
+<i class="icon-cog${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-trash"
+<i class="icon-trash${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-home"
+<i class="icon-home${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-file"
+<i class="icon-file${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-time"
+<i class="icon-time${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-road"
+<i class="icon-road${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-download-alt"
+<i class="icon-download-alt${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-download"
+<i class="icon-download${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-upload"
+<i class="icon-upload${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-inbox"
+<i class="icon-inbox${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-play-circle"
+<i class="icon-play-circle${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-repeat"
+<i class="icon-repeat${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-refresh"
+<i class="icon-refresh${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-list-alt"
+<i class="icon-list-alt${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-lock"
+<i class="icon-lock${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-flag"
+<i class="icon-flag${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-headphones"
+<i class="icon-headphones${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-volume-off"
+<i class="icon-volume-off${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-volume-down"
+<i class="icon-volume-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-volume-up"
+<i class="icon-volume-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-qrcode"
+<i class="icon-qrcode${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-barcode"
+<i class="icon-barcode${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-tag"
+<i class="icon-tag${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-tags"
+<i class="icon-tags${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-book"
+<i class="icon-book${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-bookmark"
+<i class="icon-bookmark${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-print"
+<i class="icon-print${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-camera"
+<i class="icon-camera${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-font"
+<i class="icon-font${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-bold"
+<i class="icon-bold${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-italic"
+<i class="icon-italic${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-text-height"
+<i class="icon-text-height${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-text-width"
+<i class="icon-text-width${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-align-left"
+<i class="icon-align-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-align-center"
+<i class="icon-align-center${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-align-right"
+<i class="icon-align-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-align-justify"
+<i class="icon-align-justify${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-list"
+<i class="icon-list${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-indent-left"
+<i class="icon-indent-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-indent-right"
+<i class="icon-indent-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-facetime-video"
+<i class="icon-facetime-video${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-picture"
+<i class="icon-picture${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-pencil"
+<i class="icon-pencil${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-map-marker"
+<i class="icon-map-marker${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-adjust"
+<i class="icon-adjust${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-tint"
+<i class="icon-tint${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-edit"
+<i class="icon-edit${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-share"
+<i class="icon-share${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-check"
+<i class="icon-check${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-move"
+<i class="icon-move${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-step-backward"
+<i class="icon-step-backward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-fast-backward"
+<i class="icon-fast-backward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-backward"
+<i class="icon-backward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-play"
+<i class="icon-play${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-pause"
+<i class="icon-pause${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-stop"
+<i class="icon-stop${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-forward"
+<i class="icon-forward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-fast-forward"
+<i class="icon-fast-forward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-step-forward"
+<i class="icon-step-forward${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-eject"
+<i class="icon-eject${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-chevron-left"
+<i class="icon-chevron-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-chevron-right"
+<i class="icon-chevron-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-plus-sign"
+<i class="icon-plus-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-minus-sign"
+<i class="icon-minus-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-remove-sign"
+<i class="icon-remove-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-ok-sign"
+<i class="icon-ok-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-question-sign"
+<i class="icon-question-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-info-sign"
+<i class="icon-info-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-screenshot"
+<i class="icon-screenshot${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-remove-circle"
+<i class="icon-remove-circle${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-ok-circle"
+<i class="icon-ok-circle${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-ban-circle"
+<i class="icon-ban-circle${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-arrow-left"
+<i class="icon-arrow-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-arrow-right"
+<i class="icon-arrow-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-arrow-up"
+<i class="icon-arrow-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-arrow-down"
+<i class="icon-arrow-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-share-alt"
+<i class="icon-share-alt${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-resize-full"
+<i class="icon-resize-full${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-resize-small"
+<i class="icon-resize-small${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-plus"
+<i class="icon-plus${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-minus"
+<i class="icon-minus${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-asterisk"
+<i class="icon-asterisk${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-exclamation-sign"
+<i class="icon-exclamation-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-gift"
+<i class="icon-gift${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-leaf"
+<i class="icon-leaf${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-fire"
+<i class="icon-fire${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-eye-open"
+<i class="icon-eye-open${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-eye-close"
+<i class="icon-eye-close${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-warning-sign"
+<i class="icon-warning-sign${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-plane"
+<i class="icon-plane${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-calendar"
+<i class="icon-calendar${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-random"
+<i class="icon-random${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-comment"
+<i class="icon-comment${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-magnet"
+<i class="icon-magnet${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-chevron-up"
+<i class="icon-chevron-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-chevron-down"
+<i class="icon-chevron-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-retweet"
+<i class="icon-retweet${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-shopping-cart"
+<i class="icon-shopping-cart${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-folder-close"
+<i class="icon-folder-close${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-folder-open"
+<i class="icon-folder-open${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-resize-vertical"
+<i class="icon-resize-vertical${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-resize-horizontal"
+<i class="icon-resize-horizontal${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-hdd"
+<i class="icon-hdd${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-bullhorn"
+<i class="icon-bullhorn${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-bell"
+<i class="icon-bell${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-certificate"
+<i class="icon-certificate${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-thumbs-up"
+<i class="icon-thumbs-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-thumbs-down"
+<i class="icon-thumbs-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-hand-right"
+<i class="icon-hand-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-hand-left"
+<i class="icon-hand-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-hand-up"
+<i class="icon-hand-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-hand-down"
+<i class="icon-hand-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-circle-arrow-right"
+<i class="icon-circle-arrow-right${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-circle-arrow-left"
+<i class="icon-circle-arrow-left${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-circle-arrow-up"
+<i class="icon-circle-arrow-up${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-circle-arrow-down"
+<i class="icon-circle-arrow-down${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-globe"
+<i class="icon-globe${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-wrench"
+<i class="icon-wrench${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-tasks"
+<i class="icon-tasks${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-filter"
+<i class="icon-filter${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-briefcase"
+<i class="icon-briefcase${1: icon-white}"></i>
+endsnippet
+
+snippet icon "Bootstrap icon: icon-fullscreen"
+<i class="icon-fullscreen${1: icon-white}"></i>
+endsnippet
+
+
 # TODO:
 #   alert
-#   form-horizontal
-#   control-group
-#   icons
