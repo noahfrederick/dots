@@ -264,6 +264,9 @@ nnoremap <Leader>md :Dispatch<CR>
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :w<CR>:so %<CR>
 
+" Write a one-off version of the current buffer
+nnoremap <Leader>t :w %:p:r_<C-r>=strftime('%Y%m%d')<CR>.%:e<CR>
+
 " Source selection or current line
 vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
@@ -273,6 +276,9 @@ nnoremap <Leader>W :call <SID>StripTrailingWhitespace()<CR>:echomsg "Removed tra
 
 " Re-indent entire buffer
 nnoremap <Leader>= mzgg=G`z
+
+" sleuth.vim likes to change 'shiftwidth' to 8
+nnoremap <Leader>4 :set tabstop=4 softtabstop=4 shiftwidth=4<CR>
 
 " Show highlighting groups for current word
 nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
@@ -355,6 +361,10 @@ nnoremap <Space>v :CtrlP $HOME/.vim<CR>
 " --------------------------------------------------------------------------------
 
 let g:netrw_banner = 0
+
+" :help menu.vim
+let g:did_install_default_menus = 1
+let g:did_install_syntax_menu = 1
 
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
