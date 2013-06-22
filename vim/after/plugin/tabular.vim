@@ -4,6 +4,6 @@ if !exists(":Tabularize")
   finish
 endif
 
-AddTabularPattern! rocket /=/l1l0
+AddTabularPattern! rocket /=>/
 
 " vim:set et sw=2:
