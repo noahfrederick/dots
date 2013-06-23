@@ -19,7 +19,7 @@ if &t_Co >= 16
 endif
 
 if &shell =~# "fish$"
-  set shell=sh                  " Ensure shell is POSIX compatible
+  set shell=/bin/bash           " Ensure shell is POSIX compatible
 endif
 
 set encoding=utf-8              " Use UTF-8 as default file encoding
