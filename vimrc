@@ -125,7 +125,7 @@ function! <SID>FollowSymlink()
   " Get path of actual file
   let fname = resolve(expand("%:p"))
   " Rename buffer with new path
-  exec "file ".fname
+  execute "file " . fname
   " Read file again to trigger any plug-ins that are context-sensitive
   edit
 endfunction
@@ -137,7 +137,7 @@ endif
 function! <SID>StripTrailingWhitespace()
   let l:saved_search = @/
   let l:saved_pos = getpos('.')
-  %s/\s\+$//e
+  %substitute/\s\+$//e
   call setpos('.', l:saved_pos)
   let @/ = l:saved_search
 endfunction
@@ -169,7 +169,7 @@ endif
 function! <SID>PostNew(title, bang)
   let g:template_title = a:title
   let file = "$BLOG/_drafts/" . tolower(substitute(a:title, "\\W\\+", "-", "g")) . ".md"
-  exec "e" . a:bang . " " . fnameescape(file)
+  execute "edit" . a:bang . " " . fnameescape(file)
   set filetype=liquid
 endfunction
 
@@ -187,13 +187,13 @@ endfunction
 command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
 command! -bar PostPublish call <SID>PostPublish()
 
-command! -bang Today exec "e<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
+command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-        \ | wincmd p | diffthis
+  command DiffOrig vertical new | set buftype=nofile | read # | 0delete_
+    \ | diffthis | wincmd p | diffthis
 endif
 
 " }}}
@@ -272,23 +272,23 @@ nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 cnoremap %% <C-r>=expand("%:h")."/"<CR>
 
 " Convenient ways to open files relative to current buffer
-map <Leader>ew :e %%
-map <Leader>es :sp %%
-map <Leader>ev :vsp %%
-map <Leader>et :tabe %%
+map <Leader>ew :edit %%
+map <Leader>es :split %%
+map <Leader>ev :vsplit %%
+map <Leader>et :tabedit %%
 
 " Toggle light/dark background
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " Make
-nnoremap <Leader>mm :w<CR>:silent make<CR>:cc<CR>
+nnoremap <Leader>mm :write<CR>:silent make<CR>:cc<CR>
 nnoremap <Leader>md :Dispatch<CR>
 
 " Write buffer and source current file
-nnoremap <silent> <Leader>w :w<CR>:so %<CR>
+nnoremap <silent> <Leader>w :write<CR>:source %<CR>
 
 " Write a one-off version of the current buffer
-nnoremap <Leader>t :w %:p:r_<C-r>=strftime('%Y%m%d')<CR>.%:e<CR>
+nnoremap <Leader>t :write %:p:r_<C-r>=strftime('%Y%m%d')<CR>.%:e<CR>
 
 " Source selection or current line
 vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
@@ -356,14 +356,14 @@ nnoremap <Space>; :CtrlPBuffer<CR>
 nnoremap <Space>~ :CtrlP $HOME<CR>
 nnoremap <Space>, :CtrlPTag<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
-nnoremap <Space>/ :vimgrep // **/*.<C-r>=expand('%:e')<CR>
+nnoremap <Space>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
   \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
-nnoremap <Space>G :e $HOME/.dots/gvimrc<CR>
-nnoremap <Space>L :e $HOME/.vimrc.local<CR>
-nnoremap <Space>M :e Makefile<CR>
-nnoremap <Space>N :e $DOCS/vim.md<CR>
-nnoremap <Space>R :e Rakefile<CR>
-nnoremap <Space>V :e $HOME/.dots/vimrc<CR>
+nnoremap <Space>G :edit $HOME/.dots/gvimrc<CR>
+nnoremap <Space>L :edit $HOME/.vimrc.local<CR>
+nnoremap <Space>M :edit Makefile<CR>
+nnoremap <Space>N :edit $DOCS/vim.md<CR>
+nnoremap <Space>R :edit Rakefile<CR>
+nnoremap <Space>V :edit $HOME/.dots/vimrc<CR>
 nnoremap <Space>bb :CtrlP $BLOG<CR>
 nnoremap <Space>bd :CtrlP $BLOG/_drafts<CR>
 nnoremap <Space>bp :CtrlP $BLOG/_posts<CR>
