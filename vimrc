@@ -350,12 +350,14 @@ nnoremap ]oo :set colorcolumn=0<CR>
 nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
 " <Space> mappings for finding files
-nnoremap <Space><Space> :CtrlPBuffer<CR>
-nnoremap <Space>/ :CtrlP<CR>
+nnoremap <Space><Space> :CtrlP<CR>
 nnoremap <Space>. :CtrlP .<CR>
+nnoremap <Space>; :CtrlPBuffer<CR>
 nnoremap <Space>~ :CtrlP $HOME<CR>
 nnoremap <Space>, :CtrlPTag<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
+nnoremap <Space>/ :vimgrep // **/*.<C-r>=expand('%:e')<CR>
+  \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 nnoremap <Space>G :e $HOME/.dots/gvimrc<CR>
 nnoremap <Space>L :e $HOME/.vimrc.local<CR>
 nnoremap <Space>M :e Makefile<CR>
