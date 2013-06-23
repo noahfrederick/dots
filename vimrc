@@ -142,6 +142,29 @@ function! <SID>StripTrailingWhitespace()
   let @/ = l:saved_search
 endfunction
 
+function! <SID>Bdelete(bang) abort
+  let l:current_buffer = bufnr("%")
+  let l:alternate_buffer = bufnr("#")
+
+  if buflisted(l:alternate_buffer)
+    execute "buffer" . a:bang . " #"
+  else
+    execute "bnext" . a:bang
+  endif
+
+  if bufnr("%") == l:current_buffer
+    new
+  endif
+
+  if buflisted(l:current_buffer)
+    execute "bdelete" . a:bang . " " . l:current_buffer
+  endif
+endfunction
+
+if !exists(":Bdelete")
+  command -bang -bar Bdelete call <SID>Bdelete(<q-bang>)
+endif
+
 " Create a new Jekyll post in _drafts/
 function! <SID>PostNew(title, bang)
   let g:template_title = a:title
