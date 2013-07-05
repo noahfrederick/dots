@@ -308,7 +308,7 @@ nnoremap <silent> <Leader>W :call <SID>Preserve("%s/\s\+$//e","%s/\n\{3,}/\r\r/e
 nnoremap <silent> <Leader>= :call <SID>Preserve("normal! gg=G")<CR>
 
 " sleuth.vim likes to change 'shiftwidth' to 8
-nnoremap <Leader>4 :set tabstop=4 softtabstop=4 shiftwidth=4<CR>
+nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
 
 " Show highlighting groups for current word
 nnoremap <silent> <Leader>p :call <SID>SynStack()<CR>
