@@ -20,7 +20,7 @@ let colors_name = "styx"
 hi Normal              guifg=#dddddd  guibg=#1a1a1a
 hi Cursor              guifg=#ffffff  guibg=#4da9f0
 hi CursorLine          guibg=#222222  gui=NONE
-hi MatchParen          guifg=#dddddd  guibg=NONE     gui=underline
+hi MatchParen          guifg=#ffffff  guibg=#264049  gui=underline
 hi Pmenu               guifg=#ffffff  guibg=#000000
 hi PmenuThumb          guibg=#dddddd
 hi PmenuSBar           guibg=#444444
@@ -40,7 +40,7 @@ hi Wildmenu            guifg=#ffffff  guibg=#1f333a  gui=bold
 hi StatusLine          guifg=#ffffff  guibg=#136a92  gui=NONE
 hi StatusLineNC        guifg=#dddddd  guibg=#444444  gui=NONE
 hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
-hi Folded              guifg=#138791  guibg=#222222  gui=italic,underline  guisp=#1a1a1a
+hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp=#1a1a1a
 hi Directory           guifg=#93c3d6
 hi Title               guifg=#e9d9b3  gui=bold
 hi ErrorMsg            guifg=#ffffff  guibg=#ff0055
@@ -83,7 +83,7 @@ hi Identifier      guifg=#dddddd  gui=NONE
 hi Statement       guifg=#b1d631  gui=bold
 hi Constant        guifg=#d6b8f5
 hi Number          guifg=#93c3d6
-hi Boolean         guifg=#e9d9b3
+hi Boolean         guifg=#93c3d6
 hi Special         guifg=#d6b8f5
 hi Ignore          guifg=#444444
 hi! link Operator  Delimiter
@@ -212,6 +212,13 @@ hi mustacheMarker            guifg=#1c6068
 hi mustacheVariable          guifg=#739ba3
 hi mustacheVariableUnescape  guifg=#ffb6c0
 hi mustachePartial           guifg=#d6b8f5
+
+"}}}
+" Syntastic {{{
+hi SyntasticWarningSign  guifg=#b7aa80  guibg=NONE
+hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
+" hi SyntasticWarningLine  guisp=#b7aa80  gui=undercurl
+" hi SyntasticErrorLine    guisp=#ff0055  gui=undercurl
 
 "}}}
 
