@@ -88,7 +88,6 @@ endif
 set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
-set gdefault                    " 'g' flag of ':substitute' is on by default
 
 let g:statusline_separator_left = " \u27e9 "
 let g:statusline_separator_right = " \u27e8 "
