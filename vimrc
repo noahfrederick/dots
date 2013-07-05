@@ -348,6 +348,9 @@ nnoremap <Leader>dr :DelimitMateReload<CR>
 nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
 
+" Switch to alternate window or buffer
+nnoremap <silent> <Leader><Leader> :if winnr("$") > 1<Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
+
 nnoremap <Leader><CR> *<C-o>
 map <BS> %
 
