@@ -273,7 +273,7 @@ noremap <Right> <C-w>>
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
-cnoremap %% <C-r>=expand("%:h")."/"<CR>
+cnoremap %% <C-r>=fnameescape(expand("%:h"))."/"<CR>
 
 " Convenient ways to open files relative to current buffer
 map <Leader>ew :edit %%
