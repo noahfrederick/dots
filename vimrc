@@ -401,6 +401,21 @@ let g:netrw_banner = 0
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1
 
+" :help syntastic-global-options
+if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
+  let g:syntastic_error_symbol = "\u203c"
+  let g:syntastic_warning_symbol = "\u203c"
+  let g:syntastic_style_error_symbol = "\u00a7"
+  let g:syntastic_style_warning_symbol = "\u00a7"
+endif
+
+" :help syntastic-config-makeprg
+" Don't complain about indentation with tabs, set encoding
+let g:syntastic_php_phpcs_post_args = "--tab-width=4 --encoding=utf-8"
+" Use PSR2 standard instead of default PEAR
+" http://www.php-fig.org/psr/2/
+let g:syntastic_php_phpcs_post_args .= " --standard=PSR2"
+
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
 
