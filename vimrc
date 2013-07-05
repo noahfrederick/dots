@@ -26,17 +26,21 @@ set encoding=utf-8              " Use UTF-8 as default file encoding
 set spelllang=en_us             " Language and region to use for spellchecking
 set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
+set ruler                       " Show cursor position if status line not visible
 set modeline modelines=5        " Look for modeline at beginning/end of file
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set scrolloff=2                 " Keep lines above/below cursor visible
 set sidescrolloff=5             " Keep columns left/right of cursor visible
+set display+=lastline           " Show as much as possible of wrapped last line
 set helpheight=1000             " Maximize help window vertically
+set lazyredraw                  " Do not redraw screen during macro execution
 set fillchars=vert:\            " Use space for vertical split fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
   set showbreak=...
 endif
+set nowrap                      " Do not wrap long lines by default
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let &fillchars = "vert:\u2502" | hi! VertSplit ctermbg=NONE guibg=NONE
@@ -205,8 +209,8 @@ if has("autocmd")
     autocmd!
 
     " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
-    autocmd FileType markdown setlocal textwidth=78 | silent! compiler pandoc
+    autocmd FileType text,markdown setlocal textwidth=78 wrap
+    autocmd FileType markdown silent! compiler pandoc
 
     " Always use spelling for particular file types
     autocmd FileType gitcommit setlocal spell
@@ -218,6 +222,7 @@ if has("autocmd")
 
     " Automatically complete closing tags
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
+    autocmd FileType html,liquid,xml setlocal textwidth=120
 
     " Do not wrap lines in the QuickFix window
     autocmd FileType qf setlocal nowrap
