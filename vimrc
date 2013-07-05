@@ -43,7 +43,7 @@ endif
 set nowrap                      " Do not wrap long lines by default
 set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &fillchars = "vert:\u2502" | hi! VertSplit ctermbg=NONE guibg=NONE
+  let &fillchars = "vert:\u2502" | highlight VertSplit ctermbg=NONE guibg=NONE
   let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
   if has("linebreak")
     let &showbreak = "\u21aa"
@@ -398,7 +398,7 @@ let g:did_install_syntax_menu = 1
 " xptemplate key
 let g:xptemplate_key = "<Tab>"
 
-" UltiSnip settings
+" UltiSnips settings
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
@@ -417,7 +417,7 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_balance_matchpairs = 1
 
-" Supertab settings
+" :help supertab-options
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
@@ -428,8 +428,8 @@ if has("autocmd")
     autocmd!
     autocmd FileType *
       \ if exists("*SuperTabChain") && &omnifunc != '' |
-      \   call SuperTabChain(&omnifunc, "<c-p>") |
-      \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+      \   call SuperTabChain(&omnifunc, "<C-p>") |
+      \   call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
       \ endif
   augroup END
 endif
@@ -444,5 +444,4 @@ if filereadable(glob("~/.vimrc.local"))
 endif
 
 " }}}
-
 " vim: fdm=marker:sw=2:sts=2:et
