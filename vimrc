@@ -137,10 +137,13 @@ if !exists(":FollowSymlink")
   command FollowSymlink call <SID>FollowSymlink()
 endif
 
-function! <SID>StripTrailingWhitespace()
+" Execute commands without moving cursor, changing search pattern
+function! <SID>Preserve(...)
   let l:saved_search = @/
   let l:saved_pos = getpos('.')
-  %substitute/\s\+$//e
+  for l:command in a:000
+    execute l:command
+  endfor
   call setpos('.', l:saved_pos)
   let @/ = l:saved_search
 endfunction
@@ -298,11 +301,11 @@ nnoremap <Leader>t :write %:p:r_<C-r>=strftime('%Y%m%d')<CR>.%:e<CR>
 vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
-" Remove trailing whitespace
-nnoremap <Leader>W :call <SID>StripTrailingWhitespace()<CR>:echomsg "Removed trailing whitespace"<CR>
+" Remove trailing whitespace, merge consecutive empty lines
+nnoremap <silent> <Leader>W :call <SID>Preserve("%s/\s\+$//e","%s/\n\{3,}/\r\r/e")<CR>
 
 " Re-indent entire buffer
-nnoremap <Leader>= mzgg=G`z
+nnoremap <silent> <Leader>= :call <SID>Preserve("normal! gg=G")<CR>
 
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :set tabstop=4 softtabstop=4 shiftwidth=4<CR>
