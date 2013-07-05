@@ -395,6 +395,11 @@ nnoremap <Space>v :CtrlP $HOME/.vim<CR>
 " PLUG-INS                                                                     {{{
 " --------------------------------------------------------------------------------
 
+" :help ruby.vim
+let g:ruby_fold = 1
+let g:ruby_no_comment_fold = 1
+
+" :help netrw-browser-options
 let g:netrw_banner = 0
 
 " :help menu.vim
