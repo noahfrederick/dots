@@ -33,6 +33,8 @@ set history=500                 " Keep 500 lines of history
 set scrolloff=2                 " Keep lines above/below cursor visible
 set sidescrolloff=5             " Keep columns left/right of cursor visible
 set display+=lastline           " Show as much as possible of wrapped last line
+set foldnestmax=3               " Limit depth of nested syntax/indent folds
+set foldopen-=block             " Do not open folds on "(", "{", etc.
 set helpheight=1000             " Maximize help window vertically
 set lazyredraw                  " Do not redraw screen during macro execution
 set fillchars=vert:\            " Use space for vertical split fill char
