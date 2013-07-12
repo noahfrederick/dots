@@ -150,6 +150,17 @@ function! <SID>Preserve(...)
   let @/ = l:saved_search
 endfunction
 
+function! <SID>NormalizeWhitespace()
+  " 1. Strip trailing whitespace
+  " 2. Merge consecutive blank lines
+  " 3. Strip empty line from end of file
+  call <SID>Preserve(
+    \ '%substitute/\s\+$//e',
+    \ '%substitute/\n\{3,}/\r\r/e',
+    \ '%substitute/\n\+\%$//e'
+    \ )
+endfunction
+
 function! <SID>Bdelete(bang) abort
   let l:current_buffer = bufnr("%")
   let l:alternate_buffer = bufnr("#")
@@ -308,7 +319,7 @@ vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>W :call <SID>Preserve("%s/\s\+$//e","%s/\n\{3,}/\r\r/e")<CR>
+nnoremap <silent> <Leader>W :call <SID>NormalizeWhitespace()<CR>
 
 " Re-indent entire buffer
 nnoremap <silent> <Leader>= :call <SID>Preserve("normal! gg=G")<CR>
