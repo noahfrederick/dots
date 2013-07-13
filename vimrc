@@ -356,6 +356,8 @@ nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 vnoremap <Leader>aw :Tabularize multiple_spaces<CR>
 nnoremap <Leader>ar :Tabularize rocket<CR>
 vnoremap <Leader>ar :Tabularize rocket<CR>
+nnoremap <Leader>as :Tabularize assignment<CR>
+vnoremap <Leader>as :Tabularize assignment<CR>
 
 " Shortcuts for delimitMate
 nnoremap <Leader>dd :DelimitMateSwitch<CR>
