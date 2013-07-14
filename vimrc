@@ -304,9 +304,9 @@ map <Leader>et :tabedit %%
 " Toggle light/dark background
 nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
-" Make
-nnoremap <Leader>mm :write<CR>:silent make<CR>:cc<CR>
-nnoremap <Leader>md :Dispatch<CR>
+" :help dispatch-commands
+nnoremap <F2> :Make<CR>
+nnoremap <F3> :Dispatch<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :write<CR>:source %<CR>
