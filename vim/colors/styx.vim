@@ -11,18 +11,16 @@ if exists("syntax_on")
   syntax reset
 endif
 
-" TODO delete this comment
-
-let colors_name = "styx"
+let g:colors_name = "styx"
 
 "}}}
 " Vim UI {{{
-hi Normal              guifg=#dddddd  guibg=#1a1a1a
+hi Normal              guifg=#d2d2d2  guibg=#1a1a1a
 hi Cursor              guifg=#ffffff  guibg=#4da9f0
 hi CursorLine          guibg=#222222  gui=NONE
-hi MatchParen          guifg=#ffffff  guibg=#264049  gui=underline
+hi MatchParen          guifg=#ffffff  guibg=#264049  gui=underline  guisp=#539dbd
 hi Pmenu               guifg=#ffffff  guibg=#000000
-hi PmenuThumb          guibg=#dddddd
+hi PmenuThumb          guibg=#d2d2d2
 hi PmenuSBar           guibg=#444444
 hi PmenuSel            guifg=#000000  guibg=#539dbd
 hi ColorColumn         guibg=#000000
@@ -38,7 +36,7 @@ hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
 hi Wildmenu            guifg=#ffffff  guibg=#1f333a  gui=bold
 hi StatusLine          guifg=#ffffff  guibg=#136a92  gui=NONE
-hi StatusLineNC        guifg=#dddddd  guibg=#444444  gui=NONE
+hi StatusLineNC        guifg=#d2d2d2  guibg=#444444  gui=NONE
 hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
 hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp=#1a1a1a
 hi Directory           guifg=#93c3d6
@@ -71,7 +69,7 @@ hi! link SpecialKey    NonText
 
 "}}}
 " Generic syntax {{{
-hi Delimiter       guifg=#bbbbbb
+hi Delimiter       guifg=#b8b8b8
 hi Comment         guifg=#888888  gui=italic
 hi Underlined      guifg=#93c3d6  gui=underline
 hi Type            guifg=#e9d9b3  gui=none
@@ -79,7 +77,7 @@ hi String          guifg=#ffb6c0
 hi Keyword         guifg=#b1d631
 hi Todo            guifg=#ffffff  guibg=NONE     gui=underline  guisp=#ffb6c0
 hi Function        guifg=#e9d9b3
-hi Identifier      guifg=#dddddd  gui=NONE
+hi Identifier      guifg=#d2d2d2  gui=NONE
 hi Statement       guifg=#b1d631  gui=bold
 hi Constant        guifg=#d6b8f5
 hi Number          guifg=#93c3d6
@@ -108,12 +106,14 @@ hi! link htmlEndTag         htmlTag
 
 "}}}
 " XML {{{
-hi xmlTagName       guifg=#93c3d6
-hi xmlTag           guifg=#93c3d6
-hi xmlAttrib        guifg=#bce2f1
-hi! link xmlString  String
-hi! link xmlEndTag  xmlTag
-hi! link xmlEqual   xmlTag
+hi xmlTagName            guifg=#93c3d6
+hi xmlTag                guifg=#93c3d6
+hi xmlAttrib             guifg=#bce2f1
+hi! link xmlString       String
+hi! link xmlEndTag       xmlTag
+hi! link xmlEqual        xmlTag
+hi! link xmlEntity       htmlSpecialChar
+hi! link xmlEntityPunct  xmlEntity
 
 "}}}
 " JavaScript {{{
@@ -139,7 +139,7 @@ hi! link markdownLinkTextDelimiter  markdownLinkDelimiter
 hi! link markdownUrl                markdownLinkText
 hi! link markdownAutomaticLink      markdownLinkText
 hi! link markdownCodeBlock          String
-hi! link markdownCode          String
+hi! link markdownCode               String
 hi markdownBold                     gui=bold
 hi markdownItalic                   gui=italic
 
