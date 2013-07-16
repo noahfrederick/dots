@@ -43,10 +43,10 @@ if has("linebreak")             " Wrap lines at word boundaries
   set showbreak=...
 endif
 set nowrap                      " Do not wrap long lines by default
-set listchars=tab:>\ ,eol:$,trail:~,extends:>,precedes:<,nbsp:+
+set listchars=tab:>\ ,eol:$,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let &fillchars = "vert:\u2502" | highlight VertSplit ctermbg=NONE guibg=NONE
-  let &listchars = "tab:\u25b8 ,eol:\u00ac,trail:\u2334,extends:\u276f,precedes:\u276e,nbsp:+"
+  let &listchars = "tab:\u25b8 ,eol:\u00ac,extends:\u276f,precedes:\u276e,nbsp:\u2334"
   if has("linebreak")
     let &showbreak = "\u21aa"
   endif
