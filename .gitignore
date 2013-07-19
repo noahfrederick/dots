@@ -1,4 +1,5 @@
 vim/.netrwhist
+vim/bundle/*
 vim/sessions/*
 vim/spell/*.spl
 vim/tmp/*
