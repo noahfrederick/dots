@@ -35,8 +35,8 @@ hi Visual              guibg=#264049
 hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
 hi Wildmenu            guifg=#ffffff  guibg=#1f333a  gui=bold
-hi StatusLine          guifg=#ffffff  guibg=#136a92  gui=NONE
-hi StatusLineNC        guifg=#d2d2d2  guibg=#444444  gui=NONE
+hi StatusLine          guifg=#ffffff  guibg=#151515  gui=NONE
+hi StatusLineNC        guifg=#888888  guibg=#151515  gui=NONE
 hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
 hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp=#1a1a1a
 hi Directory           guifg=#93c3d6
@@ -74,7 +74,7 @@ hi Comment         guifg=#888888  gui=italic
 hi Underlined      guifg=#93c3d6  gui=underline
 hi Type            guifg=#e9d9b3  gui=none
 hi String          guifg=#ffb6c0
-hi Keyword         guifg=#b1d631
+hi Keyword         guifg=#93c3d6  gui=bold
 hi Todo            guifg=#ffffff  guibg=NONE     gui=underline  guisp=#ffb6c0
 hi Function        guifg=#e9d9b3
 hi Identifier      guifg=#d2d2d2  gui=NONE
@@ -117,8 +117,11 @@ hi! link xmlEntityPunct  xmlEntity
 
 "}}}
 " JavaScript {{{
-hi! link javaScript        Normal
-hi! link javaScriptBraces  Delimiter
+hi! link javaScript            Normal
+hi! link javaScriptBraces      Delimiter
+hi! link javaScriptParens      Delimiter
+hi! link javaScriptIdentifier  Keyword
+hi! link javaScriptNumber      Number
 
 "}}}
 " PHP {{{
@@ -142,6 +145,13 @@ hi! link markdownCodeBlock          String
 hi! link markdownCode               String
 hi markdownBold                     gui=bold
 hi markdownItalic                   gui=italic
+
+hi! link markdownTitleBlock         markdownListMarker
+
+hi markdownOrgTodo                  guifg=#ffb6c0  gui=bold
+hi markdownOrgDone                  guifg=#cde88a  gui=bold
+hi markdownOrgCanceled              guifg=#888888  gui=bold
+hi markdownOrgWaiting               guifg=#e9d9b3  gui=bold
 
 "}}}
 " Ruby {{{
