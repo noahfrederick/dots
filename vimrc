@@ -243,6 +243,8 @@ if has("autocmd")
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
     autocmd FileType html,liquid,xml setlocal textwidth=120
 
+    autocmd FileType vim setlocal keywordprg=:help
+
     " Do not wrap lines in the QuickFix window
     autocmd FileType qf setlocal nowrap
 
