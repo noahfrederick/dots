@@ -434,6 +434,7 @@ if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let g:syntastic_style_error_symbol = "\u00a7"
   let g:syntastic_style_warning_symbol = "\u00a7"
 endif
+let g:syntastic_enable_highlighting = 0
 
 " :help syntastic-config-makeprg
 " Don't complain about indentation with tabs, set encoding
