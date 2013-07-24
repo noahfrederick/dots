@@ -313,11 +313,11 @@ nnoremap <F3> :Dispatch<CR>
 " Write buffer and source current file
 nnoremap <silent> <Leader>w :write<CR>:source %<CR>
 
-" Write a one-off version of the current buffer
-nnoremap <Leader>t :write %:p:r_<C-r>=strftime('%Y%m%d')<CR>.%:e<CR>
+" Write a one-off timestamped version of the current buffer
+nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
 
 " Source selection or current line
-vnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
+xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
@@ -341,7 +341,7 @@ nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>gb :Gblame<CR>
-vnoremap <Leader>gb :Gblame<CR>
+xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
 
