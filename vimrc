@@ -28,6 +28,7 @@ set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
 set ruler                       " Show cursor position if status line not visible
 set modeline modelines=5        " Look for modeline at beginning/end of file
+set hidden                      " Allow buffers to become hidden
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set scrolloff=2                 " Keep lines above/below cursor visible
