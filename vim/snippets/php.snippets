@@ -32,12 +32,12 @@ snippet "cl(ass)?" "class" !br
 /**
  * ${4:Description}.
  *
- * @package    ${5:`!v snippet_helper#ProjectTitle()`}
- * @category   ${6:`!v PathToClassCategory(expand("%"))`}
- * @author     `!v snippet_helper#Author()`
- * @copyright  © `!v strftime('%Y')` `!v snippet_helper#Author()`
+ * @package    ${5:`!v helper#snippet#ProjectTitle()`}
+ * @category   ${6:`!v helper#php#PathToClassCategory(expand("%"))`}
+ * @author     `!v helper#snippet#Author()`
+ * @copyright  © `!v strftime('%Y')` `!v helper#snippet#Author()`
  */
-class ${1:`!v PathToClassName(expand("%"))`}${2: extends ${3:`!v PathToParentClassName(expand("%"))`}} {
+class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v helper#php#PathToParentClassName(expand("%"))`}} {
 	${VISUAL}$0
 }
 endsnippet

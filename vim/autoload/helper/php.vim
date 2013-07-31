@@ -1,12 +1,6 @@
-" ftplugin/php.vim - Settings for PHP including snippet helpers
+" autoload/helper/php.vim - PHP helpers
 
-" Use :make to check PHP syntax
-setlocal makeprg=php\ -l\ % errorformat=%m\ in\ %f\ on\ line\ %l
-
-" Settings for bundled PHP plug-in
-let g:php_noShortTags = 1         " Always use <?php
-
-let b:php_source_prefixes = [
+let s:php_source_prefixes = [
   \ 'application/classes/',
   \ 'application/tests/',
   \ 'src/main/php/',
@@ -15,7 +9,7 @@ let b:php_source_prefixes = [
   \ 'lib/',
   \ ]
 
-let b:php_source_segments = [
+let s:php_source_segments = [
   \ ['/tests/', 'Tests'],
   \ ['/Controller/', 'Controllers'],
   \ ['/Model/', 'Models'],
@@ -26,9 +20,9 @@ let b:php_source_segments = [
 " Infer the PSR-0 class name from file's path.
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
-function! PathToClassName(path)
+function! helper#php#PathToClassName(path)
   let l:path = a:path
-  for l:prefix in b:php_source_prefixes
+  for l:prefix in s:php_source_prefixes
     if stridx(l:path, l:prefix) == 0
         let l:path = strpart(l:path, strlen(l:prefix))
         break
@@ -38,7 +32,7 @@ function! PathToClassName(path)
 endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.
-function! PathToParentClassName(path)
+function! helper#php#PathToParentClassName(path)
   let l:path = a:path
   if stridx(l:path, "/tests/") != -1
     return "PHPUnit_Framework_TestCase"
@@ -49,28 +43,28 @@ endfunction
 " Derive class name from test class name
 " Example:
 "   HTTP_RequestTest -> HTTP_Request
-function! TestClassNameToClassName(className)
+function! helper#php#TestClassNameToClassName(className)
   return substitute(a:className, 'Test$', '', '')
 endfunction
 
 " Derive test class name from class name
 " Example:
 "   HTTP_Request -> HTTP_RequestTest
-function! ClassNameToTestClassName(className)
+function! helper#php#ClassNameToTestClassName(className)
   return a:className.'Test'
 endfunction
 
 " Generate a generic description for test case
-function! GetTestCaseDescription()
-  let className = PathToClassName()
-  let className = TestClassNameToClassName(className)
+function! helper#php#GetTestCaseDescription()
+  let className = helper#php#PathToClassName()
+  let className = helper#php#TestClassNameToClassName(className)
 
   return 'Test case for class '.className
 endfunction
 
 " Derive class category from file's path
-function! PathToClassCategory(path)
-  for [segment, category] in b:php_source_segments
+function! helper#php#PathToClassCategory(path)
+  for [segment, category] in s:php_source_segments
     if stridx(a:path, l:segment) != -1
       return l:category
     endif

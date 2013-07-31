@@ -1,23 +1,22 @@
-" autoload/snippet_helper.vim - Global helpers for snippets
+" autoload/helper/snippets.vim - Global helpers for snippets
 " Maintainer:   Noah Frederick
 
-if exists("g:loaded_snippet_helper") || v:version < 700 || &cp
-  finish
-endif
-let g:loaded_snippet_helper = 1
-
-function! snippet_helper#Author()
-  return system('git config --get user.name')[0:-2]
+function! helper#snippet#Author()
+  if executable("git")
+    return system('git config --get user.name')[0:-2]
+  endif
 endfunction
 
-function! snippet_helper#Email()
-  return system('git config --get user.email')[0:-2]
+function! helper#snippet#Email()
+  if executable("git")
+    return system('git config --get user.email')[0:-2]
+  endif
 endfunction
 
-function! snippet_helper#Title(basename)
+function! helper#snippet#Title(basename)
   if exists("g:template_title")
     " Setting g:template_title let's us override the title (once)
-    title = g:template_title
+    let title = g:template_title
     unlet g:template_title
     return title
   endif
@@ -32,7 +31,7 @@ function! snippet_helper#Title(basename)
   return title
 endfunction
 
-function! snippet_helper#ProjectTitle()
+function! helper#snippet#ProjectTitle()
   if exists("$PROJECT_TITLE") && $PROJECT_TITLE != ""
     return $PROJECT_TITLE
   endif
