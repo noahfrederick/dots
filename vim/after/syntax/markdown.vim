@@ -1,0 +1,13 @@
+" Org-mode-like extensions to Markdown
+
+syntax keyword markdownOrgTodo TODO
+syntax keyword markdownOrgDone DONE
+syntax keyword markdownOrgCanceled CANCELED
+syntax keyword markdownOrgWaiting WAITING
+syntax match markdownOrgTimestamp "\[\d\{4}-\d\{2}-\d\{2} .\{-}\]"
+
+" Pandoc
+syntax match markdownTitleBlock "%\%(\s\|$\)"
+
+highlight default link markdownTitleBlock PreProc
+highlight default link markdownOrgTimestamp Special
