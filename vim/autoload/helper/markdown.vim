@@ -1,5 +1,5 @@
 " Promote/demote headings
-function! markdown#PromoteHeading()
+function! helper#markdown#PromoteHeading()
   let l:line = getline('.')
 
   if l:line =~# '^##\+ '
@@ -10,7 +10,7 @@ function! markdown#PromoteHeading()
   endif
 endfunction
 
-function! markdown#DemoteHeading()
+function! helper#markdown#DemoteHeading()
   let l:line = getline('.')
 
   if l:line =~# '^######'
@@ -37,7 +37,7 @@ endfunction
 " Smart <Enter> in insert mode:
 "   - List continuation (end list by hitting <Enter> twice)
 "   - Block quote continuation
-function! markdown#ExpandCR()
+function! helper#markdown#ExpandCR()
   let l:line = getline('.')
 
   if l:line =~# '^\s*[-\*+>] $'
