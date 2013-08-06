@@ -185,30 +185,6 @@ if !exists(":Bdelete")
   command -bang -bar Bdelete call <SID>Bdelete(<q-bang>)
 endif
 
-if exists("$BLOG")
-  " Create a new Jekyll post in _drafts/
-  function! <SID>PostNew(title, bang)
-    let g:template_title = a:title
-    let file = "$BLOG/_drafts/" . tolower(substitute(a:title, "\\W\\+", "-", "g")) . ".md"
-    execute "edit" . a:bang . " " . fnameescape(file)
-    set filetype=liquid
-  endfunction
-
-  " Move the current draft into _posts/ and prepend date to filename
-  function! <SID>PostPublish()
-    if expand("%:p:h") !~# '/_drafts$'
-      echoerr "This does not appear to be a draft blog post"
-      return
-    endif
-    write
-    " Note: relies on eunuch-:Move command
-    exec "Move $BLOG/_posts/" . strftime("%Y-%m-%d") . "-" . expand("%:p:t")
-  endfunction
-
-  command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
-  command! -bar PostPublish call <SID>PostPublish()
-endif
-
 if exists("$NOTES")
   command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
 endif
@@ -396,9 +372,6 @@ nnoremap <Space>M :edit Makefile<CR>
 nnoremap <Space>N :edit $DOCS/vim.md<CR>
 nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>V :edit $HOME/.dots/vimrc<CR>
-nnoremap <Space>bb :CtrlP $BLOG<CR>
-nnoremap <Space>bd :CtrlP $BLOG/_drafts<CR>
-nnoremap <Space>bp :CtrlP $BLOG/_posts<CR>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlP $DOCS<CR>
 nnoremap <Space>ka :CtrlP application<CR>
