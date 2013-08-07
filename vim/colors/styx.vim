@@ -46,8 +46,8 @@ hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
 hi DiffDelete          guifg=#000000  guibg=#ff0055
 hi DiffText            guifg=#000000  guibg=#e9d9b3  gui=bold
-hi User1               guifg=#ffffff  guibg=#1c6068
-hi User2               guifg=#ffffff  guibg=#539dbd
+hi User1               guifg=#b7aa80  guibg=#151515
+hi User2               guifg=#ff0055  guibg=#151515
 hi User3               guifg=#ffffff  guibg=#e9d9b3
 hi User4               guifg=#ffffff  guibg=#000000
 hi User5               guifg=#ffffff  guibg=#d6b8f5
@@ -84,8 +84,8 @@ hi Number          guifg=#93c3d6
 hi Boolean         guifg=#93c3d6
 hi Special         guifg=#d6b8f5
 hi Ignore          guifg=#444444
+hi PreProc         guifg=#888888  gui=bold
 hi! link Operator  Delimiter
-hi! link PreProc   Delimiter
 hi! link Error     ErrorMsg
 
 "}}}
@@ -93,7 +93,7 @@ hi! link Error     ErrorMsg
 hi htmlTagName              guifg=#b1d631
 hi htmlTag                  guifg=#b1d631
 hi htmlArg                  guifg=#cde88a
-hi htmlH1                   gui=bold
+hi htmlH1                   guifg=#ffffff  gui=bold
 hi htmlBold                 gui=bold
 hi htmlItalic               gui=italic
 hi htmlUnderline            gui=underline
@@ -181,6 +181,7 @@ hi! link GitGutterChangeDelete   GitGutterChange
 "}}}
 " Vim {{{
 hi! link vimSetSep    Delimiter
+hi! link vimOption    Keyword
 hi! link vimContinue  Delimiter
 hi! link vimHiAttrib  Constant
 
