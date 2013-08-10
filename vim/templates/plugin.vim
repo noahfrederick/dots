@@ -10,4 +10,4 @@ augroup @BASENAME@
   autocmd!
 augroup END
 
-" vim:set et sw=2:
+" vim: fdm=marker:sw=2:sts=2:et
