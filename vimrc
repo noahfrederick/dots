@@ -38,7 +38,7 @@ set foldnestmax=3               " Limit depth of nested syntax/indent folds
 set foldopen-=block             " Do not open folds on "(", "{", etc.
 set helpheight=1000             " Maximize help window vertically
 set lazyredraw                  " Do not redraw screen during macro execution
-set fillchars=vert:\            " Use space for vertical split fill char
+set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
   set showbreak=...
@@ -46,11 +46,12 @@ endif
 set nowrap                      " Do not wrap long lines by default
 set listchars=tab:>\ ,eol:$,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &fillchars = "vert:\u2502" | highlight VertSplit ctermbg=NONE guibg=NONE
+  let &fillchars = "vert:\u2502,diff: "
   let &listchars = "tab:\u25b8 ,eol:\u00ac,extends:\u276f,precedes:\u276e,nbsp:\u2334"
   if has("linebreak")
     let &showbreak = "\u21aa"
   endif
+  highlight VertSplit ctermbg=NONE guibg=NONE
 endif
 
 if has("unnamedplus")
