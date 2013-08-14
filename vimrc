@@ -97,12 +97,16 @@ let g:statusline_separator_left = " \u27e9 "
 let g:statusline_separator_right = " \u27e8 "
 
 let &statusline = ""
-let &statusline .= " %6.(#%n%) ".g:statusline_separator_left
-let &statusline .= "%t"
-let &statusline .= ' %{exists("*fugitive#statusline")?fugitive#statusline()[4:-2]:""}'
-let &statusline .= "%m%="
-let &statusline .= "%{strlen(&fenc)?&enc:&fenc}".g:statusline_separator_right
-let &statusline .= '%{strlen(&ft)?&ft:"n/a"}'.g:statusline_separator_right
+let &statusline .= " %{fnamemodify(getcwd(), ':~')}"
+let &statusline .= g:statusline_separator_left
+let &statusline .= "%f%m"
+let &statusline .= "%{StatuslineGit()}"
+let &statusline .= "%="
+let &statusline .= "%{strlen(&fenc)?&enc:&fenc}"
+let &statusline .= g:statusline_separator_right
+let &statusline .= '%{strlen(&ft)?&ft:"n/a"}'
+let &statusline .= g:statusline_separator_right
+let &statusline .= '%1*%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 let &statusline .= "%3.l:%-3.c "
 
 " In many terminal emulators the mouse works just fine, thus enable it.
@@ -118,6 +122,18 @@ endif
 " }}}
 " FUNCTIONS & COMMANDS                                                         {{{
 " --------------------------------------------------------------------------------
+
+" Git branch/commit in status line
+function! StatuslineGit()
+  if !exists('*fugitive#head')
+    return ''
+  endif
+  let l:out = fugitive#head(8)
+  if l:out !=# ''
+    let l:out = g:statusline_separator_left . l:out
+  endif
+  return l:out
+endfunction
 
 " Show highlight group of character under cursor
 function! <SID>SynStack()
