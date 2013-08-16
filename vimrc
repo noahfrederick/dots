@@ -436,8 +436,9 @@ let g:UltiSnipsSnippetDirectories = ["snippets"]
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 12
 
-" CtrlP
-let g:ctrlp_extensions = ['tag']
+" :help ctrlp-options
+let g:ctrlp_extensions = ["tag"]
+let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-standard"]
 
 " delimitMate settings
 let g:delimitMate_expand_cr = 1
