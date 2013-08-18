@@ -1,0 +1,33 @@
+{
+/**
+ * ~/Library/KeyBindings/DefaultKeyBinding.dict
+ *
+ * Supplements to built-in bindings such as
+ * C-o, C-a, C-e, C-k, C-y, C-v, C-f, C-b, C-p, C-n, C-t,
+ * and perhaps a few more.
+ */
+
+/* Ctrl shortcuts */
+
+    "^w"        = "deleteWordBackward:";            /* C-w        Delete word backward */
+
+/* Meta shortcuts */
+
+    "~f"        = "moveWordForward:";               /* M-f        Move forward word */
+    "~b"        = "moveWordBackward:";              /* M-b        Move backward word */
+    "~<"        = "moveToBeginningOfDocument:";     /* M-<        Move to beginning of document */
+    "~>"        = "moveToEndOfDocument:";           /* M->        Move to end of document */
+    "~d"        = "deleteWordForward:";             /* M-d        Delete word forward */
+    "~t"        = "transposeWords:";                /* M-t        Transpose words */
+
+/* C-x shortcuts */
+
+    "^x" = {
+        "u"     = "undo:";                          /* C-x u      Undo */
+        "k"     = "performClose:";                  /* C-x k      Close */
+        "^f"    = "openDocument:";                  /* C-x C-f    Open (find file) */
+        "^s"    = "saveDocument:";                  /* C-x C-s    Save */
+        "^w"    = "saveDocumentAs:";                /* C-x C-w    Save as */
+    };
+
+}

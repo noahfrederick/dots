@@ -11,7 +11,8 @@ task :link do
 
   special_locations = {
     "bin"  => File.join(ENV['HOME'], "bin"),
-    "fish" => File.join(ENV['HOME'], ".config", "fish")
+    "fish" => File.join(ENV['HOME'], ".config", "fish"),
+    "osx"  => nil
   }
 
   Dir['*'].each do |file|
@@ -24,7 +25,9 @@ task :link do
              File.join(ENV['HOME'], ".#{file}")
            end
 
-    if File.exist?(dest)
+    if dest.nil?
+      puts "Not linking #{file}"
+    elsif File.exist?(dest)
       if File.identical? file, dest
         puts "Already linked #{dest}"
       elsif replace_all
