@@ -46,13 +46,13 @@ hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
 hi DiffDelete          guifg=#000000  guibg=#ff0055
 hi DiffText            guifg=#000000  guibg=#e9d9b3  gui=bold
-hi User1               guifg=#b7aa80  guibg=#151515
-hi User2               guifg=#ff0055  guibg=#151515
-hi User3               guifg=#ffffff  guibg=#e9d9b3
-hi User4               guifg=#ffffff  guibg=#000000
-hi User5               guifg=#ffffff  guibg=#d6b8f5
-hi User6               guifg=#ffffff  guibg=#739ba3
-hi User7               guifg=#ffffff  guibg=#93c3d6
+hi User1               guifg=#000000  guibg=#d2d2d2
+hi User2               guifg=#ffffff  guibg=#333333
+hi User3               guifg=#000000  guibg=#e9d9b3
+hi User4               guifg=#000000  guibg=#ffb6c0
+hi User5               guifg=#000000  guibg=#d6b8f5
+hi User6               guifg=#000000  guibg=#739ba3
+hi User7               guifg=#000000  guibg=#93c3d6
 hi User8               guifg=#ffffff  guibg=#b7aa80
 hi User9               guifg=#ffffff  guibg=#222222
 hi! link CursorColumn  CursorLine
@@ -66,6 +66,7 @@ hi! link TablineSel    StatusLine
 hi! link Tabline       StatusLineNC
 hi! link TabLineFill   Tabline
 hi! link SpecialKey    NonText
+hi! link Conceal       NonText
 
 "}}}
 " Generic syntax {{{
@@ -230,6 +231,13 @@ hi SyntasticWarningSign  guifg=#b7aa80  guibg=NONE
 hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
 " hi SyntasticWarningLine  guisp=#b7aa80  gui=undercurl
 " hi SyntasticErrorLine    guisp=#ff0055  gui=undercurl
+
+"}}}
+" CSV {{{
+hi! link CSVColumnOdd         Normal
+hi! link CSVColumnEven        Comment
+hi! link CSVColumnHeaderOdd   Title
+hi! link CSVColumnHeaderEven  CSVColumnHeaderOdd
 
 "}}}
 
