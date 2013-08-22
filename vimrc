@@ -5,7 +5,7 @@ set nocompatible                " Disable Vi compatibility
 
 if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
   runtime bundle/pathogen/autoload/pathogen.vim
-  call pathogen#infect()        " Manage plug-ins with pathogen.vim
+  call pathogen#infect()        " Manage 'runtimepath' with pathogen.vim
 endif
 
 if has("autocmd")
@@ -35,7 +35,7 @@ set scrolloff=2                 " Keep lines above/below cursor visible
 set sidescrolloff=5             " Keep columns left/right of cursor visible
 set display+=lastline           " Show as much as possible of wrapped last line
 set foldnestmax=3               " Limit depth of nested syntax/indent folds
-set foldopen-=block             " Do not open folds on "(", "{", etc.
+set foldopen-=block             " Do not open folds on '(', '{', etc.
 set helpheight=1000             " Maximize help window vertically
 set lazyredraw                  " Do not redraw screen during macro execution
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
@@ -455,7 +455,7 @@ if has("autocmd")
   augroup SuperTabRC
     autocmd!
     autocmd FileType *
-      \ if exists("*SuperTabChain") && &omnifunc != '' |
+      \ if exists("*SuperTabChain") && &omnifunc != "" |
       \   call SuperTabChain(&omnifunc, "<C-p>") |
       \   call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
       \ endif

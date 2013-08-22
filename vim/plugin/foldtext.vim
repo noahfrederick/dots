@@ -10,7 +10,7 @@
 "
 " Features:
 "   - In very narrow windows, the line count is omitted.
-"   - The original indentation of the the preview text is preserved.
+"   - The original indentation of the preview text is preserved.
 "   - Matching brackets are collapsed to "{ ... }".
 "
 function! CleanFoldText()
