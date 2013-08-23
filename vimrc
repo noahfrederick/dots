@@ -237,6 +237,17 @@ if has("autocmd")
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
     autocmd FileType html,liquid,xml setlocal textwidth=120
 
+    " CSS-like languages
+    autocmd FileType css,less setlocal foldmethod=marker
+    autocmd FileType css,less setlocal foldmarker={,}
+
+    " csv.vim
+    autocmd FileType csv map <buffer> ( H
+    autocmd FileType csv map <buffer> ) L
+
+    " Keep separate spell file for Vim scripting
+    autocmd FileType vim,help setlocal
+      \ spellfile=~/.vim/spell/en.utf-8.add,~/.vim/spell/vim.utf-8.add
     autocmd FileType vim setlocal keywordprg=:help
 
     " Do not wrap lines in the QuickFix window
@@ -251,7 +262,7 @@ if has("autocmd")
     autocmd FileType fish setlocal textwidth=78 foldmethod=expr
 
     " Set the file type for common Ruby files not ending in .rb
-    autocmd BufRead,BufNewFile {Rakefile} set filetype=ruby
+    autocmd BufRead,BufNewFile {Rakefile,Guardfile} set filetype=ruby
   augroup END
 
   set cursorline
