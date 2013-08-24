@@ -419,12 +419,17 @@ let g:did_install_syntax_menu = 1
 
 " :help syntastic-global-options
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let g:syntastic_error_symbol = "\u203c"
-  let g:syntastic_warning_symbol = "\u203c"
+  let g:syntastic_error_symbol = "\u24a0 "
+  let g:syntastic_warning_symbol = "\u24b2 "
   let g:syntastic_style_error_symbol = "\u00a7"
   let g:syntastic_style_warning_symbol = "\u00a7"
 endif
 let g:syntastic_enable_highlighting = 0
+let g:syntastic_stl_format = ' %E{%e' . g:syntastic_error_symbol
+let g:syntastic_stl_format .= ' (line %fe)}'
+let g:syntastic_stl_format .= '%B{ }'
+let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol
+let g:syntastic_stl_format .= ' (line %fw)} '
 
 " :help syntastic-config-makeprg
 " Don't complain about indentation with tabs, set encoding
