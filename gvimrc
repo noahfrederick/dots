@@ -15,4 +15,6 @@ set visualbell
 set spell
 set number
 
+set fullscreen
+
 " vim: fdm=marker:sw=2:sts=2:et
