@@ -291,6 +291,12 @@ endif
 " Make Y consistent with C and D
 nnoremap Y y$
 
+" Linewise movement should work on screen lines
+noremap k gk
+noremap j gj
+noremap gk k
+noremap gj j
+
 noremap <Down> <C-w>+
 noremap <Up> <C-w>-
 noremap <Left> <C-w><
