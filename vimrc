@@ -160,11 +160,11 @@ endif
 " Execute commands without moving cursor, changing search pattern
 function! <SID>Preserve(...)
   let l:saved_search = @/
-  let l:saved_pos = getpos('.')
+  let l:saved_view = winsaveview()
   for l:command in a:000
     execute l:command
   endfor
-  call setpos('.', l:saved_pos)
+  call winrestview(l:saved_view)
   let @/ = l:saved_search
 endfunction
 
