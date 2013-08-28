@@ -206,6 +206,9 @@ if exists("$NOTES")
   command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
 endif
 
+" Toggle light/dark background
+command! -nargs=0 -bar BackgroundInvert let &background = ( &background == "dark" ? "light" : "dark" )
+
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 if !exists(":DiffOrig")
@@ -314,8 +317,6 @@ map <Leader>es :split %%
 map <Leader>ev :vsplit %%
 map <Leader>et :tabedit %%
 
-" Toggle light/dark background
-nnoremap <Leader>k :let &background = ( &background == "dark" ? "light" : "dark" )<CR>
 
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
