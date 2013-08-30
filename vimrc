@@ -424,6 +424,11 @@ let g:netrw_banner = 0
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1
 
+" :help GitGutterCustomisation
+if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
+  let g:gitgutter_sign_modified_removed = "\u2243"
+endif
+
 " :help syntastic-global-options
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let g:syntastic_error_symbol = "\u24a0 "
