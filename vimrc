@@ -389,12 +389,16 @@ nnoremap <Space>, :CtrlPTag<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
 nnoremap <Space>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
   \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
-nnoremap <Space>G :edit $HOME/.dots/gvimrc<CR>
+nnoremap <Space>D :edit README.md<CR>
+nnoremap <Space>E :edit Gemfile<CR>
+nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
+nnoremap <Space>H :edit .htaccess<CR>
 nnoremap <Space>L :edit $HOME/.vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
 nnoremap <Space>N :edit $DOCS/vim.md<CR>
 nnoremap <Space>R :edit Rakefile<CR>
-nnoremap <Space>V :edit $HOME/.dots/vimrc<CR>
+nnoremap <Space>U :edit Guardfile<CR>
+nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlP $DOCS<CR>
 nnoremap <Space>ka :CtrlP application<CR>
