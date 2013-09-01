@@ -179,6 +179,12 @@ function! <SID>NormalizeWhitespace()
     \ )
 endfunction
 
+function! <SID>NormalModeDigraph(char2)
+  let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
+  echo 'digraph: ' . l:char1 . a:char2
+  return "r\<C-k>" . l:char1 . a:char2
+endfunction
+
 function! <SID>Bdelete(bang) abort
   let l:current_buffer = bufnr("%")
   let l:alternate_buffer = bufnr("#")
@@ -317,6 +323,13 @@ map <Leader>es :split %%
 map <Leader>ev :vsplit %%
 map <Leader>et :tabedit %%
 
+" Use character under cursor as first character in digraph and replace it
+" Ex.:
+"   Pressing <Leader>k- on the 'e' in
+"     habere
+"   Makes
+"     habēre
+nnoremap <expr> <Leader>k <SID>NormalModeDigraph(nr2char(getchar()))
 
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
