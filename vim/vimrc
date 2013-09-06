@@ -441,6 +441,20 @@ let g:netrw_banner = 0
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1
 
+" airline.vim
+let g:airline_branch_prefix = '⎇ '
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_theme = 'noctu'
+let g:airline_section_a = '%{fnamemodify(getcwd(), ":t")}'
+if exists('$PROJECT_TITLE')
+  let g:airline_section_a = '%{$PROJECT_TITLE}'
+endif
+let g:airline#extensions#csv#column_display = 'Name'
+
+
 " :help GitGutterCustomisation
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let g:gitgutter_sign_modified_removed = "\u2243"
