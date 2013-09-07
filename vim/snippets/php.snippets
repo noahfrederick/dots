@@ -20,15 +20,15 @@ snippet d "Define constant" !b
 define('${1:NAME}', ${2:value});
 endsnippet
 
-snippet "a(rray)?" "array()" r
+snippet array "array()"
 array($1)
 endsnippet
 
-snippet "a(rray)?" "$var = array();" !br
+snippet array "$var = array();" !b
 $${1:arr} = array($2);
 endsnippet
 
-snippet "cl(ass)?" "class" !br
+snippet class "Class definition" !b
 /**
  * ${4:Description}.
  *
@@ -42,7 +42,7 @@ class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v help
 }
 endsnippet
 
-snippet "f(un)?" "function" !br
+snippet fun "Function definition" !b
 ${1:public }function ${2:fun_name}(${3})
 {
 	${VISUAL}$0
