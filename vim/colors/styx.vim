@@ -233,6 +233,10 @@ hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
 " hi SyntasticErrorLine    guisp=#ff0055  gui=undercurl
 
 "}}}
+" CSS {{{
+hi! link cssBraces  Delimiter
+
+"}}}
 " CSV {{{
 hi! link CSVColumnOdd         Normal
 hi! link CSVColumnEven        Comment
