@@ -10,7 +10,6 @@ alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
 alias ll='ls -hl'
 alias la='ls -ahl'
 
-alias v="$EDITOR"
 alias vs="$EDITOR -S"
 alias c=clear
 alias r=rails
@@ -20,6 +19,9 @@ alias tp='taskwarrior-project.bash'
 alias ta='taskwarrior-project.bash add'
 function o () {
 	open ${@:-'.'}
+}
+function v () {
+	mvim --remote-silent ${@:-'.'}
 }
 
 # Git abbreviations
@@ -43,20 +45,11 @@ alias gpu='git pull'
 alias gs='git status'
 
 # Selenium server
-alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.31.0/selenium-server-standalone-2.31.0.jar -p 4444'
+alias selenium='java -jar /usr/local/Cellar/selenium-server-standalone/2.35.0/selenium-server-standalone-2.35.0.jar -p 4444'
 
 #
 # FUNCTIONS
 #
-# Give visual indicator of exit status of previous command.
-function result () {
-	if [ $? = 0 ]; then
-		echo -e "\033[0;32m----- Success -----\033[0m"
-	else
-		echo -e "\033[0;31m----- Failure -----\033[0m"
-	fi
-}
-
 # Print PATH in readable form.
 function path () {
 	IFS_OLD=$IFS
