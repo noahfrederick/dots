@@ -1,5 +1,8 @@
 " Org-mode-like extensions to Markdown
 
+" The keywords below are case-sensitive
+syntax case match
+
 syntax keyword markdownOrgTodo TODO
 syntax keyword markdownOrgDone DONE
 syntax keyword markdownOrgCanceled CANCELED
