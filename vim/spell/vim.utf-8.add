@@ -1,0 +1,16 @@
+QuickFix
+vim
+autoload
+autocmd
+g
+modeline
+linebreak
+utf
+unnamedplus
+shiftwidth
+unix
+ignorecase
+fenc
+plugin
+textwidth
+vimrc
