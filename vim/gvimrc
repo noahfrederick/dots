@@ -17,4 +17,7 @@ set number
 
 set fullscreen
 
+" Toggle window transparency - useful for referencing something behind Vim
+nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
+
 " vim: fdm=marker:sw=2:sts=2:et
