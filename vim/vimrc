@@ -331,6 +331,18 @@ map <Leader>et :tabedit %%
 "     habēre
 nnoremap <expr> <Leader>k <SID>NormalModeDigraph(nr2char(getchar()))
 
+" Shortcut for inserting date and time in various formats
+" from @tpope. The repeat(..., 0) makes it such that there's
+" no output from <C-r>=
+inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
+  \ "%Y-%m-%d %H:%M:%S",
+  \ "%Y-%m-%d",
+  \ "%Y %b %d",
+  \ "%d-%b-%y",
+  \ "%a, %d %b %Y %H:%M:%S %z",
+  \ "%a %b %d %T %Z %Y"
+  \ ], 'strftime(v:val)')), 0)<CR>
+
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
