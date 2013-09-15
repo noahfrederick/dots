@@ -363,6 +363,9 @@ nnoremap <silent> <Leader>W :call <SID>NormalizeWhitespace()<CR>
 " Re-indent entire buffer
 nnoremap <silent> <Leader>= :call <SID>Preserve("normal! gg=G")<CR>
 
+" Yank entire buffer
+nnoremap <silent> <Leader>y :call <SID>Preserve("normal! ggyG")<CR>
+
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
 
