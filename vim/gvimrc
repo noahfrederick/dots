@@ -15,7 +15,9 @@ set visualbell
 set spell
 set number
 
-set fullscreen
+if has('gui_macvim')
+  set fullscreen
+endif
 
 " Toggle window transparency - useful for referencing something behind Vim
 nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
