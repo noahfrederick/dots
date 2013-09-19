@@ -518,7 +518,7 @@ let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-stand
 let g:csv_disable_fdt = 1
 
 " Specify syntaxes to import for Markdown code blocks
-let g:markdown_fenced_languages = ["vim", "php", "ruby"]
+let g:markdown_fenced_languages = ["vim", "php", "ruby", "sh"]
 
 " delimitMate settings
 let g:delimitMate_expand_cr = 1
