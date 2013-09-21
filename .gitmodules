@@ -52,9 +52,6 @@
 [submodule "vim/bundle/noctu"]
 	path = vim/bundle/noctu
 	url = git@github.com:noahfrederick/vim-noctu.git
-[submodule "vim/bundle/gitgutter"]
-	path = vim/bundle/gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
 [submodule "vim/bundle/liquid"]
 	path = vim/bundle/liquid
 	url = git://github.com/tpope/vim-liquid.git
