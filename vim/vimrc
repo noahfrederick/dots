@@ -489,6 +489,8 @@ let g:syntastic_stl_format .= '%B{ }'
 let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol
 let g:syntastic_stl_format .= ' (line %fw)} '
 
+let g:syntastic_php_checkers = ['php']
+
 " :help syntastic-config-makeprg
 " Don't complain about indentation with tabs, set encoding
 let g:syntastic_php_phpcs_post_args = "--tab-width=4 --encoding=utf-8"
