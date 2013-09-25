@@ -65,6 +65,7 @@ set wildmenu                    " Command line completion
 set cmdheight=2                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
+set showcmd                     " Show incomplete key sequences
 
 "" Whitespace
 set autoindent
