@@ -470,6 +470,18 @@ if exists('$PROJECT_TITLE')
 endif
 let g:airline#extensions#csv#column_display = 'Name'
 
+" Only enable YouCompleteMe for certain file types
+let g:ycm_filetype_whitelist = {
+      \ 'php': 1,
+      \ 'vim': 1,
+      \ 'python': 1,
+      \ 'javascript': 1,
+      \ 'ruby': 1,
+      \ 'css': 1,
+      \ 'less': 1
+      \ }
+let g:ycm_complete_in_strings = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " :help GitGutterCustomisation
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
