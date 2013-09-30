@@ -211,6 +211,8 @@ endif
 
 if exists("$NOTES")
   command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
+  command! -nargs=1 -bang Notes vimgrep<bang> /<args>/ $NOTES/**/*.md
+  command! -nargs=1 -bang Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md<Bar>lcd %:p:h"
 endif
 
 " Toggle light/dark background
