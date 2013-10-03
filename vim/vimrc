@@ -253,6 +253,9 @@ if has("autocmd")
     autocmd FileType css,less setlocal foldmethod=marker
     autocmd FileType css,less setlocal foldmarker={,}
 
+    " Ruby folding
+    autocmd FileType ruby setlocal foldlevel=2
+
     " csv.vim
     autocmd FileType csv map <buffer> ( H
     autocmd FileType csv map <buffer> ) L
