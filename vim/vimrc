@@ -341,6 +341,9 @@ map <Leader>et :tabedit %%
 "     habēre
 nnoremap <expr> <Leader>k <SID>NormalModeDigraph(nr2char(getchar()))
 
+" Look up documentation with Dash.app
+nmap <Leader>K <Plug>DashSearch
+
 " Shortcut for inserting date and time in various formats
 " from @tpope. The repeat(..., 0) makes it such that there's
 " no output from <C-r>=
