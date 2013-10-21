@@ -96,7 +96,7 @@ let g:statusline_separator_left = " \u27e9 "
 let g:statusline_separator_right = " \u27e8 "
 
 let &statusline = ""
-let &statusline .= " %{fnamemodify(getcwd(), ':~')}"
+let &statusline .= " %{fnamemodify(getcwd(), ':t:~')}"
 let &statusline .= g:statusline_separator_left
 let &statusline .= "%f%m"
 let &statusline .= "%{StatuslineGit()}"
@@ -105,8 +105,8 @@ let &statusline .= "%{strlen(&fenc)?&enc:&fenc}"
 let &statusline .= g:statusline_separator_right
 let &statusline .= '%{strlen(&ft)?&ft:"n/a"}'
 let &statusline .= g:statusline_separator_right
-let &statusline .= '%1*%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 let &statusline .= "%3.l:%-3.c "
+let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has("mouse")
