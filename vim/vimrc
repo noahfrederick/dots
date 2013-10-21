@@ -1,8 +1,6 @@
 " GENERAL SETTINGS                                                             {{{
 " --------------------------------------------------------------------------------
 
-set nocompatible                " Disable Vi compatibility
-
 if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
   runtime bundle/pathogen/autoload/pathogen.vim
   call pathogen#infect()        " Manage 'runtimepath' with pathogen.vim
