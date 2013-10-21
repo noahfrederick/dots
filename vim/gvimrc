@@ -1,12 +1,6 @@
 " Set colors
 colorscheme styx
 
-" Set font
-set guifont=Panic\ Sans:h13
-
-" Panic Sans needs a little vertical breathing room
-set linespace=2
-
 " Hide toolbar and scrollbars by default
 " (see :help 'guioptions')
 set guioptions=gmt
@@ -16,10 +10,15 @@ set spell
 set number
 
 if has('gui_macvim')
-  set fullscreen
-endif
+  set guifont=Panic\ Sans:h13
 
-" Toggle window transparency - useful for referencing something behind Vim
-nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
+  " Panic Sans needs a little vertical breathing room
+  set linespace=2
+
+  set fullscreen
+
+  " Toggle window transparency - useful for referencing something behind Vim
+  nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
+endif
 
 " vim: fdm=marker:sw=2:sts=2:et
