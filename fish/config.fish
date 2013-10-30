@@ -13,10 +13,7 @@ prepend_to_path $HOME/bin
 #
 # FISH
 #
-set -gx fish_greeting ''
-function fish_user_key_bindings
-	bind \cn accept-autosuggestion
-end
+set -g fish_greeting
 
 #
 # DIRECTORIES
