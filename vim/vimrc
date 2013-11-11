@@ -135,7 +135,7 @@ function! StatuslineGit()
 endfunction
 
 " Show highlight group of character under cursor
-function! <SID>SynStack()
+function! s:SynStack()
   if !exists("*synstack")
     return
   endif
@@ -143,7 +143,7 @@ function! <SID>SynStack()
 endfunction
 
 " Follow symlink to actual file
-function! <SID>FollowSymlink()
+function! s:FollowSymlink()
   " Get path of actual file
   let fname = resolve(expand("%:p"))
   " Rename buffer with new path
@@ -157,7 +157,7 @@ if !exists(":FollowSymlink")
 endif
 
 " Execute commands without moving cursor, changing search pattern
-function! <SID>Preserve(...)
+function! s:Preserve(...)
   let l:saved_search = @/
   let l:saved_view = winsaveview()
   for l:command in a:000
@@ -167,7 +167,7 @@ function! <SID>Preserve(...)
   let @/ = l:saved_search
 endfunction
 
-function! <SID>NormalizeWhitespace()
+function! s:NormalizeWhitespace()
   " 1. Strip trailing whitespace
   " 2. Merge consecutive blank lines
   " 3. Strip empty line from end of file
@@ -178,13 +178,13 @@ function! <SID>NormalizeWhitespace()
     \ )
 endfunction
 
-function! <SID>NormalModeDigraph(char2)
+function! s:NormalModeDigraph(char2)
   let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
   echo 'digraph: ' . l:char1 . a:char2
   return "r\<C-k>" . l:char1 . a:char2
 endfunction
 
-function! <SID>Bdelete(bang) abort
+function! s:Bdelete(bang) abort
   let l:current_buffer = bufnr("%")
   let l:alternate_buffer = bufnr("#")
 
