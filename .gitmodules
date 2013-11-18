@@ -100,3 +100,12 @@
 [submodule "vim/bundle/jade"]
 	path = vim/bundle/jade
 	url = git://github.com/digitaltoad/vim-jade.git
+[submodule "vim/bundle/textobj-user"]
+	path = vim/bundle/textobj-user
+	url = git@github.com:kana/vim-textobj-user.git
+[submodule "vim/bundle/textobj-rubyblock"]
+	path = vim/bundle/textobj-rubyblock
+	url = git@github.com:nelstrom/vim-textobj-rubyblock.git
+[submodule "vim/bundle/rbenv"]
+	path = vim/bundle/rbenv
+	url = git@github.com:tpope/vim-rbenv.git
