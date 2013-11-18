@@ -30,7 +30,7 @@ hi SpellRare           guisp=#b7aa80  guibg=NONE     gui=undercurl
 hi SpellLocal          guisp=#d6b8f5  guibg=NONE     gui=undercurl
 hi NonText             guifg=#666666
 hi LineNr              guifg=#444444  guibg=NONE
-hi CursorLineNr        guifg=#b7aa80  guibg=#222222
+hi CursorLineNr        guifg=#539dbd  guibg=#222222
 hi Visual              guibg=#264049
 hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
@@ -234,7 +234,40 @@ hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
 
 "}}}
 " CSS {{{
-hi! link cssBraces  Delimiter
+hi! link cssStyle                     Delimiter
+hi! link cssBraces                    Delimiter
+" CSS syntax file sucks and doesn't link to a common cssProperty group
+hi cssProperty                        guifg=#b8b8b8
+hi! link cssAnimationProp             cssProperty
+hi! link cssBackgroundProp            cssProperty
+hi! link cssBorderOutlineProp         cssProperty
+hi! link cssBoxProp                   cssProperty
+hi! link cssColorProp                 cssProperty
+hi! link cssContentForPagedMediaProp  cssProperty
+hi! link cssDimensionProp             cssProperty
+hi! link cssFlexibleBoxProp           cssProperty
+hi! link cssFontProp                  cssProperty
+hi! link cssGeneratedContentProp      cssProperty
+hi! link cssGridProp                  cssProperty
+hi! link cssHyerlinkProp              cssProperty
+hi! link cssLineboxProp               cssProperty
+hi! link cssListProp                  cssProperty
+hi! link cssMarginProp                cssProperty
+hi! link cssMarqueeProp               cssProperty
+hi! link cssMultiColumnProp           cssProperty
+hi! link cssPaddingProp               cssProperty
+hi! link cssPagedMediaProp            cssProperty
+hi! link cssPositioningProp           cssProperty
+hi! link cssPrintProp                 cssProperty
+hi! link cssRubyProp                  cssProperty
+hi! link cssSpeechProp                cssProperty
+hi! link cssTableProp                 cssProperty
+hi! link cssTextProp                  cssProperty
+hi! link cssTransformProp             cssProperty
+hi! link cssTransitionProp            cssProperty
+hi! link cssUIProp                    cssProperty
+hi! link cssAuralProp                 cssProperty
+hi! link cssRenderProp                cssProperty
 
 "}}}
 " CSV {{{
