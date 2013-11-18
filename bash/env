@@ -8,6 +8,7 @@ function pathadd () {
 }
 
 hash brew &>/dev/null && pathadd "$(brew --prefix josegonzalez/php/php54)/bin"
+pathadd ~/.cask/bin
 pathadd ~/bin
 
 #
