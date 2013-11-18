@@ -4,3 +4,51 @@ snippet php53 "Force PHP 5.3" b
 # Use PHP 5.3
 AddHandler application/x-httpd-php53 .php
 endsnippet
+
+snippet php54 "Force PHP 5.4" b
+# Use PHP 5.4
+AddHandler application/x-httpd-php54 .php
+endsnippet
+
+snippet php55 "Force PHP 5.5" b
+# Use PHP 5.5
+AddHandler application/x-httpd-php55 .php
+endsnippet
+
+snippet mod "IfModule" b
+<IfModule mod_${1:rewrite}.c>
+RewriteEngine On
+$0
+</IfModule>
+endsnippet
+
+snippet rule "RewriteRule" b
+RewriteRule ${1:^url$} ${2:/new-url/} [${3:R=301,}L]
+endsnippet
+
+snippet cond "RewriteCond" b
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+endsnippet
+
+snippet base "RewriteBase" b
+RewriteBase ${1:/}
+endsnippet
+
+snippet wp "WordPress rewrite block" b
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+endsnippet
+
+snippet opt "Options" b
+Options ${1:-Indexes}
+endsnippet
