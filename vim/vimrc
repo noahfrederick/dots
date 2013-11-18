@@ -36,6 +36,7 @@ set foldnestmax=3               " Limit depth of nested syntax/indent folds
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set helpheight=1000             " Maximize help window vertically
 set lazyredraw                  " Do not redraw screen during macro execution
+set formatoptions+=j            " Remove extra comment char when joining lines
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
@@ -70,6 +71,7 @@ set autoindent
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Width of displayed tabs--the rest is taken care of by sleuth.vim
 set shiftround                  " Round indent to multiple of 'shiftwidth'
+set nojoinspaces                " Do not insert two spaces after '.' when using J
 
 "" Swaps and backups
 if !strlen($SUDO_USER) && has("unix")
