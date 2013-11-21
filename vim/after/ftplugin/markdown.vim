@@ -25,3 +25,9 @@ inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
 " Promote/demote headings
 nnoremap <buffer> <Left> :call helper#markdown#PromoteHeading()<CR>
 nnoremap <buffer> <Right> :call helper#markdown#DemoteHeading()<CR>
+
+" Follow link under cursor
+nnoremap <buffer> gx :call helper#markdown#FollowLinkUnderCursor()<CR>
+
+" Use pandoc to run off a PDF with :make
+silent! compiler pandoc

@@ -58,3 +58,17 @@ function! helper#markdown#ExpandCR()
 
   return "\<CR>"
 endfunction
+
+" The gx mapping provided by the Netrw plug-in only works on WORDS. This
+" provides support for opening links under the cursor:
+function! helper#markdown#FollowLinkUnderCursor()
+  let l:saved_reg = @t
+  let l:saved_pos = getpos('.')
+
+  normal! Bf("tyib
+  let l:url = @t
+  call netrw#NetrwBrowseX(url, 0)
+
+  let @t = l:saved_reg
+  call setpos('.', l:saved_pos)
+endfunction
