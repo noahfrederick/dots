@@ -434,10 +434,12 @@ nnoremap [oo :set colorcolumn=+1<CR>
 nnoremap ]oo :set colorcolumn=0<CR>
 nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
-" <Space> mappings for finding files
+" <Space> mappings for navigating files and buffers
 nnoremap <Space><Space> :CtrlP<CR>
 nnoremap <Space>. :CtrlP .<CR>
 nnoremap <Space>; :CtrlPBuffer<CR>
+nnoremap <Space>' :CtrlPBookmarkDir<CR>
+nnoremap <Space>" :CtrlPBookmarkDirAdd<CR>
 nnoremap <Space>~ :CtrlP $HOME<CR>
 nnoremap <Space>, :CtrlPTag<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
@@ -463,9 +465,10 @@ nnoremap <Space>km :CtrlP application/classes/Model<CR>
 nnoremap <Space>ko :CtrlP application/config<CR>
 nnoremap <Space>kt :CtrlP application/templates<CR>
 nnoremap <Space>kv :CtrlP application/classes/View<CR>
+nnoremap <Space>m :CtrlPMixed<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
 nnoremap <Space>p :CtrlP $PROJECTS<CR>
-nnoremap <Space>v :CtrlP $HOME/.vim<CR>
+nnoremap <Space>v :CtrlPRTS<CR>
 
 " }}}
 " PLUG-INS                                                                     {{{
@@ -551,7 +554,7 @@ let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 12
 
 " :help ctrlp-options
-let g:ctrlp_extensions = ["tag"]
+let g:ctrlp_extensions = ["tag", "rtscript", "bookmarkdir"]
 let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-standard"]
 
 " Prevent csv.vim from setting its own 'foldtext'
