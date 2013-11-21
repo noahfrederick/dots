@@ -270,8 +270,9 @@ if has("autocmd")
       \ spellfile=~/.vim/spell/en.utf-8.add,~/.vim/spell/vim.utf-8.add
     autocmd FileType vim setlocal keywordprg=:help
 
-    " Do not wrap lines in the QuickFix window
-    autocmd FileType qf setlocal nowrap
+    " Do not highlight current line in quickfix window as it overlaps the
+    " current item highlight
+    autocmd FileType qf setlocal wrap nocursorline
 
     " Set format options for Apache config files
     autocmd FileType apache setlocal comments=:# commentstring=#\ %s
@@ -280,6 +281,9 @@ if has("autocmd")
     " Set options for fish scripts
     autocmd FileType fish silent! compiler fish
     autocmd FileType fish setlocal textwidth=78 foldmethod=expr
+
+    " Never show line numbers in help buffers
+    autocmd FileType help set nonumber
 
     " Set the file type for common Ruby files not ending in .rb
     autocmd BufRead,BufNewFile {Rakefile,Guardfile} set filetype=ruby
@@ -291,7 +295,7 @@ if has("autocmd")
 
     " Only highlight cursor line in active buffer window
     autocmd WinLeave * set nocursorline
-    autocmd WinEnter * set cursorline
+    autocmd WinEnter * if &filetype == 'qf' | set nocursorline | else | set cursorline | endif
   augroup END
 
   highlight! link TrailingWhitespace Error
@@ -301,6 +305,14 @@ if has("autocmd")
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
+  augroup END
+
+  augroup Cmdwin
+    autocmd!
+    " Never show line numbers in command-line window as they are not useful
+    " and take up space (normally it inherits this setting like any other
+    " window)
+    autocmd CmdwinEnter * set nonumber
   augroup END
 endif
 
