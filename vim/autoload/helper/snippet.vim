@@ -2,15 +2,22 @@
 " Maintainer:   Noah Frederick
 
 function! helper#snippet#Author()
-  if executable("git")
-    return system('git config --get user.name')[0:-2]
-  endif
+  return s:get_git_config_value('user.name')
 endfunction
 
 function! helper#snippet#Email()
+  return s:get_git_config_value('user.email')
+endfunction
+
+function! helper#snippet#GitHubUsername()
+  return s:get_git_config_value('user.github')
+endfunction
+
+function! s:get_git_config_value(key)
   if executable("git")
-    return system('git config --get user.email')[0:-2]
+    return system('git config --get ' . a:key)[0:-2]
   endif
+  return 0
 endfunction
 
 function! helper#snippet#Title(basename)
@@ -39,4 +46,3 @@ function! helper#snippet#ProjectTitle()
 endfunction
 
 " vim:set et sw=2:
-

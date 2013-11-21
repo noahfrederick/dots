@@ -10,6 +10,7 @@ function! SkeletonCustomReplace(filename)
   let basename = fnamemodify(a:filename, ':t:r')
   call skeleton#Replace('EMAIL', helper#snippet#Email())
   call skeleton#Replace('AUTHOR', helper#snippet#Author())
+  call skeleton#Replace('GITHUB_USERNAME', helper#snippet#GitHubUsername())
   call skeleton#Replace('TITLE', helper#snippet#Title(basename))
   call skeleton#Replace('PROJECT_TITLE', helper#snippet#ProjectTitle())
 endfunction
