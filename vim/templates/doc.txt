@@ -5,7 +5,6 @@ License:  Same terms as Vim itself (see |license|)
 
 This plugin is only available if 'compatible' is not set.
 
-==============================================================================
 CONTENTS					*@BASENAME@*
 
   1. Introduction .......... |@BASENAME@-introduction|
