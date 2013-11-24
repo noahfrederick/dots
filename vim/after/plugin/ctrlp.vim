@@ -6,13 +6,11 @@ if !exists("g:loaded_ctrlp") || ( exists("g:loaded_ctrlp") && !g:loaded_ctrlp )
   finish
 endif
 
-
 " ctrlp only looks for this
 let g:ctrlp_status_func = {
   \ "main": "CtrlP_Statusline_1",
   \ "prog": "CtrlP_Statusline_2",
   \ }
-
 
 " CtrlP_Statusline_1 and CtrlP_Statusline_2 both must return a full statusline
 " and are accessible globally.
@@ -20,11 +18,17 @@ let g:ctrlp_status_func = {
 " Arguments: focus, byfname, s:regexp, prv, item, nxt, marked
 "            a:1    a:2      a:3       a:4  a:5   a:6  a:7
 function! CtrlP_Statusline_1(...)
-  let usercolor = "%9*"
+  let usercolor = "%4*"
   if a:5 == "buffers"
-    let usercolor = "%1*"
+    let usercolor = "%5*"
   elseif a:5 == "mru files"
-    let usercolor = "%2*"
+    let usercolor = "%6*"
+  elseif a:5 == "bookmarked dirs"
+    let usercolor = "%7*"
+  elseif a:5 == "tags"
+    let usercolor = "%8*"
+  elseif a:5 == "runtime scripts"
+    let usercolor = "%9*"
   endif
 
   let byfname = usercolor." ".a:2.g:statusline_separator_left
@@ -34,13 +38,12 @@ function! CtrlP_Statusline_1(...)
   let regex = a:3 ? "regex".g:statusline_separator_right : ""
   let focus = a:1.g:statusline_separator_right
   let prv = a:4." "
-  let item = "%4* ".a:5." ".usercolor
+  let item = "%#StatusLine# ".a:5." ".usercolor
   let nxt = " ".a:6." "
 
   " Return the full statusline
   return byfname.dir.marked.regex.focus.prv.item.nxt
 endfunction
-
 
 " Argument: len
 "           a:1

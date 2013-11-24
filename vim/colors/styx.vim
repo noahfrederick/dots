@@ -30,7 +30,7 @@ hi SpellRare           guisp=#b7aa80  guibg=NONE     gui=undercurl
 hi SpellLocal          guisp=#d6b8f5  guibg=NONE     gui=undercurl
 hi NonText             guifg=#666666
 hi LineNr              guifg=#444444  guibg=NONE
-hi CursorLineNr        guifg=#539dbd  guibg=#222222
+hi CursorLineNr        guifg=#539dbd  guibg=#222222  gui=NONE
 hi Visual              guibg=#264049
 hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
@@ -46,15 +46,15 @@ hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
 hi DiffDelete          guifg=#000000  guibg=#ff0055
 hi DiffText            guifg=#000000  guibg=#e9d9b3  gui=bold
-hi User1               guifg=#000000  guibg=#d2d2d2
-hi User2               guifg=#ffffff  guibg=#333333
-hi User3               guifg=#000000  guibg=#e9d9b3
-hi User4               guifg=#000000  guibg=#ffb6c0
-hi User5               guifg=#000000  guibg=#d6b8f5
-hi User6               guifg=#000000  guibg=#739ba3
-hi User7               guifg=#000000  guibg=#93c3d6
-hi User8               guifg=#ffffff  guibg=#b7aa80
-hi User9               guifg=#ffffff  guibg=#222222
+hi User1               guifg=#ff0055  guibg=#151515  " Modified
+hi User2               guifg=#539dbd  guibg=#151515  " Special
+hi User3               guifg=#b1d631  guibg=#151515  " Readonly
+hi User4               guifg=#000000  guibg=#bbbbbb  " CtrlP default (indluding files)
+hi User5               guifg=#000000  guibg=#b7aa80  " CtrlP buffers
+hi User6               guifg=#000000  guibg=#ffb6c0  " CtrlP MRU files
+hi User7               guifg=#000000  guibg=#93c3d6  " CtrlP bookmarks
+hi User8               guifg=#000000  guibg=#d6b8f5  " CtrlP tags
+hi User9               guifg=#000000  guibg=#b1d631  " CtrlP runtime scripts
 hi! link CursorColumn  CursorLine
 hi! link SignColumn    LineNr
 hi! link FoldColumn    SignColumn

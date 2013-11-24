@@ -101,11 +101,14 @@ let g:statusline_separator_right = " \u27e8 "
 let &statusline = ""
 let &statusline .= " %{fnamemodify(getcwd(), ':t:~')}"
 let &statusline .= g:statusline_separator_left
-let &statusline .= "%f%m"
-let &statusline .= "%{StatuslineGit()}"
+let &statusline .= "%f"
+let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
+let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
+let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
+let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
+let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
 let &statusline .= "%="
-let &statusline .= "%{strlen(&fenc)?&enc:&fenc}"
-let &statusline .= g:statusline_separator_right
+let &statusline .= "%#StatuslineNC#%{strlen(&fenc)?&enc:&fenc}%* "
 let &statusline .= '%{strlen(&ft)?&ft:"n/a"}'
 let &statusline .= g:statusline_separator_right
 let &statusline .= "%3.l:%-3.c "
@@ -132,7 +135,7 @@ function! StatuslineGit()
   endif
   let l:out = fugitive#head(8)
   if l:out !=# ''
-    let l:out = g:statusline_separator_left . l:out
+    let l:out = ' @ ' . l:out
   endif
   return l:out
 endfunction
