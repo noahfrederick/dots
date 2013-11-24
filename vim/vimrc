@@ -610,7 +610,8 @@ endif
 " LOCAL VIMRC                                                                  {{{
 " --------------------------------------------------------------------------------
 
-" Local
+" Include a local configuration file if available. It is sourced at the end so
+" that any local settings override those in this file.
 if filereadable(glob("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
