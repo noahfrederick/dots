@@ -163,25 +163,44 @@ if !exists(":FollowSymlink")
 endif
 
 " Execute commands without moving cursor, changing search pattern
-function! s:Preserve(...)
+"
+" - First parameter is a function name to call as a string
+" - Second (optional) parameter is an array of arguments to pass to the
+"   function
+function! g:Preserve(func, ...)
+  let l:FuncRef = function(a:func)
+  if a:0 > 0
+    let l:args = a:1
+  else
+    let l:args = []
+  endif
+
   let l:saved_search = @/
   let l:saved_view = winsaveview()
-  for l:command in a:000
-    execute l:command
-  endfor
+
+  let l:return_value = call(l:FuncRef, l:args)
+
   call winrestview(l:saved_view)
   let @/ = l:saved_search
+
+  return l:return_value
 endfunction
 
 function! s:NormalizeWhitespace()
   " 1. Strip trailing whitespace
+  %substitute/\s\+$//e
   " 2. Merge consecutive blank lines
+  %substitute/\n\{3,}/\r\r/e
   " 3. Strip empty line from end of file
-  call <SID>Preserve(
-    \ '%substitute/\s\+$//e',
-    \ '%substitute/\n\{3,}/\r\r/e',
-    \ '%substitute/\n\+\%$//e'
-    \ )
+  %substitute/\n\+\%$//e
+endfunction
+
+function! s:ReindentBuffer()
+  normal! gg=G
+endfunction
+
+function! s:YankBuffer()
+  normal! ggyG
 endfunction
 
 function! s:NormalModeDigraph(char2)
@@ -386,13 +405,13 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>W :call <SID>NormalizeWhitespace()<CR>
+nnoremap <silent> <Leader>W :call g:Preserve('<SID>NormalizeWhitespace')<CR>
 
 " Re-indent entire buffer
-nnoremap <silent> <Leader>= :call <SID>Preserve("normal! gg=G")<CR>
+nnoremap <silent> <Leader>= :call g:Preserve('<SID>ReindentBuffer')<CR>
 
 " Yank entire buffer
-nnoremap <silent> <Leader>y :call <SID>Preserve("normal! ggyG")<CR>
+nnoremap <silent> <Leader>y :call g:Preserve('<SID>YankBuffer')<CR>
 
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
