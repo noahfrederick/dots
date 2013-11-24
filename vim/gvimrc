@@ -10,10 +10,26 @@ set spell
 set number
 
 if has('gui_macvim')
-  set guifont=Panic\ Sans:h13
+  " Has the nice '<>', excellent legibility, easy to distinguish among
+  " punctuation marks, but too 'squiggly' looking and no italics
+  set guifont=Source\ Code\ Pro:h14
+  set linespace=0
 
-  " Panic Sans needs a little vertical breathing room
-  set linespace=2
+  " Dashes are too short, underscores too thin
+  " set guifont=DejaVu\ Sans\ Mono:h13
+  " set linespace=2
+
+  " Has slashed '0' instead of dot
+  " set guifont=Menlo:h13
+  " set linespace=2
+
+  " Poor legibility of certain letters
+  " set guifont=Ubuntu\ Mono:h15
+  " set linespace=2
+
+  " Non-ASCII characters show up too small
+  " set guifont=Panic\ Sans:h13
+  " set linespace=2
 
   set fullscreen
 
