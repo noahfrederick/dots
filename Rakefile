@@ -57,6 +57,11 @@ task :submodule_update do
   system 'git submodule update --init'
 end
 
+desc "Pull latest from submodule repositories"
+task :submodule_pull do
+  system 'git submodule foreach git pull --ff-only'
+end
+
 def replace_file file, dest
   system %Q{rm -rf "#{dest}"}
   link_file file, dest
