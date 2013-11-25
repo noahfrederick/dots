@@ -48,7 +48,7 @@
 	url = git://github.com/tpope/vim-rails.git
 [submodule "vim/bundle/bundler"]
 	path = vim/bundle/bundler
-	url = git://github.com/tpope/vim-bundler.git
+	url = git@github.com:tpope/vim-bundler.git
 [submodule "vim/bundle/noctu"]
 	path = vim/bundle/noctu
 	url = git@github.com:noahfrederick/vim-noctu.git
@@ -88,9 +88,6 @@
 [submodule "vim/bundle/speeddating"]
 	path = vim/bundle/speeddating
 	url = git://github.com/tpope/vim-speeddating.git
-[submodule "vim/bundle/sparkup"]
-	path = vim/bundle/sparkup
-	url = git://github.com/kogakure/vim-sparkup.git
 [submodule "vim/bundle/fish"]
 	path = vim/bundle/fish
 	url = git://github.com/dag/vim-fish.git
@@ -109,3 +106,6 @@
 [submodule "vim/bundle/rbenv"]
 	path = vim/bundle/rbenv
 	url = git@github.com:tpope/vim-rbenv.git
+[submodule "vim/bundle/sparkup"]
+	path = vim/bundle/sparkup
+	url = git@github.com:dbakker/vim-sparkup.git
