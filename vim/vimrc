@@ -75,13 +75,14 @@ set nojoinspaces                " Do not insert two spaces after '.' when using 
 
 "" Swaps and backups
 if !strlen($SUDO_USER) && has("unix")
-  " Don't store swaps in . -- store in ~/.vim/tmp/%path%to%orig.swp
-  set directory=~/.vim/tmp//,.,/var/tmp
-  " Don't store backups in . -- store in ~/.vim/tmp/%path%to%orig~
-  set backupdir=~/.vim/tmp//,.,/var/tmp
+  " Don't store swaps in . -- store in ~/.vim/tmp/swap/%path%to%orig.swp
+  set directory=~/.vim/tmp/swap//,.,/var/tmp
+  " Don't store backups in . -- store in ~/.vim/tmp/backup/%path%to%orig~
+  set backupdir=~/.vim/tmp/backup//,.,/var/tmp
   " Create tmp/ dir if it doesn't exist
   if !isdirectory($HOME."/.vim/tmp") && exists("*mkdir")
-    call mkdir($HOME."/.vim/tmp", "p", 0700)
+    call mkdir($HOME."/.vim/tmp/swap", "p", 0700)
+    call mkdir($HOME."/.vim/tmp/backup", "p", 0700)
   endif
 else
   set nobackup
