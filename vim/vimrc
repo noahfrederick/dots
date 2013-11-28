@@ -159,9 +159,7 @@ function! s:FollowSymlink()
   edit
 endfunction
 
-if !exists(":FollowSymlink")
-  command FollowSymlink call <SID>FollowSymlink()
-endif
+command! FollowSymlink call <SID>FollowSymlink()
 
 " Execute commands without moving cursor, changing search pattern
 "
@@ -229,9 +227,7 @@ function! s:Bdelete(bang) abort
   endif
 endfunction
 
-if !exists(":Bdelete")
-  command -bang -bar Bdelete call <SID>Bdelete(<q-bang>)
-endif
+command! -bang -bar Bdelete call <SID>Bdelete(<q-bang>)
 
 if exists("$NOTES")
   command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
@@ -244,10 +240,8 @@ command! -nargs=0 -bar BackgroundInvert let &background = ( &background == "dark
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
-if !exists(":DiffOrig")
-  command DiffOrig vertical new | set buftype=nofile | read # | 0delete_
-    \ | diffthis | wincmd p | diffthis
-endif
+command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
+  \ | diffthis | wincmd p | diffthis
 
 " }}}
 " AUTOCOMMANDS                                                                 {{{
