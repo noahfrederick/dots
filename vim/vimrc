@@ -444,6 +444,8 @@ nnoremap <silent> <Leader><Leader> :if winnr("$") > 1<Bar>wincmd p<Bar>else<Bar>
 
 nnoremap <Leader><CR> *<C-o>
 map <BS> %
+nnoremap <Leader>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
+  \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
@@ -451,16 +453,15 @@ nnoremap ]oo :set colorcolumn=0<CR>
 nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
 " <Space> mappings for navigating files and buffers
-nnoremap <Space><Space> :CtrlP<CR>
+nnoremap <Space><Space> :CtrlPMixed<CR>
 nnoremap <Space>. :CtrlP .<CR>
 nnoremap <Space>; :CtrlPBuffer<CR>
 nnoremap <Space>' :CtrlPBookmarkDir<CR>
 nnoremap <Space>" :CtrlPBookmarkDirAdd<CR>
 nnoremap <Space>~ :CtrlP $HOME<CR>
 nnoremap <Space>, :CtrlPTag<CR>
+nnoremap <Space>/ :CtrlPLine<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
-nnoremap <Space>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
-  \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 nnoremap <Space>D :edit README.md<CR>
 nnoremap <Space>E :edit Gemfile<CR>
 nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
@@ -472,15 +473,8 @@ nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>U :edit Guardfile<CR>
 nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
-nnoremap <Space>d :CtrlP $DOCS<CR>
-nnoremap <Space>ka :CtrlP application<CR>
-nnoremap <Space>kc :CtrlP application/classes/Controller<CR>
-nnoremap <Space>ke :CtrlP application/messages<CR>
-nnoremap <Space>kl :CtrlP application/logs<CR>
-nnoremap <Space>km :CtrlP application/classes/Model<CR>
-nnoremap <Space>ko :CtrlP application/config<CR>
-nnoremap <Space>kt :CtrlP application/templates<CR>
-nnoremap <Space>kv :CtrlP application/classes/View<CR>
+nnoremap <Space>d :CtrlPDir<CR>
+nnoremap <Space>f :CtrlP<CR>
 nnoremap <Space>m :CtrlPMixed<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
 nnoremap <Space>p :CtrlP $PROJECTS<CR>
@@ -572,8 +566,32 @@ let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 12
 
 " :help ctrlp-options
-let g:ctrlp_extensions = ["tag", "rtscript", "bookmarkdir"]
+let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
+if !isdirectory(g:ctrlp_cache_dir) && exists("*mkdir")
+  call mkdir(g:ctrlp_cache_dir, "p", 0700)
+endif
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_extensions = ["tag", "dir", "bookmarkdir", "line", "rtscript"]
 let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-standard"]
+let g:ctrlp_abbrev = {
+  \ 'gmode': 't',
+  \ 'abbrevs': [
+    \ { 'pattern': '^a ', 'expanded': 'app/'        },
+    \ { 'pattern': '^b ', 'expanded': 'bin/'        },
+    \ { 'pattern': '^c ', 'expanded': 'controller/' },
+    \ { 'pattern': '^e ', 'expanded': 'message/'    },
+    \ { 'pattern': '^f ', 'expanded': 'config/'     },
+    \ { 'pattern': '^h ', 'expanded': 'helper/'     },
+    \ { 'pattern': '^l ', 'expanded': 'lib/'        },
+    \ { 'pattern': '^m ', 'expanded': 'model/'      },
+    \ { 'pattern': '^o ', 'expanded': 'log/'        },
+    \ { 'pattern': '^p ', 'expanded': 'template/'   },
+    \ { 'pattern': '^s ', 'expanded': 'spec/'       },
+    \ { 'pattern': '^t ', 'expanded': 'test/'       },
+    \ { 'pattern': '^v ', 'expanded': 'view/'       },
+    \ ]
+  \ }
 
 " Prevent csv.vim from setting its own 'foldtext'
 let g:csv_disable_fdt = 1
