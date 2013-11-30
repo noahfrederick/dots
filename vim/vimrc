@@ -271,7 +271,7 @@ if has("autocmd")
     autocmd FileType css,less setlocal foldmarker={,}
 
     " Ruby folding
-    autocmd FileType ruby setlocal foldlevel=2
+    autocmd FileType ruby setlocal foldlevel=2 foldmethod=syntax
 
     " csv.vim
     autocmd FileType csv map <buffer> ( H
@@ -491,7 +491,6 @@ nnoremap <Space>v :CtrlPRTS<CR>
 " --------------------------------------------------------------------------------
 
 " :help ruby.vim
-let g:ruby_fold = 1
 let g:ruby_no_comment_fold = 1
 
 " :help netrw-browser-options
@@ -580,7 +579,7 @@ let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-stand
 let g:csv_disable_fdt = 1
 
 " Specify syntaxes to import for Markdown code blocks
-let g:markdown_fenced_languages = ["vim", "php", "sh"]
+let g:markdown_fenced_languages = ["sh", "php", "vim", "ruby"]
 
 " delimitMate settings
 let g:delimitMate_expand_cr = 1
