@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 3em;
+    font-family: Ubuntu, sans-serif;
+}
+h2 {
+    text-align: center;
+}
+code,
+pre {
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 100%;
+}
+#content {
+    width: 50em;
+    margin: 0 auto;
+}

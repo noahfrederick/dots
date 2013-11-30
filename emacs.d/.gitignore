@@ -1,0 +1,14 @@
+*.cache
+*.elc
+*.eld
+.cask
+.org-id-locations
+.projectile
+auto-save-list
+bookmarks
+custom.el
+emacs.el
+newsticker
+private.el
+project-persist
+url

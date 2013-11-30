@@ -1,0 +1,59 @@
+* Capture
+- ~C-c c~ Capture
+- ~C-c C-c~ Save it
+- ~C-c C-w~ Refile it
+
+* Hierarchy
+- ~M-<left/right>~ Promote/demote current headline or list item
+- ~M-<enter>~ Create new item at current level
+- ~M-S-<enter>~ Create new TODO at current level
+
+* To-Dos
+- ~C-c C-t~ Cycle state
+- ~C-c C-s~ Schedule it
+- ~C-c C-d~ Set deadline
+- ~C-c comma~ Set priority
+- ~S-<up/down>~ Increase/decrease priority of current headline
+- ~C-c C-c~ Toggle checkbox state
+- ~C-u C-c C-c~ Toggle checkbox presence
+
+* Links
+- ~C-c C-l~ Edit current link
+
+* Dates and Times
+- ~C-c .~ Insert timestamp (use twice to insert range)
+- ~C-c !~ Insert inactive timestamp (doesn't appear in agendas)
+- ~C-u C-c .~ / ~C-u C-c !~ Like above but including time
+- ~S-<left/right>~ Increment/decrement by day
+- ~S-<up/down>~ Increment/decrement segment at cursor
+- ~C-c C-y~ Evaluate time range and insert after range text
+
+* Tags
+- ~C-c C-q~ Tag a headline
+
+* Archiving
+- ~C-c C-x C-a~ Archive current item
+- ~C-u C-c C-x C-s~ Prompt to archive each non-TODO subtree of current item
+
+* Agenda
+Many commands without the ~C-c~ manipulate the agenda items
+
+- ~C-c a~ Open an agenda view
+
+* Clocking tasks
+- ~C-c C-x C-i~ / ~C-c C-x C-o~ Clock in/clock out
+- ~C-u C-c C-x C-i~ Select from list of recently clocked tasks
+- ~C-u C-u C-c C-x C-i~ Clock into the task at point and mark it as the default task
+- ~C-u C-u C-u C-c C-x C-i~ Start clock at point at time last clock stopped
+- ~C-c C-x C-x~ Clock in last clocked task
+- ~C-u C-c C-x C-x~ As above, but select from recently clocked tasks
+- ~C-u C-u C-c C-x C-x~ As above, but start clock at time last clock stopped
+- ~C-S-<up/down>~ On ~CLOCK~ log lines, increase/decrease both timestamps so
+  that the clock duration keeps the same
+- ~C-c C-x C-q~ Cancel current clock
+- ~C-c C-x C-j~ Jump to currently clocked in item
+
+Note: The clock is automatically stopped on tasks when you mark them as DONE.
+
+* Source Code
+- ~C-c single-quote~ Edit current ~SRC~ block in native mode
