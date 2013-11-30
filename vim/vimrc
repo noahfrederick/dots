@@ -600,9 +600,13 @@ let g:csv_disable_fdt = 1
 let g:markdown_fenced_languages = ["sh", "php", "vim", "ruby"]
 
 " delimitMate settings
+" Off by default as it breaks the dot command and abbreviations
+let g:delimitMade_offByDefault = 1
+let g:delimitMate_balance_matchpairs = 1
+" These options unfortunately prevent triggering abbrevs with <CR> and <Space>
+" (see https://github.com/Raimondi/delimitMate/issues/145)
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
-let g:delimitMate_balance_matchpairs = 1
 
 " :help supertab-options
 let g:SuperTabDefaultCompletionType = "context"
