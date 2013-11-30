@@ -9,6 +9,7 @@ let g:compiled_file_locations = {
       \ 'haml':   [['.', '.html'],   ['..', '.html']],
       \ 'js':     [['.', '.min.js']],
       \ 'coffee': [['.', '.min.js'], ['../js', '.js']],
+      \ 'md':     [['.', '.pdf'],    ['.', '.html']],
       \ }
 
 function! helper#path#CompiledVersion(path)

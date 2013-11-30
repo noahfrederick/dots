@@ -31,3 +31,9 @@ nnoremap <buffer> gx :call helper#markdown#FollowLinkUnderCursor()<CR>
 
 " Use pandoc to run off a PDF with :make
 silent! compiler pandoc
+
+" Recompile file on save if compiled version already exists
+augroup AfterMarkdown
+  autocmd!
+  autocmd BufWritePost *.md call helper#make#Recompile(expand('<afile>'))
+augroup END
