@@ -1,8 +1,8 @@
-" GENERAL SETTINGS                                                             {{{
+" Initialize plug-ins                                                          {{{
 " --------------------------------------------------------------------------------
 
-if filereadable($HOME."/.vim/bundle/pathogen/autoload/pathogen.vim")
-  runtime bundle/pathogen/autoload/pathogen.vim
+if filereadable($HOME."/.vim/bundle/vim-pathogen/autoload/pathogen.vim")
+  runtime bundle/vim-pathogen/autoload/pathogen.vim
   call pathogen#infect()        " Manage 'runtimepath' with pathogen.vim
 endif
 
@@ -12,6 +12,64 @@ endif
 if has("syntax") && !exists("g:syntax_on")
   syntax enable                 " Enable syntax highlighting
 endif
+
+"=category General-purpose utilities
+"=bundle AndrewRadev/splitjoin.vim
+"=bundle AndrewRadev/switch.vim
+"=bundle Raimondi/delimitMate
+"=bundle SirVer/ultisnips
+"=bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
+"=bundle ervandew/supertab
+"=bundle gmarik/vundle
+"=bundle godlygeek/tabular
+"=bundle kana/vim-textobj-user
+"=bundle kien/ctrlp.vim
+"=bundle noahfrederick/vim-skeleton
+"=bundle rizzatti/dash.vim
+"=bundle rizzatti/funcoo.vim
+"=bundle scrooloose/syntastic
+"=bundle tpope/vim-abolish
+"=bundle tpope/vim-commentary
+"=bundle tpope/vim-dispatch
+"=bundle tpope/vim-endwise
+"=bundle tpope/vim-eunuch
+"=bundle tpope/vim-fugitive
+"=bundle tpope/vim-obsession
+"=bundle tpope/vim-pathogen
+"=bundle tpope/vim-repeat
+"=bundle tpope/vim-sleuth
+"=bundle tpope/vim-speeddating
+"=bundle tpope/vim-surround
+"=bundle tpope/vim-unimpaired
+
+"=category Language-specific utilities
+"=bundle dbakker/vim-lint
+"=bundle dbakker/vim-sparkup
+"=bundle nelstrom/vim-markdown-folding
+"=bundle nelstrom/vim-textobj-rubyblock
+"=bundle tpope/vim-bundler
+"=bundle tpope/vim-rails
+"=bundle tpope/vim-rake
+"=bundle tpope/vim-rbenv
+
+"=category File-type runtime files
+"=bundle dag/vim-fish
+"=bundle digitaltoad/vim-jade
+"=bundle groenewege/vim-less
+"=bundle juvenn/mustache.vim
+"=bundle othree/html5.vim
+"=bundle tpope/vim-git
+"=bundle tpope/vim-liquid
+"=bundle tpope/vim-markdown
+
+"=category Color schemes
+"=bundle noahfrederick/vim-hemisu
+"=bundle noahfrederick/vim-noctu
+
+" }}}
+" General settings                                                             {{{
+" --------------------------------------------------------------------------------
+
 if &t_Co >= 16
   silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
 endif
@@ -126,7 +184,7 @@ if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &rtp) ==# ""
 endif
 
 " }}}
-" FUNCTIONS & COMMANDS                                                         {{{
+" Functions & commands                                                         {{{
 " --------------------------------------------------------------------------------
 
 " Git branch/commit in status line
@@ -244,7 +302,7 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
   \ | diffthis | wincmd p | diffthis
 
 " }}}
-" AUTOCOMMANDS                                                                 {{{
+" Autocommands                                                                 {{{
 " --------------------------------------------------------------------------------
 
 if has("autocmd")
@@ -333,7 +391,7 @@ if has("autocmd")
 endif
 
 " }}}
-" MAPPINGS                                                                     {{{
+" Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
 
 " Make Y consistent with C and D
@@ -481,7 +539,7 @@ nnoremap <Space>p :CtrlP $PROJECTS<CR>
 nnoremap <Space>v :CtrlPRTS<CR>
 
 " }}}
-" PLUG-INS                                                                     {{{
+" Plug-in settings                                                             {{{
 " --------------------------------------------------------------------------------
 
 " :help ruby.vim
@@ -598,6 +656,7 @@ let g:csv_disable_fdt = 1
 
 " Specify syntaxes to import for Markdown code blocks
 let g:markdown_fenced_languages = ["sh", "php", "vim", "ruby"]
+let g:markdown_fold_override_foldtext = 0
 
 " delimitMate settings
 " Off by default as it breaks the dot command and abbreviations
@@ -626,7 +685,7 @@ if has("autocmd")
 endif
 
 " }}}
-" LOCAL VIMRC                                                                  {{{
+" Local vimrc                                                                  {{{
 " --------------------------------------------------------------------------------
 
 " Include a local configuration file if available. It is sourced at the end so

@@ -1,0 +1,219 @@
+#!/bin/bash
+#
+# vim-spore: Manage Vim plug-ins in ~/.vim/bundle
+#
+
+SPORE_VERSION=0.0.1
+
+SPORE_CMD_PREFIX='"='
+SPORE_DRY_RUN=0
+
+SPORE_CMD=
+SPORE_COUNT_INSTALLED=0
+SPORE_COUNT_UPDATED=0
+SPORE_COUNT_REMOVED=0
+SPORE_COUNT_TOTAL=0
+
+VIM_DIR="$HOME/.vim"
+VIMRC="$VIM_DIR/vimrc"
+VIM_BUNDLE_DIR="$VIM_DIR/bundle"
+
+# Utilities {{{
+color () {
+	case $1 in
+		bold) tput bold ;;
+		red) tput setaf 1 ;;
+		green) tput setaf 2 ;;
+		yellow) tput setaf 3 ;;
+		blue) tput setaf 4 ;;
+		magenta) tput setaf 5 ;;
+		cyan) tput setaf 6 ;;
+		reset) tput sgr0 ;;
+	esac
+}
+
+echoc () {
+	ECHO_COLOR=$1
+	shift
+	echo "$(color $ECHO_COLOR)$*$(color reset)"
+}
+
+notice () {
+	echoc green $*
+}
+
+error () {
+	echoc red $*
+}
+
+debug () {
+	echoc blue $*
+}
+
+maybe () {
+	if [[ $SPORE_DRY_RUN == 1 ]]; then
+		# Workaround for quoted commands
+		eval "debug '$*'"
+	else
+		eval $*
+	fi
+}
+
+github_url () {
+	echo "git@github.com:${1}.git"
+}
+
+github_repo () {
+	echo "${1#*/}"
+}
+
+bundle_subdir () {
+	echo "${VIM_BUNDLE_DIR}/$(github_repo $1)"
+}
+
+# Perform a git clone unless target directory exists
+git_clone () {
+	if [[ -d "$(bundle_subdir $1)" ]]; then
+		error "$(bundle_subdir $1) already exists"
+		return 1
+	fi
+	maybe "git clone '$(github_url $1)' '$(bundle_subdir $1)'"
+}
+
+# Perform a git submodule update --init if target directory exists
+git_submodule_init () {
+	maybe "cd $(bundle_subdir $1) && git submodule update --init"
+}
+
+# Perform a git pull if target directory exists
+git_pull () {
+	maybe "cd $(bundle_subdir $1) && git pull --ff-only"
+}
+
+git_install () {
+	git_clone "$1" && git_submodule_init "$1"
+}
+
+git_update () {
+	git_pull "$1"
+	git_submodule_init "$1"
+}
+
+run_install () {
+	maybe $*
+}
+
+print_summary () {
+	echo
+	if [[ $SPORE_CMD == bundle_list ]]; then
+		notice "$SPORE_COUNT_TOTAL plug-ins in total."
+	else
+		notice "$SPORE_COUNT_INSTALLED new plug-in(s) installed, $SPORE_COUNT_UPDATED updated."
+	fi
+}
+# }}}
+# Commands {{{
+bundle_install () {
+	BUNDLE_NAME=$1
+	shift
+
+	if [[ -d "$(bundle_subdir $BUNDLE_NAME)" ]]; then
+		return
+	fi
+	notice "Installing ${BUNDLE_NAME}..."
+	git_install "$BUNDLE_NAME"
+
+	if [[ "$1" == build: ]]; then
+		notice "Running build commands for ${BUNDLE_NAME}..."
+		# TODO this is a workaround - we really want to grab the quoted commands
+		shift
+		run_install $*
+	fi
+
+	SPORE_COUNT_INSTALLED=$(( SPORE_COUNT_INSTALLED + 1 ))
+}
+
+bundle_update () {
+	notice "Updating ${1}..."
+	git_update "$1"
+
+	SPORE_COUNT_UPDATED=$(( SPORE_COUNT_UPDATED + 1 ))
+}
+
+bundle_list () {
+	if [[ -d "$(bundle_subdir $1)" ]]; then
+		echo -n '+ '
+		notice "$1"
+	else
+		echo -n '- '
+		error "$1 (not installed)"
+	fi
+}
+
+bundle_update_or_install () {
+	if [[ -d "$(bundle_subdir $1)" ]]; then
+		bundle_update "$1"
+	else
+		bundle_install "$1"
+	fi
+}
+
+bundle () {
+	$SPORE_CMD $*
+	SPORE_COUNT_TOTAL=$(( SPORE_COUNT_TOTAL + 1 ))
+}
+
+category () {
+	echo
+	echoc bold $*
+}
+
+vimrc () {
+	commands="$(grep $SPORE_CMD_PREFIX $VIMRC)"
+	while read -r cmd; do
+		cmd="${cmd#*=}"
+		$cmd
+	done <<< "$commands"
+}
+
+version () {
+	echo "Spore version ${SPORE_VERSION}"
+}
+
+list () {
+	SPORE_CMD=bundle_list
+	vimrc
+	print_summary
+}
+
+install () {
+	SPORE_CMD=bundle_install
+	vimrc
+	print_summary
+}
+
+update () {
+	SPORE_CMD=bundle_update_or_install
+	vimrc
+	print_summary
+}
+# }}}
+
+# Process flags
+IS_FLAG=1
+
+while [[ $IS_FLAG == 1 ]]; do
+	case $1 in
+		--dry-run|-d) SPORE_DRY_RUN=1; shift ;;
+		*) IS_FLAG=0 ;;
+	esac
+done
+
+# Process main command
+case $1 in
+	install) install ;;
+	update) update ;;
+	list) list ;;
+	version) version ;;
+	*) print_help ;;
+esac
