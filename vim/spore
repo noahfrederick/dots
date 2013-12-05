@@ -3,8 +3,29 @@
 # vim-spore: Manage Vim plug-ins in ~/.vim/bundle
 #
 
-SPORE_VERSION=0.0.1
+# Version:
+SPORE_VERSION=0.0.2
 
+# Usage:
+SPORE_USAGE="$(basename "$0") [-d] <command>
+
+Options:
+  -d        Dry run mode--see what commands will be run without doing anything
+
+Commands:
+  install   Install missing plug-ins
+  update    Update each plug-in, installing any missing ones
+  list      List all plug-ins registered in your vimrc
+  version   Print version info
+  help      Print this help message"
+
+# Configuration:
+VIM_DIR="$HOME/.vim"
+VIMRC="$VIM_DIR/vimrc"
+VIM_BUNDLE_DIR="$VIM_DIR/bundle"
+
+#################################################
+# Globals {{{
 SPORE_CMD_PREFIX='"='
 SPORE_DRY_RUN=0
 
@@ -13,11 +34,7 @@ SPORE_COUNT_INSTALLED=0
 SPORE_COUNT_UPDATED=0
 SPORE_COUNT_REMOVED=0
 SPORE_COUNT_TOTAL=0
-
-VIM_DIR="$HOME/.vim"
-VIMRC="$VIM_DIR/vimrc"
-VIM_BUNDLE_DIR="$VIM_DIR/bundle"
-
+# }}}
 # Utilities {{{
 color () {
 	case $1 in
@@ -33,9 +50,24 @@ color () {
 }
 
 echoc () {
-	ECHO_COLOR=$1
+	local echo_color=$1
 	shift
-	echo "$(color $ECHO_COLOR)$*$(color reset)"
+	echo "$(color $echo_color)$*$(color reset)"
+}
+
+pretty_print_bundle () {
+	local echo_color=$1
+	local prefix=$2
+	local repo_owner=$(github_owner $3)
+	local repo_name=$(github_repo $3)
+	if [[ -n "$4" ]]; then
+		local message=" ($4)"
+	else
+		local message=
+	fi
+
+	echo -n "$prefix "
+	echo "$(color $echo_color)$repo_owner/$(color bold)$repo_name$(color reset)$message"
 }
 
 notice () {
@@ -43,11 +75,11 @@ notice () {
 }
 
 error () {
-	echoc red $*
+	echoc red $* >&2
 }
 
 debug () {
-	echoc blue $*
+	echoc blue $* >&2
 }
 
 maybe () {
@@ -67,8 +99,16 @@ github_repo () {
 	echo "${1#*/}"
 }
 
+github_owner () {
+	echo "${1%/*}"
+}
+
 bundle_subdir () {
 	echo "${VIM_BUNDLE_DIR}/$(github_repo $1)"
+}
+
+ensure_bundle_dir () {
+	[[ -d "$VIM_BUNDLE_DIR" ]] || maybe "mkdir -p $VIM_BUNDLE_DIR"
 }
 
 # Perform a git clone unless target directory exists
@@ -114,17 +154,17 @@ print_summary () {
 # }}}
 # Commands {{{
 bundle_install () {
-	BUNDLE_NAME=$1
+	local bundle_name=$1
 	shift
 
-	if [[ -d "$(bundle_subdir $BUNDLE_NAME)" ]]; then
+	if [[ -d "$(bundle_subdir $bundle_name)" ]]; then
 		return
 	fi
-	notice "Installing ${BUNDLE_NAME}..."
-	git_install "$BUNDLE_NAME"
+	notice "Installing ${bundle_name}..."
+	git_install "$bundle_name"
 
 	if [[ "$1" == build: ]]; then
-		notice "Running build commands for ${BUNDLE_NAME}..."
+		notice "Running build commands for ${bundle_name}..."
 		# TODO this is a workaround - we really want to grab the quoted commands
 		shift
 		run_install $*
@@ -142,11 +182,9 @@ bundle_update () {
 
 bundle_list () {
 	if [[ -d "$(bundle_subdir $1)" ]]; then
-		echo -n '+ '
-		notice "$1"
+		pretty_print_bundle green + $1
 	else
-		echo -n '- '
-		error "$1 (not installed)"
+		pretty_print_bundle red - $1 "not installed"
 	fi
 }
 
@@ -169,7 +207,7 @@ category () {
 }
 
 vimrc () {
-	commands="$(grep $SPORE_CMD_PREFIX $VIMRC)"
+	local commands="$(grep $SPORE_CMD_PREFIX $VIMRC)"
 	while read -r cmd; do
 		cmd="${cmd#*=}"
 		$cmd
@@ -188,6 +226,7 @@ list () {
 
 install () {
 	SPORE_CMD=bundle_install
+	ensure_bundle_dir
 	vimrc
 	print_summary
 }
@@ -197,23 +236,49 @@ update () {
 	vimrc
 	print_summary
 }
+
+print_help () {
+	echo "$SPORE_USAGE" >&2
+}
 # }}}
-
+# Run {{{
 # Process flags
-IS_FLAG=1
-
-while [[ $IS_FLAG == 1 ]]; do
-	case $1 in
-		--dry-run|-d) SPORE_DRY_RUN=1; shift ;;
-		*) IS_FLAG=0 ;;
+while getopts ':d' option; do
+	case "$option" in
+		d)
+			SPORE_DRY_RUN=1
+			;;
+		\?)
+			error "$(printf "Illegal option: -%s\n" "$OPTARG")"
+			print_help
+			exit 1
+			;;
 	esac
 done
+shift $((OPTIND - 1))
 
-# Process main command
+# Dispatch main command
 case $1 in
-	install) install ;;
-	update) update ;;
-	list) list ;;
-	version) version ;;
-	*) print_help ;;
+	install)
+		install
+		;;
+	update)
+		update
+		;;
+	list)
+		list
+		;;
+	version)
+		version
+		;;
+	help)
+		print_help
+		;;
+	*)
+		error "$(printf "Illegal command: %s\n" "$1")"
+		print_help
+		exit 1
+		;;
 esac
+# }}}
+# vim: foldmethod=marker
