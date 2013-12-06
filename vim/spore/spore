@@ -1,0 +1,341 @@
+#!/bin/bash
+#
+# vim-spore: Manage Vim plug-ins in ~/.vim/bundle
+#
+
+# Version:
+readonly VERSION=0.1.0
+
+# Usage:
+readonly USAGE="$(basename "$0") [<options>] <command> [<plug-in>]
+
+Options:
+	-d, --dry-run   See what commands would be run without doing anything
+	-v, --verbose   Verbose output
+
+Commands:
+	install         Install missing plug-ins listed in vimrc, or <plug-in> if given
+	uninstall       Uninstall <plug-in>
+	update          Update each plug-in listed in vimrc, or <plug-in> if given
+	list            List all plug-ins registered in your vimrc
+	version         Print version info
+	help            Print this help message"
+
+# Configuration:
+readonly VIM_DIR="${VIM_DIR:-"$HOME/.vim"}"
+readonly VIM_BUNDLE_DIR="${VIM_BUNDLE_DIR:-"$VIM_DIR/bundle"}"
+readonly MYVIMRC="${MYVIMRC:-"$VIM_DIR/vimrc"}"
+
+readonly CMD_PREFIX='"='
+
+# Error exit codes
+readonly ERROR_USAGE=2
+readonly ERROR_MISSING_ARGUMENTS=3
+readonly ERROR_NOT_FOUND=4
+
+#################################################
+# Globals {{{
+DRY_RUN=0
+VERBOSE=0
+
+CMD=
+PLUGIN=
+
+COUNT_INSTALLED=0
+COUNT_UPDATED=0
+COUNT_REMOVED=0
+COUNT_TOTAL=0
+# }}}
+# Utilities {{{
+color() {
+	case $1 in
+		bold) tput bold ;;
+		red) tput setaf 1 ;;
+		green) tput setaf 2 ;;
+		yellow) tput setaf 3 ;;
+		blue) tput setaf 4 ;;
+		magenta) tput setaf 5 ;;
+		cyan) tput setaf 6 ;;
+		reset) tput sgr0 ;;
+	esac
+}
+
+echoc() {
+	local echo_color=$1
+	shift
+	echo "$(color $echo_color)$*$(color reset)"
+}
+
+pretty_print_bundle() {
+	local echo_color=$1
+	local prefix=$2
+	local repo_owner=$(github_owner $3)
+	local repo_name=$(github_repo $3)
+	if [[ -n "$4" ]]; then
+		local message=" ($4)"
+	else
+		local message=
+	fi
+
+	echo -n "$prefix "
+	echo "$(color $echo_color)$repo_owner/$(color bold)$repo_name$(color reset)$message"
+}
+
+notice() {
+	echoc green $*
+}
+
+prompt() {
+	echo -n "$(color bold)$(color yellow)$*$(color reset)"
+}
+
+error() {
+	echoc red $* >&2
+}
+
+error_and_die() {
+	error $1
+	exit $2
+}
+
+debug() {
+	echoc blue $* >&2
+}
+
+maybe() {
+	# TODO perhaps also print command if VERBOSE is set
+	if [[ $DRY_RUN == 1 ]]; then
+		# Workaround for quoted commands
+		debug $*
+	else
+		eval $*
+	fi
+}
+
+github_url() {
+	echo "git@github.com:${1}.git"
+}
+
+github_repo() {
+	echo "${1#*/}"
+}
+
+github_owner() {
+	echo "${1%/*}"
+}
+
+bundle_subdir() {
+	echo "${VIM_BUNDLE_DIR}/$(github_repo $1)"
+}
+
+ensure_bundle_dir() {
+	[[ -d "$VIM_BUNDLE_DIR" ]] || maybe "mkdir -p $VIM_BUNDLE_DIR"
+}
+
+ensure_vim_dir() {
+	[[ -d "$VIM_DIR" ]] || error_and_die "$(printf "VIM_DIR is not a directory: %s" "$VIM_DIR")" $ERROR_NOT_FOUND
+}
+
+ensure_vimrc() {
+	[[ -r "$MYVIMRC" ]] || error_and_die "$(printf "MYVIMRC is not readable: %s" "$MYVIMRC")" $ERROR_NOT_FOUND
+}
+
+# Perform a git clone unless target directory exists
+git_clone() {
+	if [[ -d "$(bundle_subdir $1)" ]]; then
+		error "$(bundle_subdir $1) already exists"
+		return 1
+	fi
+	maybe "git clone '$(github_url $1)' '$(bundle_subdir $1)'"
+}
+
+# Perform a git submodule update --init if target directory exists
+git_submodule_init() {
+	maybe "cd $(bundle_subdir $1) && git submodule update --init"
+}
+
+# Perform a git pull if target directory exists
+git_pull() {
+	maybe "cd $(bundle_subdir $1) && git pull --ff-only"
+}
+
+git_install() {
+	git_clone "$1" && git_submodule_init "$1"
+}
+
+git_update() {
+	git_pull "$1"
+	git_submodule_init "$1"
+}
+
+run_install() {
+	maybe "$*"
+}
+
+print_summary() {
+	echo
+	if [[ $CMD == list ]]; then
+		notice "$COUNT_TOTAL plug-ins in total."
+	else
+		notice "$COUNT_INSTALLED new plug-in(s) installed, $COUNT_UPDATED updated."
+	fi
+}
+# }}}
+# Subcommands {{{
+install() {
+	local bundle_name=$1
+	shift
+
+	if [[ -d "$(bundle_subdir $bundle_name)" ]]; then
+		return
+	fi
+	notice "Installing ${bundle_name}..."
+	git_install "$bundle_name"
+
+	# TODO parse subsequent args in a while loop
+	if [[ "$1" == build: ]]; then
+		notice "Running build commands for ${bundle_name}..."
+		# TODO this is a workaround - we really want to grab the quoted commands
+		shift
+		install_cmd="$*"
+		# Strip the quotes
+		install_cmd="${install_cmd%\'}"
+		install_cmd="${install_cmd#\'}"
+		run_install "$install_cmd"
+	fi
+
+	if [[ -n "$PLUGIN" ]]; then
+		prompt "Add the following to your vimrc to register the plug-in:"
+		echo
+		echo "\"=bundle $PLUGIN"
+	fi
+
+	COUNT_INSTALLED=$(( COUNT_INSTALLED + 1 ))
+}
+
+# TODO implement uninstall()
+
+update() {
+	notice "Updating ${1}..."
+	git_update "$1"
+
+	COUNT_UPDATED=$(( COUNT_UPDATED + 1 ))
+}
+
+list() {
+	if [[ -d "$(bundle_subdir $1)" ]]; then
+		pretty_print_bundle green + $1
+	else
+		pretty_print_bundle red - $1 "not installed"
+	fi
+}
+
+version() {
+	echo "Spore version ${VERSION}"
+}
+
+help() {
+	echo "$USAGE" >&2
+}
+# }}}
+# Vimrc Commands {{{
+bundle() {
+	$CMD $*
+	COUNT_TOTAL=$(( COUNT_TOTAL + 1 ))
+}
+
+category() {
+	echo
+	echoc bold $*
+}
+# }}}
+# Run {{{
+
+process_vimrc() {
+	local commands="$(grep $CMD_PREFIX "$MYVIMRC")"
+	while read -r vimrc_cmd; do
+		vimrc_cmd="${vimrc_cmd#*=}"
+		$vimrc_cmd
+	done <<< "$commands"
+}
+
+dispatch_command() {
+	case $CMD in
+		help|version)
+			$CMD
+			;;
+		*)
+			[[ "$CMD" == install ]] && ensure_bundle_dir
+
+			if [[ -z "$PLUGIN" ]]; then
+				process_vimrc
+			else
+				$CMD "$PLUGIN"
+			fi
+
+			print_summary
+			;;
+	esac
+}
+
+main() {
+	if [[ -z "$CMD" ]]; then
+		help
+		exit $ERROR_USAGE
+	fi
+
+	ensure_vim_dir
+	ensure_vimrc
+
+	dispatch_command
+	exit 0
+}
+
+# Process arguments
+while test $# != 0; do
+	case "$1" in
+		-d|--dry-run)
+			DRY_RUN=1
+			;;
+		-v|--verbose)
+			VERBOSE=1
+			;;
+		list|version|help) # Commands that take no arguments
+			CMD="$1"
+			;;
+		install|update) # Commands that optionally take an argument
+			CMD="$1"
+			case "$2" in
+				*/*)
+					PLUGIN="$2"
+					shift
+					;;
+			esac
+			;;
+		uninstall) # Commands that require an argument
+			CMD="$1"
+			case "$2" in
+				*/*)
+					PLUGIN="$2"
+					shift
+					;;
+				*)
+					error "$(printf "%s subcommand requires a plug-in name" "$1")"
+					print_help
+					exit $ERROR_MISSING_ARGUMENTS
+					;;
+			esac
+			;;
+		*)
+			error "$(printf "Illegal argument: %s\n" "$1")"
+			print_help
+			exit $ERROR_USAGE
+			;;
+	esac
+	shift
+done
+
+# Dispatch main command
+main
+# }}}
+# vim: foldmethod=marker
