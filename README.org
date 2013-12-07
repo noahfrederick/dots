@@ -1,0 +1,91 @@
+Personal configuration files and miscellaneous scripts for the
+platforms I work on (mostly OS X).
+
+* Installation
+
+#+BEGIN_SRC sh
+  git clone git@github.com:noahfrederick/dots.git ~/.dots
+  cd ~/.dots && rake install
+#+END_SRC
+
+* Usage
+
+Several convenient ~rake~ tasks are provided for managing the
+configuration:
+
+#+BEGIN_SRC sh :results output
+  rake -T
+#+END_SRC
+
+#+RESULTS:
+: rake install           # Install dotfiles by creating symlinks and initializing submodules
+: rake link              # Link dotfiles into user's home directory
+: rake submodule_pull    # Pull latest from submodule repositories
+: rake submodule_update  # Run 'git submodule update --init' on dotfile repository
+
+* Software
+** Vim
+
+[[http://vim.org][Vim]] is a free (liber) cross-platform text editor based on vi. It has
+been around since the early '90s and is arguably the best editor
+currently in existence. Although Vim is admittedly better suited for
+writing code than prose (largely because of its poor handling of
+soft-wrapped lines), I use it for pretty much everything.
+
+On OS X, install Vim with Homebrew:
+
+#+BEGIN_SRC sh
+  brew install macvim --override-system-vim --with-lua --with-luajit
+#+END_SRC
+
+Ruby and Python support is compiled in by default as of this writing.
+
+Plug-ins are managed with a CLI utility called [[vim/spore/README.md][spore]] in conjunction
+with [[https://github.com/tpope/vim-pathogen][pathogen.vim]].
+
+** Emacs
+
+[[http://www.gnu.org/software/emacs/][Emacs]] is a free (liber) cross-platform text editor, mail client, news
+reader, organizer, and more. It is the second-best text editor
+currently in existence. It does not take the streamlined, minimalistic
+approach that Vim does, but it can be made to emulate Vim. I use Emacs
+for the excellent [[http://orgmode.org][Org mode]].
+
+On OS X, install Emacs with Homebrew:
+
+#+BEGIN_SRC sh
+  brew install emacs --cocoa --srgb
+#+END_SRC
+
+For instructions on how to install packages etc., see my [[emacs.d/emacs.org][emacs.org]]
+file.
+
+** Bash
+
+My shell of choice is Bash. As of this writing OS X ships with Bash
+version 3, but I take advantage of several features of version 4.
+
+#+BEGIN_SRC sh
+  brew install bash bash-completion
+#+END_SRC
+
+** Fish
+
+I also use the [[http://fishshell.com][fish shell]] on and off. It is a better shell than bash
+and zsh, but not being POSIX compatible is a pain.
+
+More software ought to be developed with [[http://fishshell.com/docs/current/design.html][fish's design guidelines]] in
+mind.
+
+#+BEGIN_SRC sh
+  brew install fish
+#+END_SRC
+
+** Tmux
+
+[[http://tmux.sourceforge.net][Tmux]] is a popular terminal multiplexer.
+
+#+BEGIN_SRC sh
+  brew install tmux
+#+END_SRC
+
