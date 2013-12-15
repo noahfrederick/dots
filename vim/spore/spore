@@ -4,7 +4,7 @@
 #
 
 # Version:
-readonly VERSION=0.1.0
+readonly VERSION=0.1.1
 
 # Usage:
 readonly USAGE="$(basename "$0") [<options>] <command> [<plug-in>]
@@ -246,7 +246,7 @@ bundle() {
 
 category() {
 	echo
-	echoc bold $*
+	echoc bold '#' $*
 }
 # }}}
 # Run {{{
@@ -273,7 +273,7 @@ dispatch_command() {
 				$CMD "$PLUGIN"
 			fi
 
-			print_summary
+			[[ $VERBOSE == 1 ]] && print_summary
 			;;
 	esac
 }
