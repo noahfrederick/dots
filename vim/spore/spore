@@ -113,7 +113,7 @@ maybe() {
 }
 
 github_url() {
-	echo "git@github.com:${1}.git"
+	echo "git://github.com/${1}.git"
 }
 
 github_repo() {
