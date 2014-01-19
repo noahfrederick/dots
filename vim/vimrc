@@ -385,8 +385,9 @@ nmap <Leader>K <Plug>DashSearch
 
 " Remove the last character on current line:
 " This is something I find myself doing often, but I find it difficult to hit
-" '$' quickly. This has the added bonus of retaining the cursor position.
-nnoremap <Leader>x mi$x`i
+" '$' quickly. This has the added bonus of working on a range of lines.
+nnoremap <Leader>x :normal! $x<CR>
+xnoremap <Leader>x :normal! $x<CR>
 
 " Shortcut for inserting date and time in various formats
 " from @tpope. The repeat(..., 0) makes it such that there's
