@@ -344,6 +344,9 @@ endif
 " Make Y consistent with C and D
 nnoremap Y y$
 
+" Q repeats the last command-line command (Ex mode is still accessible via gQ)
+nnoremap Q @:
+
 " Linewise movement should work on screen lines
 noremap k gk
 noremap j gj
