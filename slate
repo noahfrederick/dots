@@ -13,14 +13,14 @@ config windowHintsShowIcons true
 config windowHintsDuration 5
 
 # Monitors
-alias mon-laptop   1920x1200
-alias mon-samsung  1
+alias mon-macbook2010 1920x1200
+alias mon-dell2005    1680x1050
 
 # Hint characters
 alias showHintsLeftHand hint ASDFG
 alias showNormalHint hint ASDFGHJKL
 
-alias showGrid grid padding:5 ${mon-laptop}:6,2 ${mon-samsung}:4,1
+alias showGrid grid padding:5 ${mon-macbook2010}:6,2 ${mon-dell2005}:4,1
 
 # Applications
 alias browser   'Safari'
@@ -43,14 +43,14 @@ alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSize
 alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
 alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
 # Concrete positions
-alias 1-full        move screenOriginX;screenOriginY                  screenSizeX;screenSizeY           ${mon-laptop}
-alias 1-left        move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY         ${mon-laptop}
-alias 1-right       move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY         ${mon-laptop}
-alias 2-full        move screenOriginX;screenOriginY                  screenSizeX;screenSizeY           ${mon-samsung}
-alias 2-left        move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY         ${mon-samsung}
-alias 2-right       move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY         ${mon-samsung}
-alias 2-righttop    move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY/2       ${mon-samsung}
-alias 2-rightbottom move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2  screenSizeX/2;screenSizeY/2  ${mon-samsung}
+alias 1-full        move screenOriginX;screenOriginY                  screenSizeX;screenSizeY           ${mon-macbook2010}
+alias 1-left        move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY         ${mon-macbook2010}
+alias 1-right       move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY         ${mon-macbook2010}
+alias 2-full        move screenOriginX;screenOriginY                  screenSizeX;screenSizeY           ${mon-dell2005}
+alias 2-left        move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY         ${mon-dell2005}
+alias 2-right       move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY         ${mon-dell2005}
+alias 2-righttop    move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY/2       ${mon-dell2005}
+alias 2-rightbottom move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2  screenSizeX/2;screenSizeY/2  ${mon-dell2005}
 
 # 2 Monitor layout
 layout 2monitor ${term}:MAIN_FIRST    ${2-full} | ${1-right}
@@ -69,8 +69,8 @@ layout 1monitor ${reader}:REPEAT      ${1-full}
 layout 1monitor ${media}:REPEAT       ${1-full}
 
 # Default layouts
-default 2monitor resolutions:${mon-laptop};${mon-samsung};
-default 1monitor resolutions:${mon-laptop}
+default 2monitor resolutions:${mon-macbook2010};${mon-dell2005};
+default 1monitor resolutions:${mon-macbook2010}
 
 # Numpad location Bindings
 bind pad0 ${showHintsLeftHand}
