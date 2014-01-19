@@ -187,11 +187,6 @@ hi! link vimContinue  Delimiter
 hi! link vimHiAttrib  Constant
 
 "}}}
-" LESS {{{
-hi lessVariable             guifg=#b7aa80
-hi! link lessVariableValue  Normal
-
-"}}}
 " NERDTree {{{
 hi! link NERDTreeHelp      Comment
 hi! link NERDTreeExecFile  String
@@ -234,13 +229,16 @@ hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
 
 "}}}
 " CSS {{{
+hi cssNoise                           guifg=#888888
 hi! link cssStyle                     Delimiter
 hi! link cssBraces                    Delimiter
+hi! link cssIdentifier                String
 " CSS syntax file sucks and doesn't link to a common cssProperty group
-hi cssProperty                        guifg=#b8b8b8
+hi! link cssProperty                  Normal
 hi! link cssAnimationProp             cssProperty
 hi! link cssBackgroundProp            cssProperty
 hi! link cssBorderOutlineProp         cssProperty
+hi! link cssBorderProp                cssProperty
 hi! link cssBoxProp                   cssProperty
 hi! link cssColorProp                 cssProperty
 hi! link cssContentForPagedMediaProp  cssProperty
@@ -266,8 +264,18 @@ hi! link cssTextProp                  cssProperty
 hi! link cssTransformProp             cssProperty
 hi! link cssTransitionProp            cssProperty
 hi! link cssUIProp                    cssProperty
+" LESS syntax file uses cssUIAttr instead of cssUIProp
+hi! link cssUIAttr                    cssProperty
 hi! link cssAuralProp                 cssProperty
 hi! link cssRenderProp                cssProperty
+
+"}}}
+" LESS {{{
+hi lessVariable                  guifg=#b7aa80
+hi! link lessVariableValue       Normal
+hi! link lessVariableAssignment  Delimiter
+hi! link lessMixinChar           Delimiter
+hi! link lessClass               cssClassName
 
 "}}}
 " CSV {{{
@@ -277,5 +285,4 @@ hi! link CSVColumnHeaderOdd   Title
 hi! link CSVColumnHeaderEven  CSVColumnHeaderOdd
 
 "}}}
-
 " vim: fdm=marker:sw=2:sts=2:et
