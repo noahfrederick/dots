@@ -15,7 +15,9 @@ pathadd ~/bin
 # DIRECTORIES
 #
 export DOCS="$HOME/Documents"
-export NOTES="$DOCS/logbook"
+export LOGBOOK="$DOCS/Logbook"
+export DROPBOX="$HOME/Dropbox"
+export NOTES="$DROPBOX/Notes"
 export PROJECTS="$HOME/projects"
 export WEBSITES="$HOME/Sites"
 export BLOG="$WEBSITES/noahfrederick.com/jekyll"

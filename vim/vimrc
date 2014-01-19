@@ -234,9 +234,9 @@ endfunction
 command! -bang -bar Bdelete call <SID>Bdelete(<q-bang>)
 
 if exists("$NOTES")
-  command! -bang Today execute "edit<bang> $NOTES/" . strftime("%Y-%m-%d") . ".md<Bar>lcd %:p:h"
-  command! -nargs=1 -bang Notes vimgrep<bang> /<args>/ $NOTES/**/*.md
-  command! -nargs=1 -bang Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md<Bar>lcd %:p:h"
+  command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
+  command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
+  command! -nargs=1 -bang Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
 " Toggle light/dark background
@@ -480,7 +480,7 @@ nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
 nnoremap <Space>H :edit .htaccess<CR>
 nnoremap <Space>L :edit $HOME/.vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
-nnoremap <Space>N :edit $DOCS/vim.md<CR>
+nnoremap <Space>N :Notes<Space>
 nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>U :edit Guardfile<CR>
 nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
