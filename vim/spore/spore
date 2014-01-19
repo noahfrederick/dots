@@ -48,6 +48,8 @@ COUNT_TOTAL=0
 # }}}
 # Utilities {{{
 color() {
+	# Only color output when stdout is a tty
+	[ -t 1 ] || return
 	case $1 in
 		bold) tput bold ;;
 		red) tput setaf 1 ;;
