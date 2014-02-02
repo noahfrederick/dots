@@ -216,9 +216,12 @@ command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly call helper#buffer#Bufonly(<q-args>, <q-bang>)
 
 if exists("$NOTES")
+  function! s:CompleteNote(A, L, P)
+    return helper#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
+  endfunction
   command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=1 -bang Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
+  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
 " Toggle light/dark background

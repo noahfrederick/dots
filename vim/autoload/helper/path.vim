@@ -43,4 +43,9 @@ function! s:construct_path_with_new_suffix(head, dir, base, new_suffix)
   return resolve(a:head . '/' . a:dir . '/' . l:filename)
 endfunction
 
+function! helper#path#CompleteHead(path_prefix, filename_pattern, A, L, P)
+  let matches = split(globpath(a:path_prefix, '**/' . a:A . a:filename_pattern), "\n")
+  return map(matches, 'fnamemodify(v:val, ":s?' . a:path_prefix . '/??:r")')
+endfunction
+
 " vim:set et sw=2:
