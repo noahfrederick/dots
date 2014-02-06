@@ -18,10 +18,8 @@ configuration:
 #+END_SRC
 
 #+RESULTS:
-: rake install           # Install dotfiles by creating symlinks and initializing submodules
-: rake link              # Link dotfiles into user's home directory
-: rake submodule_pull    # Pull latest from submodule repositories
-: rake submodule_update  # Run 'git submodule update --init' on dotfile repository
+: rake install  # Install dotfiles by creating symlinks
+: rake link     # Link dotfiles into user's home directory
 
 * Software
 ** Vim

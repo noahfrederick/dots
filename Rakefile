@@ -2,8 +2,8 @@ require 'rake'
 
 task :default => [:install]
 
-desc "Install dotfiles by creating symlinks and initializing submodules"
-task :install => [:submodule_update, :link]
+desc "Install dotfiles by creating symlinks"
+task :install => [:link]
 
 desc "Link dotfiles into user's home directory"
 task :link do
@@ -12,7 +12,6 @@ task :link do
   special_locations = {
     "bin"  => File.join(ENV['HOME'], "bin"),
     "fish" => File.join(ENV['HOME'], ".config", "fish"),
-    "osx"  => nil
   }
 
   Dir['*'].each do |file|
@@ -50,16 +49,6 @@ task :link do
       link_file file, dest
     end
   end
-end
-
-desc "Run 'git submodule update --init' on dotfile repository"
-task :submodule_update do
-  system 'git submodule update --init'
-end
-
-desc "Pull latest from submodule repositories"
-task :submodule_pull do
-  system 'git submodule foreach git pull --ff-only'
 end
 
 def replace_file file, dest
