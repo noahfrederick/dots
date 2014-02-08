@@ -643,6 +643,7 @@ let g:markdown_fold_override_foldtext = 0
 "=bundle groenewege/vim-less
 "=bundle juvenn/mustache.vim
 "=bundle othree/html5.vim
+"=bundle puppetlabs/puppet-syntax-vim
 "=bundle tpope/vim-git
 "=bundle tpope/vim-liquid
 "=bundle tpope/vim-markdown
