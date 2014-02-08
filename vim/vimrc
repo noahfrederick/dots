@@ -469,6 +469,7 @@ nnoremap <Space>D :edit README.md<CR>
 nnoremap <Space>E :edit Gemfile<CR>
 nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
 nnoremap <Space>H :edit .htaccess<CR>
+nnoremap <Space>I :edit .gitignore<CR>
 nnoremap <Space>L :edit $HOME/.vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
 nnoremap <Space>N :Notes<Space>
