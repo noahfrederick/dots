@@ -54,19 +54,21 @@ alias 2-rightbottom move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2
 
 # 2 Monitor layout
 layout 2monitor ${term}:MAIN_FIRST    ${2-full} | ${1-right}
-layout 2monitor ${browser}:REPEAT     ${1-full}
+layout 2monitor ${browser}:MAIN_FIRST ${1-full} | ${2-full}
 layout 2monitor ${editor}:REPEAT      ${1-full}
 layout 2monitor ${mail}:MAIN_FIRST    ${2-full}
 layout 2monitor ${reader}:REPEAT      ${2-full}
-layout 2monitor ${media}:REPEAT       ${1-full}
+layout 2monitor ${media}:REPEAT       ${2-full}
+layout 2monitor ${chat}:REPEAT        ${1-right}
 
 # 1 Monitor layout
 layout 1monitor ${term}:MAIN_FIRST    ${1-right}
-layout 1monitor ${editor}:MAIN_FIRST  ${1-full}
 layout 1monitor ${browser}:REPEAT     ${1-full}
+layout 1monitor ${editor}:MAIN_FIRST  ${1-full}
 layout 1monitor ${mail}:MAIN_FIRST    ${1-full}
 layout 1monitor ${reader}:REPEAT      ${1-full}
 layout 1monitor ${media}:REPEAT       ${1-full}
+layout 1monitor ${chat}:REPEAT        ${1-right}
 
 # Default layouts
 default 2monitor resolutions:${mon-macbook2010};${mon-dell2005};
