@@ -549,7 +549,6 @@ let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
 if !isdirectory(g:ctrlp_cache_dir) && exists("*mkdir")
   call mkdir(g:ctrlp_cache_dir, "p", 0700)
 endif
-let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_extensions = ["tag", "dir", "bookmarkdir", "line", "rtscript"]
 let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-standard"]
