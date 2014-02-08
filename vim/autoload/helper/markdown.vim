@@ -34,29 +34,45 @@ function! helper#markdown#DemoteHeading()
   call setpos('.', l:saved_pos)
 endfunction
 
-" Smart <Enter> in insert mode:
+" Open new lines intelligently:
 "   - List continuation (end list by hitting <Enter> twice)
 "   - Block quote continuation
-function! helper#markdown#ExpandCR()
+function! helper#markdown#OpenLine(trigger)
   let l:line = getline('.')
 
-  if l:line =~# '^\s*[-\*+>] $'
-    return "\<C-u>\<CR>"
+  if a:trigger !=? 'o'
+    " When triggering from insert mode, use o instead to preserve indent
+    let l:out = "\<Esc>o"
+    let l:normal = 0
+  else
+    " Otherwise we can use the original command
+    let l:out = a:trigger
+    let l:normal = 1
+  endif
+
+  if l:line =~# '^\s*[-\*+>]\+ $'
+    if l:normal == 0
+      return "\<C-u>\<CR>"
+    endif
   elseif l:line =~# '^\s*\d\+\. $'
-    return "\<C-u>\<C-u>\<CR>"
+    if l:normal == 0
+      return "\<C-u>\<C-u>\<CR>"
+    endif
   elseif l:line =~# '^\s*- '
-    return "\<Esc>o- "
+    return l:out . "- "
+  elseif l:line =~# '^\s*\(--\|++\) '
+    return l:out . "-- "
   elseif l:line =~# '^\s*\* '
-    return "\<Esc>o* "
+    return l:out . "* "
   elseif l:line =~# '^\s*+ '
-    return "\<Esc>o+ "
+    return l:out . "+ "
   elseif l:line =~# '^\s*> '
-    return "\<Esc>o> "
+    return l:out . "> "
   elseif l:line =~# '^\s*\d\+\. '
     return "\<Esc>\"tyy\"tpf \"_DB\<C-a>A "
   endif
 
-  return "\<CR>"
+  return a:trigger
 endfunction
 
 " The gx mapping provided by the Netrw plug-in only works on WORDS. This

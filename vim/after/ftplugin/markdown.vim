@@ -16,7 +16,11 @@ if exists(':Switch')
 endif
 
 " Smart <Enter> in insert mode
-inoremap <buffer><expr> <CR> helper#markdown#ExpandCR()
+inoremap <buffer><expr> <CR> helper#markdown#OpenLine("\<CR>")
+
+" Also for normal mode o/O
+nnoremap <buffer><expr> o helper#markdown#OpenLine("o")
+nnoremap <buffer><expr> O helper#markdown#OpenLine("O")
 
 " Timestamp insertion
 inoremap <buffer> <C-g>. [<C-r>=strftime("%Y-%m-%d %a")<CR>]
