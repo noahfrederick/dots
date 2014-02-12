@@ -230,9 +230,10 @@ hi SyntasticErrorSign    guifg=#ff0055  guibg=NONE
 "}}}
 " CSS {{{
 hi cssNoise                           guifg=#888888
+hi cssIdentifier                      guifg=#ffb6c0 gui=bold
+hi cssClassName                       guifg=#e9d9b3 gui=bold
 hi! link cssStyle                     Delimiter
 hi! link cssBraces                    Delimiter
-hi! link cssIdentifier                String
 " CSS syntax file sucks and doesn't link to a common cssProperty group
 hi! link cssProperty                  Normal
 hi! link cssAnimationProp             cssProperty
