@@ -1323,12 +1323,12 @@ template selector and ~<TAB>~.
 
   Functionality I want or things that need to be fixed:
 
-  - [ ] Pressing ~Tab~ in a *Help* buffer jumps to the next link
-  - [ ] Pressing ~C-w~ in minibuffer deletes word backward
-  - [ ] Evil bindings in package listings
-  - [ ] Fix: don't remap ~h~ and ~l~ in Org agenda buffer, move old ~j~ and ~k~ to ~n~ and ~p~
-  - [ ] Fix: figure out how to create normal-state mapping that starts with ~c~
-  - [ ] Use Emacs for RSS. =newsticker.el= seemed promising, but it
+  - Feature: Pressing ~Tab~ in a *Help* buffer jumps to the next link
+  - Feature: Pressing ~C-w~ in minibuffer deletes word backward
+  - Feature: Evil bindings in package listings
+  - Fix: don't remap ~h~ and ~l~ in Org agenda buffer, move old ~j~ and ~k~ to ~n~ and ~p~
+  - Fix: figure out how to create normal-state mapping that starts with ~c~
+  - Use Emacs for RSS. =newsticker.el= seemed promising, but it
     caused Emacs to hang on startup while it fetched feeds and it
     couldn't handle half the feeds for some reason. =elfeed.el= was
     overly complicated and also couldn't handle some feeds. Gnus is
