@@ -140,16 +140,41 @@
 * Appearance
 
 ** UI
+   
+   Hide parts of the GUI that we don't need, namely the graphical tool
+   bar and any scroll bars.
 
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
      (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
      (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+   #+END_SRC
+   
+   Here we load the theme, which determines colors and font
+   variants. Enox is a medium-contrast theme with a dark background.
 
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (load-theme 'enox t)
-     ;(load-theme 'solarized-light t)
-     (set-frame-font "Panic Sans-14" t t)
+   #+END_SRC
 
+   We also set the font while specifying a couple fallbacks. The last
+   argument of =set-frame-font= ensures that new frames inherit the font
+   as well.
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (cond
+      ((find-font (font-spec :name "Source Code Pro"))
+       (set-frame-font "Source Code Pro-15" t t))
+      ((find-font (font-spec :name "Panic Sans"))
+       (set-frame-font "Panic Sans-14" t t))
+      ((find-font (font-spec :name "courier"))
+       (set-frame-font "courier-14" t t)))
+   #+END_SRC
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (global-hl-line-mode)
 
      ;; http://stackoverflow.com/questions/335487/programmatically-setting-emacs-frame-size
@@ -344,7 +369,21 @@
 
 * Editing
 
+** Text Encodings
+
+   Use UTF-8 encoding wherever possible:
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (set-default-coding-systems 'utf-8-unix)
+     (set-terminal-coding-system 'utf-8-unix)
+     (set-keyboard-coding-system 'utf-8-unix)
+     (prefer-coding-system 'utf-8-unix)
+   #+END_SRC
+
 ** Utilities
+
+   These packages provide various conveniences for editing.
 
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -378,13 +417,15 @@
          (sp-pair "[" nil :post-handlers
                   '(:add ((lambda (id action context)
                             (nox/sp/pair-on-newline-and-indent id action context)) "RET")))))
+   #+END_SRC
+   
+   When proper source control isn't an option, it's useful to be able
+   to create a copy of a file as you are working on it.
+   =nox/write-timestamped-current-file-copy= writes the contents of the
+   active buffer to a copy with a timestamp appended to the filename.
 
-     ;; Use UTF-8
-     (set-default-coding-systems 'utf-8-unix)
-     (set-terminal-coding-system 'utf-8-unix)
-     (set-keyboard-coding-system 'utf-8-unix)
-     (prefer-coding-system 'utf-8-unix)
-
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
      (defun nox/write-file-copy (filename)
        (interactive "F")
        (save-restriction (widen)
