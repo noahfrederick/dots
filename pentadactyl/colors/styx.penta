@@ -8,14 +8,14 @@ hi clear
 
 hi -a Normal color: #ddd !important;
 hi -a Normal background: radial-gradient(ellipse, #282828, #111) !important;
-hi -a FontFixed font-family: "Ubuntu Mono", "Panic Sans", "Monaco", monospace; font-size: 11pt !important;
+hi -a FontFixed font-family: "Source Code Pro", "Panic Sans", "Monaco", monospace; font-size: 11pt !important;
 
 " some groups -- such as `CmdLine` and `StatusLine` -- are linked by default
 hi -a -link=FontFixed Hint
 hi -a -link=FontFixed CompItem
 hi -a -link=FontFixed CompTitle
 
-hi Hint font-size: 18px; background: rgba(162,114,209,0.8) !important; border: 2px solid rgb(162,114,209); padding: 4px; border-radius: 3px; font-weight: bold; margin-left: -25px; color: white; line-height:1em;
+hi Hint font-size: 18px; background: rgba(162,114,209,0.8) !important; border: 2px solid rgb(162,114,209); padding: 4px; border-radius: 3px; font-weight: bold; color: white; line-height:1em;
 hi HintActive background: rgba(200, 255, 0, 0.6) !important;
 " This one isn't being respected
 hi HintElem background: rgba(255, 195, 0, 0.6) !important;
