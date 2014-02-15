@@ -2,14 +2,65 @@ body {
     margin: 0;
     padding: 3em;
     font-family: Ubuntu, sans-serif;
+    line-height: 1.6em;
+}
+a {
+    color: #419886;
 }
 h2 {
     text-align: center;
+    margin-top: 3em;
+}
+h3 {
+    color: #503d15;
+}
+ul ul,
+ul ul ul {
+    list-style: disc;
 }
 code,
 pre {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: "Source Code Pro", "Ubuntu Mono", monospace;
     font-size: 100%;
+    color: #555;
+}
+pre {
+    padding: .8em .6em;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    background: #30363b;
+    line-height: 1.2em;
+    color: #ddd;
+    box-shadow: inset 0 0 80px rgba(0,0,0,.1);
+}
+.todo {
+    color: #f05;
+}
+#text-table-of-contents ul {
+    list-style: none;
+}
+#text-table-of-contents > ul {
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+}
+#text-table-of-contents > ul > li {
+    border-bottom: 1px solid #ddd;
+    padding-top: .6em;
+    padding-bottom: .6em;
+}
+#text-table-of-contents > ul > li:first-child {
+    border-top: 1px solid #ddd;
+}
+#text-table-of-contents > ul > li > a {
+    font-weight: bold;
+}
+#text-table-of-contents ul a {
+    text-decoration: none;
+}
+#text-table-of-contents ul a:hover {
+    text-decoration: underline;
 }
 #content {
     width: 50em;
