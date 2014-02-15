@@ -1,15 +1,8 @@
 #
 # PROMPT
 #
-# Source script that defines __git_ps1 ()
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] ; then
-	source /usr/local/etc/bash_completion.d/git-prompt.sh
-	
-	# Show a "*" next to branch name for unstaged changes, a "+"
-	# for staged changes, and a "$" for stashed changes.
-	GIT_PS1_SHOWDIRTYSTATE=1
-	GIT_PS1_SHOWSTASHSTATE=1
-fi
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
 
 function prompt_func () {
 	local exit_status=$?;
