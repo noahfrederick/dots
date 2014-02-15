@@ -4,10 +4,10 @@ loadplugins '\.(js|penta)$'
 group user
 colorscheme styx
 
-set hintkeys=asdfjkl;
+set hintkeys=asdfghjkl;
 set showstatuslinks=command
-set showtabline=multitab
-set editor='/usr/local/bin/mvim -f +<line> <file>'
+set showtabline=never
+set editor='/opt/boxen/homebrew/bin/mvim -f +<line> <file>'
 set defsearch=duckduckgo
 
 set passkeys+='^https?://www\.duolingo\.com/':<CR><Up><Down>123456789
