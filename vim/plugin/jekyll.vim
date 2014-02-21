@@ -30,8 +30,4 @@ endfunction
 command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
 command! -bar PostPublish call <SID>PostPublish()
 
-nnoremap <Space>bb :CtrlP $BLOG<CR>
-nnoremap <Space>bd :CtrlP $BLOG/_drafts<CR>
-nnoremap <Space>bp :CtrlP $BLOG/_posts<CR>
-
 " vim: fdm=marker:sw=2:sts=2:et
