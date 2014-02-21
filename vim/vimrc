@@ -32,7 +32,7 @@ set ruler                       " Show cursor position if status line not visibl
 set modeline modelines=5        " Look for modeline at beginning/end of file
 set hidden                      " Allow buffers to become hidden
 set autoread                    " Reload unchanged buffer when file changes
-set history=500                 " Keep 500 lines of history
+set history=500                 " Keep 500 lines of command-line history
 set scrolloff=2                 " Keep lines above/below cursor visible
 set sidescrolloff=5             " Keep columns left/right of cursor visible
 set display+=lastline           " Show as much as possible of wrapped last line
@@ -127,7 +127,7 @@ if has("mouse")
 endif
 
 " Load matchit.vim, if a newer version isn't already installed
-if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &rtp) ==# ""
+if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &runtimepath) ==# ""
   runtime! macros/matchit.vim
 endif
 
