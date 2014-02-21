@@ -65,6 +65,7 @@ endif
 
 "" Command line and completion
 set wildmenu                    " Command line completion
+set wildcharm=<C-z>
 set cmdheight=2                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
@@ -460,6 +461,7 @@ nnoremap <Space>N :Notes<Space>
 nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>U :edit Guardfile<CR>
 nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
+nnoremap <Space>b :buffer <C-z><S-Tab>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlPDir<CR>
 nnoremap <Space>f :CtrlP<CR>
