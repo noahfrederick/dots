@@ -48,4 +48,14 @@ function! helper#path#CompleteHead(path_prefix, filename_pattern, A, L, P)
   return map(matches, 'fnamemodify(v:val, ":s?' . a:path_prefix . '/??:r")')
 endfunction
 
+" Follow symlink to actual file
+function! helper#FollowSymlink()
+  " Get path of actual file
+  let fname = resolve(expand("%:p"))
+  " Rename buffer with new path
+  execute "file " . fname
+  " Read file again to trigger any plug-ins that are context-sensitive
+  edit
+endfunction
+
 " vim:set et sw=2:
