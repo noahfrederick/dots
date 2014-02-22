@@ -19,10 +19,10 @@ set -g fish_greeting
 # DIRECTORIES
 #
 set -gx DOCS     "$HOME/Documents"
-set -gx NOTES    "$DOCS/logbook"
-set -gx PROJECTS "$HOME/projects"
+set -gx LOGBOOK  "$DOCS/Logbook"
+set -gx DROPBOX  "$HOME/Dropbox"
+set -gx NOTES    "$DROPBOX/Notes"
 set -gx WEBSITES "$HOME/Sites"
-set -gx BLOG     "$WEBSITES/noahfrederick.com/jekyll"
 
 #
 # EDITOR
@@ -35,31 +35,18 @@ set -gx EDITOR vim
 set -gx CLICOLOR 1
 set -gx GREP_OPTIONS '--color=auto'
 
-#
-# RUBY
-#
-prepend_to_path $HOME/.rbenv/bin
-prepend_to_path $HOME/.rbenv/shims
-
-if test -d $HOME/.rbenv
-	rbenv rehash >/dev/null ^&1
-end
-
-#
-# PHP
-#
-prepend_to_path (brew --prefix josegonzalez/php/php54)/bin
+set -g fish_color_command     green   --bold
+set -g fish_color_cwd         yellow
+set -g fish_color_end         green
+set -g fish_color_error       red     --bold
+set -g fish_color_escape      purple
+set -g fish_color_valid_path  blue    --underline
 
 #
 # ALIASES
 #
 function v;   vim $argv; end
 function vs;  vim -S $argv; end
-function r;   rails $argv; end
-function t;   task $argv; end
-function ts;  task summary $argv; end
-function tp;  taskwarrior-project.bash $argv; end
-function ta;  taskwarrior-project.bash add $argv; end
 function o;   if [ -z $argv[1] ]; open .; else; open $argv; end; end
 function g;   if [ -z $argv[1] ]; git status --short; else; git $argv; end; end
 function ga;  git add $argv; end
@@ -77,3 +64,8 @@ function gl;  git log $argv; end
 function gp;  git push $argv; end
 function gpu; git pull $argv; end
 function gs;  git status $argv; end
+
+# Make fish work with boxen - This script is generated via
+# https://gist.github.com/burke/5066634
+set -l FISH_BOXEN ~/.config/fish/boxen.fish
+test -r $FISH_BOXEN; and source $FISH_BOXEN
