@@ -39,6 +39,7 @@ set display+=lastline           " Show as much as possible of wrapped last line
 set foldnestmax=3               " Limit depth of nested syntax/indent folds
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set helpheight=1000             " Maximize help window vertically
+set previewheight=20            " Preview window used for, e.g., :Gstatus
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
