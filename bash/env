@@ -7,7 +7,6 @@ function pathadd () {
 	fi
 }
 
-hash brew &>/dev/null && pathadd "$(brew --prefix josegonzalez/php/php54)/bin"
 pathadd ~/.cask/bin
 pathadd ~/bin
 
@@ -50,3 +49,8 @@ export GREP_OPTIONS='--color=auto'
 # OTHER
 #
 export FTP_PASSIVE=1
+
+#
+# BOXEN
+#
+[ -f /opt/boxen/env.sh ] && source /opt/boxen/env.sh
