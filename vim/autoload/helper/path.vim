@@ -49,7 +49,7 @@ function! helper#path#CompleteHead(path_prefix, filename_pattern, A, L, P)
 endfunction
 
 " Follow symlink to actual file
-function! helper#FollowSymlink()
+function! helper#path#FollowSymlink()
   " Get path of actual file
   let fname = resolve(expand("%:p"))
   " Rename buffer with new path
