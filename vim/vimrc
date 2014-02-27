@@ -379,7 +379,7 @@ nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
 
 " Write buffer and source current file
-nnoremap <silent> <Leader>w :write<CR>:source %<CR>
+nnoremap <silent> <Leader>W :write<CR>:source %<CR>
 
 " Write a one-off timestamped version of the current buffer
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
@@ -389,13 +389,15 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>W :call g:Preserve('<SID>NormalizeWhitespace')<CR>
+nnoremap <silent> <Leader>w :call g:Preserve('<SID>NormalizeWhitespace')<CR>
 
 " Re-indent entire buffer
 nnoremap <silent> <Leader>= :call g:Preserve('<SID>ReindentBuffer')<CR>
 
 " Yank entire buffer
 nnoremap <silent> <Leader>y :call g:Preserve('<SID>YankBuffer')<CR>
+
+xnoremap <Leader>p "_dP
 
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
@@ -416,13 +418,8 @@ xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
 
-" Git Gutter plug-in complements Fugitive
-nnoremap <Leader>gu :GitGutterToggle<CR>
-nnoremap <Leader>gh :GitGutterLineHighlightsToggle<CR>
-
 " Shortcuts for delimitMate
-nnoremap <Leader>dd :DelimitMateSwitch<CR>
-nnoremap <Leader>dr :DelimitMateReload<CR>
+nnoremap <Leader>d :DelimitMateSwitch<CR>
 
 " Traversing folds
 nnoremap <C-k> zMzkzv[zzt
@@ -431,7 +428,7 @@ nnoremap <C-j> zMzjzvzt
 " Switch to alternate window or buffer
 nnoremap <silent> <Leader><Leader> :if winnr("$") > 1<Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
-nnoremap <Leader><CR> *<C-o>
+nnoremap <Leader><CR> :set hlsearch<CR>*<C-o>
 map <BS> %
 nnoremap <Leader>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
   \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
