@@ -147,53 +147,9 @@ function! StatuslineGit()
   return l:out
 endfunction
 
-" Execute commands without moving cursor, changing search pattern
-"
-" - First parameter is a function name to call as a string
-" - Second (optional) parameter is an array of arguments to pass to the
-"   function
-function! g:Preserve(func, ...)
-  let l:FuncRef = function(a:func)
-  if a:0 > 0
-    let l:args = a:1
-  else
-    let l:args = []
-  endif
-
-  let l:saved_search = @/
-  let l:saved_view = winsaveview()
-
-  let l:return_value = call(l:FuncRef, l:args)
-
-  call winrestview(l:saved_view)
-  let @/ = l:saved_search
-
-  return l:return_value
-endfunction
-
-function! s:NormalizeWhitespace()
-  " 1. Strip trailing whitespace
-  %substitute/\s\+$//e
-  " 2. Merge consecutive blank lines
-  %substitute/\n\{3,}/\r\r/e
-  " 3. Strip empty line from end of file
-  %substitute/\n\+\%$//e
-endfunction
-
-function! s:ReindentBuffer()
-  normal! gg=G
-endfunction
-
-function! s:YankBuffer()
-  normal! ggyG
-endfunction
-
-function! s:NormalModeDigraph(char2)
-  let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
-  echo 'digraph: ' . l:char1 . a:char2
-  return "r\<C-k>" . l:char1 . a:char2
-endfunction
-
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has("mouse")
+  set mouse=a
 command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly call helper#buffer#Bufonly(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
@@ -349,7 +305,7 @@ map <Leader>et :tabedit %%
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader>k <SID>NormalModeDigraph(nr2char(getchar()))
+nnoremap <expr> <Leader>k helper#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app (analogous to K command)
 nmap <Leader>K <Plug>DashSearch
@@ -389,13 +345,13 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>w :call g:Preserve('<SID>NormalizeWhitespace')<CR>
+nnoremap <silent> <Leader>w :call helper#editing#NormalizeWhitespace()<CR>
 
 " Re-indent entire buffer
-nnoremap <silent> <Leader>= :call g:Preserve('<SID>ReindentBuffer')<CR>
+nnoremap <silent> <Leader>= :call helper#editing#ReindentBuffer()<CR>
 
 " Yank entire buffer
-nnoremap <silent> <Leader>y :call g:Preserve('<SID>YankBuffer')<CR>
+nnoremap <silent> <Leader>y :call helper#editing#YankBuffer()<CR>
 
 xnoremap <Leader>p "_dP
 
