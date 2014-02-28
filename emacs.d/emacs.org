@@ -117,7 +117,7 @@
 ** Private
 
    Since this configuration is kept in version control in public view,
-   we keep sensitive information such as passwords in separate
+   we keep sensitive information such as passwords in a separate
    file. Anything with the special prefix =nox/private/= originates from
    this file.
 
