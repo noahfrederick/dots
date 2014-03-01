@@ -503,7 +503,7 @@
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
      ;; Use aspell for spell checking: brew install aspell --lang=en
-     (setq ispell-program-name "/usr/local/bin/aspell")
+     (setq ispell-program-name "aspell")
      (add-hook 'text-mode-hook 'flyspell-mode)
      (add-hook 'prog-mode-hook 'flyspell-prog-mode)
    #+END_SRC
@@ -1269,15 +1269,15 @@ template selector and ~<TAB>~.
 
    #+NAME: notifications
    #+BEGIN_SRC emacs-lisp :tangle no
-     (defvar nox/notifier-path
-       "/usr/local/bin/terminal-notifier")
-
+     (defvar nox/notifier-program-name
+       "terminal-notifier")
+     
      (defun nox/send-notification (title msg &optional group)
        (let ((group (if group (format " -group %s" group)))
              (msg (format " -message '%s'" msg))
              (title (format " -title '%s'" title))
              (sender " -sender org.gnu.Emacs"))
-         (shell-command (concat nox/notifier-path
+         (shell-command (concat nox/notifier-program-name
                                 msg
                                 title
                                 sender
