@@ -522,14 +522,15 @@ let g:ctrlp_abbrev = {
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let g:syntastic_error_symbol = "\u276f\u276f"
-  let g:syntastic_warning_symbol = "\u276f"
-  let g:syntastic_style_error_symbol = "\u276f\u276f"
+  let g:syntastic_error_symbol         = "\u276f\u276f"
+  let g:syntastic_warning_symbol       = "\u276f"
+  let g:syntastic_style_error_symbol   = "\u276f\u276f"
   let g:syntastic_style_warning_symbol = "\u276f"
 endif
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_enable_highlighting = 0
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_auto_jump                = 1
+let g:syntastic_enable_highlighting      = 0
 let g:syntastic_stl_format = ' %E{%e' . g:syntastic_error_symbol
 let g:syntastic_stl_format .= ' (line %fe)}'
 let g:syntastic_stl_format .= '%B{ }'
