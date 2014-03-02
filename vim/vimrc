@@ -122,20 +122,6 @@ let &statusline .= g:statusline_separator_right
 let &statusline .= "%3.l:%-3.c "
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has("mouse")
-  set mouse=a
-endif
-
-" Load matchit.vim, if a newer version isn't already installed
-if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &runtimepath) ==# ""
-  runtime! macros/matchit.vim
-endif
-
-" }}}
-" Functions & commands                                                         {{{
-" --------------------------------------------------------------------------------
-
 " Git branch/commit in status line
 function! StatuslineGit()
   if !exists('*fugitive#head')
@@ -151,31 +137,13 @@ endfunction
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has("mouse")
   set mouse=a
-command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
-command! -bang -nargs=? -complete=buffer Bufonly call helper#buffer#Bufonly(<q-args>, <q-bang>)
-command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
-
-if exists("$NOTES")
-  function! s:CompleteNote(A, L, P)
-    return helper#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
-  endfunction
-  command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
-  command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
-" Toggle light/dark background
-command! -nargs=0 -bar BackgroundInvert let &background = ( &background == "dark" ? "light" : "dark" )
+" Load matchit.vim, if a newer version isn't already installed
+if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &runtimepath) ==# ""
+  runtime! macros/matchit.vim
+endif
 
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
-  \ | diffthis | wincmd p | diffthis
-
-" 'Quickfix do' analogous to :argdo, :bufdo, etc.
-command! -nargs=1 Cdo call helper#Cdo(<q-args>)
-
-command! -nargs=* -bar Spore call spore#exec(<q-args>)
 " }}}
 " Autocommands                                                                 {{{
 " --------------------------------------------------------------------------------
@@ -266,6 +234,36 @@ if has("autocmd")
 endif
 
 " }}}
+" User-Defined Commands                                                        {{{
+" --------------------------------------------------------------------------------
+
+command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
+command! -bang -nargs=? -complete=buffer Bufonly call helper#buffer#Bufonly(<q-args>, <q-bang>)
+command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
+
+if exists("$NOTES")
+  function! s:CompleteNote(A, L, P)
+    return helper#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
+  endfunction
+  command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
+  command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
+  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
+endif
+
+" Toggle light/dark background
+command! -nargs=0 -bar BackgroundInvert let &background = ( &background == "dark" ? "light" : "dark" )
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
+  \ | diffthis | wincmd p | diffthis
+
+" 'Quickfix do' analogous to :argdo, :bufdo, etc.
+command! -nargs=1 Cdo call helper#Cdo(<q-args>)
+
+command! -nargs=* -bar Spore call spore#exec(<q-args>)
+
+" }}}
 " Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
 
@@ -288,7 +286,7 @@ noremap <Up> <C-w>-
 noremap <Left> <C-w><
 noremap <Right> <C-w>>
 
-" Turn off highlighting and clear any message already displayed
+" Clear search highlighting and any message already displayed
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
