@@ -106,7 +106,7 @@ let g:statusline_separator_left = " \u27e9 "
 let g:statusline_separator_right = " \u27e8 "
 
 let &statusline = ""
-let &statusline .= " %{fnamemodify(getcwd(), ':t:~')}"
+let &statusline .= " %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}"
 let &statusline .= g:statusline_separator_left
 let &statusline .= "%f"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
