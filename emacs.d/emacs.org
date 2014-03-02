@@ -94,7 +94,8 @@
             (exec-path-from-shell-initialize)
             ;; Correctly parse exec-path when PATH deleimiter is a space
             (when (equal (file-name-nondirectory (getenv "SHELL")) "fish")
-              (setq exec-path (split-string (car exec-path) " ")))))
+              (setq exec-path (split-string (car exec-path) " "))
+              (setenv "PATH" (mapconcat 'identity exec-path ":")))))
    #+END_SRC
 
 ** Start Server
