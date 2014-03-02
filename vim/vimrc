@@ -377,6 +377,9 @@ nnoremap <Leader>g/ :Ggrep<Space>
 " Shortcuts for delimitMate
 nnoremap <Leader>d :DelimitMateSwitch<CR>
 
+nnoremap <Leader>tt :Transmit<CR>
+nnoremap <Leader>ta :TransmitAlternate<CR>
+
 " Traversing folds
 nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
