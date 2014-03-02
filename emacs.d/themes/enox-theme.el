@@ -97,6 +97,14 @@ Ansi-Color faces are included.")
    ;; Dired
    `(dired-directory ((,class (:weight bold :foreground ,nox-dir))))
    `(dired-symlink ((,class (:weight normal :foreground ,nox-special))))
+   ;; Magit
+   `(magit-item-highlight ((,class (:background ,nox-bg-subtle))))
+   `(magit-log-sha1 ((,class (:foreground ,nox-special))))
+   `(diff-added ((,class (:background ,nox-green :foreground ,nox-bg-dark))))
+   `(diff-removed ((,class (:background ,nox-red :foreground ,nox-em))))
+   `(diff-context ((,class (:foreground ,nox-comment))))
+   `(diff-hunk-header ((,class (:background ,nox-fg-subtle))))
+   `(diff-file-header ((,class (:weight bold :background ,nox-fg-subtle :foreground ,nox-em))))
    ;; Ido faces
    `(ido-first-match ((,class (:weight bold :foreground ,nox-em))))
    `(ido-only-match ((,class (:weight bold :foreground ,nox-green))))
