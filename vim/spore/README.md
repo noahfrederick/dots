@@ -2,6 +2,22 @@
 
 Command-line tool for managing Vim plug-ins in ~/.vim/bundle
 
+## Usage
+
+	spore [<options>] <command> [<plug-in>]
+
+	Options:
+		-d, --dry-run   See what commands would be run without doing anything
+		-v, --verbose   Verbose output
+
+	Commands:
+		install         Install missing plug-ins listed in vimrc, or <plug-in> if given
+		uninstall       Uninstall <plug-in>
+		update          Update each plug-in listed in vimrc, or <plug-in> if given
+		list            List all plug-ins registered in your vimrc
+		version         Print version info
+		help            Print this help message
+
 ## Testing
 
 Spore has a [bats](https://github.com/sstephenson/bats) test suite. The
