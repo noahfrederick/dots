@@ -2,6 +2,14 @@
 " Maintainer:   Noah Frederick
 
 let s:spore_executable = expand('~/.vim/spore/spore')
+let s:spore_buffer_commands = [
+  \ '(u)pdate plug-in',
+  \ '(U)pdate all',
+  \ '(D)elete',
+  \ '(i)nstall',
+  \ '(r)efresh',
+  \ '(q)uit',
+  \ ]
 
 function! s:buffer_setup()
   tabnew
@@ -12,6 +20,55 @@ endfunction
 function! s:get_listing()
   execute join(['2read !', s:spore_executable, 'list'])
   2delete _
+  echo
+endfunction
+
+function! s:get_bundle_url(bundle)
+  return join(['https://github.com/', a:bundle], '')
+endfunction
+
+function! spore#current_bundle()
+  let l:words = split(getline('.'))
+  if len(l:words) > 1
+    return l:words[1]
+  endif
+endfunction
+
+function! spore#browse(bundle)
+  if a:bundle ==# ''
+    return
+  endif
+  let l:url = s:get_bundle_url(a:bundle)
+  call netrw#NetrwBrowseX(l:url, 0)
+endfunction
+
+function! spore#update(bundle)
+  if a:bundle ==# ''
+    return
+  endif
+  return spore#exec(join(['update', a:bundle], ' '))
+endfunction
+
+function! spore#update_all()
+  return spore#exec('update')
+endfunction
+
+function! spore#install(bundle)
+  if a:bundle ==# ''
+    return
+  endif
+  silent call spore#exec(join(['install', a:bundle], ' '))
+  redraw!
+  call spore#refresh()
+endfunction
+
+function! spore#uninstall(bundle)
+  if a:bundle ==# ''
+    return
+  endif
+  silent call spore#exec(join(['uninstall', a:bundle], ' '))
+  redraw!
+  call spore#refresh()
 endfunction
 
 function! spore#exec(args)
@@ -35,7 +92,7 @@ function! spore#list()
   set modifiable
   call s:buffer_setup()
   " Populate buffer
-  call append(0, '" (u)pdate plug-in  (U)pdate all  (D)elete  (R)estore  (r)efresh  (q)uit')
+  call append(0, '" ' . join(s:spore_buffer_commands, '  '))
   call s:get_listing()
   set nomodifiable
 

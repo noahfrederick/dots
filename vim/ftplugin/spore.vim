@@ -11,11 +11,11 @@ setlocal statusline=[Spore]
 nnoremap <buffer> <silent> r :silent call spore#refresh()<CR>
 nnoremap <buffer> <silent> u :call spore#update(spore#current_bundle())<CR>
 nnoremap <buffer> <silent> U :call spore#update_all()<CR>
-nnoremap <buffer> <silent> R :call spore#restore(spore#current_bundle())<CR>
+nnoremap <buffer> <silent> i :call spore#install(spore#current_bundle())<CR>
 nnoremap <buffer> <silent> D :call spore#uninstall(spore#current_bundle())<CR>
-nnoremap <buffer> q :quit!<CR>
+nnoremap <buffer> <silent> q :set modifiable<CR>:bwipeout!<CR>
+nnoremap <buffer> <silent> <CR> :call spore#browse(spore#current_bundle())<CR>
 
-nnoremap <buffer> i <Nop>
 nnoremap <buffer> I <Nop>
 nnoremap <buffer> a <Nop>
 nnoremap <buffer> A <Nop>
