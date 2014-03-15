@@ -4,7 +4,7 @@
 #
 
 # Version:
-readonly VERSION=0.1.1
+readonly VERSION=0.1.2
 
 # Usage:
 readonly USAGE="$(basename "$0") [<options>] <command> [<plug-in>]
@@ -45,11 +45,16 @@ COUNT_INSTALLED=0
 COUNT_UPDATED=0
 COUNT_REMOVED=0
 COUNT_TOTAL=0
+
+COLOR=
+if [ -t 1 ]; then
+	COLOR=1
+fi
 # }}}
 # Utilities {{{
 color() {
 	# Only color output when stdout is a tty
-	[ -t 1 ] || return
+	[ -z $COLOR ] && return
 	case $1 in
 		bold) tput bold ;;
 		red) tput setaf 1 ;;
