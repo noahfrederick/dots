@@ -152,12 +152,6 @@ if has("autocmd")
   augroup FileTypeOptions
     autocmd!
 
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text,markdown setlocal textwidth=78 wrap
-
-    " Always use spelling for particular file types
-    autocmd FileType gitcommit setlocal spell
-
     " Append semicolon or comma to end of line in insert mode
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ;; <Esc>A;
     autocmd FileType c,cpp,css,javascript,php inoremap <buffer> ,, <Esc>A,
@@ -166,13 +160,6 @@ if has("autocmd")
     " Automatically complete closing tags
     autocmd FileType html,liquid,markdown,php,xml inoremap <buffer> </ </<C-x><C-o>
     autocmd FileType html,liquid,xml setlocal textwidth=120
-
-    " CSS-like languages
-    autocmd FileType css,less setlocal foldmethod=marker
-    autocmd FileType css,less setlocal foldmarker={,}
-
-    " Ruby folding
-    autocmd FileType ruby setlocal foldlevel=2 foldmethod=syntax
 
     " csv.vim
     autocmd FileType csv map <buffer> ( H
