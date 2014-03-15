@@ -188,9 +188,6 @@ if has("autocmd")
 
     " Never show line numbers in help buffers
     autocmd FileType help set nonumber
-
-    " Set the file type for common Ruby files not ending in .rb
-    autocmd BufRead,BufNewFile {Rakefile,Guardfile} set filetype=ruby
   augroup END
 
   set cursorline
@@ -549,10 +546,6 @@ let g:syntastic_php_phpcs_post_args .= " --standard=PSR2"
 "=bundle tpope/vim-vinegar
 
 "=category Language-specific utilities
-"=bundle chrisbra/csv.vim
-" Prevent csv.vim from setting its own 'foldtext'
-let g:csv_disable_fdt = 1
-
 "=bundle dbakker/vim-lint
 "=bundle dbakker/vim-sparkup
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
@@ -568,17 +561,15 @@ let g:markdown_fold_override_foldtext = 0
 "=bundle tpope/vim-rbenv
 
 "=category File-type runtime files
+"=bundle sheerun/vim-polyglot
 "=bundle dag/vim-fish
-"=bundle digitaltoad/vim-jade
-"=bundle groenewege/vim-less
-"=bundle juvenn/mustache.vim
-"=bundle othree/html5.vim
-"=bundle puppetlabs/puppet-syntax-vim
-"=bundle tpope/vim-git
 "=bundle tpope/vim-liquid
-"=bundle tpope/vim-markdown
+
 " Specify syntaxes to import for Markdown code blocks
 let g:markdown_fenced_languages = ["sh", "php", "vim", "ruby"]
+
+" Prevent csv.vim from setting its own 'foldtext'
+let g:csv_disable_fdt = 1
 
 " :help ruby.vim
 let g:ruby_no_comment_fold = 1
