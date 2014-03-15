@@ -431,8 +431,8 @@ let g:delimitMate_expand_space = 1
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
-let g:UltiSnipsSnippetDir = "~/.vim/snippets"
-let g:UltiSnipsSnippetDirectories = ["snippets"]
+let g:UltiSnipsSnippetsDir = "~/.vim/snips"
+let g:UltiSnipsSnippetDirectories = ["snips"]
 
 "=bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
 " Only enable YouCompleteMe for certain file types

@@ -2,13 +2,13 @@
 
 # We use a little hack so that the snippet is expanded
 # and parsed correctly
-snippet snip "Snippet definition" !
+snippet snip "Snippet definition"
 `!p snip.rv = "snippet"` ${1:Tab_trigger} "${2:Description}" ${3:!b}
 $0
 `!p snip.rv = "endsnippet"`
 endsnippet
 
-snippet global "Global snippet" !
+snippet global "Global snippet"
 `!p snip.rv = "global"` !p
 $0
 `!p snip.rv = "endglobal"`

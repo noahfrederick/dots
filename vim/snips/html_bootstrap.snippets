@@ -1,12 +1,12 @@
 # html_bootstrap.snippets - Snippets for html file type (Twitter Bootstrap snippets)
 
-snippet well "HTML <div class='well'>" !b
+snippet well "HTML <div class='well'>" b
 <div class="well">
 	${VISUAL}$0
 </div>
 endsnippet
 
-snippet alert "HTML <div class='alert'>" !b
+snippet alert "HTML <div class='alert'>" b
 <div class="alert${1: alert-block}">
 	${VISUAL}$0
 </div>
@@ -16,11 +16,11 @@ snippet btn "HTML <a class='btn'>"
 <a class="btn${1: btn-primary}" href="${2:#}">${3:$2}</a>
 endsnippet
 
-snippet submit "HTML <input type='submit'>" !
+snippet submit "HTML <input type='submit'>"
 <input class="btn${1: btn-primary}" type="submit" value="${2:Submit}" />
 endsnippet
 
-snippet table "HTML <table>" !b
+snippet table "HTML <table>" b
 <table class="table${1: table-condensed}">
 	<thead>
 		<tr>
@@ -38,11 +38,11 @@ endsnippet
 # Labels and badges
 #
 
-snippet label "Bootstrap <span class='label'>" !
+snippet label "Bootstrap <span class='label'>"
 <span class="label${1: label-info}">${VISUAL}$0</span>
 endsnippet
 
-snippet badge "Bootstrap <span class='badge'>" !
+snippet badge "Bootstrap <span class='badge'>"
 <span class="badge${1: badge-info}">${VISUAL}$0</span>
 endsnippet
 
@@ -50,7 +50,7 @@ endsnippet
 # Forms
 #
 
-snippet input "Input with Label" !b
+snippet input "Input with Label" b
 <div class="control-group">
 	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
 	<div class="controls">
@@ -59,7 +59,7 @@ snippet input "Input with Label" !b
 </div>
 endsnippet
 
-snippet checkbox "Checkbox input" !b
+snippet checkbox "Checkbox input" b
 <div class="control-group">
 	<div class="controls">
 		<label class="${3:checkbox}" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">
@@ -72,7 +72,7 @@ endsnippet
 
 # Radio same as above
 
-snippet textarea "Textarea with Label" !b
+snippet textarea "Textarea with Label" b
 <div class="control-group">
 	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
 	<div class="controls">
@@ -81,7 +81,7 @@ snippet textarea "Textarea with Label" !b
 </div>
 endsnippet
 
-snippet select "Select with Label" !b
+snippet select "Select with Label" b
 <div class="control-group">
 	<label class="control-label" for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label>
 	<div class="controls">
@@ -93,7 +93,7 @@ snippet select "Select with Label" !b
 </div>
 endsnippet
 
-snippet form "HTML <form>" !b
+snippet form "HTML <form>" b
 <form class="form-horizontal" action="${1:#}" method="${2:post}" accept-charset="utf-8">
 	$0
 </form>

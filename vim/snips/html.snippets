@@ -1,14 +1,14 @@
 # html.snippets - Snippets for html file type
 
-snippet a "Link" !
+snippet a "Link"
 <a href="${1:http://${2:example.com}}"${3: target="_blank"}>${4:$2}</a>
 endsnippet
 
-snippet m "Mailto link" !
+snippet m "Mailto link"
 <a href="mailto:${1:user@example.com}${2:?subject=${3:Subject}}"${4: class="email"}>${5:$1}</a>
 endsnippet
 
-snippet "h(\d)" "HTML <h_>" !r
+snippet "h(\d)" "HTML <h_>" r
 <h`!p snip.rv = match.group(1)` id="${1/[\w\d]+|( )/(?1:-:\L$0\E)/g}">${1}</h`!p snip.rv = match.group(1)`>
 endsnippet
 
@@ -29,11 +29,11 @@ snippet doctype "DocType HTML 5.0" b
 
 endsnippet
 
-snippet link "HTML <link>" !b
+snippet link "HTML <link>" b
 <link rel="${1:stylesheet}" href="${2:/css/style.css}" type="text/css" media="${3:screen}" />
 endsnippet
 
-snippet title "HTML <title>" !b
+snippet title "HTML <title>" b
 <title>${1:`!p snip.rv = snip.basename or "Page Title"`}</title>
 endsnippet
 
@@ -45,7 +45,7 @@ snippet meta "HTML <meta>" b
 <meta name="${1:description}" content="${2:content}" />
 endsnippet
 
-snippet script "HTML <script src...>" !b
+snippet script "HTML <script src...>" b
 <script src="${1:/js/main.js}" type="text/javascript"></script>
 endsnippet
 

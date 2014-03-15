@@ -4,7 +4,7 @@ snippet php "<?php ?>" w
 <?php ${VISUAL}$0 ?>
 endsnippet
 
-snippet php "<?php ?>" !b
+snippet php "<?php ?>" b
 <?php
 
 ${VISUAL}$0
@@ -12,11 +12,11 @@ ${VISUAL}$0
 ?>
 endsnippet
 
-snippet q "Variable assignment" !b
+snippet q "Variable assignment" b
 $$1 = $2;
 endsnippet
 
-snippet d "Define constant" !b
+snippet d "Define constant" b
 define('${1:NAME}', ${2:value});
 endsnippet
 
@@ -24,11 +24,11 @@ snippet array "array()"
 array($1)
 endsnippet
 
-snippet array "$var = array();" !b
+snippet array "$var = array();" b
 $${1:arr} = array($2);
 endsnippet
 
-snippet class "Class definition" !b
+snippet class "Class definition" b
 /**
  * ${4:Description}.
  *
@@ -42,49 +42,49 @@ class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v help
 }
 endsnippet
 
-snippet fun "Function definition" !b
+snippet fun "Function definition" b
 ${1:public }function ${2:fun_name}(${3})
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet if "if (condition) { }" !b
+snippet if "if (condition) { }" b
 if (${1:/* condition */})
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet else "else { }" !b
+snippet else "else { }" b
 else
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet for "for" !b
+snippet for "for" b
 for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++})
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet foreach "foreach" !b
+snippet foreach "foreach" b
 foreach ($${1:variable} as $${2:key} => $${3:value})
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet while "while (condition) { }" !b
+snippet while "while (condition) { }" b
 while (${1:/* condition */})
 {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet do "do" !b
+snippet do "do" b
 do
 {
 	${VISUAL}$0
@@ -92,7 +92,7 @@ do
 while (${1:/* condition */});
 endsnippet
 
-snippet doc "doc comment" !b
+snippet doc "doc comment" b
 /**
  * $1
  */
