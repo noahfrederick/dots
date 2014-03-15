@@ -218,7 +218,7 @@ install() {
 	if [[ -n "$PLUGIN" ]]; then
 		prompt "Add the following to your vimrc to register the plug-in:"
 		echo
-		echo "\"=bundle $PLUGIN"
+		echo "${CMD_PREFIX}bundle $PLUGIN"
 	fi
 
 	COUNT_INSTALLED=$(( COUNT_INSTALLED + 1 ))
