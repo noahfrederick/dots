@@ -3,3 +3,4 @@ vim/bundle/*
 vim/sessions/*
 vim/spell/*.spl
 vim/tmp/*
+vim/vimrc.local

@@ -395,7 +395,7 @@ nnoremap <Space>E :edit Gemfile<CR>
 nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
 nnoremap <Space>H :edit .htaccess<CR>
 nnoremap <Space>I :edit .gitignore<CR>
-nnoremap <Space>L :edit $HOME/.vimrc.local<CR>
+nnoremap <Space>L :edit $HOME/.dots/vim/vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
 nnoremap <Space>N :Notes<Space>
 nnoremap <Space>R :edit Rakefile<CR>
@@ -584,9 +584,7 @@ let g:did_install_syntax_menu = 1
 
 " Include a local configuration file if available. It is sourced at the end so
 " that any local settings override those in this file.
-if filereadable(glob("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
+runtime vimrc.local
 
 " }}}
 " vim: fdm=marker:sw=2:sts=2:et
