@@ -381,7 +381,7 @@ nnoremap ]oo :set colorcolumn=0<CR>
 nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
 " <Space> mappings for navigating files and buffers
-nnoremap <Space><Space> :CtrlPMixed<CR>
+nnoremap <Space><Space> :CtrlP<CR>
 nnoremap <Space>. :CtrlP .<CR>
 nnoremap <Space>; :CtrlPBuffer<CR>
 nnoremap <Space>' :CtrlPBookmarkDir<CR>
@@ -397,17 +397,17 @@ nnoremap <Space>H :edit .htaccess<CR>
 nnoremap <Space>I :edit .gitignore<CR>
 nnoremap <Space>L :edit $HOME/.dots/vim/vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
-nnoremap <Space>N :Notes<Space>
 nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>U :edit Guardfile<CR>
 nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
 nnoremap <Space>b :buffer <C-z><S-Tab>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlPDir<CR>
-nnoremap <Space>f :CtrlP<CR>
+nnoremap <Space>f :find<Space>
 nnoremap <Space>m :CtrlPMixed<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
 nnoremap <Space>p :CtrlP $PROJECTS<CR>
+nnoremap <Space>t :tjump /
 nnoremap <Space>v :CtrlPRTS<CR>
 
 " }}}
