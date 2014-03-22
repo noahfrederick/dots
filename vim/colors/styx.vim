@@ -163,6 +163,13 @@ hi! link rubyInstanceVariable       Number
 hi! link rubyStringDelimiter        rubyString
 
 "}}}
+" Diff {{{
+hi diffAdded  guifg=#b1d631
+hi diffRemoved  guifg=#ff0055
+hi! link diffFile  PreProc
+hi! link diffLine  Title
+
+"}}}
 " Git {{{
 hi gitCommitBranch               guifg=#e9d9b3
 hi gitCommitSelectedType         guifg=#cde88a
