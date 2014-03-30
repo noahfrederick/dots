@@ -241,7 +241,8 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
   \ | diffthis | wincmd p | diffthis
 
 " 'Quickfix do' analogous to :argdo, :bufdo, etc.
-command! -nargs=1 Cdo call helper#Cdo(<q-args>)
+command! -nargs=1 Cdo     call helper#Cdo(0)
+command! -nargs=1 Cdofile call helper#Cdo(1)
 
 command! -nargs=* -bar Spore call spore#exec(<q-args>)
 
