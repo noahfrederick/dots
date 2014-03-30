@@ -11,12 +11,14 @@ Command-line tool for managing Vim plug-ins in ~/.vim/bundle
 		-v, --verbose   Verbose output
 
 	Commands:
-		install         Install missing plug-ins listed in vimrc, or <plug-in> if given
+		install         Install missing plug-ins listed in SPORE_FILE, or <plug-in> if given
 		uninstall       Uninstall <plug-in>
-		update          Update each plug-in listed in vimrc, or <plug-in> if given
-		list            List all plug-ins registered in your vimrc
+		update          Update each plug-in listed in SPORE_FILE, or <plug-in> if given
+		list            List all plug-ins registered in your SPORE_FILE
 		version         Print version info
 		help            Print this help message
+
+The default location of your `SPORE_FILE`, which lists your plug-ins is `~/.vim/Spore`.
 
 ## Testing
 
