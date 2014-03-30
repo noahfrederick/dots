@@ -273,13 +273,7 @@ noremap <Right> <C-w>>
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
-cnoremap %% <C-r>=fnameescape(expand("%:h"))."/"<CR>
-
-" Convenient ways to open files relative to current buffer
-map <Leader>ew :edit %%
-map <Leader>es :split %%
-map <Leader>ev :vsplit %%
-map <Leader>et :tabedit %%
+cnoremap %% <C-r>=fnameescape(expand("%:~:h"))."/"<CR>
 
 " Use character under cursor as first character in digraph and replace it
 " Ex.:
@@ -402,6 +396,7 @@ nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
 nnoremap <Space>b :buffer <C-z><S-Tab>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlPDir<CR>
+nmap     <Space>e :edit %%<C-z><S-Tab>
 nnoremap <Space>f :find *
 nnoremap <Space>m :CtrlPMixed<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
