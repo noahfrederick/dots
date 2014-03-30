@@ -1,0 +1,50 @@
+# Color schemes
+bundle noahfrederick/vim-hemisu
+bundle noahfrederick/vim-noctu
+
+# General-purpose utilities
+bundle AndrewRadev/splitjoin.vim
+bundle AndrewRadev/switch.vim
+bundle Raimondi/delimitMate
+bundle SirVer/ultisnips
+bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
+bundle eiginn/netrw
+bundle ervandew/supertab
+bundle godlygeek/tabular
+bundle kana/vim-textobj-user
+bundle kien/ctrlp.vim
+bundle mattn/vim-textobj-url
+bundle noahfrederick/vim-skeleton
+bundle rizzatti/dash.vim
+bundle rizzatti/funcoo.vim
+bundle scrooloose/syntastic
+bundle tpope/vim-abolish
+bundle tpope/vim-commentary
+bundle tpope/vim-dispatch
+bundle tpope/vim-endwise
+bundle tpope/vim-eunuch
+bundle tpope/vim-fugitive
+bundle tpope/vim-obsession
+bundle tpope/vim-pathogen
+bundle tpope/vim-repeat
+bundle tpope/vim-sleuth
+bundle tpope/vim-speeddating
+bundle tpope/vim-surround
+bundle tpope/vim-unimpaired
+bundle tpope/vim-vinegar
+bundle wellle/targets.vim
+
+# Language-specific utilities
+bundle dbakker/vim-lint
+bundle dbakker/vim-sparkup
+bundle nelstrom/vim-markdown-folding
+bundle nelstrom/vim-textobj-rubyblock
+bundle tpope/vim-bundler
+bundle tpope/vim-rails
+bundle tpope/vim-rake
+bundle tpope/vim-rbenv
+
+# File-type runtime files
+bundle sheerun/vim-polyglot
+bundle dag/vim-fish
+bundle tpope/vim-liquid

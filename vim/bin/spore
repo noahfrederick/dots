@@ -4,7 +4,7 @@
 #
 
 # Version:
-readonly VERSION=0.1.3
+readonly VERSION=0.2.0
 
 # Usage:
 readonly USAGE="$(basename "$0") [<options>] <command> [<plug-in>]
@@ -14,19 +14,17 @@ Options:
 	-v, --verbose   Verbose output
 
 Commands:
-	install         Install missing plug-ins listed in vimrc, or <plug-in> if given
+	install         Install missing plug-ins listed in SPORE_FILE, or <plug-in> if given
 	uninstall       Uninstall <plug-in>
-	update          Update each plug-in listed in vimrc, or <plug-in> if given
-	list            List all plug-ins registered in your vimrc
+	update          Update each plug-in listed in SPORE_FILE, or <plug-in> if given
+	list            List all plug-ins registered in your SPORE_FILE
 	version         Print version info
 	help            Print this help message"
 
 # Configuration:
 readonly VIM_DIR="${VIM_DIR:-"$HOME/.vim"}"
 readonly VIM_BUNDLE_DIR="${VIM_BUNDLE_DIR:-"$VIM_DIR/bundle"}"
-readonly MYVIMRC="${MYVIMRC:-"$VIM_DIR/vimrc"}"
-
-readonly CMD_PREFIX='"='
+readonly SPORE_FILE="${SPORE_FILE:-"$VIM_DIR/Spore"}"
 
 # Error exit codes
 readonly ERROR_USAGE=2
@@ -143,8 +141,8 @@ ensure_vim_dir() {
 	[[ -d "$VIM_DIR" ]] || error_and_die "$(printf "VIM_DIR is not a directory: %s" "$VIM_DIR")" $ERROR_NOT_FOUND
 }
 
-ensure_vimrc() {
-	[[ -r "$MYVIMRC" ]] || error_and_die "$(printf "MYVIMRC is not readable: %s" "$MYVIMRC")" $ERROR_NOT_FOUND
+ensure_spore_file() {
+	[[ -r "$SPORE_FILE" ]] || error_and_die "$(printf "SPORE_FILE is not readable: %s" "$SPORE_FILE")" $ERROR_NOT_FOUND
 }
 
 # Perform a git clone unless target directory exists
@@ -216,9 +214,9 @@ install() {
 	fi
 
 	if [[ -n "$PLUGIN" ]]; then
-		prompt "Add the following to your vimrc to register the plug-in:"
+		prompt "Add the following to your Spore file to register the plug-in:"
 		echo
-		echo "${CMD_PREFIX}bundle $PLUGIN"
+		echo "bundle $PLUGIN"
 	fi
 
 	COUNT_INSTALLED=$(( COUNT_INSTALLED + 1 ))
@@ -256,7 +254,7 @@ help() {
 	echo "$USAGE" >&2
 }
 # }}}
-# Vimrc Commands {{{
+# Spore File Commands {{{
 bundle() {
 	$CMD $*
 	COUNT_TOTAL=$(( COUNT_TOTAL + 1 ))
@@ -269,11 +267,10 @@ category() {
 # }}}
 # Run {{{
 
-process_vimrc() {
-	local commands="$(grep $CMD_PREFIX "$MYVIMRC")"
-	while read -r vimrc_cmd; do
-		vimrc_cmd="${vimrc_cmd#*=}"
-		$vimrc_cmd
+process_spore_file() {
+	local commands="$(grep '^[^#]' "$SPORE_FILE")"
+	while read -r spore_cmd; do
+		$spore_cmd
 	done <<< "$commands"
 }
 
@@ -286,7 +283,7 @@ dispatch_command() {
 			[[ "$CMD" == install ]] && ensure_bundle_dir
 
 			if [[ -z "$PLUGIN" ]]; then
-				process_vimrc
+				process_spore_file
 			else
 				$CMD "$PLUGIN"
 			fi
@@ -303,7 +300,7 @@ main() {
 	fi
 
 	ensure_vim_dir
-	ensure_vimrc
+	ensure_spore_file
 
 	dispatch_command
 	exit 0

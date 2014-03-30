@@ -13,9 +13,6 @@ if has("syntax") && !exists("g:syntax_on")
   syntax enable                 " Enable syntax highlighting
 endif
 
-"=category Color schemes
-"=bundle noahfrederick/vim-hemisu
-"=bundle noahfrederick/vim-noctu
 if &t_Co >= 16
   silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
 endif
@@ -414,10 +411,6 @@ nnoremap <Space>v :CtrlPRTS<CR>
 " Plug-ins                                                                     {{{
 " --------------------------------------------------------------------------------
 
-"=category General-purpose utilities
-"=bundle AndrewRadev/splitjoin.vim
-"=bundle AndrewRadev/switch.vim
-"=bundle Raimondi/delimitMate
 " delimitMate settings
 " Off by default as it breaks the dot command and abbreviations
 let g:delimitMade_offByDefault = 1
@@ -427,14 +420,12 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
-"=bundle SirVer/ultisnips
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
 
-"=bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
 " Only enable YouCompleteMe for certain file types
 let g:ycm_filetype_whitelist = {
       \ 'php': 1,
@@ -448,8 +439,6 @@ let g:ycm_filetype_whitelist = {
 let g:ycm_complete_in_strings = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
-"=bundle eiginn/netrw
-"=bundle ervandew/supertab
 " :help supertab-options
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
@@ -467,9 +456,6 @@ if has("autocmd")
   augroup END
 endif
 
-"=bundle godlygeek/tabular
-"=bundle kana/vim-textobj-user
-"=bundle kien/ctrlp.vim
 " :help ctrlp-options
 let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
 if !isdirectory(g:ctrlp_cache_dir) && exists("*mkdir")
@@ -497,11 +483,6 @@ let g:ctrlp_abbrev = {
     \ ]
   \ }
 
-"=bundle mattn/vim-textobj-url
-"=bundle noahfrederick/vim-skeleton
-"=bundle rizzatti/dash.vim
-"=bundle rizzatti/funcoo.vim
-"=bundle scrooloose/syntastic
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
@@ -530,40 +511,10 @@ let g:syntastic_php_phpcs_post_args = "--tab-width=4 --encoding=utf-8"
 " http://www.php-fig.org/psr/2/
 let g:syntastic_php_phpcs_post_args .= " --standard=PSR2"
 
-"=bundle tpope/vim-abolish
-"=bundle tpope/vim-commentary
-"=bundle tpope/vim-dispatch
-"=bundle tpope/vim-endwise
-"=bundle tpope/vim-eunuch
-"=bundle tpope/vim-fugitive
-"=bundle tpope/vim-obsession
-"=bundle tpope/vim-pathogen
-"=bundle tpope/vim-repeat
-"=bundle tpope/vim-sleuth
-"=bundle tpope/vim-speeddating
-"=bundle tpope/vim-surround
-"=bundle tpope/vim-unimpaired
-"=bundle tpope/vim-vinegar
-
-"=category Language-specific utilities
-"=bundle dbakker/vim-lint
-"=bundle dbakker/vim-sparkup
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
 let g:sparkupDoMaps = 0
 
-"=bundle nelstrom/vim-markdown-folding
 let g:markdown_fold_override_foldtext = 0
-
-"=bundle nelstrom/vim-textobj-rubyblock
-"=bundle tpope/vim-bundler
-"=bundle tpope/vim-rails
-"=bundle tpope/vim-rake
-"=bundle tpope/vim-rbenv
-
-"=category File-type runtime files
-"=bundle sheerun/vim-polyglot
-"=bundle dag/vim-fish
-"=bundle tpope/vim-liquid
 
 " Specify syntaxes to import for Markdown code blocks
 let g:markdown_fenced_languages = ["sh", "php", "vim", "ruby"]
