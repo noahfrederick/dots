@@ -7,15 +7,15 @@ endif
 let g:loaded_jekyll = 1
 
 " Create a new Jekyll post in _drafts/
-function! s:PostNew(title, bang)
+function! s:new_post(title, bang)
   let g:template_title = a:title
-  let file = '$BLOG/_drafts/' . tolower(substitute(a:title, '\W\+', '-', 'g')) . '.md'
+  let file = expand('$BLOG') . '/_drafts/' . tolower(substitute(a:title, '\W\+', '-', 'g')) . '.md'
   execute 'edit' . a:bang . ' ' . fnameescape(file)
   set filetype=liquid
 endfunction
 
 " Move the current draft into _posts/ and prepend date to filename
-function! s:PostPublish()
+function! s:publish_post()
   if !exists(':Move')
     echoerr 'Requires eunuch-:Move command'
     return
@@ -24,10 +24,10 @@ function! s:PostPublish()
     return
   endif
   write
-  exec 'Move $BLOG/_posts/' . strftime('%Y-%m-%d') . '-' . expand('%:p:t')
+  exec 'Move ' . expand('$BLOG') . '/_posts/' . strftime('%Y-%m-%d') . '-' . expand('%:p:t')
 endfunction
 
-command! -nargs=1 -bang PostNew call <SID>PostNew(<q-args>, <q-bang>)
-command! -bar PostPublish call <SID>PostPublish()
+command! -nargs=1 -bang JekyllNew call <SID>new_post(<q-args>, <q-bang>)
+command! -bar JekyllPublish call <SID>publish_post()
 
 " vim: fdm=marker:sw=2:sts=2:et
