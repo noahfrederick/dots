@@ -23,6 +23,7 @@ set -gx LOGBOOK  "$DOCS/Logbook"
 set -gx DROPBOX  "$HOME/Dropbox"
 set -gx NOTES    "$DROPBOX/Notes"
 set -gx WEBSITES "$HOME/Sites"
+set -gx BLOG     "$WEBSITES/noahfrederick.com/jekyll"
 
 #
 # EDITOR
