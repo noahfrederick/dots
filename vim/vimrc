@@ -401,7 +401,7 @@ nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
 nnoremap <Space>b :buffer <C-z><S-Tab>
 nnoremap <Space>c :CtrlP $HOME/.dots<CR>
 nnoremap <Space>d :CtrlPDir<CR>
-nnoremap <Space>f :find<Space>
+nnoremap <Space>f :find *
 nnoremap <Space>m :CtrlPMixed<CR>
 nnoremap <Space>n :CtrlP $NOTES<CR>
 nnoremap <Space>p :CtrlP $PROJECTS<CR>
