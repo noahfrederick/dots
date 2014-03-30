@@ -1,7 +1,7 @@
 " spore.vim - Spore plug-in manager support for use inside Vim
 " Maintainer:   Noah Frederick
 
-let s:spore_executable = expand('~/.vim/spore/spore')
+let s:spore_executable = 'spore'
 let s:spore_buffer_commands = [
   \ '(u)pdate plug-in',
   \ '(U)pdate all',
@@ -19,7 +19,6 @@ endfunction
 
 function! s:get_listing()
   execute join(['2read !', s:spore_executable, 'list'])
-  2delete _
   echo
 endfunction
 
@@ -46,7 +45,7 @@ function! spore#update(bundle)
   if a:bundle ==# ''
     return
   endif
-  return spore#exec(join(['update', a:bundle], ' '))
+  return spore#exec(join(['update', a:bundle]))
 endfunction
 
 function! spore#update_all()
@@ -57,7 +56,7 @@ function! spore#install(bundle)
   if a:bundle ==# ''
     return
   endif
-  silent call spore#exec(join(['install', a:bundle], ' '))
+  silent call spore#exec(join(['install', a:bundle]))
   redraw!
   call spore#refresh()
 endfunction
@@ -66,12 +65,17 @@ function! spore#uninstall(bundle)
   if a:bundle ==# ''
     return
   endif
-  silent call spore#exec(join(['uninstall', a:bundle], ' '))
+  silent call spore#exec(join(['uninstall', a:bundle]))
   redraw!
   call spore#refresh()
 endfunction
 
 function! spore#exec(args)
+  if executable(s:spore_executable) < 1
+    echoerr 'Executable not found: make sure ' . s:spore_executable . ' is in PATH'
+    return
+  endif
+
   if a:args ==# ''
     return spore#list()
   endif
@@ -97,7 +101,7 @@ function! spore#list()
   set nomodifiable
 
   " Place cursor on first plug-in line
-  4
+  3
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et
