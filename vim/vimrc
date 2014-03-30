@@ -2,8 +2,9 @@
 " --------------------------------------------------------------------------------
 
 if has("vim_starting") && filereadable($HOME."/.vim/bundle/vim-pathogen/autoload/pathogen.vim")
+  " Manage 'runtimepath' with pathogen.vim
   runtime bundle/vim-pathogen/autoload/pathogen.vim
-  call pathogen#infect()        " Manage 'runtimepath' with pathogen.vim
+  execute pathogen#infect()
 endif
 
 if has("autocmd")
