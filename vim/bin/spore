@@ -4,7 +4,7 @@
 #
 
 # Version:
-readonly VERSION=0.2.0
+readonly VERSION=0.2.1
 
 # Usage:
 readonly USAGE="$(basename "$0") [<options>] <command> [<plug-in>]
@@ -343,7 +343,7 @@ while test $# != 0; do
 			;;
 		*)
 			error "$(printf "Illegal argument: %s\n" "$1")"
-			print_help
+			help
 			exit $ERROR_USAGE
 			;;
 	esac
