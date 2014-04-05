@@ -102,10 +102,10 @@
 
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no
-     ;(use-package server
-       ;:init
-       ;(unless (server-running-p)
-         ;(server-start)))
+     (use-package server
+       :init
+       (unless (server-running-p)
+         (server-start)))
    #+END_SRC
 ** Temporary Files
 
@@ -144,7 +144,7 @@
 * Appearance
 
 ** UI
-   
+
    Hide parts of the GUI that we don't need, namely the graphical tool
    bar and any scroll bars.
 
@@ -153,7 +153,7 @@
      (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
      (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
    #+END_SRC
-   
+
    Here we load the theme, which determines colors and font
    variants. Enox is a medium-contrast theme with a dark background.
 
@@ -170,7 +170,7 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (cond
       ((find-font (font-spec :name "Source Code Pro"))
-       (set-frame-font "Source Code Pro-15" t t))
+       (set-frame-font "Source Code Pro-14" t t))
       ((find-font (font-spec :name "Panic Sans"))
        (set-frame-font "Panic Sans-14" t t))
       ((find-font (font-spec :name "courier"))
@@ -181,9 +181,6 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (global-hl-line-mode)
 
-     ;; http://stackoverflow.com/questions/335487/programmatically-setting-emacs-frame-size
-     ;;
-     ;; TODO always maximize height:
      ;; The developer build of Emacs Trunk has a function called
      ;; toggle-frame-maximized, which is included within
      ;; .../lisp/frame.el. That function can be added to the
@@ -192,16 +189,12 @@
      ;; both width and height in one-fell-swoop.
      ;;
      ;; Source: http://stackoverflow.com/a/18711628
-     (add-to-list 'default-frame-alist '(left . 0))
-     (add-to-list 'default-frame-alist '(top . 0))
-     (add-to-list 'default-frame-alist '(height . 67))
-     (add-to-list 'default-frame-alist '(width . 234))
+     (if (fboundp 'toggle-frame-maximized)
+         (add-hook 'emacs-startup-hook 'toggle-frame-maximized))
 
      ;; Set up terminal frames appropriately
      (defun nox/after-make-frame (frame)
-       (if (display-graphic-p frame)
-           (set-frame-font "Panic Sans-14" t t)
-         ;; else
+       (unless (display-graphic-p frame)
          (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
          (set-face-background 'default "dummy-color" frame)))
 
@@ -219,7 +212,7 @@
      ;; Never require full word answers
      (defalias 'yes-or-no-p 'y-or-n-p)
 
-     (setq linum-format "%5d ")
+     (setq linum-format "%4d ")
      (add-hook 'prog-mode-hook 'linum-mode)
    #+END_SRC
 
@@ -237,10 +230,11 @@
 
          (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/www/" ":\\1:"))
          (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/\\([-_A-Za-z0-9]+\\)/" ":\\2.\\1:"))
-         (add-to-list 'sml/replacer-regexp-list '("^~/gh/\\(.*\\)/" ":Git:\\1:"))
+         (add-to-list 'sml/replacer-regexp-list '("^~/.dots/\\(.*\\)/" ":Config:\\1:"))
          (add-to-list 'sml/replacer-regexp-list '("^~/org/" ":Org:"))
 
          (add-to-list 'sml/hidden-modes " Projectile")
+         (add-to-list 'sml/hidden-modes " EvilOrg")
          (add-to-list 'sml/hidden-modes " Undo-Tree")
          (add-to-list 'sml/hidden-modes " Guide")
          (add-to-list 'sml/hidden-modes " yas")))
@@ -275,14 +269,6 @@
 
    #+NAME: evil
    #+BEGIN_SRC emacs-lisp :tangle no
-     (require 'evil-leader)
-     (require 'evil)
-     (require 'evil-numbers)
-
-     (evil-mode nil) ; See https://github.com/cofi/evil-leader/issues/10
-     (global-evil-leader-mode 1)
-     (evil-mode 1)
-
      (setq evil-want-C-u-scroll t
            evil-want-C-w-in-emacs-state t)
 
@@ -291,6 +277,14 @@
            evil-insert-state-cursor '("white" bar)
            evil-visual-state-cursor '("white" hbar)
            evil-replace-state-cursor '("orange" hbar))
+
+     (require 'evil-leader)
+     (require 'evil)
+     (require 'evil-numbers)
+
+     (evil-mode nil) ; See https://github.com/cofi/evil-leader/issues/10
+     (global-evil-leader-mode 1)
+     (evil-mode 1)
    #+END_SRC
 
 ** TODO Miscellaneous Bindings
@@ -310,9 +304,9 @@
        "h" 'dash-at-point
        "P" 'package-list-packages
        "=" 'nox/indent-buffer
-       ;; TODO: move out of leader
-       "con" 'linum-mode
-       "cow" 'toggle-truncate-lines
+       ;; Option toggle
+       "on" 'linum-mode
+       "ow" 'toggle-truncate-lines
        ;; Git
        "g s" 'magit-status
        "g l" 'magit-log
@@ -342,6 +336,8 @@
      (define-key minibuffer-local-completion-map [escape] 'nox/minibuffer-keyboard-quit)
      (define-key minibuffer-local-must-match-map [escape] 'nox/minibuffer-keyboard-quit)
      (define-key minibuffer-local-isearch-map [escape] 'nox/minibuffer-keyboard-quit)
+
+     (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
 
      ;; Unimpaired.vim
      (define-key evil-normal-state-map (kbd "[ SPC")
@@ -392,15 +388,17 @@
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package surround
-       :init (global-surround-mode 1))
-
+       :commands global-surround-mode
+       :idle (global-surround-mode 1))
+     
      (use-package ace-jump-mode
        :commands ace-jump-mode
        :init
        (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
-
+     
      (use-package smartparens-config
-       :init (smartparens-global-mode t)
+       :commands smartparens-global-mode
+       :idle (smartparens-global-mode t)
        :config
        (progn
          ;; Fix handling of {} and [] when hitting RET inside
@@ -409,12 +407,12 @@
            (save-excursion
              (newline)
              (indent-according-to-mode)))
-
+     
          (defun nox/sp/pair-on-newline-and-indent (id action context)
            "Open a new brace or bracket expression, with relevant newlines and indent. "
            (nox/sp/pair-on-newline id action context)
            (indent-according-to-mode))
-
+     
          (sp-pair "{" nil :post-handlers
                   '(:add ((lambda (id action context)
                             (nox/sp/pair-on-newline-and-indent id action context)) "RET")))
@@ -422,7 +420,7 @@
                   '(:add ((lambda (id action context)
                             (nox/sp/pair-on-newline-and-indent id action context)) "RET")))))
    #+END_SRC
-   
+
    When proper source control isn't an option, it's useful to be able
    to create a copy of a file as you are working on it.
    =nox/write-timestamped-current-file-copy= writes the contents of the
@@ -468,8 +466,8 @@
                   whitespace-mode)
        :init
        (progn
-         (evil-leader/set-key "W"   'whitespace-cleanup)
-         (evil-leader/set-key "col" 'whitespace-mode))
+         (evil-leader/set-key "w"  'whitespace-cleanup)
+         (evil-leader/set-key "ol" 'whitespace-mode))
        :config
        (progn
          (setq whitespace-line-column 110) ; TODO: only apply to HTML
@@ -516,9 +514,8 @@
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package flycheck
-       :init
-       (progn
-         (global-flycheck-mode 1)))
+       :commands global-flycheck-mode
+       :idle (global-flycheck-mode 1))
    #+END_SRC
 
 ** Emacs-Lisp
@@ -571,10 +568,10 @@
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package yasnippet
+       :commands yas-global-mode
+       :idle (yas-global-mode t)
        :init
        (progn
-         (yas-global-mode t)
-
          ;; Suppress excessive log messages
          (setq yas-verbosity 1)))
    #+END_SRC
@@ -894,8 +891,8 @@
        :config
        (setq org-habit-show-habits-only-for-today nil))
 
-     (setq org-directory "~/org")
-     (setq org-default-notes-file (expand-file-name "agenda.org" org-directory))
+     (setq org-directory "~/org"
+           org-default-notes-file (expand-file-name "agenda.org" org-directory))
 
      ;; http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html
      (org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
@@ -920,13 +917,13 @@
                     "* TODO %i%?\n  DEADLINE: %^{Due}t\n%^{Cost}p\n%^{Billable}"
                     :clock-keep t :kill-buffer t))))
 
-     (setq org-goto-interface (quote outline-path-completion))
-     (setq org-log-done (quote time))
-     (setq org-log-into-drawer t)
-     (setq org-refile-allow-creating-parent-nodes (quote confirm))
-     (setq org-refile-use-outline-path t)
-     (setq org-return-follows-link t)
-     (setq org-catch-invisible-edits (quote show-and-error))
+     (setq org-goto-interface (quote outline-path-completion)
+           org-log-done (quote time)
+           org-log-into-drawer t
+           org-refile-allow-creating-parent-nodes (quote confirm)
+           org-refile-use-outline-path t
+           org-return-follows-link t
+           org-catch-invisible-edits (quote show-and-error))
 
      (setq org-todo-keywords '((sequence
                                "TODO(t)"
@@ -944,8 +941,8 @@
       'org-babel-load-languages
       '((emacs-lisp . t)
         (sh . t)))
-     (setq org-src-fontify-natively t)
-     (setq org-src-tab-acts-natively t)
+     (setq org-src-fontify-natively t
+           org-src-tab-acts-natively t)
    #+END_SRC
 
 ** Templates
@@ -1272,7 +1269,7 @@ template selector and ~<TAB>~.
    #+BEGIN_SRC emacs-lisp :tangle no
      (defvar nox/notifier-program-name
        "terminal-notifier")
-     
+
      (defun nox/send-notification (title msg &optional group)
        (let ((group (if group (format " -group %s" group)))
              (msg (format " -message '%s'" msg))
