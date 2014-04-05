@@ -1,3 +1,4 @@
+fish/completions/*.fish
 vim/.netrwhist
 vim/bundle/*
 vim/sessions/*
