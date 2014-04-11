@@ -18,6 +18,7 @@
 (depends-on "helm")
 (depends-on "helm-projectile")
 (depends-on "htmlize")
+(depends-on "ibuffer-vc")
 (depends-on "ido-ubiquitous")
 (depends-on "ido-vertical-mode")
 (depends-on "magit")
@@ -26,9 +27,9 @@
 (depends-on "pallet")
 (depends-on "popup")
 (depends-on "pos-tip")
+(depends-on "project-persist")
 (depends-on "projectile")
 (depends-on "rainbow-delimiters")
-(depends-on "rainbow-mode")
 (depends-on "s")
 (depends-on "sauron")
 (depends-on "smart-mode-line")
@@ -37,3 +38,7 @@
 (depends-on "surround")
 (depends-on "use-package")
 (depends-on "yasnippet")
+
+(source gnu)
+
+(depends-on "rainbow-mode")

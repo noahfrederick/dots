@@ -15,7 +15,7 @@
    uses [[https://github.com/cask/cask][Cask]] to specify the package dependencies. [[https://github.com/rdallasgray/pallet][Pallet]] allows us to
    use Cask in conjunction with ~package.el~.
 
-  - Install GNU Emacs 24 or higher
+  - Install GNU Emacs 24 or later
   - Install Cask from https://github.com/cask/cask
   - Run ~cask install~ in ~$HOME/.emacs.d~
 
@@ -29,7 +29,7 @@
 
 ** Configuring Packages
 
-   We use [[https://github.com/jwiegley/use-package][=use-package=]] to autoload packages throughout:
+   We use =[[https://github.com/jwiegley/use-package][use-package]]= to autoload packages throughout:
 
    #+NAME: init-before
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -43,12 +43,12 @@
 
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no :tangle no
-     (defun nox/show-load-time ()
-       "Show load time in minibuffer"
-       (message "Load time: %s seconds."
+     (defun nox/show-startup-time ()
+       "Show Emacs's startup time in the minibuffer"
+       (message "Startup time: %s seconds."
                 (emacs-uptime "%s")))
 
-     (add-hook 'emacs-startup-hook 'nox/show-load-time 'append)
+     (add-hook 'emacs-startup-hook 'nox/show-startup-time 'append)
    #+END_SRC
 
 * Emacs Initialization
@@ -87,18 +87,23 @@
    #+NAME: init-before
    #+BEGIN_SRC emacs-lisp :tangle no
      (cond ((eq system-type 'darwin)
-            (setq delete-by-moving-to-trash t)
-            (setq trash-directory "~/.Trash/")
-            ;; Use gls for dired: brew install coreutils
-            (setq insert-directory-program "gls")
+            (setq delete-by-moving-to-trash t
+                  trash-directory "~/.Trash/")
+            ;; BSD ls does not support --dired. Use GNU core-utils: brew install coreutils
+            (when (executable-find "gls")
+              (setq insert-directory-program "gls"))
+            ;; Derive PATH by running a shell so that GUI Emacs sessions have access to it
             (exec-path-from-shell-initialize)
-            ;; Correctly parse exec-path when PATH deleimiter is a space
+            ;; Correctly parse exec-path when PATH delimiter is a space
             (when (equal (file-name-nondirectory (getenv "SHELL")) "fish")
               (setq exec-path (split-string (car exec-path) " "))
               (setenv "PATH" (mapconcat 'identity exec-path ":")))))
    #+END_SRC
 
 ** Start Server
+
+   The Emacs server allows for using ~emacsclient~ to quickly pop open a
+   new frame in a terminal:
 
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -107,6 +112,19 @@
        (unless (server-running-p)
          (server-start)))
    #+END_SRC
+
+   Here are the most common ways in which ~emacsclient~ is used:
+
+   | Command                         | Description                     |
+   |---------------------------------+---------------------------------|
+   | ~emacsclient~                     | Edit in existing frame          |
+   | ~emacsclient -n (--no-wait)~      | Do not wait--return immediately |
+   | ~emacsclient -c (--create-frame)~ | Edit in a new frame             |
+   | ~emacsclient -t (--tty)~          | Edit in a new terminal frame    |
+   | ~emacsclient -e (--eval)~         | Evaluate the following Elisp    |
+
+   For more, see ~man emacsclient~.
+
 ** Temporary Files
 
    #+NAME: init-after
@@ -154,8 +172,8 @@
      (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
    #+END_SRC
 
-   Here we load the theme, which determines colors and font
-   variants. Enox is a medium-contrast theme with a dark background.
+   Load the theme, which determines colors and font variants. Enox is
+   a medium-contrast theme with a dark background.
 
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -265,26 +283,33 @@
 
 * Evil
 
+  Evil mode is a minor mode providing Vim emulation for Emacs. It
+  reproduces Vim's modal editing and even certain Ex commands.
+
 ** Setup
 
    #+NAME: evil
    #+BEGIN_SRC emacs-lisp :tangle no
-     (setq evil-want-C-u-scroll t
-           evil-want-C-w-in-emacs-state t)
+     (use-package evil
+       :pre-load
+       (setq evil-want-C-u-scroll t
+             evil-want-C-w-in-emacs-state t)
+       :config
+       (progn
+         (require 'evil-leader)
+         (require 'evil-numbers)
 
-     (setq evil-default-cursor '("white" box)
-           evil-emacs-state-cursor '("pink" box)
-           evil-insert-state-cursor '("white" bar)
-           evil-visual-state-cursor '("white" hbar)
-           evil-replace-state-cursor '("orange" hbar))
+         (setq evil-default-cursor '("white" box)
+               evil-emacs-state-cursor '("pink" box)
+               evil-insert-state-cursor '("white" bar)
+               evil-visual-state-cursor '("white" hbar)
+               evil-replace-state-cursor '("orange" hbar))
 
-     (require 'evil-leader)
-     (require 'evil)
-     (require 'evil-numbers)
-
-     (evil-mode nil) ; See https://github.com/cofi/evil-leader/issues/10
-     (global-evil-leader-mode 1)
-     (evil-mode 1)
+         (evil-mode nil) ; See https://github.com/cofi/evil-leader/issues/10
+         (evil-leader/set-leader "<SPC>")
+         (global-evil-leader-mode 1)
+         (evil-mode 1)
+         (evil-set-initial-state 'help-mode 'emacs)))
    #+END_SRC
 
 ** TODO Miscellaneous Bindings
@@ -294,8 +319,6 @@
      (global-set-key (kbd "RET") 'newline-and-indent)
 
      (evil-leader/set-key
-       "b" 'ido-switch-buffer
-       "B" 'ibuffer
        "f" 'fiplr-find-file
        "d" 'fiplr-find-directory
        "D" 'dired
@@ -303,14 +326,9 @@
        "s" 'ansi-term
        "h" 'dash-at-point
        "P" 'package-list-packages
-       "=" 'nox/indent-buffer
        ;; Option toggle
-       "on" 'linum-mode
-       "ow" 'toggle-truncate-lines
-       ;; Git
-       "g s" 'magit-status
-       "g l" 'magit-log
-       "g d" 'magit-diff)
+       "o n" 'linum-mode
+       "o w" 'toggle-truncate-lines)
 
      (define-key evil-motion-state-map "j" 'evil-next-visual-line)
      (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -318,6 +336,8 @@
 
      (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
      (define-key evil-normal-state-map "_" 'evil-numbers/dec-at-pt)
+
+     (define-key evil-normal-state-map "-" 'dired)
 
      ;; Escape minibuffer
      (defun nox/minibuffer-keyboard-quit ()
@@ -390,12 +410,12 @@
      (use-package surround
        :commands global-surround-mode
        :idle (global-surround-mode 1))
-     
+
      (use-package ace-jump-mode
        :commands ace-jump-mode
        :init
-       (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
-     
+       (evil-leader/set-key (kbd "SPC") 'ace-jump-mode))
+
      (use-package smartparens-config
        :commands smartparens-global-mode
        :idle (smartparens-global-mode t)
@@ -407,12 +427,12 @@
            (save-excursion
              (newline)
              (indent-according-to-mode)))
-     
+
          (defun nox/sp/pair-on-newline-and-indent (id action context)
-           "Open a new brace or bracket expression, with relevant newlines and indent. "
+           "Open a new brace or bracket expression, with relevant newlines and indent."
            (nox/sp/pair-on-newline id action context)
            (indent-according-to-mode))
-     
+
          (sp-pair "{" nil :post-handlers
                   '(:add ((lambda (id action context)
                             (nox/sp/pair-on-newline-and-indent id action context)) "RET")))
@@ -466,8 +486,8 @@
                   whitespace-mode)
        :init
        (progn
-         (evil-leader/set-key "w"  'whitespace-cleanup)
-         (evil-leader/set-key "ol" 'whitespace-mode))
+         (evil-leader/set-key "w"   'whitespace-cleanup)
+         (evil-leader/set-key "o l" 'whitespace-mode))
        :config
        (progn
          (setq whitespace-line-column 110) ; TODO: only apply to HTML
@@ -489,6 +509,8 @@
              (interactive)
              (save-excursion
                      (indent-region (point-min) (point-max) nil)))
+
+     (evil-leader/set-key "=" 'nox/indent-buffer)
 
      (defun nox/show-trailing-whitespace ()
              (interactive)
@@ -516,6 +538,46 @@
      (use-package flycheck
        :commands global-flycheck-mode
        :idle (global-flycheck-mode 1))
+   #+END_SRC
+
+** Version Control and History
+
+   Undo tree provides a Vim-like branching undo history that can be
+   visualized and traversed in another window.
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package undo-tree
+       :init (evil-leader/set-key "u" 'undo-tree-visualize)
+       :config
+       (progn
+         ;; Use HJKL-style mappings instead of NPFB
+         (define-key undo-tree-visualizer-mode-map "j" 'undo-tree-visualize-redo)
+         (define-key undo-tree-visualizer-mode-map "k" 'undo-tree-visualize-undo)
+         (define-key undo-tree-visualizer-mode-map "h" 'undo-tree-visualize-switch-branch-left)
+         (define-key undo-tree-visualizer-mode-map "l" 'undo-tree-visualize-switch-branch-right)
+         (define-key undo-tree-visualizer-selection-mode-map "j" 'undo-tree-visualize-select-next)
+         (define-key undo-tree-visualizer-selection-mode-map "k" 'undo-tree-visualize-select-previous)
+         (define-key undo-tree-visualizer-selection-mode-map "h" 'undo-tree-visualize-select-left)
+         (define-key undo-tree-visualizer-selection-mode-map "l" 'undo-tree-visualize-select-right)))
+   #+END_SRC
+
+   Magit provides featureful Git integration.
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package magit
+       :commands (magit-status magit-diff magit-log magit-blame-mode)
+       :init
+       (evil-leader/set-key
+         "g s" 'magit-status
+         "g b" 'magit-blame-mode
+         "g l" 'magit-log
+         "g d" 'magit-diff)
+       :config
+       (progn
+         ;; TODO: Use HJKL-style mappings instead of NPFB
+         ))
    #+END_SRC
 
 ** Emacs-Lisp
@@ -627,7 +689,13 @@
 
 ** Buffers
 
-   For more intensive buffer switching and buffer management, use ~ibuffer~:
+   For more intensive buffer switching and buffer management, we use
+   ibuffer, which displays a listing in its own
+   buffer. =ibuffer-saved-filter-groups= defines rules for grouping
+   buffers under categories ("filter groups").
+
+   The [[https://github.com/purcell/ibuffer-vc][ibuffer-vc]] package generates filter groups for consumption by
+   ibuffer that categorize buffers by version control repository root.
 
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -636,38 +704,57 @@
        :init
        (progn
          (setq ibuffer-saved-filter-groups
-               (quote (("default"
-                        ("Config" (or
-                                   (filename . ".dots/")
-                                   (filename . ".emacs.d/")))
-                        ("Shell"  (or
-                                   (mode . eshell-mode)
-                                   (mode . shell-mode)))
-                        ("Dired"  (mode . dired-mode))
-                        ("Prose"  (or
-                                   (mode . tex-mode)
-                                   (mode . plain-tex-mode)
-                                   (mode . latex-mode)
-                                   (mode . rst-mode)
-                                   (mode . markdown-mode)))
-                        ("Org"    (mode . org-mode))
-                        ("Gnus"   (or
-                                   (mode . message-mode)
-                                   (mode . gnus-group-mode)
-                                   (mode . gnus-summary-mode)
-                                   (mode . gnus-article-mode)))
-                        ("Emacs"  (name . "^\\*.*\\*$"))
-                        )
-                       ("projects"
-                        ("Thesis" (filename . "~/thesis/"))
-                        ))))
+               '(("Config" (or
+                            (filename . ".dots/")
+                            (filename . ".emacs.d/")))
+                 ("Shell"  (or
+                            (mode . eshell-mode)
+                            (mode . shell-mode)))
+                 ("Dired"  (mode . dired-mode))
+                 ("Prose"  (or
+                            (mode . tex-mode)
+                            (mode . plain-tex-mode)
+                            (mode . latex-mode)
+                            (mode . rst-mode)
+                            (mode . markdown-mode)))
+                 ("Org"    (mode . org-mode))
+                 ("Gnus"   (or
+                            (mode . message-mode)
+                            (mode . gnus-group-mode)
+                            (mode . gnus-summary-mode)
+                            (mode . gnus-article-mode)))
+                 ("Emacs"  (name . "^\\*.*\\*$")))
+               ibuffer-show-empty-filter-groups nil
+               ibuffer-expert t)
 
-         (add-hook 'ibuffer-mode-hook
-                   (lambda ()
-                     (ibuffer-switch-to-saved-filter-groups "default")))
+         (use-package ibuffer-vc
+           :commands ibuffer-vc-generate-filter-groups-by-vc-root
+           :init
+           (progn
+             (defun nox/ibuffer-apply-filter-groups ()
+               "Combine my saved ibuffer filter groups with those generated
+          by `ibuffer-vc-generate-filter-groups-by-vc-root'"
+               (interactive)
+               (setq ibuffer-filter-groups
+                     (append (ibuffer-vc-generate-filter-groups-by-vc-root)
+                             ibuffer-saved-filter-groups))
+               (message "ibuffer-vc: groups set")
+               (let ((ibuf (get-buffer "*Ibuffer*")))
+                 (when ibuf
+                   (with-current-buffer ibuf
+                     (pop-to-buffer ibuf)
+                     (ibuffer-update nil t)))))
 
-         (setq ibuffer-expert t)
-         (setq ibuffer-show-empty-filter-groups nil)))
+             (add-hook 'ibuffer-hook 'nox/ibuffer-apply-filter-groups)))))
+   #+END_SRC
+
+   Set up convenient un-chorded maps:
+
+   #+NAME: navigation-completion
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (evil-leader/set-key
+       "b" 'ido-switch-buffer
+       "B" 'ibuffer)
    #+END_SRC
 
    Clean up buffers periodically:
@@ -900,39 +987,39 @@
      (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 
      (setq org-capture-templates
-           (quote (("t" "To-do" entry
-                    (file+headline "" "Inbox")
-                    "* TODO %u %^{Task}"
-                    :clock-keep t :kill-buffer t)
-                   ("d" "To-do (done)" entry
-                    (file+headline "" "Inbox")
-                    "* DONE %u %^{Task}"
-                    :clock-keep t :kill-buffer t)
-                   ("q" "Quick to-do" entry
-                    (file+headline "" "Inbox")
-                    "* TODO %^{Task}\n  SCHEDULED: %t"
-                    :clock-keep t :kill-buffer t :immediate-finish t)
-                   ("s" "Timeslip" entry
-                    (file+olp (expand-file-name "bigtech.org" org-directory) "Unfiled")
-                    "* TODO %i%?\n  DEADLINE: %^{Due}t\n%^{Cost}p\n%^{Billable}"
-                    :clock-keep t :kill-buffer t))))
+           '(("t" "To-do" entry
+              (file+headline "" "Inbox")
+              "* TODO %u %^{Task}"
+              :clock-keep t :kill-buffer t)
+             ("d" "To-do (done)" entry
+              (file+headline "" "Inbox")
+              "* DONE %u %^{Task}"
+              :clock-keep t :kill-buffer t)
+             ("q" "Quick to-do" entry
+              (file+headline "" "Inbox")
+              "* TODO %^{Task}\n  SCHEDULED: %t"
+              :clock-keep t :kill-buffer t :immediate-finish t)
+             ("s" "Timeslip" entry
+              (file+olp (expand-file-name "bigtech.org" org-directory) "Unfiled")
+              "* TODO %i%?\n  DEADLINE: %^{Due}t\n%^{Cost}p\n%^{Billable}"
+              :clock-keep t :kill-buffer t)))
 
-     (setq org-goto-interface (quote outline-path-completion)
-           org-log-done (quote time)
+     (setq org-goto-interface 'outline-path-completion
+           org-log-done 'time
            org-log-into-drawer t
-           org-refile-allow-creating-parent-nodes (quote confirm)
+           org-refile-allow-creating-parent-nodes 'confirm
            org-refile-use-outline-path t
            org-return-follows-link t
-           org-catch-invisible-edits (quote show-and-error))
+           org-catch-invisible-edits 'show-and-error)
 
      (setq org-todo-keywords '((sequence
-                               "TODO(t)"
-                               "STARTED(s!)"
-                               "WAITING(w@/!)"
-                               "|"
-                               "CANCELED(c@)"
-                               "DONE(d!)"
-                               )))
+                                "TODO(t)"
+                                "STARTED(s!)"
+                                "WAITING(w@/!)"
+                                "|"
+                                "CANCELED(c@)"
+                                "DONE(d!)"
+                                )))
 
      (setq org-hide-leading-stars t)
 
@@ -947,9 +1034,9 @@
 
 ** Templates
 
-Org mode provides a mechanism for inserting [[http://orgmode.org/manual/Easy-Templates.html][templates]] into Org
-documents. To insert a structural element, type a ~<~, followed by a
-template selector and ~<TAB>~.
+   Org mode provides a mechanism for inserting [[http://orgmode.org/manual/Easy-Templates.html][templates]] into Org
+   documents. To insert a structural element, type a ~<~, followed by a
+   template selector and ~<TAB>~.
 
 ** Tags
 
@@ -983,7 +1070,7 @@ template selector and ~<TAB>~.
 
 ** Key Bindings
 
-#+INCLUDE: "org_key_bindings.org"
+   #+INCLUDE: "org_key_bindings.org"
 
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -1083,7 +1170,7 @@ template selector and ~<TAB>~.
     I tend not to consult the agenda often enough, so let's show it
     after Emacs is idle for a while.
 
-   #+NAME: org
+    #+NAME: org
     #+BEGIN_SRC emacs-lisp :tangle no
       (defun nox/jump-to-org-agenda ()
         (interactive)
@@ -1261,7 +1348,19 @@ template selector and ~<TAB>~.
        (nox/invoice-create (buffer-file-name)))
    #+END_SRC
 
-* Notifications
+* Notifications and ERC
+
+** ERC
+
+   ERC is an extensible IRC client for Emacs. We keep our
+   configuration in a separate =.ercrc.el= file that gets autoloaded
+   upon invoking ~nox/erc~ (by way of loading the =erc= package).
+
+   #+NAME: notifications
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package erc
+       :commands (nox/erc erc))
+   #+END_SRC
 
 ** Terminal Notifier
 
@@ -1365,9 +1464,8 @@ template selector and ~<TAB>~.
 
   Functionality I want or things that need to be fixed:
 
-  - Feature: Pressing ~Tab~ in a *Help* buffer jumps to the next link
-  - Feature: Pressing ~C-w~ in minibuffer deletes word backward
   - Feature: Evil bindings in package listings
+  - Feature: Evil bindings in magit status window
   - Fix: don't remap ~h~ and ~l~ in Org agenda buffer, move old ~j~ and ~k~ to ~n~ and ~p~
   - Fix: figure out how to create normal-state mapping that starts with ~c~
   - Use Emacs for RSS. =newsticker.el= seemed promising, but it
