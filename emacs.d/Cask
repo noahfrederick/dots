@@ -1,3 +1,4 @@
+(source gnu)
 (source melpa)
 
 (depends-on "ace-jump-mode")
@@ -12,7 +13,6 @@
 (depends-on "evil-numbers")
 (depends-on "exec-path-from-shell")
 (depends-on "f")
-(depends-on "fiplr")
 (depends-on "flycheck")
 (depends-on "guide-key")
 (depends-on "helm")
@@ -27,9 +27,9 @@
 (depends-on "pallet")
 (depends-on "popup")
 (depends-on "pos-tip")
-(depends-on "project-persist")
 (depends-on "projectile")
 (depends-on "rainbow-delimiters")
+(depends-on "rainbow-mode")
 (depends-on "s")
 (depends-on "sauron")
 (depends-on "smart-mode-line")
@@ -37,8 +37,5 @@
 (depends-on "smex")
 (depends-on "surround")
 (depends-on "use-package")
+(depends-on "web-mode")
 (depends-on "yasnippet")
-
-(source gnu)
-
-(depends-on "rainbow-mode")

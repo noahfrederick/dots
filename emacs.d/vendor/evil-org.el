@@ -32,7 +32,7 @@
 (require 'org)
 
 (define-minor-mode evil-org-mode
-  "Buffer local minor mode for evil-org"
+  "Buffer local minor mode for enhanced Evil mode bindings for Org buffers."
   :init-value nil
   :lighter " EvilOrg"
   :keymap (make-sparse-keymap) ; defines evil-org-mode-map
@@ -54,7 +54,7 @@
   (evil-append nil)
   )
 
-;; normal state shortcuts
+;; Normal state bindings
 (evil-define-key 'normal evil-org-mode-map
   "gh" 'outline-up-heading
   "gj" (if (fboundp 'org-forward-same-level) ;to be backward compatible with older org version
@@ -64,20 +64,16 @@
 	   'org-backward-same-level
 	  'org-backward-heading-same-level)
   "gl" 'outline-next-visible-heading
-  "t" 'org-todo
-  "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
-  ";t" 'org-show-todo-tree
   "go" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
   "gO" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "$" 'org-end-of-line
   "^" 'org-beginning-of-line
   "<" 'org-metaleft
   ">" 'org-metaright
-  ";a" 'org-agenda
-  "-" 'org-cycle-list-bullet
+  "g-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
 
-;; normal & insert state shortcuts.
+;; Normal & insert state bindings
 (mapc (lambda (state)
         (evil-define-key state evil-org-mode-map
           (kbd "M-l") 'org-metaright

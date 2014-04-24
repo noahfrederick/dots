@@ -7,6 +7,9 @@ body {
 a {
     color: #419886;
 }
+h1 {
+    text-align: center;
+}
 h2 {
     text-align: center;
     margin-top: 3em;
@@ -26,12 +29,13 @@ pre {
 }
 pre {
     padding: .8em .6em;
+    overflow: auto;
     border: 1px solid #222222;
     border-radius: 5px;
-    background: #30363b;
+    background: #1d2124;
     line-height: 1.2em;
     color: #ddd;
-    box-shadow: inset 0 0 80px rgba(0,0,0,.1);
+    box-shadow: inset 0 0 80px rgba(0,0,0,.3);
 }
 .todo {
     color: #f05;
@@ -63,6 +67,46 @@ pre {
     text-decoration: underline;
 }
 #content {
-    width: 50em;
+    max-width: 50em;
     margin: 0 auto;
+}
+@media only screen and (min-width: 1300px) {
+    #table-of-contents {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow: scroll;
+        padding: 0 2em;
+        width: 300px;
+        background: #fafafa;
+        border-right: 1px solid #eee;
+    }
+    #table-of-contents h2 {
+        margin-top: 1.5em;
+        text-align: left;
+    }
+    #text-table-of-contents > ul > li {
+        border-bottom: 0;
+    }
+    #text-table-of-contents > ul > li:first-child {
+        border-top: 0;
+    }
+}
+@media only screen and (max-width: 1700px) and (min-width: 1300px) {
+    #content {
+        /* Prevent underlapping the table of contents */
+        margin-left: 400px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 80%;
+    }
+}
+@media only screen and (max-width: 500px) {
+    body {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 }

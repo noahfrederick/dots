@@ -13,7 +13,8 @@
 
    This configuration is intended to be installable from scratch. It
    uses [[https://github.com/cask/cask][Cask]] to specify the package dependencies. [[https://github.com/rdallasgray/pallet][Pallet]] allows us to
-   use Cask in conjunction with ~package.el~.
+   use Cask in conjunction with ~package.el~ such that our ~Cask~ file is
+   kept up to date when we add and remove packages.
 
   - Install GNU Emacs 24 or later
   - Install Cask from https://github.com/cask/cask
@@ -29,7 +30,9 @@
 
 ** Configuring Packages
 
-   We use =[[https://github.com/jwiegley/use-package][use-package]]= to autoload packages throughout:
+   We use [[https://github.com/jwiegley/use-package][use-package]] to autoload packages. It provides a DSL for
+   setting up autoloads and keybindings, and for deferring the loading
+   of packages that might otherwise slow down Emacs's startup.
 
    #+NAME: init-before
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -236,6 +239,8 @@
 
 ** Mode-line
 
+   [[https://github.com/Bruce-Connor/smart-mode-line][Smart Mode Line]] provides a fairly understandable mode-line format.
+
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package smart-mode-line
@@ -259,6 +264,11 @@
    #+END_SRC
 
 ** Delimiters
+
+   The parenface package colors parentheses distinctly. The
+   rainbow-delimiters package goes a step further and differentiates
+   levels of nested parentheses by color. This is mostly useful for
+   visually parsing Lisp's parenthesis-heavy syntax.
 
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -286,6 +296,17 @@
   Evil mode is a minor mode providing Vim emulation for Emacs. It
   reproduces Vim's modal editing and even certain Ex commands.
 
+  Evil Leader mode provides something like Vim's ~<Leader>~, which is
+  set to ~SPC~ below. Here are the conventions used throughout the
+  configuration around "namespacing" sets of commands bound to the
+  leader key:
+
+  | Key | Description                 |
+  |-----+-----------------------------|
+  | ~g~   | Git functions (via Magit)   |
+  | ~o~   | Option (minor-mode) toggles |
+  | ~r~   | Global Org mode functions   |
+
 ** Setup
 
    #+NAME: evil
@@ -299,7 +320,7 @@
          (require 'evil-leader)
          (require 'evil-numbers)
 
-         (setq evil-default-cursor '("white" box)
+         (setq evil-default-cursor '("DodgerBlue1" box)
                evil-emacs-state-cursor '("pink" box)
                evil-insert-state-cursor '("white" bar)
                evil-visual-state-cursor '("white" hbar)
@@ -309,7 +330,9 @@
          (evil-leader/set-leader "<SPC>")
          (global-evil-leader-mode 1)
          (evil-mode 1)
-         (evil-set-initial-state 'help-mode 'emacs)))
+         (evil-set-initial-state 'help-mode 'emacs)
+         (evil-set-initial-state 'magit-mode 'emacs)
+         (evil-set-initial-state 'package-menu-mode 'normal)))
    #+END_SRC
 
 ** TODO Miscellaneous Bindings
@@ -319,8 +342,10 @@
      (global-set-key (kbd "RET") 'newline-and-indent)
 
      (evil-leader/set-key
-       "f" 'fiplr-find-file
-       "d" 'fiplr-find-directory
+       "e" 'ido-find-file
+       "f" 'projectile-find-file
+       "d" 'projectile-find-dir
+       "p" 'projectile-switch-project
        "D" 'dired
        "T" 'nox/write-timestamped-current-file-copy
        "s" 'ansi-term
@@ -337,7 +362,8 @@
      (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
      (define-key evil-normal-state-map "_" 'evil-numbers/dec-at-pt)
 
-     (define-key evil-normal-state-map "-" 'dired)
+     (define-key evil-normal-state-map "-" 'dired-jump)
+     (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 
      ;; Escape minibuffer
      (defun nox/minibuffer-keyboard-quit ()
@@ -374,6 +400,7 @@
      (evil-leader/set-key-for-mode 'emacs-lisp-mode "E" 'eval-buffer)
      (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-defun)
      (evil-leader/set-key-for-mode 'emacs-lisp-mode "x" 'eval-last-sexp)
+     (evil-leader/set-key-for-mode 'emacs-lisp-mode "X" 'eval-print-last-sexp)
 
      ;; Smartparens manipulations
      ;; See all of them here:
@@ -385,6 +412,11 @@
        (kbd "C-S-h") 'sp-backward-slurp-sexp
        (kbd "C-M-l") 'sp-forward-barf-sexp
        (kbd "C-M-h") 'sp-backward-barf-sexp)
+
+     (evil-make-overriding-map package-menu-mode-map 'normal)
+     (evil-add-hjkl-bindings package-menu-mode-map 'normal
+       "p" 'package-menu-quick-help ; h
+       "n" 'evil-search-next)
    #+END_SRC
 
 * Editing
@@ -414,7 +446,7 @@
      (use-package ace-jump-mode
        :commands ace-jump-mode
        :init
-       (evil-leader/set-key (kbd "SPC") 'ace-jump-mode))
+       (evil-leader/set-key "SPC" 'ace-jump-mode))
 
      (use-package smartparens-config
        :commands smartparens-global-mode
@@ -537,7 +569,8 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package flycheck
        :commands global-flycheck-mode
-       :idle (global-flycheck-mode 1))
+       :idle (global-flycheck-mode 1)
+       :config (setq-default flycheck-disabled-checkers '(html-tidy emacs-lisp-checkdoc)))
    #+END_SRC
 
 ** Version Control and History
@@ -550,16 +583,8 @@
      (use-package undo-tree
        :init (evil-leader/set-key "u" 'undo-tree-visualize)
        :config
-       (progn
-         ;; Use HJKL-style mappings instead of NPFB
-         (define-key undo-tree-visualizer-mode-map "j" 'undo-tree-visualize-redo)
-         (define-key undo-tree-visualizer-mode-map "k" 'undo-tree-visualize-undo)
-         (define-key undo-tree-visualizer-mode-map "h" 'undo-tree-visualize-switch-branch-left)
-         (define-key undo-tree-visualizer-mode-map "l" 'undo-tree-visualize-switch-branch-right)
-         (define-key undo-tree-visualizer-selection-mode-map "j" 'undo-tree-visualize-select-next)
-         (define-key undo-tree-visualizer-selection-mode-map "k" 'undo-tree-visualize-select-previous)
-         (define-key undo-tree-visualizer-selection-mode-map "h" 'undo-tree-visualize-select-left)
-         (define-key undo-tree-visualizer-selection-mode-map "l" 'undo-tree-visualize-select-right)))
+       (setq undo-tree-visualizer-diff t
+             undo-tree-visualizer-timestamps t))
    #+END_SRC
 
    Magit provides featureful Git integration.
@@ -576,52 +601,71 @@
          "g d" 'magit-diff)
        :config
        (progn
-         ;; TODO: Use HJKL-style mappings instead of NPFB
-         ))
+         (evil-make-overriding-map magit-mode-map 'emacs)
+         (define-key magit-mode-map "\C-w" 'evil-window-map)
+         (evil-define-key 'emacs magit-mode-map "j" 'magit-goto-next-section)
+         (evil-define-key 'emacs magit-mode-map "k" 'magit-goto-previous-section)
+         (evil-define-key 'emacs magit-mode-map "K" 'magit-discard-item))) ; k
    #+END_SRC
 
-** Emacs-Lisp
+** Languages
+*** Emacs-Lisp
 
-   #+NAME: editing
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package emacs-lisp-mode
-       :init
-       (use-package eldoc
-         :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
-       :mode ("Cask" . emacs-lisp-mode))
+    #+NAME: editing
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (use-package emacs-lisp-mode
+        :init
+        (use-package eldoc
+          :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+        :mode ("Cask" . emacs-lisp-mode))
 
-     (defun nox/byte-recompile ()
-       "`byte-compile' every .el file under `user-emacs-directory' recursively"
-       (interactive)
-       (byte-recompile-directory user-emacs-directory 0)
-       (when (fboundp 'sauron-add-event)
-           (sauron-add-event 'editor 2 "Byte compiled Emacs directory")))
+      (defun nox/byte-recompile ()
+        "`byte-compile' every .el file under `user-emacs-directory' recursively"
+        (interactive)
+        (byte-recompile-directory user-emacs-directory 0)
+        (when (fboundp 'sauron-add-event)
+            (sauron-add-event 'editor 2 "Byte compiled Emacs directory")))
 
-     (defun nox/byte-compile-current-buffer ()
-       "`byte-compile' current buffer in emacs-lisp-mode if compiled file exists."
-       (interactive)
-       (when (and (eq major-mode 'emacs-lisp-mode)
-                  (file-exists-p (byte-compile-dest-file buffer-file-name)))
-         (byte-compile-file buffer-file-name)
-         (when (fboundp 'sauron-add-event)
-           (sauron-add-event 'editor 2 "Byte compiled buffer"))))
+      (defun nox/byte-compile-current-buffer ()
+        "`byte-compile' current buffer in emacs-lisp-mode if compiled file exists."
+        (interactive)
+        (when (and (eq major-mode 'emacs-lisp-mode)
+                   (file-exists-p (byte-compile-dest-file buffer-file-name)))
+          (byte-compile-file buffer-file-name)
+          (when (fboundp 'sauron-add-event)
+            (sauron-add-event 'editor 2 "Byte compiled buffer"))))
 
-     (add-hook 'after-save-hook 'nox/byte-compile-current-buffer)
-   #+END_SRC
+      (add-hook 'after-save-hook 'nox/byte-compile-current-buffer)
+    #+END_SRC
 
-** Ruby
+*** Ruby
 
-   #+NAME: editing
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package ruby-mode
-       :mode (("\\.rake$" . ruby-mode)
-              ("\\.gemspec$" . ruby-mode)
-              ("\\.ru$" . ruby-mode)
-              ("Rakefile$" . ruby-mode)
-              ("Gemfile$" . ruby-mode)
-              ("Capfile$" . ruby-mode)
-              ("Guardfile$" . ruby-mode)))
-   #+END_SRC
+    #+NAME: editing
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (use-package ruby-mode
+        :mode (("\\.rake$" . ruby-mode)
+               ("\\.gemspec$" . ruby-mode)
+               ("\\.ru$" . ruby-mode)
+               ("Rakefile$" . ruby-mode)
+               ("Gemfile$" . ruby-mode)
+               ("Capfile$" . ruby-mode)
+               ("Guardfile$" . ruby-mode)))
+    #+END_SRC
+
+*** Web
+
+    Web mode provides, among other features, syntax highlighting for
+    Javascript and CSS embedded in HTML as well as highlighting for
+    various templating languages.
+
+    #+NAME: editing
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (use-package web-mode
+        :mode (("\\.html?\\'" . web-mode)
+               ("\\.css\\'" . web-mode)
+               ("\\.mustache\\'" . web-mode)
+               ("\\.erb\\'" . web-mode)))
+    #+END_SRC
 
 ** Snippets
 
@@ -664,6 +708,13 @@
        (progn
          (setq ido-enable-flex-matching t)
          (add-to-list 'ido-ignore-files "\\.DS_Store")
+
+         (add-hook 'ido-setup-hook 'nox/ido-setup)
+
+         (defun nox/ido-setup ()
+           "Add Evil-mode-like key bindings for ido."
+           (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
+           (define-key ido-completion-map (kbd "C-k") 'ido-prev-match))
 
          (use-package ido-vertical-mode
            :init
@@ -771,82 +822,6 @@
      (use-package helm-config)
    #+END_SRC
 
-** Project Management
-
-   #+NAME: navigation-completion
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package project-persist
-       :init (project-persist-mode t)
-       :config
-       (progn
-         ;;; The following was yanked from Graphene:
-         (defun kill-buffer-if-file (buf)
-           "Kill a buffer only if it is file-based."
-           (when (buffer-file-name buf)
-             (when (buffer-modified-p buf)
-               (when (y-or-n-p (format "Buffer %s is modified - save it?" (buffer-name buf)))
-                 (save-some-buffers nil buf)))
-             (set-buffer-modified-p nil)
-             (kill-buffer buf)))
-
-         (defun kill-all-buffers ()
-           "Kill all file-based buffers."
-           (interactive)
-           (mapc (lambda (buf) (kill-buffer-if-file buf))
-                 (buffer-list)))
-
-         (defun graphene-set-project-root (dir)
-           "Change the default directory and update speedbar if used."
-           (setq default-directory dir))
-
-         (defun graphene-load-project-desktop ()
-           "Load the project's desktop if available."
-           (ignore-errors
-             (setq default-directory project-persist-current-project-settings-dir)
-             (message (format "Loading project desktop from %s" default-directory))
-             (desktop-read project-persist-current-project-settings-dir)))
-
-         ;; Kill all file-based buffers and unpin the speedbar before opening a project.
-         (add-hook 'project-persist-before-load-hook
-                   (lambda ()
-                     (kill-all-buffers)))
-
-         ;; Kill all file-based buffers and unpin the speedbar after closing a project.
-         (add-hook 'project-persist-after-close-hook
-                   (lambda ()
-                     (kill-all-buffers)))
-
-         ;; Set the project root directory, load the project desktop and update speedbar.
-         (add-hook 'project-persist-after-load-hook
-                   (lambda ()
-                     (graphene-load-project-desktop)
-                     (graphene-set-project-root project-persist-current-project-root-dir)))
-
-         ;; Save the project desktop.
-         (add-hook 'project-persist-after-save-hook
-                   (lambda ()
-                     (message (format "Saving project desktop in %s" project-persist-current-project-settings-dir))
-                     (desktop-save project-persist-current-project-settings-dir)))))
-
-     ;; http://www.emacswiki.org/DeskTop#toc4: Overriding stale desktop locks
-     ;;; desktop-override-stale-locks.el begins here
-     (defun emacs-process-p (pid)
-       "If pid is the process ID of an emacs process, return t, else nil.
-     Also returns nil if pid is nil."
-       (when pid
-         (let ((attributes (process-attributes pid)) (cmd))
-           (dolist (attr attributes)
-             (if (string= "comm" (car attr))
-                 (setq cmd (cdr attr))))
-           (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
-
-     (defadvice desktop-owner (after pry-from-cold-dead-hands activate)
-       "Don't allow dead emacsen to own the desktop file."
-       (when (not (emacs-process-p ad-return-value))
-         (setq ad-return-value nil)))
-     ;;; desktop-override-stale-locks.el ends here
-   #+END_SRC
-
 ** Find in Project
 
    [[https://github.com/bbatsov/projectile][Projectile]] allows easy switching between projects as well as
@@ -862,7 +837,9 @@
        :init
        (progn
          (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
-
+         (projectile-global-mode))
+       :config
+       (progn
          ;; TODO: This can probably be done more elegantly with :bind
          (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
          (define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
@@ -870,30 +847,7 @@
          (define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
          (define-key projectile-mode-map [?\s-D] 'projectile-dired)
          (define-key projectile-mode-map [?\s-g] 'projectile-grep)
-         (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
-
-         (projectile-global-mode)))
-   #+END_SRC
-
-   [[https://github.com/d11wtq/fiplr][Fiplr]] is a minimalistic Find in Project package that uses fuzzy
-   matching. Its function overlaps with Projectile considerably, but
-   it is more flexible about what a project means.
-
-   It serves to replace =ido-find-file=.
-
-   #+NAME: navigation-completion
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package fiplr
-       :commands (fiplr-find-file fiplr-find-directory)
-       :config (setq fiplr-root-markers '(".git"
-                                          ".svn"
-                                          ".hg"
-                                          ".bzr"
-                                          ".projectile"
-                                          "Cask"
-                                          "Gemfile"
-                                          "Makefile"
-                                          "Rakefile")))
+         (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)))
    #+END_SRC
 
 ** Auto-completion
@@ -998,11 +952,7 @@
              ("q" "Quick to-do" entry
               (file+headline "" "Inbox")
               "* TODO %^{Task}\n  SCHEDULED: %t"
-              :clock-keep t :kill-buffer t :immediate-finish t)
-             ("s" "Timeslip" entry
-              (file+olp (expand-file-name "bigtech.org" org-directory) "Unfiled")
-              "* TODO %i%?\n  DEADLINE: %^{Due}t\n%^{Cost}p\n%^{Billable}"
-              :clock-keep t :kill-buffer t)))
+              :clock-keep t :kill-buffer t :immediate-finish t)))
 
      (setq org-goto-interface 'outline-path-completion
            org-log-done 'time
@@ -1065,27 +1015,33 @@
            org-export-with-section-numbers nil
            org-export-html-preamble nil
            org-export-html-postamble nil
-           org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />")
+           org-export-html-style-include-default nil
+           org-export-html-style-include-scripts nil
+           org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />\n"
+           org-export-html-style-extra "<meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\" />")
    #+END_SRC
 
 ** Key Bindings
 
-   #+INCLUDE: "org_key_bindings.org"
+#+INCLUDE: "org_key_bindings.org"
 
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
-   ;; Org mode - http://orgmode.org/guide/Activation.html#Activation
-   (global-set-key (kbd "C-c c") 'org-capture)
-   (global-set-key (kbd "C-c l") 'org-store-link)
-   (global-set-key (kbd "C-c a") 'org-agenda)
-   (global-set-key (kbd "C-c b") 'org-iswitchb)
+     ;; Org mode - http://orgmode.org/guide/Activation.html#Activation
+     (evil-leader/set-key
+       "r a" 'org-agenda
+       "r b" 'org-iswitchb
+       "r c" 'org-capture
+       "r l" 'org-store-link)
 
-   (eval-after-load 'org-agenda
-     '(progn
-        ;; Use the standard Org agenda bindings as a base
-        (evil-make-overriding-map org-agenda-mode-map 'emacs t)
-        (evil-add-hjkl-bindings org-agenda-mode-map 'emacs
-          (kbd "C-j") 'org-agenda-goto-date))) ; "j"
+     (eval-after-load 'org-agenda
+       '(progn
+          ;; Use the standard Org agenda bindings as a base
+          (evil-make-overriding-map org-agenda-mode-map 'emacs t)
+          (evil-define-key 'emacs org-agenda-mode-map "j" 'org-agenda-next-line)
+          (evil-define-key 'emacs org-agenda-mode-map "k" 'org-agenda-previous-line)
+          (evil-define-key 'emacs org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date) ; "j"
+          (evil-define-key 'emacs org-agenda-mode-map "n" 'org-agenda-capture)))         ; "k"
    #+END_SRC
 
 ** Clocking Time
@@ -1187,7 +1143,7 @@
                     (org-fit-window-to-buffer))))
             (call-interactively 'org-agenda-list))))
 
-      (run-with-idle-timer 1200 t 'nox/jump-to-org-agenda)
+      (run-with-idle-timer 2400 t 'nox/jump-to-org-agenda)
     #+END_SRC
 
 ** Appointments
@@ -1353,12 +1309,12 @@
 ** ERC
 
    ERC is an extensible IRC client for Emacs. We keep our
-   configuration in a separate =.ercrc.el= file that gets autoloaded
-   upon invoking ~nox/erc~ (by way of loading the =erc= package).
+   configuration in a separate =erc-config.el= file that gets autoloaded
+   upon invoking ~nox/erc~.
 
    #+NAME: notifications
    #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package erc
+     (use-package erc-config
        :commands (nox/erc erc))
    #+END_SRC
 
@@ -1420,7 +1376,8 @@
 * Configuration Layout
 
   Here we define the ~emacs.el~ file that gets generated by the source
-  blocks in our Org document:
+  blocks in our Org document. This is the file that actually gets
+  loaded on startup.
 
   #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
     ;;; emacs.el --- Emacs configuration generated via Org Babel
@@ -1464,10 +1421,7 @@
 
   Functionality I want or things that need to be fixed:
 
-  - Feature: Evil bindings in package listings
-  - Feature: Evil bindings in magit status window
-  - Fix: don't remap ~h~ and ~l~ in Org agenda buffer, move old ~j~ and ~k~ to ~n~ and ~p~
-  - Fix: figure out how to create normal-state mapping that starts with ~c~
+  - Feature: remap ~C-j~ / ~C-k~ in Helm buffer.
   - Use Emacs for RSS. =newsticker.el= seemed promising, but it
     caused Emacs to hang on startup while it fetched feeds and it
     couldn't handle half the feeds for some reason. =elfeed.el= was
