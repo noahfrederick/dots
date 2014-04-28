@@ -31,8 +31,6 @@ if has('gui_macvim')
   " set guifont=Panic\ Sans:h13
   " set linespace=2
 
-  set fullscreen
-
   " Toggle window transparency - useful for referencing something behind Vim
   nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
 endif
