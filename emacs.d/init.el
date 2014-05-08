@@ -14,8 +14,7 @@
 ;; Pallet allows us to use Cask in tandem with package.el
 (require 'pallet)
 
-;; Load up Org-mode and Org-babel
-(require 'org-install)
+;; Load up Org-babel
 (require 'ob-tangle)
 
 ;; Load our main configuration file
