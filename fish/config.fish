@@ -8,6 +8,7 @@ function prepend_to_path -d "Prepend the given dir to PATH if it exists and is n
 		end
 	end
 end
+prepend_to_path $HOME/.cask/bin
 prepend_to_path $HOME/bin
 
 #
