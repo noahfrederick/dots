@@ -7,23 +7,23 @@
 
    You can find the latest version of the configuration in [[https://github.com/noahfrederick/dots][the GitHub
    repository]]. The meat of it (and the source of this document) is the
-   ~emacs.org~ file.
+   =emacs.org= file.
 
 ** Installation
 
    This configuration is intended to be installable from scratch. It
    uses [[https://github.com/cask/cask][Cask]] to specify the package dependencies. [[https://github.com/rdallasgray/pallet][Pallet]] allows us to
-   use Cask in conjunction with ~package.el~ such that our ~Cask~ file is
+   use Cask in conjunction with =package.el= such that our =Cask= file is
    kept up to date when we add and remove packages.
 
   - Install GNU Emacs 24 or later
   - Install Cask from https://github.com/cask/cask
-  - Run ~cask install~ in ~$HOME/.emacs.d~
+  - Run =cask install= in =$HOME/.emacs.d=
 
 ** Commentary
 
    Any variables, functions, or macros defined in this configuration
-   are "namespaced" with a prefix of =nox/=. This is only a convention
+   are "namespaced" with a prefix of ~nox/~. This is only a convention
    for easily distinguishing between built-in functions and those
    defined in this configuration or another package, and has no other
    special significance.
@@ -37,6 +37,35 @@
    #+NAME: init-before
    #+BEGIN_SRC emacs-lisp :tangle no
      (require 'use-package)
+   #+END_SRC
+
+* Emacs Initialization
+
+** Paths
+
+   Keep any Elisp files not installed from a package repository in the
+   =vendor/= directory:
+
+   #+NAME: init-before
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defvar nox/vendor-directory (concat user-emacs-directory "vendor/"))
+     (add-to-list 'load-path nox/vendor-directory)
+   #+END_SRC
+
+   Keep theme files in the =themes/= directory:
+
+   #+NAME: init-before
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (setq custom-theme-directory (concat user-emacs-directory "themes/"))
+   #+END_SRC
+
+   Keep temporary files in a separate directory:
+
+   #+NAME: init-before
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defvar nox/ephemeral-directory "~/.emacs.ephemeral/")
+     (unless (file-exists-p nox/ephemeral-directory)
+       (mkdir nox/ephemeral-directory))
    #+END_SRC
 
 ** Benchmarking
@@ -54,33 +83,13 @@
      (add-hook 'emacs-startup-hook 'nox/show-startup-time 'append)
    #+END_SRC
 
-* Emacs Initialization
-
-** Paths
-
-   Keep any Elisp files not installed from a package repository in the
-   ~vendor/~ directory:
+   [[https://github.com/dholm/benchmark-init-el][Benchmark-init.el]] can give us a breakdown of time spent on ~require~
+   and ~load~ calls:
 
    #+NAME: init-before
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (defvar nox/vendor-directory (concat user-emacs-directory "vendor/"))
-     (add-to-list 'load-path nox/vendor-directory)
-   #+END_SRC
-
-   Keep theme files in the ~themes/~ directory:
-
-   #+NAME: init-before
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (setq custom-theme-directory (concat user-emacs-directory "themes/"))
-   #+END_SRC
-
-   Keep temporary files in a separate directory:
-
-   #+NAME: init-before
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (defvar nox/ephemeral-directory "~/.emacs.ephemeral/")
-     (unless (file-exists-p nox/ephemeral-directory)
-       (mkdir nox/ephemeral-directory))
+   #+BEGIN_SRC emacs-lisp :tangle no :tangle no
+     (require 'benchmark-init)
+     (add-hook 'after-init-hook 'benchmark-init/deactivate)
    #+END_SRC
 
 ** Platform-specific
@@ -100,12 +109,13 @@
             ;; Correctly parse exec-path when PATH delimiter is a space
             (when (equal (file-name-nondirectory (getenv "SHELL")) "fish")
               (setq exec-path (split-string (car exec-path) " "))
-              (setenv "PATH" (mapconcat 'identity exec-path ":")))))
+              (setenv "PATH" (mapconcat 'identity exec-path ":"))
+              (setq eshell-path-env (getenv "PATH")))))
    #+END_SRC
 
 ** Start Server
 
-   The Emacs server allows for using ~emacsclient~ to quickly pop open a
+   The Emacs server allows for using =emacsclient= to quickly pop open a
    new frame in a terminal:
 
    #+NAME: init-after
@@ -116,19 +126,21 @@
          (server-start)))
    #+END_SRC
 
-   Here are the most common ways in which ~emacsclient~ is used:
+   Here are the most common ways in which =emacsclient= is used:
 
    | Command                         | Description                     |
    |---------------------------------+---------------------------------|
-   | ~emacsclient~                     | Edit in existing frame          |
-   | ~emacsclient -n (--no-wait)~      | Do not wait--return immediately |
-   | ~emacsclient -c (--create-frame)~ | Edit in a new frame             |
-   | ~emacsclient -t (--tty)~          | Edit in a new terminal frame    |
-   | ~emacsclient -e (--eval)~         | Evaluate the following Elisp    |
+   | =emacsclient=                     | Edit in existing frame          |
+   | =emacsclient -n (--no-wait)=      | Do not wait--return immediately |
+   | =emacsclient -c (--create-frame)= | Edit in a new frame             |
+   | =emacsclient -t (--tty)=          | Edit in a new terminal frame    |
+   | =emacsclient -e (--eval)=         | Evaluate the following Elisp    |
 
-   For more, see ~man emacsclient~.
+   For more, see =man emacsclient=.
 
 ** Temporary Files
+
+   Autosave and backup files (currently disabled) go in =/tmp/=.
 
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -139,11 +151,18 @@
      (setq-default make-backup-files nil)
    #+END_SRC
 
+   Keep Eshell's temporary files out of the way:
+
+   #+NAME: init-after
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (setq eshell-directory-name (expand-file-name "eshell/" nox/ephemeral-directory))
+   #+END_SRC
+
 ** Private
 
    Since this configuration is kept in version control in public view,
    we keep sensitive information such as passwords in a separate
-   file. Anything with the special prefix =nox/private/= originates from
+   file. Anything with the special prefix ~nox/private/~ originates from
    this file.
 
    #+NAME: init-before
@@ -154,7 +173,7 @@
 
 ** Custom
 
-   Set alternative location for ~custom-set-variables~ and ~custom-set-faces~:
+   Set alternative location for =custom-set-variables= and =custom-set-faces=:
 
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -164,7 +183,17 @@
 
 * Appearance
 
-** UI
+** Icon
+
+   The icon that comes with Emacs for OS X does not meet the standards
+   of design set by Apple's GUI. We use this icon from the [[https://github.com/numixproject/numix-icon-theme-circle][Numix
+   Circle icon set]] instead:
+
+   [[file:emacs.svg]]
+
+   This SVG can be converted into an ICNS file [[http://iconverticons.com/online/][here]].
+
+** TODO UI
 
    Hide parts of the GUI that we don't need, namely the graphical tool
    bar and any scroll bars.
@@ -184,7 +213,7 @@
    #+END_SRC
 
    We also set the font while specifying a couple fallbacks. The last
-   argument of =set-frame-font= ensures that new frames inherit the font
+   argument of ~set-frame-font~ ensures that new frames inherit the font
    as well.
 
    #+NAME: appearance
@@ -198,29 +227,48 @@
        (set-frame-font "courier-14" t t)))
    #+END_SRC
 
+   Highlight the current line.
+
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
      (global-hl-line-mode)
+   #+END_SRC
 
-     ;; The developer build of Emacs Trunk has a function called
-     ;; toggle-frame-maximized, which is included within
-     ;; .../lisp/frame.el. That function can be added to the
-     ;; after-init-hook or emacs-startup-hook, or simply included in the
-     ;; .emacs file that gets loaded on startup. On OSX, it increases
-     ;; both width and height in one-fell-swoop.
-     ;;
-     ;; Source: http://stackoverflow.com/a/18711628
+   GUI Emacs windows default to a tiny size. Usually, I want the
+   window to fill the screen:
+
+   #+BEGIN_QUOTE
+     The developer build of Emacs Trunk has a function called
+     ~toggle-frame-maximized~, which is included within
+     =.../lisp/frame.el=. That function can be added to the
+     ~after-init-hook~ or ~emacs-startup-hook~, or simply included in the
+     =.emacs= file that gets loaded on startup. On OSX, it increases
+     both width and height in one-fell-swoop.
+   #+END_QUOTE
+
+   Source: http://stackoverflow.com/a/18711628
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (if (fboundp 'toggle-frame-maximized)
          (add-hook 'emacs-startup-hook 'toggle-frame-maximized))
+   #+END_SRC
 
-     ;; Set up terminal frames appropriately
+   Suppress the theme's background color and Emacs's menu bar in
+   terminal frames:
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (defun nox/after-make-frame (frame)
        (unless (display-graphic-p frame)
          (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
          (set-face-background 'default "dummy-color" frame)))
 
      (add-hook 'after-make-frame-functions 'nox/after-make-frame)
+   #+END_SRC
 
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (setq ring-bell-function 'ignore)
      (setq inhibit-startup-screen t)
 
@@ -251,16 +299,33 @@
 
          (setq sml/override-theme nil)
 
-         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/www/" ":\\1:"))
-         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/\\([-_A-Za-z0-9]+\\)/" ":\\2.\\1:"))
-         (add-to-list 'sml/replacer-regexp-list '("^~/.dots/\\(.*\\)/" ":Config:\\1:"))
-         (add-to-list 'sml/replacer-regexp-list '("^~/org/" ":Org:"))
+         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/www/" ":\\1:") t)
+         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/\\([-_A-Za-z0-9]+\\)/" ":\\2.\\1:") t)
+         (add-to-list 'sml/replacer-regexp-list '("^~/.dots/\\(.*\\)/" ":Config:\\1:") t)
 
          (add-to-list 'sml/hidden-modes " Projectile")
          (add-to-list 'sml/hidden-modes " EvilOrg")
          (add-to-list 'sml/hidden-modes " Undo-Tree")
          (add-to-list 'sml/hidden-modes " Guide")
          (add-to-list 'sml/hidden-modes " yas")))
+   #+END_SRC
+
+** Popwin
+
+   [[https://github.com/m2ym/popwin-el][Popwin]] forces certain buffers into a temporary window with fixed
+   height that spans the entire width of the frame.
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package popwin
+       :commands popwin-mode
+       :idle (popwin-mode 1)
+       :config
+       (progn
+         (push '("*Org Agenda*" :width 82 :position right :dedicated t :stick t) popwin:special-display-config)
+         (push '("*helm*" :height 20) popwin:special-display-config)
+         (push '("^\*helm .+\*$" :regexp t :height 20) popwin:special-display-config)
+         (push '("*Compile-Log*" :height 20 :noselect t) popwin:special-display-config)))
    #+END_SRC
 
 ** Delimiters
@@ -276,12 +341,20 @@
      (use-package rainbow-delimiters
        :commands rainbow-delimiters-mode
        :init
-       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+       (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode))
+   #+END_SRC
 
+   Highlight matching parenthesis, brace, etc.
+
+   #+NAME: appearance
+   #+BEGIN_SRC emacs-lisp :tangle no
      (show-paren-mode t)
    #+END_SRC
 
 ** Color Names and Codes
+
+   Rainbow mode displays textual color representations with a
+   corresponding colored background.
 
    #+NAME: appearance
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -291,23 +364,27 @@
        (add-hook 'prog-mode-hook 'rainbow-turn-on))
    #+END_SRC
 
-* Evil
+* Key Bindings
 
-  Evil mode is a minor mode providing Vim emulation for Emacs. It
-  reproduces Vim's modal editing and even certain Ex commands.
+** Evil
 
-  Evil Leader mode provides something like Vim's ~<Leader>~, which is
-  set to ~SPC~ below. Here are the conventions used throughout the
-  configuration around "namespacing" sets of commands bound to the
-  leader key:
+   Evil mode is a minor mode providing Vim emulation for Emacs. It
+   reproduces Vim's modal editing and even certain Ex commands.
 
-  | Key | Description                 |
-  |-----+-----------------------------|
-  | ~g~   | Git functions (via Magit)   |
-  | ~o~   | Option (minor-mode) toggles |
-  | ~r~   | Global Org mode functions   |
+   Evil Leader mode provides something like Vim's =<Leader>=, which is
+   set to =SPC= below. Here are the conventions used throughout the
+   configuration around "namespacing" sets of commands bound to the
+   leader key:
 
-** Setup
+   | Key | Description                 |
+   |-----+-----------------------------|
+   | =g=   | Git functions (via Magit)   |
+   | =h=   | Helm commands               |
+   | =o=   | Option (minor-mode) toggles |
+   | =r=   | Global Org mode functions   |
+
+   (Evil Leader mode has to be initialized before Evil mode to work
+   around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 
    #+NAME: evil
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -315,56 +392,96 @@
        :pre-load
        (setq evil-want-C-u-scroll t
              evil-want-C-w-in-emacs-state t)
+       :init
+       (progn
+         (use-package evil-leader
+           :init
+           (progn
+             (evil-leader/set-leader "<SPC>")
+             (global-evil-leader-mode 1)
+
+             (evil-leader/set-key
+               "SPC" 'smex
+               "=" 'nox/indent-buffer
+               "b" 'ido-switch-buffer
+               "B" 'ibuffer
+               "d" 'projectile-find-dir
+               "D" 'dired
+               "e" 'ido-find-file
+               "f" 'projectile-find-file
+               "k" 'kill-this-buffer
+               "K" 'dash-at-point
+               "p" 'projectile-switch-project
+               "P" 'package-list-packages
+               "s" 'ansi-term
+               "T" 'nox/write-timestamped-current-file-copy
+               "u" 'undo-tree-visualize
+               "w" 'whitespace-cleanup
+               ;; Option toggle
+               "o l" 'whitespace-mode
+               "o n" 'linum-mode
+               "o q" 'auto-fill-mode
+               "o w" 'toggle-truncate-lines)))
+
+         (use-package evil-numbers
+           :config
+           (progn
+             (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
+             (define-key evil-normal-state-map "_" 'evil-numbers/dec-at-pt))))
        :config
        (progn
-         (require 'evil-leader)
-         (require 'evil-numbers)
-
          (setq evil-default-cursor '("DodgerBlue1" box)
+               evil-normal-state-cursor '("white" box)
                evil-emacs-state-cursor '("pink" box)
+               evil-motion-state-cursor '("mint" box)
                evil-insert-state-cursor '("white" bar)
                evil-visual-state-cursor '("white" hbar)
                evil-replace-state-cursor '("orange" hbar))
 
-         (evil-mode nil) ; See https://github.com/cofi/evil-leader/issues/10
-         (evil-leader/set-leader "<SPC>")
-         (global-evil-leader-mode 1)
          (evil-mode 1)
-         (evil-set-initial-state 'help-mode 'emacs)
+
+         ;; Override the starting state in a few major modes
          (evil-set-initial-state 'magit-mode 'emacs)
-         (evil-set-initial-state 'package-menu-mode 'normal)))
+         (evil-set-initial-state 'org-agenda-mode 'emacs)
+         (evil-set-initial-state 'package-menu-mode 'motion)
+
+         ;; Reclaim useful keys from evil-motion-state-map
+         (define-key evil-motion-state-map (kbd "RET") nil)
+         (define-key evil-motion-state-map (kbd "TAB") nil)
+
+         (global-set-key (kbd "RET") 'newline-and-indent)
+         (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+
+         (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+         (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+         (define-key evil-normal-state-map "Y" (kbd "y$"))
+
+         ;; Commentary.vim
+         (use-package evil-operator-comment
+           :init
+           (global-evil-operator-comment-mode 1))
+
+         ;; Vinegar.vim
+         (autoload 'dired-jump "dired-x"
+           "Jump to Dired buffer corresponding to current buffer." t)
+         (define-key evil-normal-state-map "-" 'dired-jump)
+         (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
+
+         ;; Unimpaired.vim
+         (define-key evil-normal-state-map (kbd "[ SPC")
+           (lambda () (interactive) (evil-insert-newline-above) (forward-line)))
+         (define-key evil-normal-state-map (kbd "] SPC")
+           (lambda () (interactive) (evil-insert-newline-below) (forward-line -1)))
+         (define-key evil-normal-state-map (kbd "[ e") (kbd "ddkP"))
+         (define-key evil-normal-state-map (kbd "] e") (kbd "ddp"))
+         (define-key evil-normal-state-map (kbd "[ b") 'previous-buffer)
+         (define-key evil-normal-state-map (kbd "] b") 'next-buffer)))
    #+END_SRC
 
-** TODO Miscellaneous Bindings
+   Additionally, let's make =ESC= work more or less like it does in Vim.
 
    #+NAME: evil
    #+BEGIN_SRC emacs-lisp :tangle no
-     (global-set-key (kbd "RET") 'newline-and-indent)
-
-     (evil-leader/set-key
-       "e" 'ido-find-file
-       "f" 'projectile-find-file
-       "d" 'projectile-find-dir
-       "p" 'projectile-switch-project
-       "D" 'dired
-       "T" 'nox/write-timestamped-current-file-copy
-       "s" 'ansi-term
-       "h" 'dash-at-point
-       "P" 'package-list-packages
-       ;; Option toggle
-       "o n" 'linum-mode
-       "o w" 'toggle-truncate-lines)
-
-     (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-     (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-     (define-key evil-normal-state-map "Y" (kbd "y$"))
-
-     (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
-     (define-key evil-normal-state-map "_" 'evil-numbers/dec-at-pt)
-
-     (define-key evil-normal-state-map "-" 'dired-jump)
-     (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
-
      ;; Escape minibuffer
      (defun nox/minibuffer-keyboard-quit ()
        "Abort recursive edit.
@@ -382,41 +499,52 @@
      (define-key minibuffer-local-completion-map [escape] 'nox/minibuffer-keyboard-quit)
      (define-key minibuffer-local-must-match-map [escape] 'nox/minibuffer-keyboard-quit)
      (define-key minibuffer-local-isearch-map [escape] 'nox/minibuffer-keyboard-quit)
+   #+END_SRC
 
-     (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+** God Mode
 
-     ;; Unimpaired.vim
-     (define-key evil-normal-state-map (kbd "[ SPC")
-       (lambda () (interactive) (evil-insert-newline-above) (forward-line)))
-     (define-key evil-normal-state-map (kbd "] SPC")
-       (lambda () (interactive) (evil-insert-newline-below) (forward-line -1)))
-     (define-key evil-normal-state-map (kbd "[ e") (kbd "ddkP"))
-     (define-key evil-normal-state-map (kbd "] e") (kbd "ddp"))
-     (define-key evil-normal-state-map (kbd "[ b") 'previous-buffer)
-     (define-key evil-normal-state-map (kbd "] b") 'next-buffer)
+   [[https://github.com/chrisdone/god-mode][God mode]] allows for entering chorded key sequences without the
+   chording.
 
-     ;; Emacs Lisp
-     (evil-leader/set-key-for-mode 'emacs-lisp-mode "C" 'byte-compile-file)
-     (evil-leader/set-key-for-mode 'emacs-lisp-mode "E" 'eval-buffer)
-     (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-defun)
-     (evil-leader/set-key-for-mode 'emacs-lisp-mode "x" 'eval-last-sexp)
-     (evil-leader/set-key-for-mode 'emacs-lisp-mode "X" 'eval-print-last-sexp)
+   #+BEGIN_EXAMPLE
+     Before: C-p C-k C-n M-^ ) C-j C-y M-r C-x z z M-2 C-g C-g C-x C-s
+     After:    p   k   n g ^ )   j   y g r     . .   2   g   g   x   s
+   #+END_EXAMPLE
 
-     ;; Smartparens manipulations
-     ;; See all of them here:
-     ;; https://github.com/Fuco1/smartparens/wiki/Working-with-expressions
-     (evil-define-key 'normal emacs-lisp-mode-map
-       (kbd "C-S-k") 'sp-split-sexp
-       (kbd "C-S-j") 'sp-join-sexp
-       (kbd "C-S-l") 'sp-forward-slurp-sexp
-       (kbd "C-S-h") 'sp-backward-slurp-sexp
-       (kbd "C-M-l") 'sp-forward-barf-sexp
-       (kbd "C-M-h") 'sp-backward-barf-sexp)
+   [[https://github.com/gridaphobe/evil-god-state][Evil god state]] provides an ~evil-execute-in-god-state~ command, which
+   creates an automatic =<Leader>= key of sorts for chorded Emacs
+   commands. For example, the =C-x C-f= binding for ~find-file~ becomes
+   =\xf=. This becomes particularly useful when dealing with major modes
+   such as Org mode that define many mode-specific chorded key
+   bindings. In this regard, it fills the role of Vim's =<LocalLeader>=.
 
-     (evil-make-overriding-map package-menu-mode-map 'normal)
-     (evil-add-hjkl-bindings package-menu-mode-map 'normal
-       "p" 'package-menu-quick-help ; h
-       "n" 'evil-search-next)
+   #+NAME: evil
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package evil-god-state
+       :commands evil-execute-in-god-state
+       :init (evil-define-key 'normal global-map "\\" 'evil-execute-in-god-state))
+   #+END_SRC
+
+** Windows
+
+   Resizing windows in Emacs isn't very intuitive. Rather than
+   expanding or contracting the current window, it makes more sense to
+   conceptualize moving the border between windows, which [[https://github.com/ramnes/move-border][move-border]]
+   accomplishes.
+
+   #+NAME: evil
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package move-border
+       :commands (move-border-left
+                  move-border-right
+                  move-border-up
+                  move-border-down)
+       :init
+       (progn
+         (define-key evil-normal-state-map (kbd "<left>") 'move-border-left)
+         (define-key evil-normal-state-map (kbd "<right>") 'move-border-right)
+         (define-key evil-normal-state-map (kbd "<up>") 'move-border-up)
+         (define-key evil-normal-state-map (kbd "<down>") 'move-border-down)))
    #+END_SRC
 
 * Editing
@@ -433,6 +561,15 @@
      (prefer-coding-system 'utf-8-unix)
    #+END_SRC
 
+   Even so, ~ansi-term~ doesn't obey:
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defadvice ansi-term (after advise-ansi-term-coding-system)
+       (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+     (ad-activate 'ansi-term)
+   #+END_SRC
+
 ** Utilities
 
    These packages provide various conveniences for editing.
@@ -443,16 +580,22 @@
        :commands global-surround-mode
        :idle (global-surround-mode 1))
 
-     (use-package ace-jump-mode
-       :commands ace-jump-mode
-       :init
-       (evil-leader/set-key "SPC" 'ace-jump-mode))
-
      (use-package smartparens-config
        :commands smartparens-global-mode
        :idle (smartparens-global-mode t)
        :config
        (progn
+         ;; Smartparens manipulations
+         ;; See all of them here:
+         ;; https://github.com/Fuco1/smartparens/wiki/Working-with-expressions
+         (evil-define-key 'normal emacs-lisp-mode-map
+           (kbd "C-S-k") 'sp-split-sexp
+           (kbd "C-S-j") 'sp-join-sexp
+           (kbd "C-S-l") 'sp-forward-slurp-sexp
+           (kbd "C-S-h") 'sp-backward-slurp-sexp
+           (kbd "C-M-l") 'sp-forward-barf-sexp
+           (kbd "C-M-h") 'sp-backward-barf-sexp)
+
          ;; Fix handling of {} and [] when hitting RET inside
          (defun nox/sp/pair-on-newline (id action context)
            "Put trailing pair on newline and return to point."
@@ -475,7 +618,7 @@
 
    When proper source control isn't an option, it's useful to be able
    to create a copy of a file as you are working on it.
-   =nox/write-timestamped-current-file-copy= writes the contents of the
+   ~nox/write-timestamped-current-file-copy~ writes the contents of the
    active buffer to a copy with a timestamp appended to the filename.
 
    #+NAME: editing
@@ -511,18 +654,25 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (setq-default indent-tabs-mode nil)
 
+     (defun nox/indent-use-tabs ()
+       (setq indent-tabs-mode t))
+     (add-hook 'markdown-mode-hook 'nox/indent-use-tabs)
+     (add-hook 'web-mode-hook 'nox/indent-use-tabs)
+
+     (use-package dtrt-indent
+       :init (dtrt-indent-mode 1))
+   #+END_SRC
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
      (setq require-final-newline t) ; auto-insert final newlines in all files
 
      (use-package whitespace
        :commands (whitespace-cleanup
                   whitespace-mode)
-       :init
-       (progn
-         (evil-leader/set-key "w"   'whitespace-cleanup)
-         (evil-leader/set-key "o l" 'whitespace-mode))
        :config
        (progn
-         (setq whitespace-line-column 110) ; TODO: only apply to HTML
+         (setq whitespace-line-column nil) ; Use value of fill-column
          (setq whitespace-style '(face
                                   tabs
                                   spaces
@@ -542,23 +692,39 @@
              (save-excursion
                      (indent-region (point-min) (point-max) nil)))
 
-     (evil-leader/set-key "=" 'nox/indent-buffer)
-
      (defun nox/show-trailing-whitespace ()
              (interactive)
              (setq show-trailing-whitespace t))
 
-     (add-hook 'prog-mode-hook 'nox/show-trailing-whitespace)
+     (add-hook 'prog-mode-hook
+               'nox/show-trailing-whitespace)
+   #+END_SRC
+
+   Auto-filling refers to hard-wrapping text. The default fill-column
+   is 80. We adjust this value for specific modes as needed.
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (setq comment-auto-fill-only-comments t)
+     (add-hook 'text-mode-hook 'turn-on-auto-fill)
+     (add-hook 'prog-mode-hook 'turn-on-auto-fill)
    #+END_SRC
 
 ** Spelling
 
+   Use aspell for spell checking: =brew install aspell --lang=en=
+
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
-     ;; Use aspell for spell checking: brew install aspell --lang=en
-     (setq ispell-program-name "aspell")
-     (add-hook 'text-mode-hook 'flyspell-mode)
-     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+     (use-package flyspell
+       :defer t
+       :idle (nox/flyspell-setup)
+       :init (setq ispell-program-name "aspell"))
+
+     (defun nox/flyspell-setup ()
+       "Deferred setup of flyspell-mode."
+       (add-hook 'text-mode-hook 'flyspell-mode)
+       (add-hook 'prog-mode-hook 'flyspell-prog-mode))
    #+END_SRC
 
 ** Syntax Checking
@@ -581,7 +747,6 @@
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package undo-tree
-       :init (evil-leader/set-key "u" 'undo-tree-visualize)
        :config
        (setq undo-tree-visualizer-diff t
              undo-tree-visualizer-timestamps t))
@@ -615,8 +780,16 @@
     #+BEGIN_SRC emacs-lisp :tangle no
       (use-package emacs-lisp-mode
         :init
-        (use-package eldoc
-          :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+        (progn
+          (use-package eldoc
+            :commands turn-on-eldoc-mode
+            :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "C" 'byte-compile-file)
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "E" 'eval-buffer)
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-defun)
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "x" 'eval-last-sexp)
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "X" 'eval-print-last-sexp))
         :mode ("Cask" . emacs-lisp-mode))
 
       (defun nox/byte-recompile ()
@@ -624,7 +797,7 @@
         (interactive)
         (byte-recompile-directory user-emacs-directory 0)
         (when (fboundp 'sauron-add-event)
-            (sauron-add-event 'editor 2 "Byte compiled Emacs directory")))
+          (sauron-add-event 'editor 2 "Byte compiled Emacs directory")))
 
       (defun nox/byte-compile-current-buffer ()
         "`byte-compile' current buffer in emacs-lisp-mode if compiled file exists."
@@ -638,6 +811,14 @@
       (add-hook 'after-save-hook 'nox/byte-compile-current-buffer)
     #+END_SRC
 
+*** Puppet
+
+    #+NAME: editing
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (use-package puppet-mode
+        :mode (("\\.pp$" . puppet-mode)))
+    #+END_SRC
+
 *** Ruby
 
     #+NAME: editing
@@ -649,6 +830,7 @@
                ("Rakefile$" . ruby-mode)
                ("Gemfile$" . ruby-mode)
                ("Capfile$" . ruby-mode)
+               ("Puppetfile$" . ruby-mode)
                ("Guardfile$" . ruby-mode)))
     #+END_SRC
 
@@ -664,7 +846,10 @@
         :mode (("\\.html?\\'" . web-mode)
                ("\\.css\\'" . web-mode)
                ("\\.mustache\\'" . web-mode)
-               ("\\.erb\\'" . web-mode)))
+               ("\\.erb\\'" . web-mode))
+        :init
+        (add-hook 'web-mode-hook (lambda ()
+                                   (set-fill-column 120))))
     #+END_SRC
 
 ** Snippets
@@ -700,13 +885,17 @@
      (use-package ido
        :init
        (progn
+         (setq ido-save-directory-list-file (expand-file-name "ido.last" nox/ephemeral-directory))
+
          (ido-mode t)
          (ido-everywhere t)
          (ido-ubiquitous-mode t))
 
        :config
        (progn
-         (setq ido-enable-flex-matching t)
+         (setq ido-enable-flex-matching t
+               ido-use-virtual-buffers t
+               ido-create-new-buffer 'always) ; Do not prompt when creating new file
          (add-to-list 'ido-ignore-files "\\.DS_Store")
 
          (add-hook 'ido-setup-hook 'nox/ido-setup)
@@ -723,7 +912,7 @@
 
 ** Smex
 
-   Smex provides Ido completion for ~M-x~.
+   Smex provides Ido completion for =M-x=.
 
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -742,7 +931,7 @@
 
    For more intensive buffer switching and buffer management, we use
    ibuffer, which displays a listing in its own
-   buffer. =ibuffer-saved-filter-groups= defines rules for grouping
+   buffer. ~ibuffer-saved-filter-groups~ defines rules for grouping
    buffers under categories ("filter groups").
 
    The [[https://github.com/purcell/ibuffer-vc][ibuffer-vc]] package generates filter groups for consumption by
@@ -799,15 +988,6 @@
              (add-hook 'ibuffer-hook 'nox/ibuffer-apply-filter-groups)))))
    #+END_SRC
 
-   Set up convenient un-chorded maps:
-
-   #+NAME: navigation-completion
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (evil-leader/set-key
-       "b" 'ido-switch-buffer
-       "B" 'ibuffer)
-   #+END_SRC
-
    Clean up buffers periodically:
 
    #+NAME: navigation-completion
@@ -817,9 +997,39 @@
 
 ** Helm
 
+   Helm provides an interface for finding and acting on items in a
+   list, such as file, buffers, and so on.
+
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package helm-config)
+     (use-package helm
+       :commands (helm-buffers-list
+                  helm-colors
+                  helm-find-files
+                  helm-for-files
+                  helm-google-suggest
+                  helm-mini
+                  helm-help
+                  helm-show-kill-ring
+                  helm-org-keywords
+                  helm-org-headlines
+                  helm-projectile
+                  heml-M-x)
+       :init
+       (evil-leader/set-key
+         "h b" 'helm-buffers-list
+         "h e" 'helm-find-files
+         "h f" 'helm-for-files
+         "h g" 'helm-google-suggest
+         "h k" 'helm-show-kill-ring
+         "h o" 'helm-org-headlines
+         "h p" 'helm-projectile
+         "h x" 'helm-M-x)
+       :config
+       (progn
+         (use-package helm-config)
+         (define-key helm-map (kbd "C-j") 'helm-next-line)
+         (define-key helm-map (kbd "C-k") 'helm-previous-line)))
    #+END_SRC
 
 ** Find in Project
@@ -829,7 +1039,7 @@
    it does not implement its own interface, instead leveraging Ido,
    Helm, or Grizzl.
 
-   Projectile's bindings start with ~C-c p~.
+   Projectile's bindings start with =C-c p=.
 
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -837,17 +1047,7 @@
        :init
        (progn
          (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
-         (projectile-global-mode))
-       :config
-       (progn
-         ;; TODO: This can probably be done more elegantly with :bind
-         (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-         (define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
-         (define-key projectile-mode-map [?\s-k] 'projectile-kill-buffers)
-         (define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
-         (define-key projectile-mode-map [?\s-D] 'projectile-dired)
-         (define-key projectile-mode-map [?\s-g] 'projectile-grep)
-         (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)))
+         (projectile-global-mode)))
    #+END_SRC
 
 ** Auto-completion
@@ -857,13 +1057,10 @@
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package auto-complete-config
+       :commands ac-config-default
+       :idle (ac-config-default)
        :init
        (progn
-         (use-package pos-tip)
-
-         (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
-         ;; User-defined dictionary goes in "~/.dict" by default.
-
          ;; The default value of ac-sources is
          ;; '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers)
          ;; and then this is overridden for a handful of major modes.
@@ -874,10 +1071,15 @@
            (setq ac-sources (append ac-sources '(ac-source-yasnippet
                                                  ac-source-filename))))
 
-         (setq ac-comphist-file (expand-file-name "ac-comphist.dat" nox/ephemeral-directory))
-         (setq ac-auto-start 1) ; Number of characters typed before completion starts
+         (setq ac-comphist-file (expand-file-name "ac-comphist.dat" nox/ephemeral-directory)
+               ac-auto-start 1)) ; Number of characters typed before completion starts
+       :config
+       (progn
+         (use-package pos-tip)
 
-         (ac-config-default)
+         (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
+         ;; User-defined dictionary goes in "~/.dict" by default.
+
          (ac-flyspell-workaround)
          (ac-linum-workaround)))
    #+END_SRC
@@ -889,9 +1091,8 @@
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package guide-key
-       :init
-       (progn
-         (guide-key-mode 1))
+       :commands guide-key-mode
+       :idle (guide-key-mode 1)
        :config
        (progn
          (setq guide-key/recursive-key-sequence-flag t
@@ -899,7 +1100,8 @@
                guide-key/popup-window-position 'bottom)
 
          ;; Sequences of interest globally
-         (setq guide-key/guide-key-sequence '("C-x r"
+         (setq guide-key/guide-key-sequence '("SPC"     ; Evil leader key
+                                              "C-x r"   ; Register commands
                                               "C-x 4"   ; Other window commands
                                               "C-x 5"   ; Other frame commands
                                               "C-x c"   ; Helm prefix
@@ -909,9 +1111,13 @@
          ;; Sequences of interest for specific modes
          (defun guide-key/my-hook-function-for-org-mode ()
            (guide-key/add-local-guide-key-sequence "C-c")
-           (guide-key/add-local-guide-key-sequence "C-c C-x")
            (guide-key/add-local-highlight-command-regexp "org-"))
-         (add-hook 'org-mode-hook 'guide-key/my-hook-function-for-org-mode)))
+         (add-hook 'org-mode-hook 'guide-key/my-hook-function-for-org-mode)
+
+         (defun guide-key/my-hook-function-for-markdown-mode ()
+           (guide-key/add-local-guide-key-sequence "C-c")
+           (guide-key/add-local-highlight-command-regexp "markdown-\\|outline-"))
+         (add-hook 'markdown-mode-hook 'guide-key/my-hook-function-for-markdown-mode)))
    #+END_SRC
 
 * Org
@@ -920,73 +1126,73 @@
 
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
-     (require 'org)
-     (use-package evil-org)
-
-     ;; http://orgmode.org/worg/org-contrib/org-mac-message.html
-     (add-to-list 'org-modules 'org-mac-message)
-
-     ;; Track habits
-     (add-to-list 'org-modules 'org-habit)
-     (use-package org-habit
+     (use-package org
        :config
-       (setq org-habit-show-habits-only-for-today nil))
+       (progn
+         (use-package evil-org)
+         (use-package org-mac-link
+           :commands org-mac-grab-link)
 
-     (setq org-directory "~/org"
-           org-default-notes-file (expand-file-name "agenda.org" org-directory))
+         ;; Track habits
+         (add-to-list 'org-modules 'org-habit)
+         (use-package org-habit
+           :config
+           (setq org-habit-show-habits-only-for-today nil))
 
-     ;; http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html
-     (org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
-     (run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
-     (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+         (setq org-directory "~/org"
+               org-default-notes-file (expand-file-name "agenda.org" org-directory))
 
-     (setq org-capture-templates
-           '(("t" "To-do" entry
-              (file+headline "" "Inbox")
-              "* TODO %u %^{Task}"
-              :clock-keep t :kill-buffer t)
-             ("d" "To-do (done)" entry
-              (file+headline "" "Inbox")
-              "* DONE %u %^{Task}"
-              :clock-keep t :kill-buffer t)
-             ("q" "Quick to-do" entry
-              (file+headline "" "Inbox")
-              "* TODO %^{Task}\n  SCHEDULED: %t"
-              :clock-keep t :kill-buffer t :immediate-finish t)))
+         ;; http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html
+         (run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
+         (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 
-     (setq org-goto-interface 'outline-path-completion
-           org-log-done 'time
-           org-log-into-drawer t
-           org-refile-allow-creating-parent-nodes 'confirm
-           org-refile-use-outline-path t
-           org-return-follows-link t
-           org-catch-invisible-edits 'show-and-error)
+         (setq org-capture-templates
+               '(("t" "To-do" entry
+                  (file+headline "" "Inbox")
+                  "* TODO %u %^{Task}"
+                  :clock-keep t :kill-buffer t)
+                 ("d" "To-do (done)" entry
+                  (file+headline "" "Inbox")
+                  "* DONE %u %^{Task}"
+                  :clock-keep t :kill-buffer t)
+                 ("q" "Quick to-do" entry
+                  (file+headline "" "Inbox")
+                  "* TODO %^{Task}\n  SCHEDULED: %t"
+                  :clock-keep t :kill-buffer t :immediate-finish t)))
 
-     (setq org-todo-keywords '((sequence
-                                "TODO(t)"
-                                "STARTED(s!)"
-                                "WAITING(w@/!)"
-                                "|"
-                                "CANCELED(c@)"
-                                "DONE(d!)"
-                                )))
+         (setq org-goto-interface 'outline-path-completion
+               org-log-done 'time
+               org-log-into-drawer t
+               org-refile-allow-creating-parent-nodes 'confirm
+               org-refile-use-outline-path t
+               org-return-follows-link t
+               org-catch-invisible-edits 'show-and-error)
 
-     (setq org-hide-leading-stars t)
+         (setq org-todo-keywords '((sequence
+                                    "TODO(t)"
+                                    "STARTED(s!)"
+                                    "WAITING(w@/!)"
+                                    "|"
+                                    "CANCELED(c@)"
+                                    "DONE(d!)"
+                                    )))
 
-     ;; Code blocks
-     (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((emacs-lisp . t)
-        (sh . t)))
-     (setq org-src-fontify-natively t
-           org-src-tab-acts-natively t)
+         (setq org-hide-leading-stars t)
+
+         ;; Code blocks
+         (org-babel-do-load-languages
+          'org-babel-load-languages
+          '((emacs-lisp . t)
+            (sh . t)))
+         (setq org-src-fontify-natively t
+               org-src-tab-acts-natively t)))
    #+END_SRC
 
 ** Templates
 
    Org mode provides a mechanism for inserting [[http://orgmode.org/manual/Easy-Templates.html][templates]] into Org
-   documents. To insert a structural element, type a ~<~, followed by a
-   template selector and ~<TAB>~.
+   documents. To insert a structural element, type a =<=, followed by a
+   template selector and =<TAB>=.
 
 ** Tags
 
@@ -1013,17 +1219,99 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (setq org-hide-emphasis-markers t
            org-export-with-section-numbers nil
-           org-export-html-preamble nil
-           org-export-html-postamble nil
-           org-export-html-style-include-default nil
-           org-export-html-style-include-scripts nil
-           org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />\n"
-           org-export-html-style-extra "<meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\" />")
+           org-export-backends '(html
+                                 latex
+                                 md)
+           org-html-preamble nil
+           org-html-postamble nil
+           org-html-head-include-default-style nil
+           org-html-head-include-scripts nil
+           org-html-head (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />\n"
+                                 "<meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\" />")
+           org-html-text-markup-alist '((bold . "<strong>%s</strong>")
+                                        (code . "<code>%s</code>")
+                                        (italic . "<em>%s</em>")
+                                        (strike-through . "<del>%s</del>")
+                                        (underline . "<dfn>%s</dfn>") ; Somewhat arbitrary
+                                        (verbatim . "<kbd>%s</kbd>")))
    #+END_SRC
 
 ** Key Bindings
 
-#+INCLUDE: "org_key_bindings.org"
+*** Hierarchy
+
+    | Binding        | Function                                     |
+    |----------------+----------------------------------------------|
+    | =M-<left/right>= | Promote/demote current headline or list item |
+    | =M-<enter>=      | Create new item at current level             |
+    | =M-S-<enter>=    | Create new TODO at current level             |
+
+*** To-Dos
+
+    | Binding     | Function                                       |
+    |-------------+------------------------------------------------|
+    | =C-c C-t=     | Cycle state                                    |
+    | =C-c C-s=     | Schedule it                                    |
+    | =C-c C-d=     | Set deadline                                   |
+    | =C-c <comma>= | Set priority                                   |
+    | =S-<up/down>= | Increase/decrease priority of current headline |
+    | =C-c C-c=     | Toggle checkbox state                          |
+    | =C-u C-c C-c= | Toggle checkbox presence                       |
+
+*** Links
+
+    | Binding | Function                    |
+    |---------+-----------------------------|
+    | =C-c C-l= | Insert link or edit current |
+
+*** Dates and Times
+
+    | Binding               | Function                                              |
+    |-----------------------+-------------------------------------------------------|
+    | =C-c .=                 | Insert timestamp (use twice to insert range)          |
+    | =C-c !=                 | Insert inactive timestamp (doesn't appear in agendas) |
+    | =C-u C-c .= / =C-u C-c != | Like above but including time                         |
+    | =S-<left/right>=        | Increment/decrement by day                            |
+    | =S-<up/down>=           | Increment/decrement segment at cursor                 |
+    | =C-c C-y=               | Evaluate time range and insert after range text       |
+
+*** Tags
+
+    | Binding | Function       |
+    |---------+----------------|
+    | =C-c C-q= | Tag a headline |
+
+*** Archiving
+
+    | Binding         | Function                                                |
+    |-----------------+---------------------------------------------------------|
+    | =C-c C-x C-a=     | Archive current item                                    |
+    | =C-u C-c C-x C-s= | Prompt to archive each non-TODO subtree of current item |
+
+*** Clocking tasks
+
+    | Binding                   | Function                                                      |
+    |---------------------------+---------------------------------------------------------------|
+    | =C-c C-x C-i= / =C-c C-x C-o= | Clock in/clock out                                            |
+    | =C-u C-c C-x C-i=           | Select from list of recently clocked tasks                    |
+    | =C-u C-u C-c C-x C-i=       | Clock into the task at point and mark it as the default task  |
+    | =C-u C-u C-u C-c C-x C-i=   | Start clock at point at time last clock stopped               |
+    | =C-c C-x C-x=               | Clock in last clocked task                                    |
+    | =C-u C-c C-x C-x=           | As above, but select from recently clocked tasks              |
+    | =C-u C-u C-c C-x C-x=       | As above, but start clock at time last clock stopped          |
+    | =C-S-<up/down>=             | On ~CLOCK~ log lines, shift both timestamps preserving duration |
+    | =C-c C-x C-q=               | Cancel current clock                                          |
+    | =C-c C-x C-j=               | Jump to currently clocked in item                             |
+
+    Note: The clock is automatically stopped on tasks when you mark them as DONE.
+
+*** Source Code
+
+    | Binding            | Function                              |
+    |--------------------+---------------------------------------|
+    | =C-c <single-quote>= | Edit current ~SRC~ block in native mode |
+
+*** Customizations
 
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -1074,18 +1362,19 @@
 
     #+NAME: org
     #+BEGIN_SRC emacs-lisp :tangle no
-      (use-package org-agenda)
-
-      (setq org-agenda-files '("~/org")
-            org-agenda-skip-unavailable-files t
-            org-agenda-skip-deadline-if-done nil
-            org-agenda-skip-scheduled-if-done nil
-            org-agenda-restore-windows-after-quit t
-            org-agenda-window-setup 'other-window
-            org-agenda-show-all-dates t
-            org-agenda-show-log t
-            org-agenda-diary-file (expand-file-name "diary.org" org-directory)
-            org-agenda-include-diary t)
+      (use-package org-agenda
+        :commands (org-agenda org-agenda-list)
+        :config
+        (setq org-agenda-files '("~/org")
+              org-agenda-skip-unavailable-files t
+              org-agenda-skip-deadline-if-done nil
+              org-agenda-skip-scheduled-if-done nil
+              org-agenda-restore-windows-after-quit t
+              org-agenda-window-setup 'current-window
+              org-agenda-show-all-dates t
+              org-agenda-show-log t
+              org-agenda-diary-file (expand-file-name "diary.org" org-directory)
+              org-agenda-include-diary t))
     #+END_SRC
 
 *** Custom Agenda Commands
@@ -1094,31 +1383,32 @@
 
     | Key | Description                                   |
     |-----+-----------------------------------------------|
-    | ~d~   | Timeline for today, including a clock summary |
-    | ~w~   | Items with status WAITING                     |
-    | ~U~   | Important tasks that I might tend to avoid    |
-    | ~P~   | Items by priority                             |
+    | =d=   | Timeline for today, including a clock summary |
+    | =w=   | Items with status WAITING                     |
+    | =U=   | Important tasks that I might tend to avoid    |
+    | =P=   | Items by priority                             |
 
     #+NAME: org
     #+BEGIN_SRC emacs-lisp :tangle no
-      (setq org-agenda-custom-commands
-            `(("d" "Timeline for today" ((agenda "" ))
-               ((org-agenda-ndays 1)
-                (org-agenda-show-log t)
-                (org-agenda-log-mode-items '(clock closed))
-                (org-agenda-clockreport-mode t)
-                (org-agenda-entry-types '())))
-              ("w" "Waiting for" todo "WAITING"
-               ((org-agenda-sorting-strategy '(priority-down))))
-              ("U" "Important stuff I don't want to do"
-               ((tags-todo "focus")))
-              ("P" "By priority"
-               ((tags-todo "+PRIORITY=\"A\"")
-                (tags-todo "+PRIORITY=\"B\"")
-                (tags-todo "+PRIORITY=\"\"")
-                (tags-todo "+PRIORITY=\"C\""))
-               ((org-agenda-prefix-format "%-10c %-10T %e ")
-                (org-agenda-sorting-strategy '(priority-down tag-up category-keep effort-down))))))
+      (eval-after-load 'org-agenda
+        '(setq org-agenda-custom-commands
+               `(("d" "Timeline for today" ((agenda "" ))
+                  ((org-agenda-ndays 1)
+                   (org-agenda-show-log t)
+                   (org-agenda-log-mode-items '(clock closed))
+                   (org-agenda-clockreport-mode t)
+                   (org-agenda-entry-types '())))
+                 ("w" "Waiting for" todo "WAITING"
+                  ((org-agenda-sorting-strategy '(priority-down))))
+                 ("U" "Important stuff I don't want to do"
+                  ((tags-todo "focus")))
+                 ("P" "By priority"
+                  ((tags-todo "+PRIORITY=\"A\"")
+                   (tags-todo "+PRIORITY=\"B\"")
+                   (tags-todo "+PRIORITY=\"\"")
+                   (tags-todo "+PRIORITY=\"C\""))
+                  ((org-agenda-prefix-format "%-10c %-10T %e ")
+                   (org-agenda-sorting-strategy '(priority-down tag-up category-keep effort-down)))))))
     #+END_SRC
 
 *** Automatically Show Agenda
@@ -1148,7 +1438,7 @@
 
 ** Appointments
 
-   Use the ~appt~ package for displaying appointment alerts. The
+   Use the =appt= package for displaying appointment alerts. The
    following was derived from [[http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html][this message]] on the Org mode mailing
    list.
 
@@ -1178,13 +1468,13 @@
                org-mobile-use-encryption t)
 
          (defvar nox/org-mobile-sync-timer nil)
-         (defvar nox/org-mobile-sync-secs (* 60 20))
+         (defvar nox/org-mobile-sync-secs (* 60 45))
 
          (defun nox/org-mobile-sync-pull-and-push ()
            (org-mobile-pull)
            (org-mobile-push)
            (when (fboundp 'sauron-add-event)
-             (sauron-add-event 'org-mobile 3 "Finished MobileOrg sync")))
+             (sauron-add-event 'org-mobile 2 "Finished MobileOrg sync")))
 
          (defun nox/org-mobile-sync-start ()
            "Start automated `org-mobile-push'"
@@ -1310,7 +1600,7 @@
 
    ERC is an extensible IRC client for Emacs. We keep our
    configuration in a separate =erc-config.el= file that gets autoloaded
-   upon invoking ~nox/erc~.
+   upon invoking =nox/erc=.
 
    #+NAME: notifications
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -1327,8 +1617,8 @@
 
      (defun nox/send-notification (title msg &optional group)
        (let ((group (if group (format " -group %s" group)))
-             (msg (format " -message '%s'" msg))
-             (title (format " -title '%s'" title))
+             (msg (format " -message %s" (shell-quote-argument msg)))
+             (title (format " -title %s" (shell-quote-argument title)))
              (sender " -sender org.gnu.Emacs"))
          (shell-command (concat nox/notifier-program-name
                                 msg
@@ -1357,6 +1647,8 @@
 
 ** Sauron
 
+   [[https://github.com/djcb/sauron][Sauron]] provides an event log that integrates with =alert.el= and ERC.
+
    #+NAME: notifications
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package sauron
@@ -1375,7 +1667,7 @@
 
 * Configuration Layout
 
-  Here we define the ~emacs.el~ file that gets generated by the source
+  Here we define the =emacs.el= file that gets generated by the source
   blocks in our Org document. This is the file that actually gets
   loaded on startup.
 
@@ -1421,7 +1713,6 @@
 
   Functionality I want or things that need to be fixed:
 
-  - Feature: remap ~C-j~ / ~C-k~ in Helm buffer.
   - Use Emacs for RSS. =newsticker.el= seemed promising, but it
     caused Emacs to hang on startup while it fetched feeds and it
     couldn't handle half the feeds for some reason. =elfeed.el= was

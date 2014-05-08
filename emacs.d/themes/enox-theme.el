@@ -7,36 +7,38 @@
 (deftheme enox
   "Enox theme: a medium-contrast theme with dark background.
 
-Basic, Font Lock, Ido, Isearch, Helm, Gnus, Message, Ediff, Flycheck,
-Speedbar, Guide Key, Flyspell, Org, Semantic, Whitespace, and
-Ansi-Color faces are included.")
+In addition to the basic and font-lock faces, faces are provided for
+Ace-Jump, Ansi-Color, Auto-Complete, Dired, Ediff, ERC, Eshell, Evil,
+Flycheck, Flyspell, Gnus, Guide Key, Helm, Ido, Isearch, Magit,
+Markdown, Message, Org, Rainbow Delimiters, Semantic, Smart Mode Line,
+Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
 
 (let* ((class '((class color) (min-colors 89)))
-      ;; Enox palette colors.
-      (nox-red "#ff0044")
-      (nox-yellow "#b7aa80")
-      (nox-green "#b1d631")
-      (nox-cyan "#5bd0b5")
-      (nox-blue "#93c3d6")
-      (nox-purple "#8b64d3")
-      (nox-em "#ffffff")
-      (nox-fg "#e2e2e2")
-      (nox-bg-em "#bdbdbd")
-      (nox-fg-subtle "#434e57")
-      (nox-bg-subtle "#212629")
-      (nox-bg "#1d2124")
-      (nox-bg-darkish "#181c1f")
-      (nox-bg-dark "#16191b")
-      (nox-selection "#456875")
-      (nox-selection-2 "#7d3e62")
-      (nox-special "#d6b8f5")
-      (nox-string "#ffaa82")
-      (nox-function "#e9d9b3")
-      (nox-comment "#7c98aa")
-      (nox-variable nox-function)
-      (nox-constant nox-blue)
-      (nox-statement nox-green)
-      (nox-keyword nox-em))
+       ;; Enox palette colors
+       (nox-red         "#ff0044")
+       (nox-yellow      "#b7aa80")
+       (nox-green       "#b1d631")
+       (nox-cyan        "#5bd0b5")
+       (nox-blue        "#93c3d6")
+       (nox-purple      "#8b64d3")
+       (nox-em          "#ffffff")
+       (nox-fg          "#e2e2e2")
+       (nox-bg-em       "#bdbdbd")
+       (nox-fg-subtle   "#434e57")
+       (nox-bg-subtle   "#212629")
+       (nox-bg          "#1d2124")
+       (nox-bg-darkish  "#181c1f")
+       (nox-bg-dark     "#16191b")
+       (nox-selection   "#456875")
+       (nox-selection-2 "#573a7d")
+       (nox-special     "#d6b8f5")
+       (nox-string      "#8ff0aa")
+       (nox-function    "#e9d9b3")
+       (nox-comment     "#7c98aa")
+       (nox-variable    nox-function)
+       (nox-constant    nox-blue)
+       (nox-statement   nox-green)
+       (nox-keyword     nox-em))
 
   (custom-theme-set-faces
    'enox
@@ -100,10 +102,19 @@ Ansi-Color faces are included.")
    ;; YASnippet
    `(yas-field-highlight-face ((,class (:background ,nox-purple :foreground ,nox-em))))
    ;; Smartparens
-   `(sp-pair-overlay-face ((,class (:background ,nox-selection-2))))
+   `(sp-pair-overlay-face ((,class (:inherit secondary-selection))))
    ;; Dired
    `(dired-directory ((,class (:weight bold :foreground ,nox-constant))))
    `(dired-symlink ((,class (:weight normal :foreground ,nox-special))))
+   ;; Markdown
+   `(markdown-header-delimiter-face ((,class (:weight normal :foreground ,nox-fg-subtle))))
+   `(markdown-header-rule-face ((,class (:inherit markdown-header-delimiter-face))))
+   `(markdown-header-face-1 ((,class (:inherit org-level-1))))
+   `(markdown-inline-code-face ((,class (:inherit org-code))))
+   `(markdown-pre-face ((,class (:inherit markdown-inline-code-face))))
+   `(markdown-url-face ((,class (:inherit org-link))))
+   `(markdown-link-face ((,class (:weight bold :foreground ,nox-blue))))
+   `(markdown-italic-face ((,class (:slant italic))))
    ;; Magit
    `(magit-item-highlight ((,class (:background ,nox-bg-subtle))))
    `(magit-log-sha1 ((,class (:foreground ,nox-special))))
@@ -122,8 +133,8 @@ Ansi-Color faces are included.")
    `(helm-action ((,class (:foreground ,nox-fg))))
    `(helm-selection ((,class (:weight bold :foreground ,nox-em :background ,nox-bg-subtle))))
    `(helm-match ((,class (:underline t :foreground ,nox-em :background ,nox-bg))))
-   `(helm-source-header ((,class (:weight bold :height 1.0 :foreground ,nox-statement :background ,nox-bg))))
-   `(helm-header ((,class (:foreground ,nox-comment :background ,nox-bg))))
+   `(helm-source-header ((,class (:background ,nox-bg-darkish))))
+   `(helm-header ((,class (:foreground ,nox-fg-subtle :background ,nox-bg))))
    `(helm-candidate-number ((,class (:foreground ,nox-fg :background ,nox-bg-subtle))))
    `(helm-separator ((,class (:foreground ,nox-fg :background ,nox-bg-subtle))))
    `(helm-ff-directory ((,class (:weight bold :foreground ,nox-constant :background ,nox-bg))))
@@ -139,7 +150,7 @@ Ansi-Color faces are included.")
    `(helm-buffer-saved-out ((,class (:foreground ,nox-red))))
    `(helm-lisp-completion-info ((,class (:foreground ,nox-comment))))
    `(helm-lisp-show-completion ((,class (:foreground ,nox-fg))))
-   ; TODO: this is super incomplete, e.g., bookmarks, grep
+   ;; TODO: this is super incomplete, e.g., bookmarks, grep
    ;; Speedbar
    `(speedbar-button-face ((,class (:foreground ,nox-comment))))
    `(speedbar-directory-face ((,class (:weight bold :foreground ,nox-constant))))
@@ -162,9 +173,9 @@ Ansi-Color faces are included.")
    `(term-color-green ((,class (:foreground ,nox-green :background ,nox-green))))
    `(term-color-blue ((,class (:foreground ,nox-blue :background ,nox-blue))))
    `(term-color-cyan ((,class (:foreground ,nox-cyan :background ,nox-cyan))))
-   `(term-color-red ((,class (:foreground ,nox-string :background ,nox-red))))
+   `(term-color-red ((,class (:foreground ,nox-red :background ,nox-red))))
    `(term-color-white ((,class (:foreground ,nox-em :background ,nox-fg))))
-   `(term-color-black ((,class (:foreground ,nox-bg-dark :background ,nox-bg-dark))))
+   `(term-color-black ((,class (:foreground ,nox-fg-subtle :background ,nox-bg-dark))))
    `(term-color-magenta ((,class (:foreground ,nox-special :background ,nox-purple))))
    `(term-default-bg-color ((,class (:background ,nox-bg))))
    `(term-default-fg-color ((,class (:foreground ,nox-fg))))
@@ -172,7 +183,7 @@ Ansi-Color faces are included.")
    `(guide-key/key-face ((,class (:foreground ,nox-fg-subtle))))
    `(guide-key/highlight-command-face ((,class (:weight bold :foreground ,nox-em))))
    `(guide-key/prefix-command-face ((,class (:weight bold :foreground ,nox-green))))
-   ;; Erc
+   ;; ERC
    `(erc-action-face ((,class (:weight bold :foreground ,nox-special))))
    `(erc-current-nick-face ((,class (:weight bold :foreground ,nox-green))))
    `(erc-dangerous-host-face ((,class (:weight bold :foreground ,nox-red))))
@@ -232,15 +243,26 @@ Ansi-Color faces are included.")
    `(ediff-fine-diff-B ((,class (:weight bold :background ,nox-yellow))))
    `(ediff-current-diff-C ((,class (:background ,nox-blue))))
    `(ediff-fine-diff-C ((,class (:weight bold :background ,nox-blue))))
+   ;; Eshell
+   `(eshell-prompt ((,class (:weight bold :foreground ,nox-keyword))))
+   `(eshell-ls-archive ((,class (:weight bold :foreground ,nox-string))))
+   `(eshell-ls-backup ((,class (:weight bold :slant italic :foreground ,nox-string))))
+   `(eshell-ls-clutter ((,class (:slant italic :foreground ,nox-red))))
+   `(eshell-ls-executable ((,class (:foreground ,nox-function))))
+   `(eshell-ls-missing ((,class (:foreground ,nox-red))))
+   `(eshell-ls-product ((,class (:foreground ,nox-comment))))
+   `(eshell-ls-readonly ((,class (:foreground ,nox-blue))))
+   `(eshell-ls-special ((,class (:weight bold :foreground ,nox-special))))
+   `(eshell-ls-symlink ((,class (:foreground ,nox-special))))
+   `(eshell-ls-unreadable ((,class (:slant italic :foreground ,nox-comment))))
    ;; Flycheck
    `(flycheck-warning ((,class (:underline (:style wave :color ,nox-yellow)))))
    `(flycheck-fringe-warning ((,class (:background ,nox-yellow :foreground ,nox-bg-dark))))
    `(flycheck-error ((,class (:underline (:style wave :color ,nox-string)))))
    `(flycheck-fringe-error ((,class (:background ,nox-red :foreground ,nox-em))))
    ;; Flyspell
-   ;; TODO: I just want an underline. Why is that so hard?
-   `(flyspell-duplicate ((,class (:foreground unspecified :underline (:style wave :color ,nox-yellow)))))
-   `(flyspell-incorrect ((,class (:foreground unspecified :underline (:style wave :color ,nox-string)))))
+   `(flyspell-duplicate ((,class (:inherit nil :underline (:style wave :color ,nox-yellow)))))
+   `(flyspell-incorrect ((,class (:inherit nil :underline (:style wave :color ,nox-red)))))
    ;; Ace-jump-mode
    `(ace-jump-face-foreground ((,class (:foreground ,nox-green))))
    `(ace-jump-face-background ((,class (:foreground ,nox-comment))))
@@ -300,13 +322,14 @@ Ansi-Color faces are included.")
    `(org-scheduled-previously ((,class (:slant italic :weight normal :foreground ,nox-string))))
    `(org-upcoming-deadline ((,class (:weight normal :foreground ,nox-em))))
    `(org-meta-line ((,class (:foreground ,nox-fg-subtle))))
+   `(org-block ((,class (:foreground ,nox-comment))))
    `(org-ellipsis ((,class (:foreground ,nox-fg-subtle))))
    `(org-todo ((,class (:weight bold :foreground ,nox-red))))
    `(org-done ((,class (:weight bold :foreground ,nox-green))))
    `(org-priority ((,class (:weight normal :foreground ,nox-comment))))
    `(org-table ((,class (:foreground ,nox-fg :background ,nox-bg-subtle))))
    `(org-checkbox ((,class (:foreground ,nox-comment :background ,nox-bg-subtle :box
-                    (:line-width -1 :style released-button)))))
+                                        (:line-width -1 :style released-button)))))
    `(org-date ((,class (:underline ,nox-special :foreground ,nox-special))))
    `(org-link ((,class (:underline ,nox-constant :foreground ,nox-constant))))
    `(org-level-1 ((,class (:height 200 :weight bold :foreground ,nox-em))))
@@ -337,7 +360,7 @@ Ansi-Color faces are included.")
    `(rainbow-delimiters-depth-6-face ((,class (:foreground ,nox-cyan))))
    `(rainbow-delimiters-unmatched-face ((,class (:background ,nox-red :foreground ,nox-em))))
    ;; Semantic faces
-   `(semantic-decoration-on-includes ((,class (:underline  ,nox-statement))))
+   `(semantic-decoration-on-includes ((,class (:underline ,nox-statement))))
    `(semantic-decoration-on-private-members-face
      ((,class (:background ,nox-bg-subtle))))
    `(semantic-decoration-on-protected-members-face
@@ -345,22 +368,23 @@ Ansi-Color faces are included.")
    `(semantic-decoration-on-unknown-includes
      ((,class (:background ,nox-red))))
    `(semantic-decoration-on-unparsed-includes
-     ((,class (:underline  ,nox-comment))))
-   `(semantic-tag-boundary-face ((,class (:overline   ,nox-yellow))))
-   `(semantic-unmatched-syntax-face ((,class (:underline  ,nox-red))))))
+     ((,class (:underline ,nox-comment))))
+   `(semantic-tag-boundary-face ((,class (:overline ,nox-yellow))))
+   `(semantic-unmatched-syntax-face ((,class (:underline ,nox-red)))))
 
-;; Set ansi-term colors
-(setq ansi-term-color-vector
-      [term term-color-black term-color-red term-color-green term-color-yellow
-        term-color-blue term-color-magenta term-color-cyan term-color-white])
-
-;(setq ansi-color-map (ansi-color-make-color-map))
+  (custom-theme-set-variables
+   'enox
+   ;; Set ansi-term colors
+   `(ansi-term-color-vector
+     [term term-color-black term-color-red term-color-green term-color-yellow
+           term-color-blue term-color-magenta term-color-cyan term-color-white])))
 
 ;; For use with package.el
 ;;;###autoload
-(when load-file-name
+(when (and (boundp 'custom-theme-load-path) load-file-name)
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
 (provide-theme 'enox)
+
 ;;; enox-theme.el ends here
