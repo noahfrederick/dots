@@ -414,7 +414,7 @@ nnoremap <Space>v :CtrlPRTS<CR>
 
 " delimitMate settings
 " Off by default as it breaks the dot command and abbreviations
-let g:delimitMade_offByDefault = 1
+let g:delimitMate_offByDefault = 1
 let g:delimitMate_balance_matchpairs = 1
 " These options unfortunately prevent triggering abbrevs with <CR> and <Space>
 " (see https://github.com/Raimondi/delimitMate/issues/145)
