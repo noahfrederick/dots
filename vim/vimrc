@@ -468,21 +468,20 @@ let g:ctrlp_user_command = [".git", "cd %s && git ls-files . -co --exclude-stand
 let g:ctrlp_abbrev = {
   \ 'gmode': 't',
   \ 'abbrevs': [
-    \ { 'pattern': '^a ', 'expanded': 'app/'        },
-    \ { 'pattern': '^b ', 'expanded': 'bin/'        },
-    \ { 'pattern': '^c ', 'expanded': 'controller/' },
-    \ { 'pattern': '^e ', 'expanded': 'message/'    },
-    \ { 'pattern': '^f ', 'expanded': 'config/'     },
-    \ { 'pattern': '^h ', 'expanded': 'helper/'     },
-    \ { 'pattern': '^l ', 'expanded': 'lib/'        },
-    \ { 'pattern': '^m ', 'expanded': 'model/'      },
-    \ { 'pattern': '^o ', 'expanded': 'log/'        },
-    \ { 'pattern': '^p ', 'expanded': 'template/'   },
-    \ { 'pattern': '^s ', 'expanded': 'spec/'       },
-    \ { 'pattern': '^t ', 'expanded': 'test/'       },
-    \ { 'pattern': '^v ', 'expanded': 'view/'       },
-    \ ]
-  \ }
+  \   { 'pattern': '^a ', 'expanded': 'app/'        },
+  \   { 'pattern': '^b ', 'expanded': 'bin/'        },
+  \   { 'pattern': '^c ', 'expanded': 'controller/' },
+  \   { 'pattern': '^e ', 'expanded': 'message/'    },
+  \   { 'pattern': '^f ', 'expanded': 'config/'     },
+  \   { 'pattern': '^h ', 'expanded': 'helper/'     },
+  \   { 'pattern': '^l ', 'expanded': 'lib/'        },
+  \   { 'pattern': '^m ', 'expanded': 'model/'      },
+  \   { 'pattern': '^o ', 'expanded': 'log/'        },
+  \   { 'pattern': '^p ', 'expanded': 'template/'   },
+  \   { 'pattern': '^s ', 'expanded': 'spec/'       },
+  \   { 'pattern': '^t ', 'expanded': 'test/'       },
+  \   { 'pattern': '^v ', 'expanded': 'view/'       },
+  \ ]}
 
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
