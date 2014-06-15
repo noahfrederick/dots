@@ -6,9 +6,10 @@ colorscheme styx
 
 set hintkeys=asdfghjkl;
 set showstatuslinks=command
-set showtabline=never
+set showtabline=multitab
 set editor='/opt/boxen/homebrew/bin/mvim -f +<line> <file>'
 set defsearch=duckduckgo
+set cookieaccept=samesite
 
 set passkeys+='^https?://www\.duolingo\.com/':<CR><Up><Down>123456789
 
