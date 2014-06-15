@@ -16,7 +16,6 @@ bundle kien/ctrlp.vim
 bundle mattn/vim-textobj-url
 bundle noahfrederick/vim-skeleton
 bundle rizzatti/dash.vim
-bundle rizzatti/funcoo.vim
 bundle scrooloose/syntastic
 bundle tpope/vim-abolish
 bundle tpope/vim-commentary
@@ -26,6 +25,7 @@ bundle tpope/vim-eunuch
 bundle tpope/vim-fugitive
 bundle tpope/vim-obsession
 bundle tpope/vim-pathogen
+bundle tpope/vim-projectionist
 bundle tpope/vim-repeat
 bundle tpope/vim-sleuth
 bundle tpope/vim-speeddating
@@ -47,4 +47,3 @@ bundle tpope/vim-rbenv
 # File-type runtime files
 bundle sheerun/vim-polyglot
 bundle dag/vim-fish
-bundle tpope/vim-liquid
