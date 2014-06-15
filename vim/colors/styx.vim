@@ -131,6 +131,7 @@ hi phpIdentifier         guifg=#b7aa80
 hi! link phpVarSelector  phpIdentifier
 hi! link phpHereDoc      String
 hi! link phpDefine       Statement
+hi! link phpParent       Normal
 
 "}}}
 " Markdown {{{
