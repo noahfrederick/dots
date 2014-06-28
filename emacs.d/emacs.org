@@ -878,6 +878,19 @@
 
 * Navigation and Completion
 
+** Save Place
+
+   Place the point where we left it when last visiting the same file.
+
+   #+NAME: navigation-completion
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package saveplace
+       :init
+       (progn
+         (setq-default save-place t)
+         (setq save-place-file (expand-file-name "saved-places" nox/ephemeral-directory))))
+   #+END_SRC
+
 ** Ido
 
    #+NAME: navigation-completion
