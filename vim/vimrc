@@ -395,9 +395,10 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
-let g:UltiSnipsExpandTrigger = "<Tab>"
-let g:UltiSnipsJumpForwardTrigger = "<Tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+let g:UltiSnipsListSnippets = '<C-g><C-j>'
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
 
