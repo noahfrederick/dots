@@ -45,6 +45,9 @@ set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
   set showbreak=...
+  if exists('&breakindent')     " Indent soft-wrapped lines
+    set breakindent
+  endif
 endif
 set nowrap                      " Do not wrap long lines by default
 set listchars=tab:>\ ,eol:$,extends:>,precedes:<,nbsp:+
