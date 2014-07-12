@@ -1,3 +1,24 @@
+" Introduction                                                                 {{{
+" --------------------------------------------------------------------------------
+"
+" This configuration has been cultivated since 2011, all the while being
+" pruned and refined. The result is a carefully curated vimrc that enhances
+" the editor and never compromises it.
+"
+" The following principles are observed:
+"
+" 1. Idiomatic: The configuration stays true to the idioms of Vim's interface.
+" 2. Progressively enhanced: Functionality is enhanced rather than replaced
+"    wholesale. Anyone comfortable with a minimally configured Vim should feel
+"    unsurprised using this one.
+" 3. Standalone: The vimrc does not have hard dependencies on other scripts or
+"    plug-ins. Though there are some <Leader> mappings that rely on autoloaded
+"    functions or externally defined commands, they are inessential.
+"
+" Care has been taken to do things "the right way" throughout and to document
+" pieces of configuration that are not obvious at first glance.
+"
+" }}}
 " General settings                                                             {{{
 " --------------------------------------------------------------------------------
 
