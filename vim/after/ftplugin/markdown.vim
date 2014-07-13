@@ -1,14 +1,21 @@
 " Org-mode-like extensions to Markdown
 
 if exists(':Switch')
-  " TODO This results in multiple keywords piling up
   let b:switch_custom_definitions = [
     \   {
     \     '^\(\s*[-+\*]\) TODO \(.*\)': '\1 DONE \2',
     \     '^\(\s*[-+\*]\) DONE \(.*\)': '\1 WAITING \2',
     \     '^\(\s*[-+\*]\) WAITING \(.*\)': '\1 CANCELED \2',
     \     '^\(\s*[-+\*]\) CANCELED \(.*\)': '\1 \2',
-    \     '^\(\s*[-+\*]\) \%(TODO\)\@!\(.*\)': '\1 TODO \2',
+    \     '^\(\s*[-+\*]\) \%(TODO\|DONE\|WAITING\|CANCELED\|\[[ x]\]\)\@!\(.*\)': '\1 TODO \2',
+    \   },
+    \   {
+    \     '^\(\s*\)-- \(.*\)': '\1++ \2',
+    \     '^\(\s*\)++ \(.*\)': '\1-- \2',
+    \   },
+    \   {
+    \     '^\(\s*[-+\*]\) \[ \] \(.*\)': '\1 [x] \2',
+    \     '^\(\s*[-+\*]\) \[x\] \(.*\)': '\1 [ ] \2',
     \   },
     \ ]
 
