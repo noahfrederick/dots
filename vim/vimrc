@@ -338,9 +338,6 @@ xnoremap <Leader>p "_dP
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
 
-" Show highlighting groups for current word
-nnoremap <silent> <Leader>p :call helper#SynStack()<CR>
-
 " Shortcuts for Fugitive plug-in
 nnoremap <Leader>gg :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>

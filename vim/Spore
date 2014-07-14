@@ -43,6 +43,7 @@ bundle tpope/vim-bundler
 bundle tpope/vim-rails
 bundle tpope/vim-rake
 bundle tpope/vim-rbenv
+bundle tpope/vim-scriptease
 
 # File-type runtime files
 bundle sheerun/vim-polyglot

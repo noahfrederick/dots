@@ -20,12 +20,4 @@ function! helper#Cdo(filewise)
   endtry
 endfunction
 
-" Show highlight group of character under cursor
-function! helper#SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line("."), col(".")), "synIDattr(v:val, 'name')")
-endfunction
-
 " vim:set et sw=2:
