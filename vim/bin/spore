@@ -336,7 +336,7 @@ while test $# != 0; do
 					;;
 				*)
 					error "$(printf "%s subcommand requires a plug-in name" "$1")"
-					print_help
+					help
 					exit $ERROR_MISSING_ARGUMENTS
 					;;
 			esac
