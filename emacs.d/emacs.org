@@ -110,7 +110,10 @@
             (when (equal (file-name-nondirectory (getenv "SHELL")) "fish")
               (setq exec-path (split-string (car exec-path) " "))
               (setenv "PATH" (mapconcat 'identity exec-path ":"))
-              (setq eshell-path-env (getenv "PATH")))))
+              (setq eshell-path-env (getenv "PATH")))
+            ;; Point Org to LibreOffice executable
+            (when (file-exists-p "/Applications/LibreOffice.app/Contents/MacOS/soffice")
+              (setq org-export-odt-convert-processes '(("LibreOffice" "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to %f%x --outdir %d %i"))))))
    #+END_SRC
 
 ** Start Server
