@@ -66,7 +66,7 @@ set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
   set showbreak=...
-  if exists('&breakindent')     " Indent soft-wrapped lines
+  if exists("+breakindent")     " Indent soft-wrapped lines
     set breakindent
   endif
 endif
@@ -224,7 +224,8 @@ endif
 " --------------------------------------------------------------------------------
 
 command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
-command! -bang -nargs=? -complete=buffer Bufonly call helper#buffer#Bufonly(<q-args>, <q-bang>)
+command! -bang -nargs=? -complete=buffer Bufonly
+  \ call helper#buffer#Bufonly(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
 
 if exists("$NOTES")
@@ -233,11 +234,13 @@ if exists("$NOTES")
   endfunction
   command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
+  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note
+    \ execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
 " Toggle light/dark background
-command! -nargs=0 -bar BackgroundInvert let &background = ( &background == "dark" ? "light" : "dark" )
+command! -nargs=0 -bar BackgroundInvert
+  \ let &background = ( &background == "dark" ? "light" : "dark" )
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -277,7 +280,7 @@ noremap <Right> <C-w>>
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 " Expand %% to directory of current file in command-line mode
-cnoremap %% <C-r>=fnameescape(expand("%:~:h"))."/"<CR>
+cnoremap %% <C-r>=fnameescape(expand("%:~:h"))<CR>/
 
 " Use character under cursor as first character in digraph and replace it
 " Ex.:
@@ -294,7 +297,8 @@ nmap <Leader>K <Plug>DashSearch
 " This is something I find myself doing often, but I find it difficult to hit
 " '$' quickly. This has the added bonus of working on a range of lines and
 " being repeatable.
-noremap <silent> <Plug>RemoveLastCharacter :normal! $x<CR>:silent! call repeat#set("\<Plug>RemoveLastCharacter")<CR>
+noremap <silent> <Plug>RemoveLastCharacter :normal! $x<CR>
+      \ :silent! call repeat#set("\<Plug>RemoveLastCharacter")<CR>
 nmap <Leader>x <Plug>RemoveLastCharacter
 xmap <Leader>x <Plug>RemoveLastCharacter
 
@@ -362,7 +366,8 @@ nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
 
 " Switch to alternate window or buffer
-nnoremap <silent> <Leader><Leader> :if winnr("$") > 1<Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
+nnoremap <silent> <Leader><Leader> :if winnr("$") > 1
+  \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
 nnoremap <Leader><CR> :set hlsearch<CR>*<C-o>
 map <BS> %
