@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: example-block
+# name: example
 # key: example
 # --
 #+BEGIN_EXAMPLE

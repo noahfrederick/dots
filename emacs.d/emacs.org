@@ -867,7 +867,8 @@
        :init
        (progn
          ;; Suppress excessive log messages
-         (setq yas-verbosity 1)))
+         (setq yas-verbosity 1
+               yas-snippet-dir (expand-file-name "snippets" user-emacs-directory))))
    #+END_SRC
 
 ** Expansion
