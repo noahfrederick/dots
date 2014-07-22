@@ -332,6 +332,16 @@ noremap <silent> <Plug>RemoveLastCharacter :normal! $x<CR>
 nmap <Leader>x <Plug>RemoveLastCharacter
 xmap <Leader>x <Plug>RemoveLastCharacter
 
+" Swap single and double quotes
+noremap <silent> <Plug>SwapQuotesN :<C-u>keeppatterns
+      \ s/['"]/\="'\""[submatch(0)!='"']/ge<CR>
+      \ :silent! call repeat#set("\<Plug>SwapQuotesN")<CR>
+noremap <silent> <Plug>SwapQuotesX :<C-u>keeppatterns
+      \ '<,'>s/['"]/\="'\""[submatch(0)!='"']/ge<CR>
+      \ :silent! call repeat#set("\<Plug>SwapQuotesX")<CR>
+nmap <Leader>' <Plug>SwapQuotesN
+xmap <Leader>' <Plug>SwapQuotesX
+
 " Shortcut for inserting date and time in various formats
 " from @tpope. The repeat(..., 0) makes it such that there's
 " no output from <C-r>=
