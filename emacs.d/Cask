@@ -27,6 +27,7 @@
 (depends-on "markdown-mode")
 (depends-on "org-plus-contrib")
 (depends-on "pallet")
+(depends-on "paradox")
 (depends-on "popup")
 (depends-on "popwin")
 (depends-on "pos-tip")

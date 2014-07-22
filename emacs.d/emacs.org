@@ -415,7 +415,7 @@
                "k" 'kill-this-buffer
                "K" 'dash-at-point
                "p" 'projectile-switch-project
-               "P" 'package-list-packages
+               "P" 'paradox-list-packages
                "s" 'ansi-term
                "T" 'nox/write-timestamped-current-file-copy
                "u" 'undo-tree-visualize
@@ -447,6 +447,7 @@
          (evil-set-initial-state 'magit-mode 'emacs)
          (evil-set-initial-state 'org-agenda-mode 'emacs)
          (evil-set-initial-state 'package-menu-mode 'motion)
+         (evil-set-initial-state 'paradox-menu-mode 'motion)
 
          ;; Reclaim useful keys from evil-motion-state-map
          (define-key evil-motion-state-map (kbd "RET") nil)
