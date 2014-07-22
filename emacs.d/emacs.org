@@ -1176,7 +1176,7 @@
                   (file+headline "" "Inbox")
                   "* DONE %u %^{Task}"
                   :clock-keep t :kill-buffer t)
-                 ("q" "Quick to-do" entry
+                 ("u" "Quick to-do" entry
                   (file+headline "" "Inbox")
                   "* TODO %^{Task}\n  SCHEDULED: %t"
                   :clock-keep t :kill-buffer t :immediate-finish t)
