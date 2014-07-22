@@ -17,6 +17,7 @@ bundle mattn/vim-textobj-url
 bundle noahfrederick/vim-skeleton
 bundle rizzatti/dash.vim
 bundle scrooloose/syntastic
+bundle talek/obvious-resize
 bundle tpope/vim-abolish
 bundle tpope/vim-commentary
 bundle tpope/vim-dispatch
