@@ -347,6 +347,7 @@ inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
+nnoremap <F4> :Start<CR>
 
 " Write buffer and source current file
 nnoremap <silent> <Leader>W :write<CR>:source %<CR>
