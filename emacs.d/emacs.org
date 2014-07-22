@@ -921,7 +921,10 @@
          (defun nox/ido-setup ()
            "Add Evil-mode-like key bindings for ido."
            (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
-           (define-key ido-completion-map (kbd "C-k") 'ido-prev-match))
+           (define-key ido-completion-map (kbd "C-k") 'ido-prev-match)
+           (define-key ido-buffer-completion-map (kbd "C-d") 'ido-kill-buffer-at-head) ; Originally C-k
+           (define-key ido-file-completion-map (kbd "C-d") 'ido-delete-file-at-head)
+           (define-key ido-file-completion-map (kbd "C--") 'ido-enter-dired)) ; Originally C-d
 
          (use-package ido-vertical-mode
            :init
