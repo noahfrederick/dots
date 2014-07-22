@@ -28,6 +28,7 @@ bundle tpope/vim-obsession
 bundle tpope/vim-pathogen
 bundle tpope/vim-projectionist
 bundle tpope/vim-repeat
+bundle tpope/vim-rhubarb
 bundle tpope/vim-sleuth
 bundle tpope/vim-speeddating
 bundle tpope/vim-surround
