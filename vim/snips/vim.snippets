@@ -8,7 +8,7 @@ endsnippet
 
 snippet fun "function" b
 function! ${1:function_name}(${2})
-	${VISUAL}$0
+	${0:${VISUAL}}
 endfunction
 endsnippet
 
@@ -18,4 +18,29 @@ endsnippet
 
 snippet cmd "command" b
 command${1:!} ${2:-nargs=${3:01*?+} }${4:-complete=${5:augroup|buffer|...} }${6:-range${7:=%N} }${8:-count=${9:N} }${10:-bang }${11:-bar }${12:-register }${13:-buffer }${14:CommandName} ${15:...}
+endsnippet
+
+snippet it "vspec it block" b
+it '${1:does something}'
+	${0:${VISUAL:TODO}}
+end
+endsnippet
+
+snippet describe "vspec describe block" b
+describe '${1:thing}'
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet context "vspec context block" b
+context '${1:context}'
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet skip "vspec SKIP block" b
+if !exists('${1:dependency}')
+	SKIP '${2:$1 not available}'
+endif
+$0
 endsnippet
