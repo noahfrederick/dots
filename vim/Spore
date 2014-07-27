@@ -48,5 +48,6 @@ bundle tpope/vim-rbenv
 bundle tpope/vim-scriptease
 
 # File-type runtime files
-bundle sheerun/vim-polyglot
 bundle dag/vim-fish
+bundle kana/vim-vspec
+bundle sheerun/vim-polyglot
