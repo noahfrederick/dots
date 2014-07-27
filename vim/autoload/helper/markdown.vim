@@ -52,12 +52,15 @@ function! helper#markdown#OpenLine(trigger)
 
   if l:line =~# '^\s*[-\*+>]\+ $'
     if l:normal == 0
+      " throw l:line
       return "\<C-u>\<CR>"
     endif
   elseif l:line =~# '^\s*\d\+\. $'
     if l:normal == 0
       return "\<C-u>\<C-u>\<CR>"
     endif
+  elseif l:line =~# '^\s*- \[[x ]\] '
+    return l:out . "- [ ] "
   elseif l:line =~# '^\s*- '
     return l:out . "- "
   elseif l:line =~# '^\s*\(--\|++\) '
@@ -69,10 +72,34 @@ function! helper#markdown#OpenLine(trigger)
   elseif l:line =~# '^\s*> '
     return l:out . "> "
   elseif l:line =~# '^\s*\d\+\. '
-    return "\<Esc>\"tyy\"tpf \"_DB\<C-a>A "
+    if a:trigger ==# 'O'
+      return "\<Esc>\"tyy\"tPf \"_Dmt:+1,'}normal! \<C-v>\<C-a>\<CR>'tA "
+    else
+      return "\<Esc>\"tyy\"tpf \"_Dmt:.,'}normal! \<C-v>\<C-a>\<CR>'tA "
+    endif
   endif
 
   return a:trigger
+endfunction
+
+function! helper#markdown#InsertDashes()
+  " Do nothing special if text other than the inserted dashes is present on
+  " the current line
+  if col('$') > 4
+    return '---'
+  endif
+
+  " On first line, insert YAML frontmatter
+  if line('.') == 1
+    return "---\<CR>---\<Up>"
+  " Below empty line, insert horizontal rule
+  elseif getline(line('.') - 1) ==# ''
+    let len = &textwidth ? &textwidth : 10
+    return repeat('-', len)
+  endif
+
+  " Else underline previous line
+  return "\<Esc>kyypVr-a"
 endfunction
 
 " The gx mapping provided by the Netrw plug-in only works on WORDS. This

@@ -40,6 +40,9 @@ nnoremap <buffer> <Right> :call helper#markdown#DemoteHeading()<CR>
 " Follow link under cursor
 nnoremap <buffer> gx :call helper#markdown#FollowLinkUnderCursor()<CR>
 
+" Smart dashes
+iabbrev <buffer><expr> --- helper#markdown#InsertDashes()
+
 " Use pandoc to run off a PDF with :make
 silent! compiler pandoc
 

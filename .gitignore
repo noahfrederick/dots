@@ -2,6 +2,8 @@ fish/completions/*.fish
 vim/.netrwhist
 vim/bundle/*
 vim/flavors/*
+vim/.vim-flavor/*
+VimFlavor.lock
 vim/sessions/*
 vim/spell/*.spl
 vim/tmp/*
