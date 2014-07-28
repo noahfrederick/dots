@@ -526,7 +526,7 @@ let g:ctrlp_abbrev = {
   \ ]}
 
 " :help syntastic-global-options
-let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
+let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let g:syntastic_error_symbol         = "\u276f\u276f"
   let g:syntastic_warning_symbol       = "\u276f"
