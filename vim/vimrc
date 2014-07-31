@@ -491,11 +491,18 @@ autocmd BufEnter * execute "inoremap <silent> "
       \ . g:UltiSnipsExpandTrigger
       \ . " <C-r>=<SID>expand_or_complete_maybe()<CR>"
 
-      \ 'python': 1,
-      \ 'javascript': 1,
-      \ 'ruby': 1,
-      \ 'css': 1,
-      \ 'less': 1
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'mail' : 1,
+      \ 'html': 1,
       \ }
 let g:ycm_complete_in_strings = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
