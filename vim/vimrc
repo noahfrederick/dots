@@ -175,7 +175,7 @@ endif
 " --------------------------------------------------------------------------------
 
 if has("autocmd")
-  augroup FileTypeOptions
+  augroup vimrc
     autocmd!
 
     autocmd FileType c,cpp,css,javascript,php call helper#filetype#MakeSemicolonMaps()
@@ -190,28 +190,20 @@ if has("autocmd")
 
     " Never show line numbers in help buffers
     autocmd FileType help set nonumber
-  augroup END
 
-  set cursorline
-  augroup CursorLine
-    autocmd!
+    set cursorline
 
     " Only highlight cursor line in active buffer window
     autocmd WinLeave * set nocursorline
     autocmd WinEnter * if &filetype == 'qf' | set nocursorline | else | set cursorline | endif
-  augroup END
 
-  highlight! link TrailingWhitespace Error
-  augroup TrailingWhiteSpace
-    autocmd!
+    highlight! link TrailingWhitespace Error
+
     autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
-  augroup END
 
-  augroup Cmdwin
-    autocmd!
     " Never show line numbers in command-line window as they are not useful
     " and take up space (normally it inherits this setting like any other
     " window)
@@ -487,9 +479,13 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
 
-autocmd BufEnter * execute "inoremap <silent> "
-      \ . g:UltiSnipsExpandTrigger
-      \ . " <C-r>=<SID>expand_or_complete_maybe()<CR>"
+if has("autocmd")
+  augroup vimrc
+    autocmd BufEnter * execute "inoremap <silent> "
+          \ . g:UltiSnipsExpandTrigger
+          \ . " <C-r>=<SID>expand_or_complete_maybe()<CR>"
+  augroup END
+endif
 
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
@@ -517,8 +513,7 @@ let g:SuperTabLongestHighlight = 1
 
 " :help supertab-completionchaining
 if has("autocmd")
-  augroup SuperTabRC
-    autocmd!
+  augroup vimrc
     autocmd FileType *
       \ if exists("*SuperTabChain") && &omnifunc != "" |
       \   call SuperTabChain(&omnifunc, "<C-p>") |
