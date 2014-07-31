@@ -462,17 +462,35 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
-let g:UltiSnipsListSnippets = '<C-g><C-j>'
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+function! s:expand_or_complete_maybe()
+  silent! call UltiSnips#ExpandSnippetOrJump()
+
+  if !exists("g:ulti_expand_or_jump_res")
+    return "\<Tab>"
+  endif
+
+  if g:ulti_expand_or_jump_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      return "\<Tab>"
+    endif
+  endif
+
+  return ""
+endfunction
+
+let g:UltiSnipsListSnippets = "<C-g><Tab>"
+let g:UltiSnipsExpandTrigger = "<Tab>"
+let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
 
-" Only enable YouCompleteMe for certain file types
-let g:ycm_filetype_whitelist = {
-      \ 'php': 1,
-      \ 'vim': 1,
+autocmd BufEnter * execute "inoremap <silent> "
+      \ . g:UltiSnipsExpandTrigger
+      \ . " <C-r>=<SID>expand_or_complete_maybe()<CR>"
+
       \ 'python': 1,
       \ 'javascript': 1,
       \ 'ruby': 1,
@@ -481,6 +499,9 @@ let g:ycm_filetype_whitelist = {
       \ }
 let g:ycm_complete_in_strings = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
+" Remove <Tab> from maps lest YCM hijack our mapping from above
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
 
 " :help supertab-options
 let g:SuperTabDefaultCompletionType = "context"
