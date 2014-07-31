@@ -6,6 +6,18 @@ if !exists("g:${1:var}")
 endif
 endsnippet
 
+snippet has "if has() block" b
+if has("${1:feature}")
+	${0:${VISUAL}}
+endif
+endsnippet
+
+snippet exists "if exists() block" b
+if exists("${1:thing}")
+	${0:${VISUAL}}
+endif
+endsnippet
+
 snippet fun "function" b
 function! ${1:function_name}(${2})
 	${0:${VISUAL}}
@@ -18,6 +30,13 @@ endsnippet
 
 snippet cmd "command" b
 command${1:!} ${2:-nargs=${3:01*?+} }${4:-complete=${5:augroup|buffer|...} }${6:-range${7:=%N} }${8:-count=${9:N} }${10:-bang }${11:-bar }${12:-register }${13:-buffer }${14:CommandName} ${15:...}
+endsnippet
+
+snippet au "autocmd group" b
+augroup ${1:`!v expand('%:t:r')`}
+	autocmd!
+	${0:${VISUAL}}
+augroup END
 endsnippet
 
 snippet it "vspec it block" b

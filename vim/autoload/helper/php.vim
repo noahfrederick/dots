@@ -72,4 +72,52 @@ function! helper#php#PathToClassCategory(path)
   return "Helpers"
 endfunction
 
+" Function text objects
+function! helper#php#FunctionSelect(object_type)
+  return s:function_select_{a:object_type}()
+endfunction
+
+function! s:function_select_a()
+  if getline('.') =~# '}'
+    normal! k
+  endif
+  normal! ]M$
+  let e = getpos('.')
+
+  normal! [m
+  call search(')', 'bW')
+  normal! %0
+  let b = getpos('.')
+
+  if 1 < e[1] - b[1]  " is there some code?
+    return ['V', b, e]
+  else
+    return 0
+  endif
+endfunction
+
+function! s:function_select_i()
+  let range = s:function_select_a()
+  if range is 0
+    return 0
+  endif
+
+  let [_, ab, ae] = range
+
+  call setpos('.', ab)
+  call search('{', 'W')
+  normal! j0
+  let ib = getpos('.')
+
+  call setpos('.', ae)
+  normal! k$
+  let ie = getpos('.')
+
+  if 0 <= ie[1] - ib[1]  " is there some code?
+    return ['V', ib, ie]
+  else
+    return 0
+  endif
+endfunction
+
 " vim: fdm=marker:sw=2:sts=2:et

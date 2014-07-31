@@ -30,22 +30,22 @@ endsnippet
 
 snippet class "Class definition" b
 /**
- * ${4:Description}.
+ * ${4:$1 class}.
  *
- * @package    ${5:`!v helper#snippet#ProjectTitle()`}
- * @category   ${6:`!v helper#php#PathToClassCategory(expand("%"))`}
+ * @package    `!v helper#snippet#ProjectTitle()`
+ * @category   ${5:`!v helper#php#PathToClassCategory(expand("%"))`}
  * @author     `!v helper#snippet#Author()`
- * @copyright  © `!v strftime('%Y')` `!v helper#snippet#Author()`
+ * @copyright  `!v helper#snippet#Copyright()`
  */
 class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v helper#php#PathToParentClassName(expand("%"))`}} {
-	${VISUAL}$0
+	${0:${VISUAL:\/\/ TODO}}
 }
 endsnippet
 
 snippet fun "Function definition" b
 ${1:public }function ${2:fun_name}(${3})
 {
-	${VISUAL}$0
+	${0:${VISUAL:\/\/ TODO}}
 }
 endsnippet
 
@@ -97,4 +97,3 @@ snippet doc "doc comment" b
  * $1
  */
 endsnippet
-

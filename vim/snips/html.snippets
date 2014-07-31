@@ -8,7 +8,7 @@ snippet m "Mailto link"
 <a href="mailto:${1:user@example.com}${2:?subject=${3:Subject}}"${4: class="email"}>${5:$1}</a>
 endsnippet
 
-snippet "h(\d)" "HTML <h_>" r
+snippet "h(\d)" "HTML <h?>" r
 <h`!p snip.rv = match.group(1)` id="${1/[\w\d]+|( )/(?1:-:\L$0\E)/g}">${1}</h`!p snip.rv = match.group(1)`>
 endsnippet
 

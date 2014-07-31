@@ -2,14 +2,23 @@
 " Maintainer:   Noah Frederick
 
 function! helper#snippet#Author()
+  if exists("$PROJECT_AUTHOR") && $PROJECT_AUTHOR != ""
+    return $PROJECT_AUTHOR
+  endif
   return s:get_git_config_value('user.name')
 endfunction
 
 function! helper#snippet#Email()
+  if exists("$PROJECT_EMAIL") && $PROJECT_EMAIL != ""
+    return $PROJECT_EMAIL
+  endif
   return s:get_git_config_value('user.email')
 endfunction
 
 function! helper#snippet#GitHubUsername()
+  if exists("$PROJECT_GITHUB_USERNAME") && $PROJECT_GITHUB_USERNAME != ""
+    return $PROJECT_GITHUB_USERNAME
+  endif
   return s:get_git_config_value('user.github')
 endfunction
 
@@ -38,11 +47,20 @@ function! helper#snippet#Title(basename)
   return title
 endfunction
 
-function! helper#snippet#ProjectTitle()
-  if exists("$PROJECT_TITLE") && $PROJECT_TITLE != ""
-    return $PROJECT_TITLE
+function! helper#snippet#Copyright()
+  if exists("$PROJECT_COPYRIGHT") && $PROJECT_COPYRIGHT != ""
+    let name = $PROJECT_COPYRIGHT
+  else
+    let name = helper#snippet#Author()
   endif
-  return "(Project Title)"
+  return join(['©', strftime('%Y'), name])
+endfunction
+
+function! helper#snippet#ProjectTitle()
+  if exists("$PROJECT_NAME") && $PROJECT_NAME != ""
+    return $PROJECT_NAME
+  endif
+  return "(Project Name)"
 endfunction
 
 " vim:set et sw=2:
