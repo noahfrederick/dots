@@ -225,7 +225,7 @@ endif
 
 command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
-  \ call helper#buffer#Bufonly(<q-args>, <q-bang>)
+      \ call helper#buffer#Bufonly(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
 
 if exists("$NOTES")
@@ -235,17 +235,17 @@ if exists("$NOTES")
   command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
   command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note
-    \ execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
+        \ execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
 " Toggle light/dark background
 command! -nargs=0 -bar BackgroundInvert
-  \ let &background = ( &background == "dark" ? "light" : "dark" )
+      \ let &background = ( &background == "dark" ? "light" : "dark" )
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
-  \ | diffthis | wincmd p | diffthis
+      \ | diffthis | wincmd p | diffthis
 
 " 'Quickfix do' analogous to :argdo, :bufdo, etc.
 command! -nargs=1 Cdo     call helper#Cdo(0)
@@ -346,13 +346,13 @@ xmap <Leader>' <Plug>SwapQuotesX
 " from @tpope. The repeat(..., 0) makes it such that there's
 " no output from <C-r>=
 inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
-  \ "%Y-%m-%d %H:%M:%S",
-  \ "%Y-%m-%d",
-  \ "%Y %b %d",
-  \ "%d-%b-%y",
-  \ "%a, %d %b %Y %H:%M:%S %z",
-  \ "%a %b %d %T %Z %Y"
-  \ ], 'strftime(v:val)')), 0)<CR>
+      \ "%Y-%m-%d %H:%M:%S",
+      \ "%Y-%m-%d",
+      \ "%Y %b %d",
+      \ "%d-%b-%y",
+      \ "%a, %d %b %Y %H:%M:%S %z",
+      \ "%a %b %d %T %Z %Y"
+      \ ], 'strftime(v:val)')), 0)<CR>
 
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
@@ -408,12 +408,12 @@ nnoremap <C-j> zMzjzvzt
 
 " Switch to alternate window or buffer
 nnoremap <silent> <Leader><Leader> :if winnr("$") > 1
-  \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
+      \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
 nnoremap <Leader><CR> :set hlsearch<CR>*<C-o>
 map <BS> %
 nnoremap <Leader>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
-  \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+      \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
@@ -536,22 +536,22 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_extensions = ["tag", "dir", "bookmarkdir", "line", "rtscript"]
 let g:ctrlp_user_command = [".git", "git --git-dir=%s/.git ls-files -co --exclude-standard"]
 let g:ctrlp_abbrev = {
-  \ 'gmode': 't',
-  \ 'abbrevs': [
-  \   { 'pattern': '^a ', 'expanded': 'app/'        },
-  \   { 'pattern': '^b ', 'expanded': 'bin/'        },
-  \   { 'pattern': '^c ', 'expanded': 'controller/' },
-  \   { 'pattern': '^e ', 'expanded': 'message/'    },
-  \   { 'pattern': '^f ', 'expanded': 'config/'     },
-  \   { 'pattern': '^h ', 'expanded': 'helper/'     },
-  \   { 'pattern': '^l ', 'expanded': 'lib/'        },
-  \   { 'pattern': '^m ', 'expanded': 'model/'      },
-  \   { 'pattern': '^o ', 'expanded': 'log/'        },
-  \   { 'pattern': '^p ', 'expanded': 'template/'   },
-  \   { 'pattern': '^s ', 'expanded': 'spec/'       },
-  \   { 'pattern': '^t ', 'expanded': 'test/'       },
-  \   { 'pattern': '^v ', 'expanded': 'view/'       },
-  \ ]}
+      \ 'gmode': 't',
+      \ 'abbrevs': [
+      \   { 'pattern': '^a ', 'expanded': 'app/'        },
+      \   { 'pattern': '^b ', 'expanded': 'bin/'        },
+      \   { 'pattern': '^c ', 'expanded': 'controller/' },
+      \   { 'pattern': '^e ', 'expanded': 'message/'    },
+      \   { 'pattern': '^f ', 'expanded': 'config/'     },
+      \   { 'pattern': '^h ', 'expanded': 'helper/'     },
+      \   { 'pattern': '^l ', 'expanded': 'lib/'        },
+      \   { 'pattern': '^m ', 'expanded': 'model/'      },
+      \   { 'pattern': '^o ', 'expanded': 'log/'        },
+      \   { 'pattern': '^p ', 'expanded': 'template/'   },
+      \   { 'pattern': '^s ', 'expanded': 'spec/'       },
+      \   { 'pattern': '^t ', 'expanded': 'test/'       },
+      \   { 'pattern': '^v ', 'expanded': 'view/'       },
+      \ ]}
 
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
