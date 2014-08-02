@@ -580,9 +580,9 @@
 
    #+NAME: editing
    #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package surround
-       :commands global-surround-mode
-       :idle (global-surround-mode 1))
+     (use-package evil-surround
+       :commands global-evil-surround-mode
+       :idle (global-evil-surround-mode 1))
 
      (use-package smartparens-config
        :commands smartparens-global-mode
