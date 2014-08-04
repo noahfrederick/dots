@@ -1035,7 +1035,7 @@
                   helm-org-keywords
                   helm-org-headlines
                   helm-projectile
-                  heml-M-x)
+                  helm-M-x)
        :init
        (evil-leader/set-key
          "h b" 'helm-buffers-list
