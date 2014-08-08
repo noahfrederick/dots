@@ -8,12 +8,11 @@ bundle AndrewRadev/switch.vim
 bundle Raimondi/delimitMate
 bundle SirVer/ultisnips
 bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
+bundle airblade/vim-gitgutter
 bundle eiginn/netrw
 bundle ervandew/supertab
 bundle godlygeek/tabular
-bundle kana/vim-textobj-user
 bundle kien/ctrlp.vim
-bundle mattn/vim-textobj-url
 bundle noahfrederick/vim-skeleton
 bundle rizzatti/dash.vim
 bundle scrooloose/syntastic
@@ -36,11 +35,19 @@ bundle tpope/vim-unimpaired
 bundle tpope/vim-vinegar
 bundle wellle/targets.vim
 
+# Text objects
+bundle akiyan/vim-textobj-php
+bundle kana/vim-textobj-function
+bundle kana/vim-textobj-line
+bundle kana/vim-textobj-user
+bundle mattn/vim-textobj-url
+bundle nelstrom/vim-textobj-rubyblock
+bundle whatyouhide/vim-textobj-xmlattr
+
 # Language-specific utilities
 bundle dbakker/vim-lint
 bundle dbakker/vim-sparkup
 bundle nelstrom/vim-markdown-folding
-bundle nelstrom/vim-textobj-rubyblock
 bundle tpope/vim-bundler
 bundle tpope/vim-rails
 bundle tpope/vim-rake
