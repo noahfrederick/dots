@@ -272,10 +272,10 @@ function! s:try_wincmd(cmd, default)
 endfunction
 
 " Flexibly define maps for SplitJoin with fallbacks
-nnoremap <silent> gJ :<C-u>call <SID>try('SplitjoinJoin',  'gJ')<CR>
-nnoremap <silent>  J :<C-u>call <SID>try('SplitjoinJoin',  'J')<CR>
-nnoremap <silent> gS :<C-u>call <SID>try('SplitjoinSplit', "r\015")<CR>
-nnoremap <silent>  S :<C-u>call <SID>try('SplitjoinSplit', 'S')<CR>
+nnoremap <silent> J :<C-u>call <SID>try('SplitjoinJoin',  'J')<CR>
+nnoremap <silent> S :<C-u>call <SID>try('SplitjoinSplit', "r\015")<CR>
+nnoremap         gJ J
+nnoremap         gS r<CR>
 
 " The arrow keys are suitable for window resizing since it's not a common
 " action and they can be mashed, unlike <C-w>+ etc.
@@ -521,6 +521,10 @@ if has("autocmd")
       \ endif
   augroup END
 endif
+
+" Disable splitjoin.vim maps (we define our own above)
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping = ''
 
 " :help ctrlp-options
 let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
