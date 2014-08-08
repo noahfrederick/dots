@@ -63,4 +63,52 @@ function! helper#snippet#ProjectTitle()
   return "(Project Name)"
 endfunction
 
+function! helper#snippet#ExpandSnippetOrCompleteMaybe()
+  call UltiSnips#ExpandSnippetOrJump()
+
+  if !exists("g:ulti_expand_or_jump_res")
+    return "\<Tab>"
+  endif
+
+  if g:ulti_expand_or_jump_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      return "\<Tab>"
+    endif
+  endif
+
+  return ""
+endfunction
+
+function! s:try_insert(skel)
+  execute "normal! i_" . a:skel . "\<C-r>=UltiSnips#ExpandSnippet()\<CR>"
+
+  if g:ulti_expand_res == 0
+    silent! undo
+  endif
+
+  return g:ulti_expand_res
+endfunction
+
+function! helper#snippet#InsertSkeleton(filename, is_projection) abort
+  " Abort on non-empty buffer or extant file
+  if !(line('$') == 1 && getline('$') == '') || filereadable(a:filename)
+    return
+  endif
+
+  if a:is_projection
+    " Loop through projections with 'skeleton' key and try each one until the
+    " snippet expands
+    for [root, value] in projectionist#query('skeleton')
+      if s:try_insert(value)
+        return
+      endif
+    endfor
+  endif
+
+  " Try generic _skel template as last resort
+  call s:try_insert("skel")
+endfunction
+
 " vim:set et sw=2:

@@ -1,7 +1,7 @@
 " skeleton_custom.vim - Skeleton Custom Functions
 " Maintainer:   Noah Frederick
 
-if exists("g:loaded_skeleton_custom") || !exists("g:loaded_skeleton")
+if exists("g:loaded_skeleton_custom") || !exists(":SkelEdit")
   finish
 endif
 let g:loaded_skeleton_custom = 1

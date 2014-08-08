@@ -454,38 +454,12 @@ let g:delimitMate_balance_matchpairs = 1
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
-function! s:expand_or_complete_maybe()
-  silent! call UltiSnips#ExpandSnippetOrJump()
-
-  if !exists("g:ulti_expand_or_jump_res")
-    return "\<Tab>"
-  endif
-
-  if g:ulti_expand_or_jump_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      return "\<Tab>"
-    endif
-  endif
-
-  return ""
-endfunction
-
 let g:UltiSnipsListSnippets = "<C-g><Tab>"
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
-
-if has("autocmd")
-  augroup vimrc
-    autocmd BufEnter * execute "inoremap <silent> "
-          \ . g:UltiSnipsExpandTrigger
-          \ . " <C-r>=<SID>expand_or_complete_maybe()<CR>"
-  augroup END
-endif
 
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
