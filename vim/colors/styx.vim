@@ -28,7 +28,7 @@ hi SpellBad            guisp=#ffb6c0  guibg=NONE     gui=undercurl
 hi SpellCap            guisp=#cde88a  guibg=NONE     gui=undercurl
 hi SpellRare           guisp=#b7aa80  guibg=NONE     gui=undercurl
 hi SpellLocal          guisp=#d6b8f5  guibg=NONE     gui=undercurl
-hi NonText             guifg=#666666
+hi NonText             guifg=#444444
 hi LineNr              guifg=#444444  guibg=NONE
 hi CursorLineNr        guifg=#539dbd  guibg=#222222  gui=NONE
 hi Visual              guibg=#264049
@@ -41,6 +41,7 @@ hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
 hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp=#1a1a1a
 hi Directory           guifg=#93c3d6
 hi Title               guifg=#e9d9b3  gui=bold
+hi SpecialKey          guifg=#1c6068
 hi ErrorMsg            guifg=#ffffff  guibg=#ff0055
 hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
@@ -65,7 +66,6 @@ hi! link ModeMsg       MoreMsg
 hi! link TablineSel    StatusLine
 hi! link Tabline       StatusLineNC
 hi! link TabLineFill   Tabline
-hi! link SpecialKey    NonText
 hi! link Conceal       NonText
 
 "}}}
