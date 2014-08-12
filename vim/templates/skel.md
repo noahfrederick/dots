@@ -1,4 +1,0 @@
-# @TITLE@
-% @AUTHOR@
-% @DATE@
-

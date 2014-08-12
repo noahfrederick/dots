@@ -13,7 +13,6 @@ bundle eiginn/netrw
 bundle ervandew/supertab
 bundle godlygeek/tabular
 bundle kien/ctrlp.vim
-bundle noahfrederick/vim-skeleton
 bundle rizzatti/dash.vim
 bundle scrooloose/syntastic
 bundle talek/obvious-resize
