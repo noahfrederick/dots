@@ -17,14 +17,34 @@ let s:php_source_segments = [
   \ ['/View/', 'Views'],
   \ ]
 
+" Get cascading key value from projection
+function! s:projection_query(key)
+  for [root, value] in projectionist#query(a:key)
+    return value
+  endfor
+  return ""
+endfunction
+
+" Get the opening PHP tag with guard, if any
+function! helper#php#Open()
+  let l:open = "<?php"
+
+  if s:projection_query("framework") ==# "kohana"
+    let l:open = join([l:open, "defined('SYSPATH') OR die('No direct script access.');"])
+  endif
+
+  return l:open
+endfunction
+
 " Infer the PSR-0 class name from file's path.
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
 function! helper#php#PathToClassName(path)
   let l:path = a:path
   for l:prefix in s:php_source_prefixes
-    if stridx(l:path, l:prefix) == 0
-        let l:path = strpart(l:path, strlen(l:prefix))
+    let l:pos = stridx(l:path, l:prefix)
+    if l:pos != -1
+        let l:path = strpart(l:path, l:pos + strlen(l:prefix))
         break
     endif
   endfor
@@ -33,10 +53,10 @@ endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.
 function! helper#php#PathToParentClassName(path)
-  let l:path = a:path
-  if stridx(l:path, "/tests/") != -1
+  if s:projection_query("category") ==# "Tests"
     return "PHPUnit_Framework_TestCase"
   endif
+
   return "ParentClass"
 endfunction
 

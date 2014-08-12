@@ -1,13 +1,74 @@
 # php.snippets - Snippets for php file type
 
+global !p
+
+class Arg(object):
+	def __init__(self, arg):
+		self.arg = arg
+		self.name = arg.split('=')[0].strip()
+
+	def __str__(self):
+		return self.name
+
+	def __unicode__(self):
+		return self.name
+
+	def is_kwarg(self):
+		return '=' in self.arg
+
+	def unprefixed(self):
+		return self.name.strip('$')
+
+def get_args(arglist):
+	args = [Arg(arg) for arg in arglist.split(',') if arg]
+
+	return args
+
+def format_access(access):
+	return " * @access  %s" % access
+
+def format_arg(arg):
+	return " * @param   %s  @todo" % arg
+
+def format_return():
+	return " * @return  @todo"
+
+def write_docstring_args(args, snip):
+	if not args:
+		snip.rv += ' {0}'.format(snip)
+		return
+
+	for arg in args:
+		snip += format_arg(arg)
+
+def write_init_body(args, parents, snip):
+	for arg in args:
+		snip += "$this->_%s = %s" % (arg.unprefixed, arg)
+
+endglobal
+
+snippet _skel "PHP skeleton" b
+`!v helper#php#Open()`
+
+$0
+endsnippet
+
+snippet _config "PHP config file" b
+`!v helper#php#Open()`
+
+return array(
+	$0
+);
+endsnippet
+
 snippet php "<?php ?>" w
-<?php ${VISUAL}$0 ?>
+<?php ${0:${VISUAL}} ?>
 endsnippet
 
 snippet php "<?php ?>" b
 <?php
 
-${VISUAL}$0
+${0:${VISUAL}}
 
 ?>
 endsnippet
@@ -28,12 +89,40 @@ snippet array "$var = array();" b
 $${1:arr} = array($2);
 endsnippet
 
+snippet post "$_POST['']" w
+$_POST['$1']$0
+endsnippet
+
+snippet get "$_GET['']" w
+$_GET['$1']$0
+endsnippet
+
+snippet request "$_REQUEST['']" w
+$_REQUEST['$1']$0
+endsnippet
+
 snippet class "Class definition" b
 /**
  * ${4:$1 class}.
  *
  * @package    `!v helper#snippet#ProjectTitle()`
- * @category   ${5:`!v helper#php#PathToClassCategory(expand("%"))`}
+ * @category   `!v helper#php#PathToClassCategory(expand("%"))`
+ * @author     `!v helper#snippet#Author()`
+ * @copyright  `!v helper#snippet#Copyright()`
+ */
+class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v helper#php#PathToParentClassName(expand("%"))`}} {
+	${0:${VISUAL:\/\/ TODO}}
+}
+endsnippet
+
+snippet _class "Class definition" b
+`!v helper#php#Open()`
+
+/**
+ * ${4:$1 class}.
+ *
+ * @package    `!v helper#snippet#ProjectTitle()`
+ * @category   `!v helper#php#PathToClassCategory(expand("%"))`
  * @author     `!v helper#snippet#Author()`
  * @copyright  `!v helper#snippet#Copyright()`
  */
@@ -43,6 +132,19 @@ class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v help
 endsnippet
 
 snippet fun "Function definition" b
+/**
+ * ${4:@todo: Docstring for $2.}`!p
+snip.rv = ""
+
+if t[1]:
+	snip += format_access(t[1].strip())
+
+args = get_args(t[3])
+if args:
+	write_docstring_args(args, snip)
+
+snip += format_return()`
+ */
 ${1:public }function ${2:fun_name}(${3})
 {
 	${0:${VISUAL:\/\/ TODO}}
@@ -92,7 +194,7 @@ do
 while (${1:/* condition */});
 endsnippet
 
-snippet doc "doc comment" b
+snippet doc "Docblock" b
 /**
  * $1
  */
