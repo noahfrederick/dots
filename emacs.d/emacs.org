@@ -827,15 +827,19 @@
 
     #+NAME: editing
     #+BEGIN_SRC emacs-lisp :tangle no
-      (use-package ruby-mode
-        :mode (("\\.rake$" . ruby-mode)
-               ("\\.gemspec$" . ruby-mode)
-               ("\\.ru$" . ruby-mode)
-               ("Rakefile$" . ruby-mode)
-               ("Gemfile$" . ruby-mode)
-               ("Capfile$" . ruby-mode)
-               ("Puppetfile$" . ruby-mode)
-               ("Guardfile$" . ruby-mode)))
+      (use-package enh-ruby-mode
+        :mode (("\\.rake$" . enh-ruby-mode)
+               ("\\.gemspec$" . enh-ruby-mode)
+               ("\\.ru$" . enh-ruby-mode)
+               ("Rakefile$" . enh-ruby-mode)
+               ("Gemfile$" . enh-ruby-mode)
+               ("Capfile$" . enh-ruby-mode)
+               ("Puppetfile$" . enh-ruby-mode)
+               ("Guardfile$" . enh-ruby-mode))
+        :init
+        (progn
+          (add-hook 'enh-ruby-mode-hook 'robe-mode)
+          (add-hook 'robe-mode-hook 'ac-robe-setup)))
     #+END_SRC
 
 *** Web
