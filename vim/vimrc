@@ -43,25 +43,27 @@ if &shell =~# "fish$"
   set shell=/bin/bash           " Ensure shell is POSIX compatible
 endif
 
+"" Behavior
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set spelllang=en_us             " Language and region to use for spellchecking
-set shortmess+=I                " Suppress intro message when starting Vim
-set laststatus=2                " Always show status line
-set ruler                       " Show cursor position if status line not visible
 set modeline modelines=5        " Look for modeline at beginning/end of file
 set hidden                      " Allow buffers to become hidden
 set autoread                    " Reload unchanged buffer when file changes
-set history=500                 " Keep 500 lines of command-line history
-set scrolloff=2                 " Keep lines above/below cursor visible
-set sidescrolloff=5             " Keep columns left/right of cursor visible
-set display+=lastline           " Show as much as possible of wrapped last line
 set foldnestmax=3               " Limit depth of nested syntax/indent folds
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set switchbuf=useopen,usetab
-set helpheight=1000             " Maximize help window vertically
-set previewheight=20            " Preview window used for, e.g., :Gstatus
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
+set scrolloff=2                 " Keep lines above/below cursor visible
+set sidescrolloff=5             " Keep columns left/right of cursor visible
+
+"" Display
+set shortmess+=I                " Suppress intro message when starting Vim
+set laststatus=2                " Always show status line
+set ruler                       " Show cursor position if status line not visible
+set helpheight=1000             " Maximize help window vertically
+set previewheight=20            " Preview window used for, e.g., :Gstatus
+set display+=lastline           " Show as much as possible of wrapped last line
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")             " Wrap lines at word boundaries
   set linebreak
@@ -81,6 +83,7 @@ if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   highlight VertSplit ctermbg=NONE guibg=NONE
 endif
 
+"" Clipboard
 if has("unnamedplus")
   set clipboard=unnamedplus
 else
@@ -97,6 +100,7 @@ set suffixes+=.css,.html        " Extensions that get a lower priority when matc
 set cmdheight=2                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
+set history=500                 " Keep 500 lines of command-line history
 set showcmd                     " Show incomplete key sequences
 set path=.,**                   " Path used by gf, :find, et alia
 
@@ -107,7 +111,7 @@ set tabstop=4                   " Width of displayed tabs--the rest is taken car
 set shiftround                  " Round indent to multiple of 'shiftwidth'
 set nojoinspaces                " Do not insert two spaces after '.' when using J
 
-"" Swaps and backups
+"" Swaps, backups, and sessions
 if !strlen($SUDO_USER) && has("unix")
   " Don't store swaps in . -- store in ~/.vim/tmp/swap/%path%to%orig.swp
   set directory=~/.vim/tmp/swap//,.,/var/tmp
@@ -123,6 +127,7 @@ else
   set nowritebackup
   set noswapfile
 endif
+set sessionoptions-=options     " Do not save settings and mappings to sessions
 
 "" Searching
 set incsearch                   " Do incremental searching
