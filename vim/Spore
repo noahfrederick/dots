@@ -3,6 +3,7 @@ bundle noahfrederick/vim-hemisu
 bundle noahfrederick/vim-noctu
 
 # General-purpose utilities
+bundle AndrewRadev/sideways.vim
 bundle AndrewRadev/splitjoin.vim
 bundle AndrewRadev/switch.vim
 bundle Raimondi/delimitMate
