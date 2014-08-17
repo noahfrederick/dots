@@ -203,7 +203,9 @@ if has("autocmd")
     autocmd WinEnter * if &filetype == 'qf' | set nocursorline | else | set cursorline | endif
 
     highlight! link TrailingWhitespace Error
+    highlight! link MixedWhitespace TrailingWhitespace
 
+    autocmd BufWinEnter * if &modifiable | match MixedWhitespace / \+\t\+/ | endif
     autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
