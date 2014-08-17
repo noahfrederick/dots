@@ -280,7 +280,7 @@ endfunction
 
 " Flexibly define maps for SplitJoin with fallbacks
 nnoremap <silent> J :<C-u>call <SID>try('SplitjoinJoin',  'J')<CR>
-nnoremap <silent> S :<C-u>call <SID>try('SplitjoinSplit', "r\<CR>")<CR>
+nnoremap <silent> S :<C-u>call <SID>try('SplitjoinSplit', "r\015")<CR>
 nnoremap         gJ J
 nnoremap         gS r<CR>
 
