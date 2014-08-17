@@ -317,8 +317,16 @@ cnoremap %% <C-r>=fnameescape(expand("%:~:h"))<CR>/
 "     habēre
 nnoremap <expr> <Leader>k helper#editing#NormalModeDigraph(nr2char(getchar()))
 
-" Look up documentation with Dash.app (analogous to K command)
-nmap <Leader>K <Plug>DashSearch
+" Look up documentation with Dash.app
+function! s:doc(cmd)
+  if &keywordprg ==# "man" && exists(":Dash")
+    return a:cmd
+  endif
+  return "K"
+endfunction
+
+nmap <expr> K <SID>doc("\<Plug>DashSearch")
+nmap <expr> <Leader>K <SID>doc("\<Plug>DashGlobalSearch")
 
 " Remove the last character on current line:
 " This is something I find myself doing often, but I find it difficult to hit
