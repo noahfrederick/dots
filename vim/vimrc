@@ -22,25 +22,24 @@
 " General settings                                                             {{{
 " --------------------------------------------------------------------------------
 
-if has("vim_starting") && filereadable($HOME."/.vim/bundle/vim-pathogen/autoload/pathogen.vim")
-  " Manage 'runtimepath' with pathogen.vim
-  runtime bundle/vim-pathogen/autoload/pathogen.vim
-  execute pathogen#infect()
-endif
+if has("vim_starting")
+  if filereadable($HOME."/.vim/bundle/vim-pathogen/autoload/pathogen.vim") && !has("neovim")
+    " Manage 'runtimepath' with pathogen.vim
+    runtime bundle/vim-pathogen/autoload/pathogen.vim
+    execute pathogen#infect()
+  endif
 
-if has("autocmd")
-  filetype plugin indent on     " File-type detection, plug-ins, indent scripts
-endif
-if has("syntax") && !exists("g:syntax_on")
-  syntax enable                 " Enable syntax highlighting
-endif
+  if has("autocmd")
+    filetype plugin indent on   " File-type detection, plug-ins, indent scripts
+  endif
 
-if &t_Co >= 16
-  silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
-endif
+  if has("syntax") && !exists("g:syntax_on")
+    syntax enable               " Enable syntax highlighting
+  endif
 
-if &shell =~# "fish$"
-  set shell=/bin/bash           " Ensure shell is POSIX compatible
+  if &t_Co >= 16
+    silent! colorscheme noctu   " Set color scheme for 16-color+ terminals
+  endif
 endif
 
 "" Behavior
@@ -56,6 +55,12 @@ set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
 set scrolloff=2                 " Keep lines above/below cursor visible
 set sidescrolloff=5             " Keep columns left/right of cursor visible
+if &shell =~# "fish$"
+  set shell=/bin/bash           " Ensure shell is POSIX compatible
+endif
+if has("mouse")
+  set mouse=a                   " Enable mouse in all modes
+endif
 
 "" Display
 set shortmess+=I                " Suppress intro message when starting Vim
@@ -164,11 +169,6 @@ function! StatuslineGit()
   endif
   return l:out
 endfunction
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has("mouse")
-  set mouse=a
-endif
 
 " Load matchit.vim, if a newer version isn't already installed
 if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &runtimepath) ==# ""
