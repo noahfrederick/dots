@@ -590,9 +590,6 @@ let g:csv_disable_fdt = 1
 " :help ruby.vim
 let g:ruby_no_comment_fold = 1
 
-" Don't let targets.vim clobber ia/aa and ir/ar
-let g:targets_pairs = '()b {}B [] <>'
-
 " :help menu.vim
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1
