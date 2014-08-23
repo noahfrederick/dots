@@ -1,13 +1,6 @@
 #
 # PATH
 #
-function prepend_to_path -d "Prepend the given dir to PATH if it exists and is not already listed"
-	if test -d $argv[1]
-		if not contains $argv[1] $PATH
-			set -gx PATH "$argv[1]" $PATH
-		end
-	end
-end
 prepend_to_path $HOME/.cask/bin
 prepend_to_path $HOME/bin
 
@@ -67,7 +60,6 @@ function gp;  git push $argv; end
 function gpu; git pull $argv; end
 function gs;  git status $argv; end
 
-# Make fish work with boxen - This script is generated via
-# https://gist.github.com/burke/5066634
+# Make fish work with boxen
 set -l FISH_BOXEN ~/.config/fish/boxen.fish
-test -r $FISH_BOXEN; and source $FISH_BOXEN
+test -r $FISH_BOXEN; and test -d /opt/boxen; and source $FISH_BOXEN
