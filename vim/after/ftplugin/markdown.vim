@@ -1,3 +1,7 @@
+" Turn on concealing of bold, italic markers
+set conceallevel=2
+set concealcursor=nc
+
 " Org-mode-like extensions to Markdown
 
 if exists(':Switch')
