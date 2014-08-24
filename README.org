@@ -5,21 +5,15 @@ platforms I work on (mostly OS X).
 
 #+BEGIN_SRC sh
   git clone git@github.com:noahfrederick/dots.git ~/.dots
-  cd ~/.dots && rake install
 #+END_SRC
 
-* Usage
+I symlink the various files via Puppet, but you could just as well
+do it manually:
 
-Several convenient ~rake~ tasks are provided for managing the
-configuration:
-
-#+BEGIN_SRC sh :results output
-  rake -T
+#+BEGIN_SRC sh
+  ln -s ~/.dots/bashrc ~/.bashrc
+  # etc.
 #+END_SRC
-
-#+RESULTS:
-: rake install  # Install dotfiles by creating symlinks
-: rake link     # Link dotfiles into user's home directory
 
 * Software
 ** Vim
@@ -58,20 +52,9 @@ On OS X, install Emacs with Homebrew:
 For instructions on how to install packages etc., see my [[emacs.d/emacs.org][emacs.org]]
 file.
 
-** Bash
-
-My shell of choice is Bash. As of this writing OS X ships with Bash
-version 3, but I take advantage of several features of version 4.
-
-#+BEGIN_SRC sh
-  brew install bash bash-completion
-#+END_SRC
-
 ** Fish
 
-I also use the [[http://fishshell.com][fish shell]] on and off. It is a better shell than bash
-and zsh, but not being POSIX compatible is a pain.
-
+My shell of choice is the [[http://fishshell.com][fish shell]].
 More software ought to be developed with [[http://fishshell.com/docs/current/design.html][fish's design guidelines]] in
 mind.
 
