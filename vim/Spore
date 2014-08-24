@@ -10,9 +10,9 @@ bundle Raimondi/delimitMate
 bundle SirVer/ultisnips
 bundle Valloric/YouCompleteMe build: 'cd ~/.vim/bundle/YouCompleteMe && ./install.sh'
 bundle airblade/vim-gitgutter
-bundle eiginn/netrw
 bundle ervandew/supertab
 bundle godlygeek/tabular
+bundle jeetsukumaran/vim-filebeagle
 bundle kien/ctrlp.vim
 bundle rizzatti/dash.vim
 bundle scrooloose/syntastic
@@ -32,7 +32,6 @@ bundle tpope/vim-sleuth
 bundle tpope/vim-speeddating
 bundle tpope/vim-surround
 bundle tpope/vim-unimpaired
-bundle tpope/vim-vinegar
 bundle wellle/targets.vim
 
 # Text objects
