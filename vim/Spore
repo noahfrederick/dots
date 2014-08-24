@@ -37,7 +37,6 @@ bundle wellle/targets.vim
 # Text objects
 bundle akiyan/vim-textobj-php
 bundle kana/vim-textobj-function
-bundle kana/vim-textobj-line
 bundle kana/vim-textobj-user
 bundle mattn/vim-textobj-url
 bundle nelstrom/vim-textobj-rubyblock
