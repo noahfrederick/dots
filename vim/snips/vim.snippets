@@ -1,17 +1,17 @@
 # vim.snippets - Snippets for vim file type
 
 snippet _skel "Generic Vim Script file" b
-" `!v expand("%")` - `!v helper#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v helper#snippet#Author()`
+" `!v expand("%")` - `!v util#snippet#Title(expand("%:t:r"))`
+" Maintainer: `!v util#snippet#Author()`
 
 $0
 
-" `!v helper#vim#Modeline()`
+" `!v vim#Modeline()`
 endsnippet
 
 snippet _plugin "Plugin file" b
-" `!v expand("%")` - `!v helper#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v helper#snippet#Author()`
+" `!v expand("%")` - `!v util#snippet#Title(expand("%:t:r"))`
+" Maintainer: `!v util#snippet#Author()`
 
 if exists("g:loaded_`!v expand("%:t:r")`") || v:version < 700 || &cp
 	finish
@@ -20,7 +20,7 @@ let g:loaded_`!v expand("%:t:r")` = 1
 
 $0
 
-" `!v helper#vim#Modeline()`
+" `!v vim#Modeline()`
 endsnippet
 
 snippet gvar "Global / configuration variable" b
@@ -42,7 +42,7 @@ endif
 endsnippet
 
 snippet fun "function" b
-function! ${1:`!v helper#vim#GuessFunctionPrefix(expand("%"))`}${2:fun_name}(${3})
+function! ${1:`!v vim#GuessFunctionPrefix(expand("%"))`}${2:fun_name}(${3})
 	${0:${VISUAL}}
 endfunction
 endsnippet

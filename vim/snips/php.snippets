@@ -48,13 +48,13 @@ def write_init_body(args, parents, snip):
 endglobal
 
 snippet _skel "PHP skeleton" b
-`!v helper#php#Open()`
+`!v php#Open()`
 
 $0
 endsnippet
 
 snippet _config "PHP config file" b
-`!v helper#php#Open()`
+`!v php#Open()`
 
 return array(
 	$0
@@ -105,28 +105,28 @@ snippet class "Class definition" b
 /**
  * ${4:$1 class}.
  *
- * @package    `!v helper#snippet#ProjectTitle()`
- * @category   `!v helper#php#PathToClassCategory(expand("%"))`
- * @author     `!v helper#snippet#Author()`
- * @copyright  `!v helper#snippet#Copyright()`
+ * @package    `!v util#snippet#ProjectTitle()`
+ * @category   `!v php#PathToClassCategory(expand("%"))`
+ * @author     `!v util#snippet#Author()`
+ * @copyright  `!v util#snippet#Copyright()`
  */
-class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v helper#php#PathToParentClassName(expand("%"))`}} {
+class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
 	${0:${VISUAL:\/\/ TODO}}
 }
 endsnippet
 
 snippet _class "Class definition" b
-`!v helper#php#Open()`
+`!v php#Open()`
 
 /**
  * ${4:$1 class}.
  *
- * @package    `!v helper#snippet#ProjectTitle()`
- * @category   `!v helper#php#PathToClassCategory(expand("%"))`
- * @author     `!v helper#snippet#Author()`
- * @copyright  `!v helper#snippet#Copyright()`
+ * @package    `!v util#snippet#ProjectTitle()`
+ * @category   `!v php#PathToClassCategory(expand("%"))`
+ * @author     `!v util#snippet#Author()`
+ * @copyright  `!v util#snippet#Copyright()`
  */
-class ${1:`!v helper#php#PathToClassName(expand("%"))`}${2: extends ${3:`!v helper#php#PathToParentClassName(expand("%"))`}} {
+class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
 	${0:${VISUAL:\/\/ TODO}}
 }
 endsnippet

@@ -1,14 +1,14 @@
-" autoload/helper.vim - Global miscellaneous helper functions
+" autoload/util.vim - Global miscellaneous helper functions
 " Maintainer:   Noah Frederick
 
 " 'Quickfix do' analogous to :argdo, :bufdo, etc.
 " Adapted from https://github.com/romainl/dotvim/blob/97e23dceda3afe6f9112172afab5741456893254/autoload/functions.vim
-function! helper#Cdo(filewise)
+function! util#Cdo(filewise, cmd)
   try
     silent cfirst
 
     while 1
-      execute <q-args>
+      execute a:cmd
 
       if a:filewise > 0
         silent cnfile

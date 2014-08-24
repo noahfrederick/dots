@@ -1,21 +1,21 @@
-" autoload/helper/snippets.vim - Global helpers for snippets
+" autoload/util/snippets.vim - Global helpers for snippets
 " Maintainer:   Noah Frederick
 
-function! helper#snippet#Author()
+function! util#snippet#Author()
   if exists("$PROJECT_AUTHOR") && $PROJECT_AUTHOR != ""
     return $PROJECT_AUTHOR
   endif
   return s:get_git_config_value('user.name')
 endfunction
 
-function! helper#snippet#Email()
+function! util#snippet#Email()
   if exists("$PROJECT_EMAIL") && $PROJECT_EMAIL != ""
     return $PROJECT_EMAIL
   endif
   return s:get_git_config_value('user.email')
 endfunction
 
-function! helper#snippet#GitHubUsername()
+function! util#snippet#GitHubUsername()
   if exists("$PROJECT_GITHUB_USERNAME") && $PROJECT_GITHUB_USERNAME != ""
     return $PROJECT_GITHUB_USERNAME
   endif
@@ -29,7 +29,7 @@ function! s:get_git_config_value(key)
   return 0
 endfunction
 
-function! helper#snippet#Title(basename)
+function! util#snippet#Title(basename)
   if exists("g:template_title")
     " Setting g:template_title let's us override the title (once)
     let title = g:template_title
@@ -47,23 +47,23 @@ function! helper#snippet#Title(basename)
   return title
 endfunction
 
-function! helper#snippet#Copyright()
+function! util#snippet#Copyright()
   if exists("$PROJECT_COPYRIGHT") && $PROJECT_COPYRIGHT != ""
     let name = $PROJECT_COPYRIGHT
   else
-    let name = helper#snippet#Author()
+    let name = util#snippet#Author()
   endif
   return join(['©', strftime('%Y'), name])
 endfunction
 
-function! helper#snippet#ProjectTitle()
+function! util#snippet#ProjectTitle()
   if exists("$PROJECT_NAME") && $PROJECT_NAME != ""
     return $PROJECT_NAME
   endif
   return "(Project Name)"
 endfunction
 
-function! helper#snippet#ExpandSnippetOrCompleteMaybe()
+function! util#snippet#ExpandSnippetOrCompleteMaybe()
   call UltiSnips#ExpandSnippetOrJump()
 
   if !exists("g:ulti_expand_or_jump_res")
@@ -91,7 +91,7 @@ function! s:try_insert(skel)
   return g:ulti_expand_res
 endfunction
 
-function! helper#snippet#InsertSkeleton(filename, is_projection) abort
+function! util#snippet#InsertSkeleton(filename, is_projection) abort
   " Abort on non-empty buffer or extant file
   if !(line('$') == 1 && getline('$') == '') || filereadable(a:filename)
     return

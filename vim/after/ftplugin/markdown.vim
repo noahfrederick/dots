@@ -27,25 +27,25 @@ if exists(':Switch')
 endif
 
 " Smart <Enter> in insert mode
-inoremap <buffer><expr> <CR> helper#markdown#OpenLine("\<CR>")
+inoremap <buffer><expr> <CR> markdown#OpenLine("\<CR>")
 
 " Also for normal mode o/O
-nnoremap <buffer><expr> o helper#markdown#OpenLine("o")
-nnoremap <buffer><expr> O helper#markdown#OpenLine("O")
+nnoremap <buffer><expr> o markdown#OpenLine("o")
+nnoremap <buffer><expr> O markdown#OpenLine("O")
 
 " Timestamp insertion
 inoremap <buffer> <C-g>. [<C-r>=strftime("%Y-%m-%d %a")<CR>]
 inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
 
 " Promote/demote headings
-nnoremap <buffer> <Left> :call helper#markdown#PromoteHeading()<CR>
-nnoremap <buffer> <Right> :call helper#markdown#DemoteHeading()<CR>
+nnoremap <buffer> <Left> :call markdown#PromoteHeading()<CR>
+nnoremap <buffer> <Right> :call markdown#DemoteHeading()<CR>
 
 " Follow link under cursor
-nnoremap <buffer> gx :call helper#markdown#FollowLinkUnderCursor()<CR>
+nnoremap <buffer> gx :call markdown#FollowLinkUnderCursor()<CR>
 
 " Smart dashes
-iabbrev <buffer><expr> --- helper#markdown#InsertDashes()
+iabbrev <buffer><expr> --- markdown#InsertDashes()
 
 " Use pandoc to run off a PDF with :make
 silent! compiler pandoc
@@ -53,5 +53,5 @@ silent! compiler pandoc
 " Recompile file on save if compiled version already exists
 augroup AfterMarkdown
   autocmd!
-  autocmd BufWritePost *.md call helper#make#Recompile(expand('<afile>'))
+  autocmd BufWritePost *.md call util#make#Recompile(expand('<afile>'))
 augroup END

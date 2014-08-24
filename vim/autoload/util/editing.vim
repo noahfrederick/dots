@@ -1,4 +1,4 @@
-" autoload/helper/editing.vim - Global helpers for editing tasks
+" autoload/util/editing.vim - Global helpers for editing tasks
 " Maintainer:   Noah Frederick
 
 " Execute commands without moving cursor, changing search pattern
@@ -6,7 +6,7 @@
 " - First parameter is a function name to call as a string
 " - Second (optional) parameter is an array of arguments to pass to the
 "   function
-function! helper#editing#Preserve(func, ...)
+function! util#editing#Preserve(func, ...)
   let l:FuncRef = function(a:func)
   if a:0 > 0
     let l:args = a:1
@@ -34,27 +34,27 @@ function! s:NormalizeWhitespace()
   %substitute/\n\+\%$//e
 endfunction
 
-function! helper#editing#NormalizeWhitespace()
-  return helper#editing#Preserve('<SID>NormalizeWhitespace')
+function! util#editing#NormalizeWhitespace()
+  return util#editing#Preserve('<SID>NormalizeWhitespace')
 endfunction
 
 function! s:ReindentBuffer()
   normal! gg=G
 endfunction
 
-function! helper#editing#ReindentBuffer()
-  return helper#editing#Preserve('<SID>ReindentBuffer')
+function! util#editing#ReindentBuffer()
+  return util#editing#Preserve('<SID>ReindentBuffer')
 endfunction
 
 function! s:YankBuffer()
   normal! ggyG
 endfunction
 
-function! helper#editing#YankBuffer()
-  return helper#editing#Preserve('<SID>YankBuffer')
+function! util#editing#YankBuffer()
+  return util#editing#Preserve('<SID>YankBuffer')
 endfunction
 
-function! helper#editing#NormalModeDigraph(char2)
+function! util#editing#NormalModeDigraph(char2)
   let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
   echo 'digraph: ' . l:char1 . a:char2
   return "r\<C-k>" . l:char1 . a:char2

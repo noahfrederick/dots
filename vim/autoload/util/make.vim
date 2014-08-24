@@ -1,19 +1,19 @@
-" autoload/helper/make.vim - Global helpers for compilation
+" autoload/util/make.vim - Global helpers for compilation
 " Maintainer:   Noah Frederick
 
 " Run :make (or :Make) only if compiled file already exists (useful for, e.g.,
 " calling in a BufWritePost autocmd):
 "
-"   autocmd BufWritePost *.md call helper#make#Recompile(expand('<afile>'))
+"   autocmd BufWritePost *.md call util#make#Recompile(expand('<afile>'))
 "
-function! helper#make#Recompile(path)
+function! util#make#Recompile(path)
   if a:path == ''
     let l:path = expand('%:p')
   else
     let l:path = a:path
   endif
 
-  if helper#path#CompiledVersion(l:path) != ''
+  if util#path#CompiledVersion(l:path) != ''
     if exists(':Make')
       Make
     else

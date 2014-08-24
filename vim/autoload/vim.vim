@@ -1,4 +1,4 @@
-" autoload/helper/vim.vim - Vim script helpers
+" autoload/vim.vim - Vim script helpers
 
 let s:script_types = [
       \ "plugin",
@@ -14,7 +14,7 @@ function! s:is_type(type, path)
   return (stridx(a:path . "/", a:type) != -1)
 endfunction
 
-function! helper#vim#GuessFunctionPrefix(path)
+function! vim#GuessFunctionPrefix(path)
   if s:is_type("autoload", a:path)
     let l:path = strpart(a:path, stridx(a:path, "autoload/") + strlen("autoload/"))
     return substitute(fnamemodify(l:path, ":r"), '/', '#', 'g') . "#"
@@ -22,7 +22,7 @@ function! helper#vim#GuessFunctionPrefix(path)
   return "s:"
 endfunction
 
-function! helper#vim#Modeline()
+function! vim#Modeline()
   return 'vim: fdm=marker:sw=2:sts=2:et'
 endfunction
 

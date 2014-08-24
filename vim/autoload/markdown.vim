@@ -1,5 +1,5 @@
 " Promote/demote headings
-function! helper#markdown#PromoteHeading()
+function! markdown#PromoteHeading()
   let l:line = getline('.')
 
   if l:line =~# '^##\+ '
@@ -10,7 +10,7 @@ function! helper#markdown#PromoteHeading()
   endif
 endfunction
 
-function! helper#markdown#DemoteHeading()
+function! markdown#DemoteHeading()
   let l:line = getline('.')
 
   if l:line =~# '^######'
@@ -37,7 +37,7 @@ endfunction
 " Open new lines intelligently:
 "   - List continuation (end list by hitting <Enter> twice)
 "   - Block quote continuation
-function! helper#markdown#OpenLine(trigger)
+function! markdown#OpenLine(trigger)
   let l:line = getline('.')
 
   if a:trigger !=? 'o'
@@ -82,7 +82,7 @@ function! helper#markdown#OpenLine(trigger)
   return a:trigger
 endfunction
 
-function! helper#markdown#InsertDashes()
+function! markdown#InsertDashes()
   " Do nothing special if text other than the inserted dashes is present on
   " the current line
   if col('$') > 4
@@ -104,7 +104,7 @@ endfunction
 
 " The gx mapping provided by the Netrw plug-in only works on WORDS. This
 " provides support for opening links under the cursor:
-function! helper#markdown#FollowLinkUnderCursor()
+function! markdown#FollowLinkUnderCursor()
   let l:saved_reg = @t
   let l:saved_pos = getpos('.')
 

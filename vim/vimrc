@@ -183,10 +183,10 @@ if has("autocmd")
   augroup vimrc
     autocmd!
 
-    autocmd FileType c,cpp,css,javascript,php call helper#filetype#MakeSemicolonMaps()
-    autocmd FileType php,rubycall call helper#filetype#MakeRocketMaps()
+    autocmd FileType c,cpp,css,javascript,php call util#filetype#MakeSemicolonMaps()
+    autocmd FileType php,rubycall call util#filetype#MakeRocketMaps()
 
-    autocmd FileType html,liquid,markdown,php,xhtml,xml call helper#filetype#MakeXMLMaps()
+    autocmd FileType html,liquid,markdown,php,xhtml,xml call util#filetype#MakeXMLMaps()
     autocmd FileType html,liquid,xhtml,xml setlocal textwidth=120
 
     " Do not highlight current line in quickfix window as it overlaps the
@@ -222,14 +222,14 @@ endif
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
 
-command! -bang -bar Bdelete call helper#buffer#Bdelete(<q-bang>)
+command! -bang -bar Bdelete call util#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
-      \ call helper#buffer#Bufonly(<q-args>, <q-bang>)
-command! -nargs=0 -bar FollowSymlink call helper#path#FollowSymlink()
+      \ call util#buffer#Bufonly(<q-args>, <q-bang>)
+command! -nargs=0 -bar FollowSymlink call util#path#FollowSymlink()
 
 if exists("$NOTES")
   function! s:CompleteNote(A, L, P)
-    return helper#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
+    return util#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
   endfunction
   command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
@@ -247,8 +247,8 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
 " 'Quickfix do' analogous to :argdo, :bufdo, etc.
-command! -nargs=1 Cdo     call helper#Cdo(0)
-command! -nargs=1 Cdofile call helper#Cdo(1)
+command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
+command! -nargs=1 Cdofile call util#Cdo(1, <q-args>)
 
 command! -nargs=* -bar Spore call spore#exec(<q-args>)
 
@@ -317,7 +317,7 @@ cnoremap %% <C-r>=fnameescape(expand("%:~:h"))<CR>/
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader>k helper#editing#NormalModeDigraph(nr2char(getchar()))
+nnoremap <expr> <Leader>k util#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
@@ -377,13 +377,13 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>w :call helper#editing#NormalizeWhitespace()<CR>
+nnoremap <silent> <Leader>w :call util#editing#NormalizeWhitespace()<CR>
 
 " Re-indent entire buffer
-nnoremap <silent> <Leader>= :call helper#editing#ReindentBuffer()<CR>
+nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
 
 " Yank entire buffer
-nnoremap <silent> <Leader>y :call helper#editing#YankBuffer()<CR>
+nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
 
 xnoremap <Leader>p "_dP
 

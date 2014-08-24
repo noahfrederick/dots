@@ -1,4 +1,4 @@
-" autoload/helper/php.vim - PHP helpers
+" autoload/php.vim - PHP helpers
 
 let s:php_source_prefixes = [
   \ 'application/classes/',
@@ -26,20 +26,24 @@ function! s:projection_query(key)
 endfunction
 
 " Get the opening PHP tag with guard, if any
-function! helper#php#Open()
-  let l:open = "<?php"
+function! php#Open()
+  let parts = ["<?php"]
 
   if s:projection_query("framework") ==# "kohana"
-    let l:open = join([l:open, "defined('SYSPATH') OR die('No direct script access.');"])
+    if s:projection_query("category") == "Tests"
+      let parts = add(parts, "defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');")
+    else
+      let parts = add(parts, "defined('SYSPATH') OR die('No direct script access.');")
+    endif
   endif
 
-  return l:open
+  return join(parts)
 endfunction
 
 " Infer the PSR-0 class name from file's path.
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
-function! helper#php#PathToClassName(path)
+function! php#PathToClassName(path)
   let l:path = a:path
   for l:prefix in s:php_source_prefixes
     let l:pos = stridx(l:path, l:prefix)
@@ -52,7 +56,7 @@ function! helper#php#PathToClassName(path)
 endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.
-function! helper#php#PathToParentClassName(path)
+function! php#PathToParentClassName(path)
   if s:projection_query("category") ==# "Tests"
     return "PHPUnit_Framework_TestCase"
   endif
@@ -63,27 +67,27 @@ endfunction
 " Derive class name from test class name
 " Example:
 "   HTTP_RequestTest -> HTTP_Request
-function! helper#php#TestClassNameToClassName(className)
+function! php#TestClassNameToClassName(className)
   return substitute(a:className, 'Test$', '', '')
 endfunction
 
 " Derive test class name from class name
 " Example:
 "   HTTP_Request -> HTTP_RequestTest
-function! helper#php#ClassNameToTestClassName(className)
+function! php#ClassNameToTestClassName(className)
   return a:className.'Test'
 endfunction
 
 " Generate a generic description for test case
-function! helper#php#GetTestCaseDescription()
-  let className = helper#php#PathToClassName()
-  let className = helper#php#TestClassNameToClassName(className)
+function! php#GetTestCaseDescription()
+  let className = php#PathToClassName()
+  let className = php#TestClassNameToClassName(className)
 
   return 'Test case for class '.className
 endfunction
 
 " Derive class category from file's path
-function! helper#php#PathToClassCategory(path)
+function! php#PathToClassCategory(path)
   for [segment, category] in s:php_source_segments
     if stridx(a:path, l:segment) != -1
       return l:category
@@ -93,7 +97,7 @@ function! helper#php#PathToClassCategory(path)
 endfunction
 
 " Function text objects
-function! helper#php#FunctionSelect(object_type)
+function! php#FunctionSelect(object_type)
   return s:function_select_{a:object_type}()
 endfunction
 
