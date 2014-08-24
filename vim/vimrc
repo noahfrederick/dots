@@ -447,16 +447,16 @@ nnoremap <Space>/ :CtrlPLine<CR>
 nnoremap <Space>? :CtrlPMRU<CR>
 nnoremap <Space>D :edit README.md<CR>
 nnoremap <Space>E :edit Gemfile<CR>
-nnoremap <Space>G :edit $HOME/.dots/vim/gvimrc<CR>
+nnoremap <Space>G :edit $HOME/src/dots/vim/gvimrc<CR>
 nnoremap <Space>H :edit .htaccess<CR>
 nnoremap <Space>I :edit .gitignore<CR>
-nnoremap <Space>L :edit $HOME/.dots/vim/vimrc.local<CR>
+nnoremap <Space>L :edit $HOME/src/dots/vim/vimrc.local<CR>
 nnoremap <Space>M :edit Makefile<CR>
 nnoremap <Space>R :edit Rakefile<CR>
 nnoremap <Space>U :edit Guardfile<CR>
-nnoremap <Space>V :edit $HOME/.dots/vim/vimrc<CR>
+nnoremap <Space>V :edit $HOME/src/dots/vim/vimrc<CR>
 nnoremap <Space>b :buffer <C-z><S-Tab>
-nnoremap <Space>c :CtrlP $HOME/.dots<CR>
+nnoremap <Space>c :CtrlP $HOME/src/dots<CR>
 nnoremap <Space>d :CtrlPDir<CR>
 nmap     <Space>e :edit %%<C-z><S-Tab>
 nnoremap <Space>f :find *
