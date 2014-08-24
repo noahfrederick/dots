@@ -52,7 +52,6 @@ function! markdown#OpenLine(trigger)
 
   if l:line =~# '^\s*[-\*+>]\+ $'
     if l:normal == 0
-      " throw l:line
       return "\<C-u>\<CR>"
     endif
   elseif l:line =~# '^\s*\d\+\. $'
@@ -72,10 +71,15 @@ function! markdown#OpenLine(trigger)
   elseif l:line =~# '^\s*> '
     return l:out . "> "
   elseif l:line =~# '^\s*\d\+\. '
-    if a:trigger ==# 'O'
-      return "\<Esc>\"tyy\"tPf \"_Dmt:+1,'}normal! \<C-v>\<C-a>\<CR>'tA "
+    if l:normal == 0
+      let l:out = "\<Esc>"
     else
-      return "\<Esc>\"tyy\"tpf \"_Dmt:.,'}normal! \<C-v>\<C-a>\<CR>'tA "
+      let l:out = ""
+    endif
+    if a:trigger ==# 'O'
+      return l:out . "\"tyy\"tPf \"_Dmt:+1,'}normal! \<C-v>\<C-a>\<CR>'tA "
+    else
+      return l:out . "\"tyy\"tpf \"_Dmt:.,'}normal! \<C-v>\<C-a>\<CR>'tA "
     endif
   endif
 
