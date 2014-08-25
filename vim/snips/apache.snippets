@@ -55,3 +55,7 @@ endsnippet
 snippet opt "Options" b
 Options ${1:-Indexes}
 endsnippet
+
+snippet hsts "Set HTTP Strict Transport Security header" b
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+endsnippet
