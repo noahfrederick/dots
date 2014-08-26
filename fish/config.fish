@@ -53,8 +53,7 @@ function gco; git checkout $argv; end
 function gd;  git diff $argv; end
 function gdc; git diff --cached $argv; end
 function gf;  git fetch $argv; end
-function gg;  git g $argv; end
-function ggg; git graph $argv; end
+function gg;  git graph $argv; end
 function gl;  git log $argv; end
 function gp;  git push $argv; end
 function gpu; git pull $argv; end
