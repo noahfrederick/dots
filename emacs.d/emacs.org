@@ -1162,10 +1162,11 @@
          (add-to-list 'org-modules 'org-habit)
          (use-package org-habit
            :config
-           (setq org-habit-show-habits-only-for-today nil))
+           (setq org-habit-show-habits-only-for-today t
+                 org-habit-show-done-always-green t))
 
          (setq org-directory "~/org"
-               org-default-notes-file (expand-file-name "agenda.org" org-directory))
+               org-default-notes-file (expand-file-name "inbox.org" org-directory))
 
          ;; http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html
          (run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
@@ -1173,46 +1174,60 @@
 
          (setq org-capture-templates
                '(("t" "To-do" entry
-                  (file+headline "" "Inbox")
-                  "* TODO %u %^{Task}"
-                  :clock-keep t :kill-buffer t)
+                   (file "")
+                   "* TODO %u %^{Task}"
+                   :clock-keep t :kill-buffer t)
                  ("d" "To-do (done)" entry
-                  (file+headline "" "Inbox")
-                  "* DONE %u %^{Task}"
-                  :clock-keep t :kill-buffer t)
+                   (file "")
+                   "* DONE %u %^{Task}"
+                   :clock-keep t :kill-buffer t)
                  ("u" "Quick to-do" entry
-                  (file+headline "" "Inbox")
-                  "* TODO %^{Task}\n  SCHEDULED: %t"
-                  :clock-keep t :kill-buffer t :immediate-finish t)
+                   (file "")
+                   "* TODO %^{Task}\n  SCHEDULED: %t"
+                   :clock-keep t :kill-buffer t :immediate-finish t)
+                 ("j" "Journal entry" entry
+                   (file+datetree "~/org/diary.org")
+                   "* %?\n  %U\n"
+                   :clock-keep t :kill-buffer t)
                  ("p" "TeamworkPM task" entry
-                  (file+headline "~/org/bigtech.org" "Tasks")
-                  "* TODO %^{TWPMLink}p%^{Task}"
-                  :clock-keep t :clock-in t :immediate-finish t)))
+                   (file+headline "~/org/bigtech.org" "Tasks")
+                   "* TODO %^{TWPMLink}p%^{Task}"
+                   :clock-keep t :clock-in t :immediate-finish t)))
 
          (setq org-goto-interface 'outline-path-completion
                org-log-done 'time
                org-log-into-drawer t
+               org-treat-S-cursor-todo-selection-as-state-change nil ; Cycle through TODO states with S-Left/Right skipping logging
+               org-refile-targets '((org-agenda-files :maxlevel . 2))
+               org-refile-target-verify-function 'nox/verify-refile-target
                org-refile-allow-creating-parent-nodes 'confirm
                org-refile-use-outline-path t
+               org-outline-path-complete-in-steps nil
+               org-completion-use-ido t
+               org-indirect-buffer-display 'current-window
                org-return-follows-link t
                org-catch-invisible-edits 'show-and-error)
 
          (setq org-todo-keywords '((sequence
-                                    "TODO(t)"
-                                    "STARTED(s!)"
-                                    "WAITING(w@/!)"
-                                    "|"
-                                    "CANCELED(c@)"
-                                    "DONE(d!)"
-                                    )))
+                                     "TODO(t)"
+                                     "STARTED(s!)"
+                                     "WAITING(w@/!)"
+                                     "|"
+                                     "CANCELED(c@)"
+                                     "DONE(d!)"
+                                     )))
+
+         (defun nox/verify-refile-target ()
+           "Exclude TODO keywords with a done state from refile targets"
+           (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
          (setq org-hide-leading-stars t)
 
          ;; Code blocks
          (org-babel-do-load-languages
-          'org-babel-load-languages
-          '((emacs-lisp . t)
-            (sh . t)))
+           'org-babel-load-languages
+           '((emacs-lisp . t)
+             (sh . t)))
          (setq org-src-fontify-natively t
                org-src-tab-acts-natively t)))
    #+END_SRC
@@ -1230,10 +1245,12 @@
 
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
-     (setq org-tag-alist '(("@work" . ?W)     ; Contexts
+     (setq org-tag-alist '((:startgroup)
+                           ("@work" . ?W)     ; Contexts
                            ("@home" . ?H)
                            ("@school" . ?S)
                            ("@errand" . ?E)
+                           (:endgroup)
                            ("build" . ?b)     ; Task types
                            ("earn" . ?e)
                            ("learn" . ?l)
@@ -1421,13 +1438,30 @@
     #+BEGIN_SRC emacs-lisp :tangle no
       (eval-after-load 'org-agenda
         '(setq org-agenda-custom-commands
-               `(("d" "Timeline for today" ((agenda "" ))
+               '(("a" "Agenda"
+                  ((agenda "")
+                   (tags-todo "/!STARTED"
+                              ((org-agenda-overriding-header "In Progress")
+                               (org-tags-match-list-sublevels nil)
+                               (org-agenda-sorting-strategy '(priority-down
+                                                              category-keep
+                                                              effort-up))))
+                   (tags "REFILE"
+                         ((org-agenda-overriding-header "Entries to Refile")
+                          (org-tags-match-list-sublevels nil)))
+                   (tags "-REFILE/"
+                         ((org-agenda-overriding-header "Entries to Archive")
+                          (org-agenda-skip-function 'nox/skip-non-archivable-tasks)
+                          (org-tags-match-list-sublevels nil)))))
+                 ("d" "Timeline for today"
+                  ((agenda ""))
                   ((org-agenda-ndays 1)
                    (org-agenda-show-log t)
                    (org-agenda-log-mode-items '(clock closed))
                    (org-agenda-clockreport-mode t)
                    (org-agenda-entry-types '())))
-                 ("w" "Waiting for" todo "WAITING"
+                 ("w" "Waiting for"
+                  todo "WAITING"
                   ((org-agenda-sorting-strategy '(priority-down))))
                  ("U" "Important stuff I don't want to do"
                   ((tags-todo "focus")))
@@ -1437,7 +1471,37 @@
                    (tags-todo "+PRIORITY=\"\"")
                    (tags-todo "+PRIORITY=\"C\""))
                   ((org-agenda-prefix-format "%-10c %-10T %e ")
-                   (org-agenda-sorting-strategy '(priority-down tag-up category-keep effort-down)))))))
+                   (org-agenda-sorting-strategy '(priority-down
+                                                  tag-up
+                                                  category-keep
+                                                  effort-down)))))))
+    #+END_SRC
+
+    #+NAME: org
+    #+BEGIN_SRC emacs-lisp :tangle no
+      ;; Thanks to http://doc.norang.ca/org-mode.html
+      (defun nox/skip-non-archivable-tasks ()
+        "Skip trees that are not available for archiving"
+        (save-restriction
+          (widen)
+          ;; Consider only tasks with done todo headings as archivable candidates
+          (let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
+                (subtree-end (save-excursion (org-end-of-subtree t))))
+            (if (member (org-get-todo-state) org-todo-keywords-1)
+                (if (member (org-get-todo-state) org-done-keywords)
+                    (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
+                           (a-month-ago (* 60 60 24 (+ daynr 1)))
+                           (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+                           (this-month (format-time-string "%Y-%m-" (current-time)))
+                           (subtree-is-current (save-excursion
+                                                 (forward-line 1)
+                                                 (and (< (point) subtree-end)
+                                                      (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+                      (if subtree-is-current
+                          subtree-end ; Has a date in this month or last month, skip it
+                        nil))  ; available to archive
+                  (or subtree-end (point-max)))
+              next-headline))))
     #+END_SRC
 
 *** Automatically Show Agenda
@@ -1519,6 +1583,112 @@
 
          (add-hook 'after-init-hook 'nox/org-mobile-sync-start)
          (add-hook 'kill-emacs-hook 'org-mobile-push)))
+   #+END_SRC
+
+** External Capture
+
+   #+NAME: org
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defun nox/org-capture-todo (note)
+       (let* ((org-file org-default-notes-file)
+              (type 'entry)
+              (headline nil)
+              (template (concat "** " note
+                                "\n   SCHEDULED: %t\n")))
+         (nox/org-capture-entry org-file headline template)))
+
+     (defun nox/org-capture-note (note)
+       (let* ((org-file org-default-notes-file)
+              (type 'entry)
+              (headline nil)
+              (template (concat "** %U " note "\n")))
+         (nox/org-capture-entry org-file headline template)))
+
+     (defun nox/org-capture-entry (org-file headline template)
+       (let* ((type 'entry)
+              (org-capture-entry
+               (if (headline)
+                   `(entry
+                     (file+headline ,org-file ,headline)
+                     ,template :clock-keep t :immediate-finish t)
+                   `(entry
+                     (file ,org-file)
+                     ,template :clock-keep t :immediate-finish t))))
+         (require 'org-capture)
+         (nox/org-capture-noninteractively)))
+
+     ;; See http://stackoverflow.com/questions/22411626/generate-org-mode-objects-programmatically
+     (defun nox/org-capture-noninteractively ()
+       (let* ((orig-buf (current-buffer))
+              (annotation (if (and (boundp 'org-capture-link-is-already-stored)
+                                   org-capture-link-is-already-stored)
+                              (plist-get org-store-link-plist :annotation)
+                            (ignore-errors (org-store-link nil))))
+              (entry org-capture-entry)
+              initial)
+         (setq initial (or org-capture-initial
+                           (and (org-region-active-p)
+                                (buffer-substring (point) (mark)))))
+         (when (stringp initial)
+           (remove-text-properties 0 (length initial) '(read-only t) initial))
+         (when (stringp annotation)
+           (remove-text-properties 0 (length annotation)
+                                   '(read-only t) annotation))
+         (setq org-capture-plist (copy-sequence (nthcdr 3 entry)))
+         (org-capture-put :target (nth 1 entry))
+         (let ((txt (nth 2 entry)) (type (or (nth 0 entry) 'entry)))
+           (when (or (not txt) (and (stringp txt) (not (string-match "\\S-" txt))))
+             (cond
+              ((eq type 'item) (setq txt "- %?"))
+              ((eq type 'checkitem) (setq txt "- [ ] %?"))
+              ((eq type 'table-line) (setq txt "| %? |"))
+              ((member type '(nil entry)) (setq txt "* %?\n  %a"))))
+           (org-capture-put :template txt :type type))
+         (org-capture-get-template)
+         (org-capture-put :original-buffer orig-buf
+                          :original-file (or (buffer-file-name orig-buf)
+                                             (and (featurep 'dired)
+                                                  (car (rassq orig-buf
+                                                              dired-buffers))))
+                          :original-file-nondirectory
+                          (and (buffer-file-name orig-buf)
+                               (file-name-nondirectory
+                                (buffer-file-name orig-buf)))
+                          :annotation annotation
+                          :initial initial
+                          :return-to-wconf (current-window-configuration)
+                          :default-time
+                          (or org-overriding-default-time
+                              (org-current-time)))
+         (org-capture-set-target-location)
+         (condition-case error
+             (org-capture-put :template (org-capture-fill-template))
+           ((error quit)
+            (if (get-buffer "*Capture*") (kill-buffer "*Capture*"))
+            (error "Capture abort: %s" error)))
+         (setq org-capture-clock-keep (org-capture-get :clock-keep))
+         (condition-case error
+             (org-capture-place-template
+              (equal (car (org-capture-get :target)) 'function))
+           ((error quit)
+            (if (and (buffer-base-buffer (current-buffer))
+                     (string-match "\\`CAPTURE-" (buffer-name)))
+                (kill-buffer (current-buffer)))
+            (set-window-configuration (org-capture-get :return-to-wconf))
+            (error "Error.")))
+         (if (and (derived-mode-p 'org-mode)
+                  (org-capture-get :clock-in))
+             (condition-case nil
+                 (progn
+                   (if (org-clock-is-active)
+                       (org-capture-put :interrupted-clock
+                                        (copy-marker org-clock-marker)))
+                   (org-clock-in)
+                   (org-set-local 'org-capture-clock-was-started t))
+               (error
+                "Could not start the clock in this capture buffer")))
+         (if (org-capture-get :immediate-finish)
+             (org-capture-finalize))))
    #+END_SRC
 
 ** TeamworkPM Integration
