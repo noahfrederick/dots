@@ -436,7 +436,7 @@
          (setq evil-default-cursor '("DodgerBlue1" box)
                evil-normal-state-cursor '("white" box)
                evil-emacs-state-cursor '("pink" box)
-               evil-motion-state-cursor '("mint" box)
+               evil-motion-state-cursor '("SeaGreen1" box)
                evil-insert-state-cursor '("white" bar)
                evil-visual-state-cursor '("white" hbar)
                evil-replace-state-cursor '("orange" hbar))
