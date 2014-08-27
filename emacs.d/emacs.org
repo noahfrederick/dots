@@ -791,7 +791,7 @@
 
           (evil-leader/set-key-for-mode 'emacs-lisp-mode "C" 'byte-compile-file)
           (evil-leader/set-key-for-mode 'emacs-lisp-mode "E" 'eval-buffer)
-          (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-defun)
+          (evil-leader/set-key-for-mode 'emacs-lisp-mode "D" 'eval-defun)
           (evil-leader/set-key-for-mode 'emacs-lisp-mode "x" 'eval-last-sexp)
           (evil-leader/set-key-for-mode 'emacs-lisp-mode "X" 'eval-print-last-sexp))
         :mode ("Cask" . emacs-lisp-mode))
