@@ -170,7 +170,7 @@
 
    #+NAME: init-before
    #+BEGIN_SRC emacs-lisp :tangle no
-     (defvar nox/private-file (expand-file-name "private.el" user-emacs-directory))
+     (defvar nox/private-file (expand-file-name "private.el.gpg" user-emacs-directory))
      (load nox/private-file 'noerror)
    #+END_SRC
 
@@ -1843,15 +1843,60 @@
 
 ** ERC
 
-   ERC is an extensible IRC client for Emacs. We keep our
-   configuration in a separate =erc-config.el= file that gets autoloaded
-   upon invoking =nox/erc=.
+   ERC is an extensible IRC client for Emacs.
 
    #+NAME: notifications
    #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package erc-config
-       :commands (nox/erc erc))
+     (use-package erc
+       :commands (nox/erc erc)
+       :config
+       (progn
+         (use-package erc-services
+           :init
+           (erc-services-mode))
+
+         (setq erc-autojoin-channels-alist nox/private/erc-autojoin-channels-alist
+               erc-prompt-for-nickserv-password nil
+               erc-kill-buffer-on-part t
+               erc-kill-queries-on-quit t
+               erc-kill-server-buffer-on-quit t
+               ;; Tracking
+               erc-track-showcount t
+               erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT")
+               erc-hide-list '("JOIN" "PART" "QUIT")
+               erc-keywords nox/private/erc-keywords
+               ;; Cosmetics
+               erc-header-line-format "%t (%n)" ; #channel@server (nick)
+               erc-fill-function 'erc-fill-static
+               erc-fill-static-center 16)
+
+         (setq sauron-watch-patterns erc-keywords
+               sauron-watch-nicks nox/private/sauron-watch-nicks)))
    #+END_SRC
+
+   This function connects to freenode.net passing in a nick and
+   password.
+
+   #+NAME: notifications
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defun nox/erc ()
+       "Connect to IRC with custom settings."
+       (interactive)
+       (erc :server "irc.freenode.net"
+            :port 6667
+            :full-name nox/private/erc-full-name
+            :nick nox/private/erc-nick
+            :password nox/private/erc-password))
+   #+END_SRC
+
+   Use =M-x erc-chanlist RET= to get a nicely sorted channel list in a
+   separate buffer.
+
+   If point is at a channel name (at the # sign), you can join that
+   channel by pressing =j= or =C-c C-j=. Use =s= to sort alphabetically or
+   according to the number of users in a channel. Type =t= to toggle
+   display of details about each channel. Type =q= to hide the window
+   and restore previous window configuration again.
 
 ** Terminal Notifier
 

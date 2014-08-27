@@ -11,5 +11,6 @@ emacs.el
 emacs.html
 newsticker
 private.el
+private.el.gpg
 project-persist
 url
