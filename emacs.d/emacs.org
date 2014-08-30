@@ -301,11 +301,9 @@
          (if after-init-time (sml/setup)
            (add-hook 'after-init-hook 'sml/setup))
 
-         (setq sml/override-theme nil)
-
-         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/www/" ":\\1:") t)
-         (add-to-list 'sml/replacer-regexp-list '("^~/Sites/\\([-_A-Za-z0-9.]+\\)/\\([-_A-Za-z0-9]+\\)/" ":\\2.\\1:") t)
-         (add-to-list 'sml/replacer-regexp-list '("^~/.dots/\\(.*\\)/" ":Config:\\1:") t)
+         (setq sml/override-theme nil
+               sml/shorten-directory nil
+               sml/mode-width 'right)
 
          (add-to-list 'sml/hidden-modes " Projectile")
          (add-to-list 'sml/hidden-modes " EvilOrg")
