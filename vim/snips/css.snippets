@@ -1,0 +1,208 @@
+# css.snippets - Snippets for css file type
+
+#
+# Imports
+#
+snippet import "CSS @import" b
+@import "${1:stylesheet}.css";
+endsnippet
+
+#
+# Selectors
+#
+snippet sel "selector { }" b
+${1} {
+	${0:${VISUAL}}
+}
+endsnippet
+
+snippet font-face "@font-face { }" b
+@font-face {
+	font-family: '${1:name}';
+	src: url('${2:src}');
+}
+endsnippet
+
+snippet media "@media ... { }" b
+@media ${1:all and (max-width: ${2:500}px) and (min-width: ${3:300}px)} {
+	${0:${VISUAL}}
+}
+endsnippet
+
+#
+# Properties
+#
+snippet b "border"
+border: ${1:solid} ${2}px #${3};
+endsnippet
+
+snippet bt "border-top"
+border-top: ${1:solid} ${2}px #${3};
+endsnippet
+
+snippet br "border-right"
+border-right: ${1:solid} ${2}px #${3};
+endsnippet
+
+snippet bb "border-bottom"
+border-bottom: ${1:solid} ${2}px #${3};
+endsnippet
+
+snippet bl "border-left"
+border-left: ${1:solid} ${2}px #${3};
+endsnippet
+
+snippet bg "background"
+background: ${1};
+endsnippet
+
+snippet bgc "background-color"
+background-color: #${1};
+endsnippet
+
+snippet bgp "background-position"
+background-position: ${1};
+endsnippet
+
+snippet bs "box-sizing"
+box-sizing: ${1:border-box};
+endsnippet
+
+snippet ba "border-radius"
+border-radius: ${1}${2:px};
+endsnippet
+
+snippet ba "border-top-left-radius"
+border-top-left-radius: ${1}${2:px};
+endsnippet
+
+snippet ba "border-top-right-radius"
+border-top-right-radius: ${1}${2:px};
+endsnippet
+
+snippet ba "border-bottom-right-radius"
+border-bottom-right-radius: ${1}${2:px};
+endsnippet
+
+snippet ba "border-bottom-left-radius"
+border-bottom-left-radius: ${1}${2:px};
+endsnippet
+
+snippet c "color"
+color: #${1};
+endsnippet
+
+snippet cl "clear"
+clear: ${1:both};
+endsnippet
+
+snippet d "display"
+display: ${1:block};
+endsnippet
+
+snippet fs "font-size"
+font-size: ${1}px;
+endsnippet
+
+snippet fst "font-style"
+font-style: ${1:normal};
+endsnippet
+
+snippet fw "font-weight"
+font-weight: ${1:bold};
+endsnippet
+
+snippet fl "float"
+float: ${1:left};
+endsnippet
+
+snippet h "height"
+height: ${1}${2:px};
+endsnippet
+
+snippet lh "line-height"
+line-height: ${1};
+endsnippet
+
+snippet ls "letter-spacing"
+letter-spacing: ${1}px;
+endsnippet
+
+snippet lst "list-style-type"
+list-style-type: ${1:none};
+endsnippet
+
+snippet m "margin"
+margin: ${1}${2:px};
+endsnippet
+
+snippet mt "margin-top"
+margin-top: ${1}${2:px};
+endsnippet
+
+snippet mb "margin-bottom"
+margin-bottom: ${1}${2:px};
+endsnippet
+
+snippet ml "margin-left"
+margin-left: ${1}${2:px};
+endsnippet
+
+snippet mr "margin-right"
+margin-right: ${1}${2:px};
+endsnippet
+
+snippet mh "max-height"
+max-height: ${1}${2:px};
+endsnippet
+
+snippet mw "max-width"
+max-width: ${1}${2:px};
+endsnippet
+
+snippet of "overflow"
+overflow: ${1:hidden};
+endsnippet
+
+snippet p "padding"
+padding: ${1}${2:px};
+endsnippet
+
+snippet pt "padding-top"
+padding-top: ${1}${2:px};
+endsnippet
+
+snippet pb "padding-bottom"
+padding-bottom: ${1}${2:px};
+endsnippet
+
+snippet pl "padding-left"
+padding-left: ${1}${2:px};
+endsnippet
+
+snippet pr "padding-right"
+padding-right: ${1}${2:px};
+endsnippet
+
+snippet pos "position"
+position: ${1:relative};
+endsnippet
+
+snippet ta "text-align"
+text-align: ${1:center};
+endsnippet
+
+snippet td "text-decoration"
+text-decoration: ${1:none};
+endsnippet
+
+snippet w "width"
+width: ${1}${2:px};
+endsnippet
+
+#
+# Misc.
+#
+snippet rgba "rgba(...)"
+rgba(${1:255}, $1, $1, 0.${2:5})
+endsnippet
