@@ -124,6 +124,7 @@
    #+NAME: init-after
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package server
+       :if window-system
        :init
        (unless (server-running-p)
          (server-start)))
