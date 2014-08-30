@@ -193,9 +193,6 @@ if has("autocmd")
     " current item highlight
     autocmd FileType qf setlocal wrap nocursorline
 
-    " Never show line numbers in help buffers
-    autocmd FileType help set nonumber
-
     set cursorline
 
     " Only highlight cursor line in active buffer window
