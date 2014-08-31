@@ -1,0 +1,21 @@
+# puppet.snippets - Snippets for puppet file type
+
+snippet _skel "Class skeleton" b
+# == Class: `!v puppet#PathToClassName()`
+#
+class `!v puppet#PathToClassName()` {
+	${0:${VISUAL}}
+}
+endsnippet
+
+snippet project "boxen::project" b
+boxen::project { '${1:project-slug}':
+	source => '${2:user/repo}'
+}
+endsnippet
+
+snippet website "project_helper::website" b
+project_helper::website { '${1:project-slug}':
+	domain => '${2:www.example.com}'
+}
+endsnippet

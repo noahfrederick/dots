@@ -40,19 +40,25 @@ function! php#Open()
   return join(parts)
 endfunction
 
+""
 " Infer the PSR-0 class name from file's path.
+"
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
-function! php#PathToClassName(path)
-  let l:path = a:path
-  for l:prefix in s:php_source_prefixes
-    let l:pos = stridx(l:path, l:prefix)
-    if l:pos != -1
-        let l:path = strpart(l:path, l:pos + strlen(l:prefix))
-        break
-    endif
-  endfor
-  return substitute(fnamemodify(l:path, ":r"), '/', '_', 'g')
+function! php#PathToClassName(...)
+  if a:0
+    let path = a:1
+  else
+    let path = expand('%:p')
+  endif
+
+  let path = util#path#RemovePrefix(s:php_source_prefixes, path)
+
+  if suffix ==# path
+    let suffix = fnamemodify(path, ':t')
+  endif
+
+  return substitute(fnamemodify(suffix, ':r'), '/', '_', 'g')
 endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.

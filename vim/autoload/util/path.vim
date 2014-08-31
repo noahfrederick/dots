@@ -58,4 +58,25 @@ function! util#path#FollowSymlink()
   edit
 endfunction
 
+""
+" Remove {prefix} and everything before it from {path}, returning the result
+function! util#path#RemovePrefix(prefix, path)
+  if type(a:prefix) ==# type([])
+    let prefixes = a:prefix
+  else
+    let prefixes = [a:prefix]
+  endif
+
+  let path = '/' . a:path
+
+  for prefix in prefixes
+    let pos = stridx(path, prefix)
+    if pos != -1
+      return strpart(path, pos + strlen(prefix))
+    endif
+  endfor
+
+  return a:path
+endfunction
+
 " vim:set et sw=2:
