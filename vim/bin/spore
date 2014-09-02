@@ -156,7 +156,7 @@ git_clone() {
 
 # Perform a git submodule update --init if target directory exists
 git_submodule_init() {
-	maybe "cd $(bundle_subdir $1) && git submodule update --init"
+	maybe "cd $(bundle_subdir $1) && git submodule update --init --recursive"
 }
 
 # Perform a git pull if target directory exists
