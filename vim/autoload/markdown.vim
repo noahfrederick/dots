@@ -41,14 +41,12 @@ function! markdown#OpenLine(trigger)
   let l:line = getline('.')
 
   if a:trigger !=? 'o'
-    " When triggering from insert mode, use o instead to preserve indent
-    let l:out = "\<Esc>o"
     let l:normal = 0
   else
-    " Otherwise we can use the original command
-    let l:out = a:trigger
     let l:normal = 1
   endif
+
+  let l:out = a:trigger
 
   if l:line =~# '^\s*[-\*+>]\+ $'
     if l:normal == 0

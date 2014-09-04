@@ -5,6 +5,9 @@ describe 'Markdown enhancement'
   before
     new
     set filetype=markdown
+    " Required for mapping's use of <C-u>
+    set backspace=2
+    set autoindent
     runtime after/ftplugin/markdown.vim
   end
 
@@ -17,6 +20,19 @@ describe 'Markdown enhancement'
       execute "normal i- Item 1\<CR>Item 2"
       Expect getline(1) ==# '- Item 1'
       Expect getline(2) ==# '- Item 2'
+    end
+
+    it 'preserves the indent when continuing a list with <CR>'
+      execute "normal i  - Item 1\<CR>Item 2"
+      Expect getline(1) ==# '  - Item 1'
+      Expect getline(2) ==# '  - Item 2'
+    end
+
+    it 'breaks the line after <CR>'
+      execute "normal i- Item 1xItem 2"
+      execute "normal ggfxi\<CR>"
+      Expect getline(1) ==# '- Item 1'
+      Expect getline(2) ==# '- xItem 2'
     end
 
     it 'continues a list with - after o'
@@ -68,10 +84,8 @@ describe 'Markdown enhancement'
     end
 
     it 'discontinues a list after a blank item'
-      " Required for mapping's use of <C-u>
-      set backspace=2
       " This test is overly fussy for some reason, and variations fail in
-      " circumstatnces where the mapping works correctly when used
+      " circumstances where the mapping works correctly when used
       " interactively.
       0put = '- '
       execute "normal A\<CR>Outside"
