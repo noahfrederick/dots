@@ -42,6 +42,7 @@ hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp
 hi Directory           guifg=#93c3d6
 hi Title               guifg=#e9d9b3  gui=bold
 hi SpecialKey          guifg=#1c6068
+hi Conceal             guifg=#539dbd  guibg=NONE
 hi ErrorMsg            guifg=#ffffff  guibg=#ff0055
 hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
@@ -66,7 +67,6 @@ hi! link ModeMsg       MoreMsg
 hi! link TablineSel    StatusLine
 hi! link Tabline       StatusLineNC
 hi! link TabLineFill   Tabline
-hi! link Conceal       NonText
 
 "}}}
 " Generic syntax {{{
