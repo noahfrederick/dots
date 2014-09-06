@@ -27,7 +27,7 @@ set -x BOXEN_DATA_DIR /opt/boxen/data
 set -x BOXEN_ENV_DIR /opt/boxen/env.d
 set -x BOXEN_LOG_DIR /opt/boxen/log
 set -x BOXEN_SOCKET_DIR /opt/boxen/data/project-sockets
-set -x BOXEN_SRC_DIR /Users/noah/src
+set -x BOXEN_SRC_DIR "$HOME/src"
 
 # Expose GitHub credentials
 
@@ -58,4 +58,4 @@ prepend_to_path bin
 
 set -x BOXEN_MYSQL_PORT 13306
 set -x BOXEN_MYSQL_SOCKET /opt/boxen/data/mysql/socket
-set -x BOXEN_MYSQL_URL "mysql://noah@localhost:13306/"
+set -x BOXEN_MYSQL_URL "mysql://$USER@localhost:13306/"
