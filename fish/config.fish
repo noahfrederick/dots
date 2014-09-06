@@ -1,7 +1,6 @@
 #
 # PATH
 #
-prepend_to_path $HOME/.cask/bin
 prepend_to_path $HOME/bin
 
 #
