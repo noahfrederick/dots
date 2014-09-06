@@ -13,7 +13,7 @@ prepend_to_path $BOXEN_HOME/homebrew/bin
 
 # Add homebrew'd stuff to the manpath.
 
-set -x MANPATH $BOXEN_HOME/homebrew/share/man $MANPATH
+prepend_to_manpath $BOXEN_HOME/homebrew/share/man
 
 # Add any binaries specific to Boxen to the path.
 
