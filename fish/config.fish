@@ -1,6 +1,7 @@
 #
 # PATH
 #
+prepend_to_path $HOME/.composer/vendor/bin
 prepend_to_path $HOME/bin
 
 #
