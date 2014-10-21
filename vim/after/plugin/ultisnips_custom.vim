@@ -2,6 +2,7 @@
 " Maintainer:   Noah Frederick
 
 if exists("g:loaded_ultisnips_custom") || !exists("g:did_UltiSnips_plugin") || exists(":SkelEdit")
+      \ || !exists("python") && !exists("python3")
   finish
 endif
 let g:loaded_ultisnips_custom = 1
