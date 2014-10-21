@@ -56,3 +56,4 @@ bundle tpope/vim-scriptease
 bundle dag/vim-fish
 bundle kana/vim-vspec
 bundle sheerun/vim-polyglot
+bundle vim-scripts/smarty-syntax
