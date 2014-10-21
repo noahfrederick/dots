@@ -52,7 +52,7 @@ function! php#PathToClassName(...)
     let path = expand('%:p')
   endif
 
-  let path = util#path#RemovePrefix(s:php_source_prefixes, path)
+  let suffix = util#path#RemovePrefix(s:php_source_prefixes, path)
 
   if suffix ==# path
     let suffix = fnamemodify(path, ':t')
