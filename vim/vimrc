@@ -189,15 +189,11 @@ if has("autocmd")
     autocmd FileType html,liquid,markdown,php,xhtml,xml call util#filetype#MakeXMLMaps()
     autocmd FileType html,liquid,xhtml,xml setlocal textwidth=120
 
-    " Do not highlight current line in quickfix window as it overlaps the
-    " current item highlight
-    autocmd FileType qf setlocal wrap nocursorline
-
     set cursorline
 
     " Only highlight cursor line in active buffer window
     autocmd WinLeave * set nocursorline
-    autocmd WinEnter * if &filetype == 'qf' | set nocursorline | else | set cursorline | endif
+    autocmd WinEnter * if &filetype != 'qf' | set cursorline | endif
 
     highlight! link TrailingWhitespace Error
     highlight! link MixedWhitespace TrailingWhitespace
