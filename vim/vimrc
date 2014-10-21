@@ -189,6 +189,9 @@ if has("autocmd")
     autocmd FileType html,liquid,markdown,php,xhtml,xml call util#filetype#MakeXMLMaps()
     autocmd FileType html,liquid,xhtml,xml setlocal textwidth=120
 
+    autocmd FileType css,html,javascript,json
+          \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call util#format#JsBeautify()
+
     set cursorline
 
     " Only highlight cursor line in active buffer window
