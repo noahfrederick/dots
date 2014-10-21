@@ -258,14 +258,15 @@ function! s:try(cmd, default)
       execute join(['normal!', a:default])
     endif
   else
-    execute join(['normal!', v:count, a:default], '')
+    execute join(['normal! ', v:count, a:default], '')
   endif
 endfunction
 
 " Try a custom command with fallback window command
 function! s:try_wincmd(cmd, default)
-  if exists(':' . a:cmd) && !v:count
-    execute a:cmd
+  if exists(':' . a:cmd)
+    let cmd = v:count ? join([a:cmd, v:count]) : a:cmd
+    execute cmd
   else
     execute join([v:count, 'wincmd', a:default])
   endif
@@ -314,7 +315,7 @@ nnoremap <expr> <Leader>k util#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
-  if &keywordprg ==# "man" && exists(":Dash")
+  if &keywordprg =~# "^man" && exists(":Dash")
     return a:cmd
   endif
   return "K"
