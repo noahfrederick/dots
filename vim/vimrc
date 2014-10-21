@@ -221,12 +221,12 @@ command! -bang -nargs=? -complete=buffer Bufonly
 command! -nargs=0 -bar FollowSymlink call util#path#FollowSymlink()
 
 if exists("$NOTES")
-  function! s:CompleteNote(A, L, P)
+  function! s:complete_note(A, L, P)
     return util#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
   endfunction
   command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=1 -bang -complete=customlist,<SID>CompleteNote Note
+  command! -nargs=1 -bang -complete=customlist,<SID>complete_note Note
         \ execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
 endif
 
