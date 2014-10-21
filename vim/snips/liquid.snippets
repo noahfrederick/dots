@@ -1,0 +1,31 @@
+# liquid.snippets - Snippets for liquid file type
+
+snippet v "{{ }}"
+{{ ${0:${VISUAL}} }}
+endsnippet
+
+snippet b "{% %}" b
+{% ${0:${VISUAL}} %}
+endsnippet
+
+snippet highlight "{% highlight %}" b
+{% highlight ${1:lang} ${2:linenos} %}
+${0:${VISUAL}}
+{% endhighlight %}
+endsnippet
+
+snippet if "{% if %}" b
+{% if ${1} %}
+${0:${VISUAL}}
+{% endif %}
+endsnippet
+
+snippet for "{% for %}" b
+{% for ${1:item} in ${2:collection} %}
+${0:${VISUAL}}
+{% endfor %}
+endsnippet
+
+snippet capture "{% capture %}" b
+{% capture ${1:var} %}${0:${VISUAL}}{% endcapture %}
+endsnippet

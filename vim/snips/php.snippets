@@ -154,42 +154,42 @@ endsnippet
 snippet if "if (condition) { }" b
 if (${1:/* condition */})
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 endsnippet
 
 snippet else "else { }" b
 else
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 endsnippet
 
 snippet for "for" b
 for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++})
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 endsnippet
 
 snippet foreach "foreach" b
 foreach ($${1:variable} as $${2:key} => $${3:value})
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 endsnippet
 
 snippet while "while (condition) { }" b
 while (${1:/* condition */})
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 endsnippet
 
 snippet do "do" b
 do
 {
-	${VISUAL}$0
+	${0:${VISUAL}}
 }
 while (${1:/* condition */});
 endsnippet
