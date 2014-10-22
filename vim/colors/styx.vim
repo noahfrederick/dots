@@ -291,7 +291,7 @@ hi! link lessClass               cssClassName
 hi! link CSVColumnOdd         Normal
 hi! link CSVColumnEven        Comment
 hi! link CSVColumnHeaderOdd   Title
-hi! link CSVColumnHeaderEven  CSVColumnHeaderOdd
+hi CSVColumnHeaderEven        guifg=#b7aa80 gui=bold
 
 "}}}
 " vim: fdm=marker:sw=2:sts=2:et
