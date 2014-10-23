@@ -623,6 +623,28 @@
        (clipboard-kill-ring-save (point-min) (point-max)))
    #+END_SRC
 
+   The following function removes the file associated with the current
+   buffer from disk. We also define an Evil ex command ~:Remove~ that
+   works like that from [[https://github.com/tpope/vim-eunuch][eunuch.vim]].
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defun nox/delete-current-file ()
+       "Delete the file associated with the current buffer and close the
+     buffer. When no file is associated with the buffer, the buffer is
+     closed only."
+       (interactive)
+       (let ((current (buffer-file-name)))
+         (kill-buffer (current-buffer))
+         (when current
+           (delete-file current))))
+
+
+     (eval-after-load 'evil
+       '(progn
+          (evil-ex-define-cmd "R[emove]" 'nox/delete-current-file)))
+   #+END_SRC
+
 ** Scrolling
 
    #+NAME: editing
