@@ -303,13 +303,7 @@
 
          (setq sml/override-theme nil
                sml/shorten-directory nil
-               sml/mode-width 'right)
-
-         (add-to-list 'sml/hidden-modes " Projectile")
-         (add-to-list 'sml/hidden-modes " EvilOrg")
-         (add-to-list 'sml/hidden-modes " Undo-Tree")
-         (add-to-list 'sml/hidden-modes " Guide")
-         (add-to-list 'sml/hidden-modes " yas")))
+               sml/mode-width 'right)))
    #+END_SRC
 
 ** Popwin
