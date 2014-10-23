@@ -517,28 +517,6 @@
        :init (evil-define-key 'normal global-map "\\" 'evil-execute-in-god-state))
    #+END_SRC
 
-** Windows
-
-   Resizing windows in Emacs isn't very intuitive. Rather than
-   expanding or contracting the current window, it makes more sense to
-   conceptualize moving the border between windows, which [[https://github.com/ramnes/move-border][move-border]]
-   accomplishes.
-
-   #+NAME: evil
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package move-border
-       :commands (move-border-left
-                  move-border-right
-                  move-border-up
-                  move-border-down)
-       :init
-       (progn
-         (define-key evil-normal-state-map (kbd "<left>") 'move-border-left)
-         (define-key evil-normal-state-map (kbd "<right>") 'move-border-right)
-         (define-key evil-normal-state-map (kbd "<up>") 'move-border-up)
-         (define-key evil-normal-state-map (kbd "<down>") 'move-border-down)))
-   #+END_SRC
-
 * Editing
 
 ** Text Encodings
@@ -638,6 +616,28 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (setq scroll-conservatively 999        ; Never recenter the window on the cursor
            mouse-wheel-scroll-amount '(1))  ; Slower mouse wheel/trackpad scrolling
+   #+END_SRC
+
+** Windows
+
+   Resizing windows in Emacs isn't very intuitive. Rather than
+   expanding or contracting the current window, it makes more sense to
+   conceptualize moving the border between windows, which [[https://github.com/ramnes/move-border][move-border]]
+   accomplishes.
+
+   #+NAME: evil
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package move-border
+       :commands (move-border-left
+                  move-border-right
+                  move-border-up
+                  move-border-down)
+       :init
+       (progn
+         (define-key evil-normal-state-map (kbd "<left>") 'move-border-left)
+         (define-key evil-normal-state-map (kbd "<right>") 'move-border-right)
+         (define-key evil-normal-state-map (kbd "<up>") 'move-border-up)
+         (define-key evil-normal-state-map (kbd "<down>") 'move-border-down)))
    #+END_SRC
 
 ** Whitespace and Formatting
