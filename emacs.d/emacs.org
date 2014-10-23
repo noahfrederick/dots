@@ -408,6 +408,7 @@
                "T" 'nox/write-timestamped-current-file-copy
                "u" 'undo-tree-visualize
                "w" 'whitespace-cleanup
+               "y" 'nox/yank-buffer
                ;; Option toggle
                "o l" 'whitespace-mode
                "o n" 'linum-mode
@@ -608,6 +609,17 @@
      (defun nox/write-timestamped-current-file-copy ()
        (interactive)
        (nox/write-timestamped-file-copy (buffer-file-name)))
+   #+END_SRC
+
+   Copying the entire buffer contents to the clipboard is a fairly
+   common need when working with other graphical programs.
+
+   #+NAME: editing
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (defun nox/yank-buffer ()
+       "Copy entire buffer to clipboard."
+       (interactive)
+       (clipboard-kill-ring-save (point-min) (point-max)))
    #+END_SRC
 
 ** Scrolling
