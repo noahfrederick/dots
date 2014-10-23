@@ -410,6 +410,7 @@
                "w" 'whitespace-cleanup
                "y" 'nox/yank-buffer
                "z" 'nox/narrow-or-widen
+               ;; Option toggle
                "o l" 'whitespace-mode
                "o n" 'linum-mode
                "o q" 'auto-fill-mode
@@ -1054,7 +1055,7 @@
 ** Helm
 
    Helm provides an interface for finding and acting on items in a
-   list, such as file, buffers, and so on.
+   list, such as files, buffers, and so on.
 
    #+NAME: navigation-completion
    #+BEGIN_SRC emacs-lisp :tangle no
