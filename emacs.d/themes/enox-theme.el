@@ -118,6 +118,7 @@ Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
    ;; Magit
    `(magit-item-highlight ((,class (:background ,nox-bg-subtle))))
    `(magit-log-sha1 ((,class (:foreground ,nox-special))))
+   `(magit-log-author ((,class (:foreground ,nox-yellow))))
    `(diff-added ((,class (:background ,nox-green :foreground ,nox-bg-dark))))
    `(diff-removed ((,class (:background ,nox-red :foreground ,nox-em))))
    `(diff-context ((,class (:foreground ,nox-comment))))
