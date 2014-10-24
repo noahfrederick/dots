@@ -381,8 +381,7 @@
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package evil
        :pre-load
-       (setq evil-want-C-u-scroll t
-             evil-want-C-w-in-emacs-state t)
+       (setq evil-want-C-w-in-emacs-state t)
        :init
        (progn
          (use-package evil-leader
@@ -449,6 +448,12 @@
          (define-key evil-motion-state-map "j" 'evil-next-visual-line)
          (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
          (define-key evil-normal-state-map "Y" (kbd "y$"))
+
+         ;; Experimental alternative to C-d, C-u
+         (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-up)
+         (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-down)
+         (define-key evil-motion-state-map (kbd "C-k") 'evil-scroll-up)
+         (define-key evil-motion-state-map (kbd "C-j") 'evil-scroll-down)
 
          ;; Commentary.vim
          (use-package evil-operator-comment
