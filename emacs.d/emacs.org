@@ -352,7 +352,9 @@
      (use-package rainbow-mode
        :commands rainbow-turn-on
        :init
-       (add-hook 'prog-mode-hook 'rainbow-turn-on))
+       (add-hook 'prog-mode-hook 'rainbow-turn-on)
+       :config
+       (setq rainbow-x-colors nil))
    #+END_SRC
 
 * Key Bindings
