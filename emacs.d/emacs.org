@@ -912,6 +912,7 @@
     #+BEGIN_SRC emacs-lisp :tangle no
       (use-package web-mode
         :mode (("\\.html?\\'" . web-mode)
+               ("\\.php\\'" . web-mode)
                ("\\.css\\'" . web-mode)
                ("\\.mustache\\'" . web-mode)
                ("\\.erb\\'" . web-mode))
