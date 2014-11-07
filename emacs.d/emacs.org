@@ -1611,6 +1611,7 @@
    #+NAME: org
    #+BEGIN_SRC emacs-lisp :tangle no
      (use-package org-mobile
+       :disabled t
        :init
        (progn
          ;; Set to the name of the file where new notes will be stored
