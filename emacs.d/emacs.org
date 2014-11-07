@@ -1565,31 +1565,6 @@
               next-headline))))
     #+END_SRC
 
-*** Automatically Show Agenda
-
-    I tend not to consult the agenda often enough, so let's show it
-    after Emacs is idle for a while.
-
-    #+NAME: org
-    #+BEGIN_SRC emacs-lisp :tangle no
-      (defun nox/jump-to-org-agenda ()
-        (interactive)
-        (let ((buf (get-buffer "*Org Agenda*"))
-              wind)
-          (if buf
-              (if (setq wind (get-buffer-window buf))
-                  (select-window wind)
-                (if (called-interactively-p)
-                    (progn
-                      (select-window (display-buffer buf t t))
-                      (org-fit-window-to-buffer))
-                  (with-selected-window (display-buffer buf)
-                    (org-fit-window-to-buffer))))
-            (call-interactively 'org-agenda-list))))
-
-      (run-with-idle-timer 2400 t 'nox/jump-to-org-agenda)
-    #+END_SRC
-
 ** Appointments
 
    Use the =appt= package for displaying appointment alerts. The
