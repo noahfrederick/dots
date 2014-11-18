@@ -280,7 +280,7 @@
      ;; Never require full word answers
      (defalias 'yes-or-no-p 'y-or-n-p)
 
-     (setq linum-format "%4d ")
+     (setq linum-format "%5d ")
      (add-hook 'prog-mode-hook 'linum-mode)
    #+END_SRC
 
