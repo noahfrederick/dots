@@ -198,6 +198,8 @@ if has("autocmd")
     autocmd WinLeave * set nocursorline
     autocmd WinEnter * if &filetype != 'qf' | set cursorline | endif
 
+    autocmd QuickFixCmdPost *grep* cwindow
+
     highlight! link TrailingWhitespace Error
     highlight! link MixedWhitespace TrailingWhitespace
 
