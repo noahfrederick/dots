@@ -29,6 +29,14 @@ snippet media "@media ... { }" b
 }
 endsnippet
 
+snippet clearfix ".clearfix ... { }" b
+.clearfix::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+endsnippet
+
 #
 # Properties
 #
