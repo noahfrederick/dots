@@ -1247,7 +1247,11 @@
                    (file "")
                    "* TODO %^{Task}\n  SCHEDULED: %t"
                    :clock-keep t :kill-buffer t :immediate-finish t)
-                 ("j" "Journal entry" entry
+                 ("j" "Journal entry (prompt for date)" entry
+                   (file+datetree+prompt "~/org/diary.org")
+                   "* %?\n  %U\n"
+                   :clock-keep t :kill-buffer t)
+                 ("J" "Journal entry" entry
                    (file+datetree "~/org/diary.org")
                    "* %?\n  %U\n"
                    :clock-keep t :kill-buffer t)
@@ -1426,8 +1430,10 @@
      ;; Org mode - http://orgmode.org/guide/Activation.html#Activation
      (evil-leader/set-key
        "r a" 'org-agenda
+       "a"   'org-agenda
        "r b" 'org-iswitchb
        "r c" 'org-capture
+       "c"   'org-capture
        "r l" 'org-store-link)
 
      (eval-after-load 'org-agenda
@@ -1500,7 +1506,7 @@
     #+BEGIN_SRC emacs-lisp :tangle no
       (eval-after-load 'org-agenda
         '(setq org-agenda-custom-commands
-               '(("a" "Agenda"
+               '(("r" "Agenda"
                   ((agenda "")
                    (tags-todo "/!STARTED"
                               ((org-agenda-overriding-header "In Progress")
