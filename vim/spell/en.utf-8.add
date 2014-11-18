@@ -5,6 +5,8 @@ CMS
 CSS
 CUNY
 DHCP
+DVD
+DVDs
 GitHub
 IP
 JSON
@@ -30,6 +32,7 @@ VirtualBox
 WordPress
 YAML
 analyses
+arugula
 blog
 checkbox
 configurability
@@ -49,6 +52,7 @@ perceptrons
 phpBB
 precompiler
 precompilers
+prerelease
 refactor
 spellchecking
 symlink
