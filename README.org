@@ -32,9 +32,6 @@ On OS X, install Vim with Homebrew:
 
 Ruby and Python support is compiled in by default as of this writing.
 
-Plug-ins are managed with a CLI utility called [[vim/bin/README.md][spore]] in conjunction
-with [[https://github.com/tpope/vim-pathogen][pathogen.vim]].
-
 ** Emacs
 
 [[http://www.gnu.org/software/emacs/][Emacs]] is a free (liber) cross-platform text editor, mail client, news

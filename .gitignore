@@ -1,6 +1,7 @@
 fish/completions/*.fish
 vim/.netrwhist
 vim/bundle/*
+vim/plugged/*
 vim/flavors/*
 vim/.vim-flavor/*
 VimFlavor.lock
