@@ -1,23 +1,12 @@
-" File: after/plugin/ctrlp.vim
-" Description: Custom statusline
+" autoload/util/ctrlp.vim - CtrlP helpers
+" Maintainer:   Noah Frederick
 
-" Make sure ctrlp is installed and loaded
-if !exists("g:loaded_ctrlp") || ( exists("g:loaded_ctrlp") && !g:loaded_ctrlp )
-  finish
-endif
-
-" ctrlp only looks for this
-let g:ctrlp_status_func = {
-  \ "main": "CtrlP_Statusline_1",
-  \ "prog": "CtrlP_Statusline_2",
-  \ }
-
-" CtrlP_Statusline_1 and CtrlP_Statusline_2 both must return a full statusline
+" ctrlp#Statusline1 and ctrlp#Statusline2 both must return a full statusline
 " and are accessible globally.
 
 " Arguments: focus, byfname, s:regexp, prv, item, nxt, marked
 "            a:1    a:2      a:3       a:4  a:5   a:6  a:7
-function! CtrlP_Statusline_1(...)
+function! util#ctrlp#Statusline1(...)
   let usercolor = "%4*"
   if a:5 == "buffers"
     let usercolor = "%5*"
@@ -47,6 +36,6 @@ endfunction
 
 " Argument: len
 "           a:1
-function! CtrlP_Statusline_2(...)
+function! util#ctrlp#Statusline2(...)
   return " ".getcwd()." %= ".a:1." "
 endfunction

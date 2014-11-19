@@ -548,6 +548,10 @@ let g:ctrlp_abbrev = {
       \   { 'pattern': '^t ', 'expanded': 'test/'       },
       \   { 'pattern': '^v ', 'expanded': 'view/'       },
       \ ]}
+let g:ctrlp_status_func = {
+      \   "main": "util#ctrlp#Statusline1",
+      \   "prog": "util#ctrlp#Statusline2",
+      \ }
 
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
