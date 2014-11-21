@@ -364,7 +364,7 @@ nnoremap <expr> <Leader>k util#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
-  if &keywordprg =~# "^man" && exists(":Dash")
+  if &keywordprg =~# "^man"
     return a:cmd
   endif
   return "K"
