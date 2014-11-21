@@ -348,6 +348,13 @@ inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
       \ "%a %b %d %T %Z %Y"
       \ ], 'strftime(v:val)')), 0)<CR>
 
+" <C-y> and <C-e> insert to end of word instead of single characters
+" (Note that this clobbers <C-y>'s function when the completion popup is
+" visible--this is by design, as it is cumbersome in combination with YCM's
+" autocompletion)
+inoremap <expr> <C-y> matchstr(getline(line('.') - 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+
 " :help dispatch-commands
 nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
