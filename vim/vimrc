@@ -298,6 +298,9 @@ nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 " Expand %% to directory of current file in command-line mode
 cnoremap %% <C-r>=fnameescape(expand("%:~:h"))<CR>/
 
+" Easier mapping to insert word under cursor when searching
+cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
+
 " Use character under cursor as first character in digraph and replace it
 " Ex.:
 "   Pressing <Leader>k- on the 'e' in
