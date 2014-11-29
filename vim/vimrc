@@ -61,6 +61,7 @@ if has("vim_starting")
   Plug 'dbakker/vim-lint',               { 'for': 'vim' }
   Plug 'dbakker/vim-sparkup',            { 'for': 'html' }
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
+  Plug 'shawncplus/phpcomplete.vim',     { 'for': 'php' }
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-rake'
