@@ -1188,6 +1188,7 @@
 
          ;; Sequences of interest globally
          (setq guide-key/guide-key-sequence '("SPC"     ; Evil leader key
+                                              "C-h"     ; Help commands
                                               "C-x r"   ; Register commands
                                               "C-x 4"   ; Other window commands
                                               "C-x 5"   ; Other frame commands
@@ -2050,3 +2051,7 @@
     couldn't handle half the feeds for some reason. =elfeed.el= was
     overly complicated and also couldn't handle some feeds. Gnus is
     ridiculous.
+  - Port =<Space>= maps from Vim. May require a macro, which would
+    take a hash of uppercase letters and file names and map them to
+    ~(locate-dominating-file FILE NAME)~.
+  - Sleuth.vim ported to Emacs.
