@@ -51,6 +51,14 @@ rbenv rehash 2>/dev/null
 
 set -x BUNDLE_JOBS 4
 
+# Add NodeJS stuff to the path.
+
+set -x NODENV_ROOT $BOXEN_HOME/nodenv
+prepend_to_path $NODENV_ROOT/bin
+# Based on the output of "nodenv init -":
+prepend_to_path $NODENV_ROOT/shims
+nodenv rehash 2>/dev/null
+
 # Add ./bin to the path. This happens after initialization to make
 # sure local stubs take precedence over stuff like rbenv.
 
