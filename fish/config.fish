@@ -28,7 +28,6 @@ set -gx EDITOR vim
 # COLORS
 #
 set -gx CLICOLOR 1
-set -gx GREP_OPTIONS '--color=auto'
 
 set -g fish_color_command     green   --bold
 set -g fish_color_cwd         yellow
