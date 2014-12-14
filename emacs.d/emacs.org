@@ -1884,7 +1884,40 @@
        (nox/invoice-create (buffer-file-name)))
    #+END_SRC
 
-* Notifications and ERC
+* Communications
+
+** Email
+
+   mu4e ("mu for Emacs") is an elisp mail client. It's more
+   minimalistic than the popular Gnus, but includes features I need:
+
+   - Email threads
+   - Flexible search
+   - Integration with Org mode
+
+   Since I haven't quite figured out a suitable setup, this package is
+   left disabled for now.
+
+   #+NAME: notifications
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (use-package mu4e
+       :disabled t
+       :pre-load
+       (add-to-list 'load-path "~/src/mu/mu4e")
+       :config
+       (progn
+         (setq mu4e-sent-folder "/Sent"
+               mu4e-drafts-folder "/Drafts"
+               mu4e-trash-folder "/Trash"
+               mu4e-refile-folder "/Archive"
+               mu4e-get-mail-command "offlineimap -o"
+               mu4e-attachment-dir "~/Downloads"
+               mu4e-update-interval 300 ; 5 minutes
+               mu4e-headers-include-related t ; Thread messages
+               mail-user-agent 'mu4e-user-agent))) ; Make mu4e default mail client
+   #+END_SRC
+
+   Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
 
 ** ERC
 
