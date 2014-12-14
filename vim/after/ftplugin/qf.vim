@@ -4,6 +4,8 @@
 " current item highlight
 setlocal wrap nocursorline
 
+setlocal nobuflisted
+
 nnoremap <buffer> q :quit<CR>
 
 " vim: fdm=marker:sw=2:sts=2:et
