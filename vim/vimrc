@@ -20,11 +20,11 @@ if has("vim_starting")
   Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
-  Plug 'Raimondi/delimitMate'
-  Plug 'SirVer/ultisnips'
-  Plug 'Valloric/YouCompleteMe',         { 'do': './install.sh' }
+  Plug 'Raimondi/delimitMate',           { 'on': [] }
+  Plug 'SirVer/ultisnips',               { 'on': [] }
+  Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'airblade/vim-gitgutter'
-  Plug 'ervandew/supertab'
+  Plug 'ervandew/supertab',              { 'on': [] }
   Plug 'godlygeek/tabular'
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'kien/ctrlp.vim',                 { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPBookmarkDir', 'CtrlPBookmarkDirAdd', 'CtrlPTag', 'CtrlPLine', 'CtrlPMRU', 'CtrlPDir', 'CtrlPMixed', 'CtrlPRTS'] }
@@ -75,6 +75,23 @@ if has("vim_starting")
   Plug 'vim-scripts/smarty-syntax'
 
   call plug#end()
+
+  " Load certain plug-ins on InsertEnter
+  " (see https://github.com/junegunn/vim-plug/issues/48#issuecomment-67436470)
+  augroup insert_mode_plugins
+    autocmd!
+    autocmd InsertEnter * call s:load_insert_mode_plugins()
+  augroup END
+
+  function! s:load_insert_mode_plugins()
+    call plug#load('supertab')
+    call plug#load('ultisnips')
+    call plug#load('delimitMate')
+    call plug#load('YouCompleteMe')
+    call youcompleteme#Enable()
+
+    autocmd! insert_mode_plugins
+  endfunction
 
   if &t_Co >= 16
     silent! colorscheme noctu   " Set color scheme for 16-color+ terminals

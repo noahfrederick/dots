@@ -1,7 +1,7 @@
 " ultisnips_custom.vim - Custom UltiSnips settings
 " Maintainer:   Noah Frederick
 
-if exists("g:loaded_ultisnips_custom") || !exists("g:did_UltiSnips_plugin") || exists(":SkelEdit")
+if exists("g:loaded_ultisnips_custom") || exists(":SkelEdit")
       \ || !has("python") && !has("python3")
   finish
 endif

@@ -92,8 +92,14 @@ function! s:try_insert(skel)
 endfunction
 
 function! util#snippet#InsertSkeleton(filename, is_projection) abort
+  " Load UltiSnips in case it was deferred via vim-plug
+  if !exists('g:did_UltiSnips_plugin') && exists(':PlugStatus')
+    call plug#load('ultisnips')
+    doautocmd FileType
+  endif
+
   " Abort on non-empty buffer or extant file
-  if !(line('$') == 1 && getline('$') == '') || filereadable(a:filename)
+  if !exists('g:did_UltiSnips_plugin') && !(line('$') == 1 && getline('$') == '') || filereadable(a:filename)
     return
   endif
 
