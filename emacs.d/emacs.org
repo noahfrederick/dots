@@ -1101,7 +1101,8 @@
                   helm-org-keywords
                   helm-org-headlines
                   helm-projectile
-                  helm-M-x)
+                  helm-M-x
+                  helm-occur)
        :init
        (evil-leader/set-key
          "h b" 'helm-buffers-list
@@ -1111,7 +1112,8 @@
          "h k" 'helm-show-kill-ring
          "h o" 'helm-org-headlines
          "h p" 'helm-projectile
-         "h x" 'helm-M-x)
+         "h x" 'helm-M-x
+         "h /" 'helm-occur)
        :config
        (progn
          (use-package helm-config)
