@@ -18,7 +18,7 @@ if has("vim_starting")
 
   " General-purpose utilities
   Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
-  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'Raimondi/delimitMate',           { 'on': [] }
   Plug 'SirVer/ultisnips',               { 'on': [] }
@@ -29,12 +29,12 @@ if has("vim_starting")
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'kien/ctrlp.vim',                 { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPBookmarkDir', 'CtrlPBookmarkDirAdd', 'CtrlPTag', 'CtrlPLine', 'CtrlPMRU', 'CtrlPDir', 'CtrlPMixed', 'CtrlPRTS'] }
   Plug 'rizzatti/dash.vim',              { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
-  Plug 'scrooloose/syntastic'
-  Plug 'talek/obvious-resize'
+  Plug 'scrooloose/syntastic',           { 'on': [] }
+  Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-dispatch'
-  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-endwise',              { 'on': [] }
   Plug 'tpope/vim-eunuch'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-obsession'
@@ -80,18 +80,13 @@ if has("vim_starting")
   " (see https://github.com/junegunn/vim-plug/issues/48#issuecomment-67436470)
   augroup insert_mode_plugins
     autocmd!
-    autocmd InsertEnter * call s:load_insert_mode_plugins()
+    autocmd InsertEnter * call util#plug#LoadInsert()
   augroup END
 
-  function! s:load_insert_mode_plugins()
-    call plug#load('supertab')
-    call plug#load('ultisnips')
-    call plug#load('delimitMate')
-    call plug#load('YouCompleteMe')
-    call youcompleteme#Enable()
-
-    autocmd! insert_mode_plugins
-  endfunction
+  augroup on_save_plugins
+    autocmd!
+    autocmd BufWritePre * call util#plug#LoadOnSave()
+  augroup END
 
   if &t_Co >= 16
     silent! colorscheme noctu   " Set color scheme for 16-color+ terminals
