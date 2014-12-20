@@ -9,14 +9,14 @@ function! util#plug#LoadInsert()
   call plug#load('YouCompleteMe')
   call youcompleteme#Enable()
 
-  doautocmd FileType
+  bufdo doautocmd FileType
   autocmd! insert_mode_plugins
 endfunction
 
 function! util#plug#LoadOnSave()
   call plug#load('syntastic')
 
-  doautocmd FileType
+  bufdo doautocmd FileType
   autocmd! on_save_plugins
 endfunction
 
