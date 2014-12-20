@@ -535,8 +535,6 @@ nnoremap <Space>v :CtrlPRTS<CR>
 
 " delimitMate settings
 let g:delimitMate_balance_matchpairs = 1
-" These options unfortunately prevent triggering abbrevs with <CR> and <Space>
-" (see https://github.com/Raimondi/delimitMate/issues/145)
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
