@@ -34,7 +34,7 @@ if has("vim_starting")
   Plug 'tpope/vim-abolish'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-dispatch'
-  Plug 'tpope/vim-endwise',              { 'on': [] }
+  Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-eunuch'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-obsession'
@@ -83,9 +83,9 @@ if has("vim_starting")
     autocmd InsertEnter * call util#plug#LoadInsert()
   augroup END
 
-  augroup on_save_plugins
+  augroup idle_plugins
     autocmd!
-    autocmd BufWritePre * call util#plug#LoadOnSave()
+    autocmd CursorHold * call util#plug#LoadIdle()
   augroup END
 
   if &t_Co >= 16
