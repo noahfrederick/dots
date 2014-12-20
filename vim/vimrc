@@ -304,6 +304,10 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
 command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
 command! -nargs=1 Cdofile call util#Cdo(1, <q-args>)
 
+if executable('osascript')
+  command! -nargs=? -bang -bar -complete=file Transmit call util#transmit#Send(<q-bang>, <q-args>)
+endif
+
 " }}}
 " Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
@@ -469,8 +473,7 @@ nnoremap <Leader>g/ :Ggrep<Space>
 " Shortcuts for delimitMate
 nnoremap <Leader>d :DelimitMateSwitch<CR>
 
-nnoremap <Leader>tt :Transmit<CR>
-nnoremap <Leader>ta :TransmitAlternate<CR>
+nnoremap <Leader>t :Transmit<CR>
 
 " Traversing folds
 nnoremap <C-k> zMzkzv[zzt
