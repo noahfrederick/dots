@@ -1,4 +1,4 @@
-" plugin/foldtext.vim - Clean fold text for the minimalist
+" autoload/util/foldtext.vim - Clean fold text for the minimalist
 " Adapted from http://dhruvasagar.com/2013/03/28/vim-better-foldtext
 "
 " Assuming your fold fillchar is "-", it produces folds that look like this:
@@ -13,7 +13,7 @@
 "   - The original indentation of the preview text is preserved.
 "   - Matching brackets are collapsed to "{ ... }".
 "
-function! CleanFoldText()
+function! util#folding#Text()
   let line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
 
   if line =~ '\s*{\s*' && getline(v:foldend) =~ '^\s*}\s*'
@@ -42,4 +42,4 @@ function! CleanFoldText()
   return foldtextstart . repeat(foldchar, winwidth(0) - foldtextlength) . foldtextend
 endfunction
 
-set foldtext=CleanFoldText()
+" vim: fdm=marker:sw=2:sts=2:et

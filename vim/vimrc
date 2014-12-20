@@ -105,6 +105,7 @@ set hidden                      " Allow buffers to become hidden
 set autoread                    " Reload unchanged buffer when file changes
 set foldnestmax=3               " Limit depth of nested syntax/indent folds
 set foldopen-=block             " Do not open folds on '(', '{', etc.
+set foldtext=util#folding#Text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
