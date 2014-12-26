@@ -31,13 +31,13 @@ endfunction
 
 function! util#snippet#Title(basename)
   if exists("g:template_title")
-    " Setting g:template_title let's us override the title (once)
+    " Setting g:template_title lets us override the title (once)
     let title = g:template_title
     unlet g:template_title
     return title
   endif
   if exists("b:template_title")
-    " Setting b:template_title also let's us override the title
+    " Setting b:template_title also lets us override the title
     return b:template_title
   endif
   " Otherwise derive from file's basename
