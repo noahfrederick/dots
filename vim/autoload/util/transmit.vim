@@ -62,6 +62,7 @@ function! s:transmit_do_applescript(path) abort
   let l:commands .= ' -e "end ignoring"'
 
   silent execute '!osascript ' . l:commands . ' &>/dev/null &'
+  redraw!
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et
