@@ -37,6 +37,12 @@ set -g fish_color_escape      purple
 set -g fish_color_valid_path  blue    --underline
 
 #
+# PINENTRY
+#
+# Suppress GUI prompt--use terminal
+set -gx PINENTRY_USER_DATA "USE_CURSES=1"
+
+#
 # ALIASES
 #
 function v;   vim $argv; end
