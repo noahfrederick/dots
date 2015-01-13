@@ -1170,6 +1170,7 @@ Projectile's bindings start with =C-c p=.
     :init
     (progn
       (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
+      (add-to-list 'projectile-globally-ignored-files ".DS_Store") ; FIXME: Only works for file in root
       (projectile-global-mode)))
 #+END_SRC
 
