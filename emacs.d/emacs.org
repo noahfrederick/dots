@@ -1282,15 +1282,15 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                 :clock-keep t :kill-buffer t)
               ("u" "Quick to-do" entry
                 (file "")
-                "* TODO %^{Task}\n  SCHEDULED: %t"
+                "* TODO %^{Task}\nSCHEDULED: %t"
                 :clock-keep t :kill-buffer t :immediate-finish t)
               ("j" "Journal entry (prompt for date)" entry
                 (file+datetree+prompt "~/org/diary.org")
-                "* %?\n  %U\n"
+                "* %?\n%U\n"
                 :clock-keep t :kill-buffer t)
               ("J" "Journal entry" entry
                 (file+datetree "~/org/diary.org")
-                "* %?\n  %U\n"
+                "* %?\n%U\n"
                 :clock-keep t :kill-buffer t)
               ("p" "TeamworkPM task" entry
                 (file+headline "~/org/bigtech.org" "Tasks")
