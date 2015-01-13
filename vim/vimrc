@@ -355,6 +355,9 @@ nnoremap <silent> <CR> :<C-u>call <SID>try('Switch', "\015")<CR>
 " Make Y consistent with C and D
 nnoremap Y y$
 
+" Paste over a visual selection while preserving the unnamed register
+xnoremap P "_dP
+
 " Q repeats the last command-line command (Ex mode is still accessible via gQ)
 nnoremap Q @:
 
@@ -453,8 +456,6 @@ nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
 
 " Yank entire buffer
 nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
-
-xnoremap <Leader>p "_dP
 
 " sleuth.vim likes to change 'shiftwidth' to 8
 nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
