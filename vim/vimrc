@@ -17,6 +17,7 @@ if has("vim_starting")
   Plug 'noahfrederick/vim-noctu'
 
   " General-purpose utilities
+  Plug '~/src/vim-codekit',              { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
   Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
   Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
