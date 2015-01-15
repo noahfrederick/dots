@@ -4,7 +4,6 @@
 function! util#plug#LoadInsert()
   call plug#load('supertab')
   call plug#load('ultisnips')
-  call plug#load('delimitMate')
   call plug#load('YouCompleteMe')
   call youcompleteme#Enable()
 

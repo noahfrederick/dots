@@ -21,7 +21,7 @@ if has("vim_starting")
   Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
   Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
-  Plug 'Raimondi/delimitMate',           { 'on': [] }
+  Plug 'Raimondi/delimitMate'
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'airblade/vim-gitgutter'
