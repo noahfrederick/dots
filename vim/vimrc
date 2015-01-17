@@ -72,7 +72,7 @@ if has("vim_starting")
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-rake'
   Plug 'tpope/vim-rbenv'
-  Plug 'tpope/vim-scriptease',           { 'for': 'vim' }
+  Plug 'tpope/vim-scriptease'
 
   " File-type runtime files
   Plug 'dag/vim-fish'
