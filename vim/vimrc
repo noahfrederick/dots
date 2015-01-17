@@ -12,12 +12,14 @@
 if has("vim_starting")
   call plug#begin()
 
+  " Use GitHub username if local source dir isn't set
+  let $PLUG_SRC = exists('$CODE') ? $CODE : 'noahfrederick'
+
   " Color schemes
-  Plug 'noahfrederick/vim-hemisu'
-  Plug 'noahfrederick/vim-noctu'
+  Plug '$PLUG_SRC/vim-hemisu'
+  Plug '$PLUG_SRC/vim-noctu'
 
   " General-purpose utilities
-  Plug '~/src/vim-codekit',              { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
   Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
   Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
@@ -29,7 +31,6 @@ if has("vim_starting")
   Plug 'godlygeek/tabular'
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'kien/ctrlp.vim',                 { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPBookmarkDir', 'CtrlPBookmarkDirAdd', 'CtrlPTag', 'CtrlPLine', 'CtrlPMRU', 'CtrlPDir', 'CtrlPMixed', 'CtrlPRTS'] }
-  Plug 'rizzatti/dash.vim',              { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
   Plug 'scrooloose/syntastic',           { 'on': [] }
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
@@ -47,6 +48,10 @@ if has("vim_starting")
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
   Plug 'wellle/targets.vim'
+  if has("mac")
+    Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
+    Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
+  endif
 
   " Text objects
   Plug 'akiyan/vim-textobj-php',         { 'for': 'php' }
@@ -57,8 +62,8 @@ if has("vim_starting")
   Plug 'whatyouhide/vim-textobj-xmlattr'
 
   " Language-/framework-specific utilities
-  Plug '~/src/vim-jekyll'
-  Plug '~/src/vim-kohana'
+  Plug '$PLUG_SRC/vim-jekyll'
+  Plug '$PLUG_SRC/vim-kohana'
   Plug 'dbakker/vim-lint',               { 'for': 'vim' }
   Plug 'dbakker/vim-sparkup',            { 'for': 'html' }
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
