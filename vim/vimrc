@@ -299,10 +299,6 @@ if exists("$NOTES")
   command! -nargs=0 -bar ShoppingList call util#ShoppingList()
 endif
 
-" Toggle light/dark background
-command! -nargs=0 -bar BackgroundInvert
-      \ let &background = ( &background == "dark" ? "light" : "dark" )
-
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
