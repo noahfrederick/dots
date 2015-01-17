@@ -38,7 +38,7 @@ hi Wildmenu            guifg=#ffffff  guibg=#1f333a  gui=bold
 hi StatusLine          guifg=#ffffff  guibg=#151515  gui=NONE
 hi StatusLineNC        guifg=#888888  guibg=#151515  gui=NONE
 hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
-hi Folded              guifg=#138791  guibg=#151515  gui=italic,underline  guisp=#1a1a1a
+hi Folded              guifg=#138791  guibg=#151515  gui=bold,italic,underline  guisp=#1a1a1a
 hi Directory           guifg=#93c3d6
 hi Title               guifg=#e9d9b3  gui=bold
 hi SpecialKey          guifg=#1c6068
