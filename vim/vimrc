@@ -27,7 +27,6 @@ if has("vim_starting")
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'airblade/vim-gitgutter'
-  Plug 'ervandew/supertab',              { 'on': [] }
   Plug 'godlygeek/tabular'
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'kien/ctrlp.vim',                 { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPBookmarkDir', 'CtrlPBookmarkDirAdd', 'CtrlPTag', 'CtrlPLine', 'CtrlPMRU', 'CtrlPDir', 'CtrlPMixed', 'CtrlPRTS'] }
@@ -585,22 +584,6 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " Remove <Tab> from maps lest YCM hijack our mapping from above
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
-
-" :help supertab-options
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-
-" :help supertab-completionchaining
-if has("autocmd")
-  augroup vimrc
-    autocmd FileType *
-      \ if exists("*SuperTabChain") && &omnifunc != "" |
-      \   call SuperTabChain(&omnifunc, "<C-p>") |
-      \   call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
-      \ endif
-  augroup END
-endif
 
 " Disable splitjoin.vim maps (we define our own above)
 let g:splitjoin_split_mapping = ''
