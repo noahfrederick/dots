@@ -318,6 +318,8 @@ endif
 " Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
 
+let g:mapleader = "\<Space>"
+
 " Try a custom command with fallback normal mode command
 function! s:try(cmd, default)
   if exists(':' . a:cmd) && !v:count
@@ -461,9 +463,6 @@ nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
 " Yank entire buffer
 nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
 
-" sleuth.vim likes to change 'shiftwidth' to 8
-nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
-
 " Shortcuts for Fugitive plug-in
 nnoremap <Leader>gg :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>
@@ -477,23 +476,23 @@ xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
 
-" Shortcuts for delimitMate
-nnoremap <Leader>d :DelimitMateSwitch<CR>
-
 nnoremap <Leader>t :Transmit<CR>
 
 " Traversing folds
 nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
 
+" sleuth.vim likes to change 'shiftwidth' to 8
+nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
+
 " Switch to alternate window or buffer
-nnoremap <silent> <Leader><Leader> :if winnr("$") > 1
+nnoremap <silent> <Leader>6 :if winnr("$") > 1
       \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
-nnoremap <Leader><CR> :set hlsearch<CR>*<C-o>
-map <BS> %
+nnoremap <Leader>8 :set hlsearch<CR>*<C-o>
 nnoremap <Leader>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
       \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+map <BS> %
 
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
@@ -522,36 +521,31 @@ nnoremap _tx :set filetype=text<CR>
 nnoremap _vi :set filetype=vim<CR>
 nnoremap _xm :set filetype=xml<CR>
 
-" <Space> mappings for navigating files and buffers
-nnoremap <Space><Space> :CtrlP<CR>
-nnoremap <Space>. :CtrlP .<CR>
-nnoremap <Space>; :CtrlPBuffer<CR>
-nnoremap <Space>' :CtrlPBookmarkDir<CR>
-nnoremap <Space>" :CtrlPBookmarkDirAdd<CR>
-nnoremap <Space>~ :CtrlP $HOME<CR>
-nnoremap <Space>, :CtrlPTag<CR>
-nnoremap <Space>/ :CtrlPLine<CR>
-nnoremap <Space>? :CtrlPMRU<CR>
-nnoremap <Space>D :edit README.md<CR>
-nnoremap <Space>E :edit Gemfile<CR>
-nnoremap <Space>G :edit $HOME/src/dots/vim/gvimrc<CR>
-nnoremap <Space>H :edit .htaccess<CR>
-nnoremap <Space>I :edit .gitignore<CR>
-nnoremap <Space>L :edit $HOME/src/dots/vim/vimrc.local<CR>
-nnoremap <Space>M :edit Makefile<CR>
-nnoremap <Space>R :edit Rakefile<CR>
-nnoremap <Space>U :edit Guardfile<CR>
-nnoremap <Space>V :edit $HOME/src/dots/vim/vimrc<CR>
-nnoremap <Space>b :buffer <C-z><S-Tab>
-nnoremap <Space>c :CtrlP $HOME/src/dots<CR>
-nnoremap <Space>d :CtrlPDir<CR>
-nmap     <Space>e :edit %%<C-z><S-Tab>
-nnoremap <Space>f :find *
-nnoremap <Space>m :CtrlPMixed<CR>
-nnoremap <Space>n :CtrlP $NOTES<CR>
-nnoremap <Space>p :CtrlP $PROJECTS<CR>
-nnoremap <Space>t :tjump /
-nnoremap <Space>v :CtrlPRTS<CR>
+" <Leader> mappings for navigating files and buffers
+nnoremap <Leader><Leader> :CtrlPBuffer<CR>
+nnoremap <Leader>; :CtrlP<CR>
+nnoremap <Leader>. :CtrlP .<CR>
+nnoremap <Leader>' :CtrlPBookmarkDir<CR>
+nnoremap <Leader>" :CtrlPBookmarkDirAdd<CR>
+nnoremap <Leader>~ :CtrlP $HOME<CR>
+nnoremap <Leader>, :CtrlPTag<CR>
+nnoremap <Leader>? :CtrlPMRU<CR>
+nnoremap <Leader>] :tjump /
+nnoremap <Leader>D :edit README.md<CR>
+nnoremap <Leader>E :edit Gemfile<CR>
+nnoremap <Leader>H :edit .htaccess<CR>
+nnoremap <Leader>I :edit .gitignore<CR>
+nnoremap <Leader>M :edit Makefile<CR>
+nnoremap <Leader>R :edit Rakefile<CR>
+nnoremap <Leader>U :edit Guardfile<CR>
+nnoremap <Leader>b :buffer <C-z><S-Tab>
+nnoremap <Leader>d :CtrlPDir<CR>
+nmap     <Leader>e :edit %%<C-z><S-Tab>
+nnoremap <Leader>l :CtrlPLine<CR>
+nnoremap <Leader>m :CtrlPMixed<CR>
+nnoremap <Leader>n :CtrlP $NOTES<CR>
+nnoremap <Leader>p :CtrlP $PROJECTS<CR>
+nnoremap <Leader>v :CtrlPRTS<CR>
 
 " }}}
 " Plug-in Settings                                                             {{{
