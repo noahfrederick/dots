@@ -11,9 +11,18 @@ set number
 
 if has('gui_macvim')
   " Has the nice '<>', excellent legibility, easy to distinguish among
-  " punctuation marks, but too 'squiggly' looking and no italics
+  " punctuation marks
   set guifont=Source\ Code\ Pro:h14
   set linespace=0
+
+  " Has the nice '<>', dotted '0', good punctuation, good legibility overall,
+  " but missing italics
+  " set guifont=Fira\ Mono:h14
+  " set linespace=0
+
+  " Has the nice '<>', great italics, but slashed '0' and feels a little heavy
+  " set guifont=Fantasque\ Sans\ Mono:h16
+  " set linespace=3
 
   " Dashes are too short, underscores too thin
   " set guifont=DejaVu\ Sans\ Mono:h13
