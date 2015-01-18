@@ -245,6 +245,9 @@ if has("autocmd")
   augroup vimrc
     autocmd!
 
+    " Prevent UltiSnips files from being hijacked by the conf filetype
+    autocmd BufNewFile,BufRead *.snippets set filetype=snippets
+
     autocmd FileType c,cpp,css,javascript,php call util#filetype#MakeSemicolonMaps()
     autocmd FileType php,rubycall call util#filetype#MakeRocketMaps()
 
