@@ -68,7 +68,6 @@ if has("vim_starting")
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
   Plug 'shawncplus/phpcomplete.vim',     { 'for': 'php' }
   Plug 'tpope/vim-bundler'
-  Plug 'tpope/vim-rails'
   Plug 'tpope/vim-rake'
   Plug 'tpope/vim-rbenv'
   Plug 'tpope/vim-scriptease'
