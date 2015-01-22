@@ -41,7 +41,7 @@ set -g fish_color_valid_path  blue    --underline
 #
 # Suppress GUI prompt--use terminal
 set -gx PINENTRY_USER_DATA "USE_CURSES=1"
-set -gx GPG_TTY (tty)
+set -x GPG_TTY (tty)
 
 #
 # ALIASES
