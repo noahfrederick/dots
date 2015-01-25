@@ -34,7 +34,7 @@ function! util#folding#Text()
 
   let gutterlen = &foldcolumn + &numberwidth
 
-  let foldindent = (v:foldlevel - 1) * &shiftwidth
+  let foldindent = (v:foldlevel - 1) * s:shiftwidth()
   let foldprefix = foldindent > 0 ? '+' . repeat(foldchar, foldindent - 2) . ' ' : ''
   let foldtextstart = strpart(foldprefix . line, 0, winwidth(0) - strlen(foldtextend) - gutterlen)
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + gutterlen
@@ -42,4 +42,16 @@ function! util#folding#Text()
   return foldtextstart . repeat(foldchar, winwidth(0) - foldtextlength) . foldtextend
 endfunction
 
+" Get the effective value of 'shiftwidth'. Newer Vims allow a value of 0,
+" which uses the value of 'tabstop', in which case we need to use the
+" shiftwidth() function.
+if exists('*shiftwidth')
+  function! s:shiftwidth()
+    return shiftwidth()
+  endfunction
+else
+  function! s:shiftwidth()
+    return &shiftwidth
+  endfunction
+endif
 " vim: fdm=marker:sw=2:sts=2:et
