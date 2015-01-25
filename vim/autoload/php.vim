@@ -27,17 +27,20 @@ endfunction
 
 " Get the opening PHP tag with guard, if any
 function! php#Open()
-  let parts = ["<?php"]
+  let out = "<?php"
+  let framework = s:projection_query("framework")
 
-  if s:projection_query("framework") ==# "kohana"
+  if framework ==# "kohana"
     if s:projection_query("category") == "Tests"
-      let parts = add(parts, "defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');")
+      let out = out . " defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');"
     else
-      let parts = add(parts, "defined('SYSPATH') OR die('No direct script access.');")
+      let out = out . " defined('SYSPATH') OR die('No direct script access.');"
     endif
+  elseif framework ==# "prestashop"
+    let out = out . " if (!defined('_PS_VERSION_')) exit;"
   endif
 
-  return join(parts)
+  return out
 endfunction
 
 ""
