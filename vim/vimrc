@@ -585,6 +585,9 @@ let g:ycm_key_list_previous_completion = ['<Up>']
 let g:splitjoin_split_mapping = ''
 let g:splitjoin_join_mapping = ''
 
+" Default of 'a' conflicts with Sideways argument text objects mapped above
+let g:targets_argTrigger = 'A'
+
 " :help ctrlp-options
 let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
 if !isdirectory(g:ctrlp_cache_dir) && exists("*mkdir")
