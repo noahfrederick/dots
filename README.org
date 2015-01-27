@@ -18,11 +18,11 @@ do it manually:
 * Software
 ** Vim
 
-[[http://vim.org][Vim]] is a free (liber) cross-platform text editor based on vi. It has
-been around since the early '90s and is arguably the best editor
-currently in existence. Although Vim is admittedly better suited for
-writing code than prose (largely because of its poor handling of
-soft-wrapped lines), I use it for pretty much everything.
+[[http://vim.org][Vim]] is a free, cross-platform text editor based on vi. It has been
+around since the early '90s and is arguably the best editor currently
+in existence. Although Vim is admittedly better suited for writing
+code than prose (largely because of its poor handling of soft-wrapped
+lines), I use it for pretty much everything.
 
 On OS X, install Vim with Homebrew:
 
@@ -34,11 +34,11 @@ Ruby and Python support is compiled in by default as of this writing.
 
 ** Emacs
 
-[[http://www.gnu.org/software/emacs/][Emacs]] is a free (liber) cross-platform text editor, mail client, news
-reader, organizer, and more. It is the second-best text editor
-currently in existence. It does not take the streamlined, minimalistic
-approach that Vim does, but it can be made to emulate Vim. I use Emacs
-for the excellent [[http://orgmode.org][Org mode]].
+[[http://www.gnu.org/software/emacs/][Emacs]] is a free, cross-platform text editor, mail client, news reader,
+organizer, and more. It is the second-best text editor currently in
+existence. It does not take the streamlined, minimalistic approach
+that Vim does, but it can be made to emulate Vim. I use Emacs for the
+excellent [[http://orgmode.org][Org mode]].
 
 On OS X, install Emacs with Homebrew:
 
@@ -66,4 +66,3 @@ mind.
 #+BEGIN_SRC sh
   brew install tmux
 #+END_SRC
-
