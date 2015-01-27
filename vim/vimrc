@@ -1,11 +1,3 @@
-" Introduction                                                                 {{{
-" --------------------------------------------------------------------------------
-"
-" This configuration has been cultivated since 2011. Care has been taken to do
-" things "the right way" throughout and to document pieces of configuration
-" that are not obvious at first glance.
-"
-" }}}
 " Plug-ins                                                                     {{{
 " --------------------------------------------------------------------------------
 
