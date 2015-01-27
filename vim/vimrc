@@ -490,8 +490,8 @@ nnoremap [oo :set colorcolumn=+1<CR>
 nnoremap ]oo :set colorcolumn=0<CR>
 nnoremap coo :let &colorcolumn = ( &colorcolumn == "+1" ? "0" : "+1" )<CR>
 
-nnoremap [, :SidewaysLeft<CR>
-nnoremap ], :SidewaysRight<CR>
+nnoremap [<Tab> :SidewaysLeft<CR>
+nnoremap ]<Tab> :SidewaysRight<CR>
 
 omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
