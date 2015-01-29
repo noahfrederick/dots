@@ -74,8 +74,8 @@ hi Delimiter       guifg=#b8b8b8
 hi Comment         guifg=#888888  gui=italic
 hi Underlined      guifg=#93c3d6  gui=underline
 hi Type            guifg=#e9d9b3  gui=none
-hi String          guifg=#ffb6c0
-hi Keyword         guifg=#93c3d6  gui=bold
+hi String          guifg=#93c3d6
+hi Keyword         guifg=#e9d9b3  gui=bold
 hi Todo            guifg=#ffffff  guibg=NONE     gui=underline  guisp=#ffb6c0
 hi Function        guifg=#e9d9b3
 hi Identifier      guifg=#d2d2d2  gui=NONE
