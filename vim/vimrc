@@ -280,6 +280,7 @@ command! -bang -bar Bdelete call util#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
       \ call util#buffer#Bufonly(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call util#path#FollowSymlink()
+command! -bang -nargs=0 -bar Marks call util#marks#Choose(<q-bang>)
 
 if exists("$NOTES")
   function! s:complete_note(A, L, P)
@@ -518,6 +519,7 @@ nnoremap <Leader>; :CtrlP<CR>
 nnoremap <Leader>. :CtrlP .<CR>
 nnoremap <Leader>' :CtrlPBookmarkDir<CR>
 nnoremap <Leader>" :CtrlPBookmarkDirAdd<CR>
+nnoremap <Leader>` :Marks<CR>
 nnoremap <Leader>~ :CtrlP $HOME<CR>
 nnoremap <Leader>, :CtrlPTag<CR>
 nnoremap <Leader>? :CtrlPMRU<CR>
