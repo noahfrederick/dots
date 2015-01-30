@@ -12,7 +12,7 @@ if has("vim_starting")
   Plug '$PLUG_SRC/vim-noctu'
 
   " General-purpose utilities
-  Plug 'AndrewRadev/sideways.vim',       { 'on': ['SidewaysLeft', 'SidewaysRight', '<Plug>SidewaysArgumentTextobjA', '<Plug>SidewaysArgumentTextobjI'] }
+  Plug 'AndrewRadev/sideways.vim'
   Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'Raimondi/delimitMate'
