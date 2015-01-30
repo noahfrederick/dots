@@ -191,12 +191,7 @@ set incsearch                   " Do incremental searching
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
 
 "" Status line
-let g:statusline_separator_left = " \u27e9 "
-let g:statusline_separator_right = " \u27e8 "
-
-let &statusline = ""
-let &statusline .= " %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}"
-let &statusline .= g:statusline_separator_left
+let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
 let &statusline .= "%f"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
 let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
@@ -204,11 +199,10 @@ let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
 let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
 let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
 let &statusline .= "%="
-let &statusline .= "%#StatuslineNC#%{strlen(&fileencoding)?&encoding:&fileencoding}"
-let &statusline .= '%{&fileformat!="unix"?"  (".&fileformat.")":""}%* '
-let &statusline .= '%{strlen(&filetype)?&filetype:"n/a"}'
-let &statusline .= g:statusline_separator_right
-let &statusline .= "%3.l:%-3.c "
+let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
+let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
+let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
+let &statusline .= '%{strlen(&filetype)?&filetype:"n/a"} '
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 " Git branch/commit in status line
@@ -221,6 +215,13 @@ function! StatuslineGit()
     let l:out = ' @ ' . l:out
   endif
   return l:out
+endfunction
+
+" Buffer indentation settings in status line
+function! StatuslineIndent()
+  let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
+  let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
+  return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
 endfunction
 
 " Load matchit.vim, if a newer version isn't already installed

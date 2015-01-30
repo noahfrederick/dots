@@ -7,6 +7,9 @@
 " Arguments: focus, byfname, s:regexp, prv, item, nxt, marked
 "            a:1    a:2      a:3       a:4  a:5   a:6  a:7
 function! util#ctrlp#Statusline1(...)
+  let separator_left = " \u27e9 "
+  let separator_right = " \u27e8 "
+
   let usercolor = "%4*"
   if a:5 == "buffers"
     let usercolor = "%5*"
@@ -20,12 +23,12 @@ function! util#ctrlp#Statusline1(...)
     let usercolor = "%9*"
   endif
 
-  let byfname = usercolor." ".a:2.g:statusline_separator_left
-  let dir = getcwd().g:statusline_separator_left
+  let byfname = usercolor." ".a:2.separator_left
+  let dir = getcwd().separator_left
   let marked = a:7[2:-2]."%="
 
-  let regex = a:3 ? "regex".g:statusline_separator_right : ""
-  let focus = a:1.g:statusline_separator_right
+  let regex = a:3 ? "regex".separator_right : ""
+  let focus = a:1.separator_right
   let prv = a:4." "
   let item = "%#StatusLine# ".a:5." ".usercolor
   let nxt = " ".a:6." "
