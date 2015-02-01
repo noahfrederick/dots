@@ -34,7 +34,7 @@ if has("vim_starting")
   Plug 'tpope/vim-projectionist'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-rhubarb'
-  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-sleuth',               { 'tag': 'v1.1' }
   Plug 'tpope/vim-speeddating'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
@@ -60,6 +60,7 @@ if has("vim_starting")
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
   Plug 'shawncplus/phpcomplete.vim',     { 'for': 'php' }
   Plug 'tpope/vim-bundler'
+  Plug 'tpope/vim-jdaddy',               { 'for': 'json' }
   Plug 'tpope/vim-rake'
   Plug 'tpope/vim-rbenv'
   Plug 'tpope/vim-scriptease'
