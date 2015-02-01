@@ -7,7 +7,6 @@ set guioptions=gmt
 
 set visualbell
 set spell
-set number
 
 if has('gui_macvim')
   " Has the nice '<>', excellent legibility, easy to distinguish among
@@ -43,5 +42,16 @@ if has('gui_macvim')
   " Toggle window transparency - useful for referencing something behind Vim
   nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
 endif
+
+command! -nargs=0 -bar Present
+      \ set nospell nonumber nolist cmdheight=1 |
+      \ let &guifont = substitute(&guifont, '\d\+$', '34', '') |
+      \ highlight StatusLine   guifg=#000000 guibg=#dddddd |
+      \ highlight StatusLineNC guifg=#888888 guibg=#dddddd |
+      \ highlight Wildmenu     guifg=#000000 guibg=#dddddd |
+      \ highlight User1        guifg=#ff0055 guibg=#dddddd |
+      \ highlight User2        guifg=#539dbd guibg=#dddddd |
+      \ highlight User3        guifg=#b1d631 guibg=#dddddd |
+      \ silent! GitGutterDisable
 
 " vim: fdm=marker:sw=2:sts=2:et
