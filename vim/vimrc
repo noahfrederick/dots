@@ -521,11 +521,10 @@ nnoremap <Leader>. :CtrlP .<CR>
 nnoremap <Leader>' :CtrlPBookmarkDir<CR>
 nnoremap <Leader>" :CtrlPBookmarkDirAdd<CR>
 nnoremap <Leader>` :Marks<CR>
-nnoremap <Leader>~ :CtrlP $HOME<CR>
 nnoremap <Leader>, :CtrlPTag<CR>
 nnoremap <Leader>? :CtrlPMRU<CR>
 nnoremap <Leader>] :tjump /
-nnoremap <Leader>D :edit README.md<CR>
+nnoremap <Leader>D :edit README*<CR>
 nnoremap <Leader>E :edit Gemfile<CR>
 nnoremap <Leader>H :edit .htaccess<CR>
 nnoremap <Leader>I :edit .gitignore<CR>
