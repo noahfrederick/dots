@@ -91,7 +91,7 @@ function! s:try_insert(skel)
   return g:ulti_expand_res
 endfunction
 
-function! util#snippet#InsertSkeleton(filename, is_projection) abort
+function! util#snippet#InsertSkeleton() abort
   " Load UltiSnips in case it was deferred via vim-plug
   if !exists('g:did_UltiSnips_plugin') && exists(':PlugStatus')
     call plug#load('ultisnips')
@@ -99,11 +99,11 @@ function! util#snippet#InsertSkeleton(filename, is_projection) abort
   endif
 
   " Abort on non-empty buffer or extant file
-  if !exists('g:did_UltiSnips_plugin') || !(line('$') == 1 && getline('$') == '') || filereadable(a:filename)
+  if !exists('g:did_UltiSnips_plugin') || !(line('$') == 1 && getline('$') == '') || filereadable(expand('%:p'))
     return
   endif
 
-  if a:is_projection
+  if !empty(b:projectionist)
     " Loop through projections with 'skeleton' key and try each one until the
     " snippet expands
     for [root, value] in projectionist#query('skeleton')
