@@ -66,8 +66,19 @@ endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.
 function! php#PathToParentClassName(path)
+  let framework = s:projection_query("framework")
+  let category = s:projection_query("category")
+
   if s:projection_query("category") ==# "Tests"
     return "PHPUnit_Framework_TestCase"
+  elseif framework ==# "kohana"
+    if category ==# "Models"
+      return "ORM"
+    elseif category ==# "Controllers"
+      return "Controller"
+    elseif category ==# "Views"
+      return "View"
+    endif
   endif
 
   return "ParentClass"

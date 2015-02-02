@@ -107,7 +107,7 @@ snippet class "Class definition" b
  *
  * @package    `!v util#snippet#ProjectTitle()`
  * @category   `!v php#PathToClassCategory(expand("%"))`
- * @author     `!v util#snippet#Author()`
+ * @author     `!v util#snippet#ProjectAuthor()`
  * @copyright  `!v util#snippet#Copyright()`
  */
 class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
@@ -119,15 +119,15 @@ snippet _class "Class definition" b
 `!v php#Open()`
 
 /**
- * ${4:$1 class}.
+ * `!v php#PathToClassName(expand("%"))` class.
  *
  * @package    `!v util#snippet#ProjectTitle()`
  * @category   `!v php#PathToClassCategory(expand("%"))`
- * @author     `!v util#snippet#Author()`
+ * @author     `!v util#snippet#ProjectAuthor()`
  * @copyright  `!v util#snippet#Copyright()`
  */
-class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
-	${0:${VISUAL:\/\/ TODO}}
+class `!v php#PathToClassName(expand("%"))` extends `!v php#PathToParentClassName(expand("%"))` {
+	${0:${VISUAL}}
 }
 endsnippet
 

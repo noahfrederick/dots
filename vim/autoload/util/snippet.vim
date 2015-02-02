@@ -2,10 +2,15 @@
 " Maintainer:   Noah Frederick
 
 function! util#snippet#Author()
+  return s:get_git_config_value('user.name')
+endfunction
+
+function! util#snippet#ProjectAuthor()
   if exists("$PROJECT_AUTHOR") && $PROJECT_AUTHOR != ""
     return $PROJECT_AUTHOR
   endif
-  return s:get_git_config_value('user.name')
+  let project_author = s:get_git_config_value('project.author')
+  return empty(project_author) ? util#snippet#Author() : project_author
 endfunction
 
 function! util#snippet#Email()
@@ -51,7 +56,7 @@ function! util#snippet#Copyright()
   if exists("$PROJECT_COPYRIGHT") && $PROJECT_COPYRIGHT != ""
     let name = $PROJECT_COPYRIGHT
   else
-    let name = util#snippet#Author()
+    let name = util#snippet#ProjectAuthor()
   endif
   return join(['©', strftime('%Y'), name])
 endfunction
@@ -60,7 +65,8 @@ function! util#snippet#ProjectTitle()
   if exists("$PROJECT_NAME") && $PROJECT_NAME != ""
     return $PROJECT_NAME
   endif
-  return "(Project Name)"
+  let project_title = s:get_git_config_value('project.title')
+  return empty(project_title) ? "(Project Name)" : project_title
 endfunction
 
 function! util#snippet#ExpandSnippetOrCompleteMaybe()
