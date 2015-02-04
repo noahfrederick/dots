@@ -220,6 +220,9 @@ endfunction
 
 " Buffer indentation settings in status line
 function! StatuslineIndent()
+  if !&modifiable
+    return ''
+  endif
   let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
   let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
   return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
