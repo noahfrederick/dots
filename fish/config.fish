@@ -46,8 +46,6 @@ set -x GPG_TTY (tty)
 #
 # ALIASES
 #
-function v;   vim $argv; end
-function vs;  vim -S $argv; end
 function o;   if [ -z $argv[1] ]; open .; else; open $argv; end; end
 function g;   if [ -z $argv[1] ]; git status --short; else; git $argv; end; end
 function ga;  git add $argv; end
