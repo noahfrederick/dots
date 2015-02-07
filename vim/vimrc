@@ -395,8 +395,8 @@ function! s:doc(cmd)
   return "K"
 endfunction
 
-nmap <expr> K <SID>doc("\<Plug>DashSearch")
-nmap <expr> <Leader>K <SID>doc("\<Plug>DashGlobalSearch")
+nmap <expr> K  <SID>doc("\<Plug>DashSearch")
+nmap <expr> gK <SID>doc("\<Plug>DashGlobalSearch")
 
 " Remove the last character on current line:
 " This is something I find myself doing often, but I find it difficult to hit
@@ -528,8 +528,8 @@ nnoremap _xm :set filetype=xml<CR>
 nnoremap <Leader><Leader> :CtrlPBuffer<CR>
 nnoremap <Leader>; :CtrlP<CR>
 nnoremap <Leader>. :CtrlP .<CR>
-nnoremap <Leader>' :CtrlPBookmarkDir<CR>
-nnoremap <Leader>" :CtrlPBookmarkDirAdd<CR>
+nnoremap <Leader>- :CtrlPBookmarkDir<CR>
+nnoremap <Leader>_ :CtrlPBookmarkDirAdd<CR>
 nnoremap <Leader>` :Marks<CR>
 nnoremap <Leader>, :CtrlPTag<CR>
 nnoremap <Leader>? :CtrlPMRU<CR>
