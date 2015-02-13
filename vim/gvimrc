@@ -44,7 +44,7 @@ if has('gui_macvim')
 endif
 
 command! -nargs=0 -bar Present
-      \ set nospell nonumber nolist cmdheight=1 |
+      \ set nospell nonumber nolist cmdheight=1 scrolloff=0 |
       \ let &guifont = substitute(&guifont, '\d\+$', '34', '') |
       \ highlight StatusLine   guifg=#000000 guibg=#dddddd |
       \ highlight StatusLineNC guifg=#888888 guibg=#dddddd |
