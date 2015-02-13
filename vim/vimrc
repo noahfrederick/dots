@@ -203,7 +203,7 @@ let &statusline .= "%="
 let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
 let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
 let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
-let &statusline .= '%{strlen(&filetype)?&filetype:"n/a"} '
+let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 " Git branch/commit in status line
