@@ -8,3 +8,50 @@ extends css
 snippet import "LESS @import" b
 @import "${1:stylesheet}.less";
 endsnippet
+
+#
+# Color Operation Functions
+#
+snippet saturate "saturate(@color, @amount)"
+saturate(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet desaturate "desaturate(@color, @amount)"
+desaturate(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet lighten "lighten(@color, @amount)"
+lighten(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet darken "darken(@color, @amount)"
+darken(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet fadein "fadein(@color, @amount)"
+fadein(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet fadeout "fadeout(@color, @amount)"
+fadeout(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet fade "fade(@color, @amount)"
+fade(${1:${VISUAL}}, ${2:10}%)
+endsnippet
+
+snippet spin "spin(@color, @angle)"
+spin(${1:${VISUAL}}, ${2:10})
+endsnippet
+
+snippet mix "mix(@color1, @color2, @weight)"
+mix(${1:${VISUAL}}, ${2:color2}, ${3:50}%)
+endsnippet
+
+snippet greyscale "greyscale(@color)"
+greyscale(${1:${VISUAL}})
+endsnippet
+
+snippet contrast "contrast(@color1, ...)"
+contrast(${1:${VISUAL}})
+endsnippet
