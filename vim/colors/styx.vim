@@ -44,6 +44,7 @@ hi Title               guifg=#e9d9b3  gui=bold
 hi SpecialKey          guifg=#1c6068
 hi Conceal             guifg=#539dbd  guibg=NONE
 hi ErrorMsg            guifg=#ffffff  guibg=#ff0055
+hi WarningMsg          guifg=#ffffff  guibg=#b7aa80
 hi DiffAdd             guifg=#000000  guibg=#b1d631
 hi DiffChange          guifg=#000000  guibg=#b7aa80
 hi DiffDelete          guifg=#000000  guibg=#ff0055
@@ -60,7 +61,6 @@ hi User9               guifg=#000000  guibg=#b1d631  " CtrlP runtime scripts
 hi! link CursorColumn  CursorLine
 hi! link SignColumn    LineNr
 hi! link FoldColumn    SignColumn
-hi! link WarningMsg    ErrorMsg
 hi! link MoreMsg       Title
 hi! link Question      MoreMsg
 hi! link ModeMsg       MoreMsg
