@@ -294,4 +294,9 @@ hi! link CSVColumnHeaderOdd   Title
 hi CSVColumnHeaderEven        guifg=#b7aa80 gui=bold
 
 "}}}
+" Quickfix list {{{
+hi! link qfLineNr             Statement
+hi! link qfSeparator          NonText
+
+"}}}
 " vim: fdm=marker:sw=2:sts=2:et
