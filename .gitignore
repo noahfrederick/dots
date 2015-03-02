@@ -1,3 +1,4 @@
+emacs.d/recentf
 fish/completions/*.fish
 vim/.netrwhist
 vim/bundle/*
