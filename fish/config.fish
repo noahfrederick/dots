@@ -19,7 +19,8 @@ set -gx NOTES    "$DROPBOX/Notes"
 set -gx CODE     "$HOME/src"
 set -gx BLOG     "$CODE/noahfrederick.com"
 
-prepend_to_cdpath "$CODE"
+append_to_cdpath "."
+append_to_cdpath "$CODE"
 
 #
 # EDITOR
