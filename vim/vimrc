@@ -191,6 +191,18 @@ set sessionoptions-=options     " Do not save settings and mappings to sessions
 set incsearch                   " Do incremental searching
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
 
+if executable('ag')
+  set grepprg=ag\ --vimgrep
+  "                 |
+  "                 `------------ Format results for Vim, include multiple matches per line
+else
+  set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
+  "                  |||
+  "                  ||`--------- Always print file names
+  "                  |`---------- Print line numbers
+  "                  `----------- Search directories recursively
+endif
+
 "" Status line
 let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
 let &statusline .= "%f"
