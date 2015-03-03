@@ -95,21 +95,21 @@ endif
 " --------------------------------------------------------------------------------
 
 "" Behavior
-set encoding=utf-8              " Use UTF-8 as default file encoding
+set encoding=utf-8              " Use UTF-8 as internal encoding
 set spelllang=en_us             " Language and region to use for spellchecking
-set modeline modelines=5        " Look for modeline at beginning/end of file
-set hidden                      " Allow buffers to become hidden
+set modeline modelines=5        " Look for modeline in first/last n lines of file
+set hidden                      " Do not unload buffers when no longer displayed
 set autoread                    " Reload unchanged buffer when file changes
-set foldnestmax=3               " Limit depth of nested syntax/indent folds
+set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set foldtext=util#folding#Text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
-set scrolloff=2                 " Keep lines above/below cursor visible
-set sidescrolloff=5             " Keep columns left/right of cursor visible
+set scrolloff=2                 " Keep n lines above/below cursor visible
+set sidescrolloff=5             " Keep n columns left/right of cursor visible
 if &shell =~# "fish$"
-  set shell=/bin/bash           " Ensure shell is POSIX compatible
+  set shell=/bin/bash           " Use a POSIX-compatible shell
 endif
 if has("mouse")
   set mouse=a                   " Enable mouse in all modes
@@ -123,14 +123,14 @@ set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
 set display+=lastline           " Show as much as possible of wrapped last line
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
-if has("linebreak")             " Wrap lines at word boundaries
-  set linebreak
+if has("linebreak")
+  set linebreak                 " Wrap lines at word boundaries
   set showbreak=...
-  if exists("+breakindent")     " Indent soft-wrapped lines
-    set breakindent
+  if exists("+breakindent")
+    set breakindent             " Indent soft-wrapped lines
   endif
 endif
-set nowrap                      " Do not wrap long lines by default
+set nowrap                      " Do not soft-wrap long lines by default
 set listchars=tab:>\ ,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let &fillchars = "vert:\u2502,diff: "
@@ -149,8 +149,8 @@ else
 endif
 
 "" Command line and completion
-set wildmenu                    " Command line completion
-set wildcharm=<C-z>
+set wildmenu                    " Show command line completion candidates
+set wildcharm=<C-z>             " Trigger for completion in macros
 set wildignore=*.swp,*.bak
 set wildignore+=*.min.*,*.css.map
 set wildignore+=*.jpg,*.png,*.gif
@@ -159,13 +159,13 @@ set cmdheight=2                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
 set history=500                 " Keep 500 lines of command-line history
-set showcmd                     " Show incomplete key sequences
+set showcmd                     " Show incomplete key sequences in bottom corner
 set path=.,**                   " Path used by gf, :find, et alia
 
 "" Whitespace
 set autoindent
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
-set tabstop=4                   " Width of displayed tabs--the rest is taken care of by sleuth.vim
+set tabstop=4                   " Display width of tabs--indentation style is handled by sleuth.vim
 set shiftround                  " Round indent to multiple of 'shiftwidth'
 set nojoinspaces                " Do not insert two spaces after '.' when using J
 
@@ -188,7 +188,7 @@ endif
 set sessionoptions-=options     " Do not save settings and mappings to sessions
 
 "" Searching
-set incsearch                   " Do incremental searching
+set incsearch                   " Highlight first search match as you type
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
 
 if executable('ag')
@@ -218,7 +218,6 @@ let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
 let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
-" Git branch/commit in status line
 function! StatuslineGit()
   if !exists('*fugitive#head')
     return ''
@@ -230,7 +229,6 @@ function! StatuslineGit()
   return l:out
 endfunction
 
-" Buffer indentation settings in status line
 function! StatuslineIndent()
   if !&modifiable
     return ''
@@ -268,7 +266,7 @@ if has("autocmd")
 
     set cursorline
 
-    " Only highlight cursor line in active buffer window
+    " Only highlight cursor line in window with focus
     autocmd WinLeave * set nocursorline
     autocmd WinEnter * if &filetype != 'qf' | set cursorline | endif
 
@@ -474,13 +472,12 @@ nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 " Remove trailing whitespace, merge consecutive empty lines
 nnoremap <silent> <Leader>w :call util#editing#NormalizeWhitespace()<CR>
 
-" Re-indent entire buffer
+" Re-indent entire buffer content
 nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
 
-" Yank entire buffer
+" Yank entire buffer content
 nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
 
-" Shortcuts for Fugitive plug-in
 nnoremap <Leader>gg :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
