@@ -31,6 +31,7 @@ hi SpellLocal          guisp=#d6b8f5  guibg=NONE     gui=undercurl
 hi NonText             guifg=#444444
 hi LineNr              guifg=#444444  guibg=NONE
 hi CursorLineNr        guifg=#539dbd  guibg=#222222  gui=NONE
+hi EndOfBuffer         guifg=#1a1a1a
 hi Visual              guibg=#264049
 hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
@@ -39,7 +40,7 @@ hi StatusLine          guifg=#ffffff  guibg=#151515  gui=NONE
 hi StatusLineNC        guifg=#888888  guibg=#151515  gui=NONE
 hi VertSplit           guifg=#111111  guibg=NONE     gui=NONE
 hi Folded              guifg=#138791  guibg=#151515  gui=bold,italic,underline  guisp=#1a1a1a
-hi Directory           guifg=#93c3d6
+hi Directory           guifg=#93c3d6  gui=bold
 hi Title               guifg=#e9d9b3  gui=bold
 hi SpecialKey          guifg=#1c6068
 hi Conceal             guifg=#539dbd  guibg=NONE
@@ -217,7 +218,7 @@ hi! link helpURL             Underlined
 
 "}}}
 " CtrlP {{{
-hi! link CtrlPMatch    String
+hi CtrlPMatch          guifg=#ffb6c0  guisp=#A5757B  gui=underline
 hi! link CtrlPLinePre  Comment
 
 "}}}
