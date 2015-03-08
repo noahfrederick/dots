@@ -1,3 +1,3 @@
-if [ -e ~/.bashrc ] ; then
+if [ -r ~/.bashrc ] ; then
 	source ~/.bashrc
 fi

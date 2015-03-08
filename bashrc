@@ -1,7 +1,175 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-source ~/.bash/env     # Environment variables
-source ~/.bash/config  # Completion and other settings
-source ~/.bash/prompt  # The prompt
-source ~/.bash/aliases # Aliases and functions
+#
+# PATH
+#
+function pathadd () {
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		export PATH="$1${PATH:+":$PATH"}"
+	fi
+}
+
+pathadd ~/.cask/bin
+pathadd ~/bin
+
+#
+# DIRECTORIES
+#
+export DOCS="$HOME/Documents"
+export DROPBOX="$HOME/Dropbox"
+export NOTES="$DROPBOX/Notes"
+export CODE="$HOME/src"
+
+#
+# EDITOR
+#
+hash vim &>/dev/null && export EDITOR=vim
+
+#
+# TERM
+#
+case "$TERM" in
+	xterm*) TERM=xterm-256color
+esac
+
+#
+# HISTORY
+#
+# Don't put duplicate lines in the history. See bash(1) for more options.
+export HISTCONTROL=ignoredups
+
+#
+# COLORS
+#
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
+
+#
+# OTHER
+#
+export FTP_PASSIVE=1
+
+#
+# BOXEN
+#
+[ -f /opt/boxen/env.sh ] && source /opt/boxen/env.sh
+
+#
+# RUBY
+#
+# Manage Ruby via rbenv
+hash rbenv &>/dev/null && eval "$(rbenv init -)"
+
+#
+# COMPLETION
+#
+if hash brew &>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+	source $(brew --prefix)/etc/bash_completion
+fi
+
+#
+# PROMPT
+#
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+
+function prompt_func () {
+	local exit_status=$?;
+
+	local PROMPTCOLOR="\[\e[1;93m\]"
+	local BOLDCOLOR="\[\e[1;33m\]"
+	local GREEN="\[\e[1;32m\]"
+	local RED="\[\e[1;31m\]"
+	local BLACK="\[\e[90m\]"
+	local NOCOLOR="\[\e[0m\]"
+
+	local PREFIX=">"
+
+	local prompt="${PREFIX} ${PROMPTCOLOR}\w"
+	type -t __git_ps1 &>/dev/null && prompt="${prompt}${BOLDCOLOR}$(__git_ps1 ' ± %s')"
+
+	if [ $exit_status -eq 0 ] ; then
+		PS1="${GREEN}${prompt} ${NOCOLOR}"
+	else
+		PS1="${RED}${prompt} ${NOCOLOR}"
+	fi
+
+	PS2="${BLACK}${PREFIX} ${NOCOLOR}"
+}
+
+# Number of path components to include in \w
+PROMPT_DIRTRIM=2
+PROMPT_COMMAND=prompt_func
+
+#
+# ALIASES
+#
+# Defaults for tree (color, show hidden, ignore version control)
+alias tree="tree -Ca -I '.svn|.git' --dirsfirst"
+
+# a - Show hidden
+# h - Human-readable file sizes
+# l - Long format
+alias ll='ls -hl'
+alias la='ls -ahl'
+
+# Git abbreviations
+function g () {
+	git ${@:-status --short}
+}
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gcl='git clone'
+alias gco='git checkout'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gf='git fetch'
+alias gg='git g'
+alias ggg='git graph'
+alias gl='git log'
+alias gp='git push'
+alias gpu='git pull'
+alias gs='git status'
+
+#
+# FUNCTIONS
+#
+# Print PATH in readable form.
+function path () {
+	IFS_OLD=$IFS
+	IFS=:
+	printf "%s\n" $PATH
+	IFS=$IFS_OLD
+}
+
+# Attach to existing tmux session rather than create a new one if possible.
+function tmux () {
+	if [[ -n "$*" ]]; then
+		command tmux $*
+	else
+		command tmux attach -d &>/dev/null || command tmux
+	fi
+}
+
+# Call Whitaker's Words without having to cd to its directory
+function ww () {
+	pushd ~/bin/words &>/dev/null
+	./words $*
+	popd &>/dev/null
+}
+
+# Add shortcut for English-Latin
+alias we='ww ~e'
+
+# Interactive Words shell
+function wi () {
+	echo -n "> "
+	while read line
+	do
+		ww $line
+		echo -n "> "
+	done
+}
