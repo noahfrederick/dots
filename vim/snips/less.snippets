@@ -5,8 +5,273 @@ extends css
 #
 # Imports
 #
-snippet import "LESS @import" b
+snippet import "Less @import" b
 @import "${1:stylesheet}.less";
+endsnippet
+
+#
+# Misc. Functions
+#
+snippet color "color(@string)"
+color(${1:@string})
+endsnippet
+
+snippet image-size "image-size(@path)"
+image-size(${1:@path})
+endsnippet
+
+snippet image-width "image-width(@path)"
+image-width(${1:@path})
+endsnippet
+
+snippet image-height "image-height(@path)"
+image-height(${1:@path})
+endsnippet
+
+snippet convert "convert(@value, @unit)"
+convert(${1:@value}, ${2:@unit})
+endsnippet
+
+snippet data-uri "data-uri([@mimetype, ]@path)"
+data-uri(${1:@mimetype, }${2:@path})
+endsnippet
+
+snippet default "default()"
+default()
+endsnippet
+
+snippet unit "unit(@dimension[, @unit])"
+unit(${1:@dimension}, ${2:@unit})
+endsnippet
+
+snippet get-unit "get-unit(@number)"
+get-unit(${1:@number})
+endsnippet
+
+snippet svg-gradient "svg-gradient(@direction, @color, ...)"
+svg-gradient(${1:@direction}, ${2:@color...})
+endsnippet
+
+#
+# String Functions
+#
+snippet escape "escape(@string)"
+escape(${1:@string})
+endsnippet
+
+snippet % "%(@string, @args, ...)"
+%(${1:@string}, ${2:@args...})
+endsnippet
+
+snippet replace "replace(@string, @pattern, @replacement[, @flags])"
+replace(${1:@string}, ${2:@pattern}, ${3:@replacement}${4:, @flags})
+endsnippet
+
+#
+# List Functions
+#
+snippet length "length(@list)"
+length(${1:@list})
+endsnippet
+
+snippet extract "extract(@list)"
+extract(${1:@list})
+endsnippet
+
+#
+# Math Functions
+#
+snippet ceil "ceil(@number)"
+ceil(${1:@number})
+endsnippet
+
+snippet floor "floor(@number)"
+floor(${1:@number})
+endsnippet
+
+snippet percentage "percentage(@number)"
+percentage(${1:@number})
+endsnippet
+
+snippet round "round(@number[, @decimalPlaces])"
+round(${1:@number}${2:, @decimalPlaces})
+endsnippet
+
+snippet sqrt "sqrt(@number)"
+sqrt(${1:@number})
+endsnippet
+
+snippet abs "abs(@number)"
+abs(${1:@number})
+endsnippet
+
+snippet sin "sin(@number)"
+sin(${1:@number})
+endsnippet
+
+snippet asin "asin(@number)"
+asin(${1:@number})
+endsnippet
+
+snippet cos "cos(@number)"
+cos(${1:@number})
+endsnippet
+
+snippet acos "acos(@number)"
+acos(${1:@number})
+endsnippet
+
+snippet tan "tan(@number)"
+tan(${1:@number})
+endsnippet
+
+snippet atan "atan(@number)"
+atan(${1:@number})
+endsnippet
+
+snippet pi "pi()"
+pi()
+endsnippet
+
+snippet pow "pow(@base, @exponent)"
+pow(${1:@base}, ${2:@exponent})
+endsnippet
+
+snippet mod "mod(@number, @number)"
+mod(${1:@number}, ${2:@number})
+endsnippet
+
+snippet min "min(@number, ...)"
+min(${1:@number...})
+endsnippet
+
+snippet max "max(@number, ...)"
+max(${1:@number...})
+endsnippet
+
+#
+# Type Functions
+#
+snippet isnumber "isnumber(@value)"
+isnumber(${1:@value})
+endsnippet
+
+snippet isstring "isstring(@value)"
+isstring(${1:@value})
+endsnippet
+
+snippet iscolor "iscolor(@value)"
+iscolor(${1:@value})
+endsnippet
+
+snippet iskeyword "iskeyword(@value)"
+iskeyword(${1:@value})
+endsnippet
+
+snippet isurl "isurl(@value)"
+isurl(${1:@value})
+endsnippet
+
+snippet ispixel "ispixel(@value)"
+ispixel(${1:@value})
+endsnippet
+
+snippet isem "isem(@value)"
+isem(${1:@value})
+endsnippet
+
+snippet ispercentage "ispercentage(@value)"
+ispercentage(${1:@value})
+endsnippet
+
+snippet isunit "isunit(@value, @unit)"
+isunit(${1:@value}, ${2:@unit})
+endsnippet
+
+snippet isruleset "isruleset(@value)"
+isruleset(${1:@value})
+endsnippet
+
+#
+# Color Definition Functions
+#
+snippet rgb "rgb(@red, @green, @blue)"
+rgb(${1:@red}, ${2:@green}, ${3:@blue})
+endsnippet
+
+snippet rgba "rgba(@red, @green, @blue, @alpha)"
+rgba(${1:@red}, ${2:@green}, ${3:@blue}, ${4:@alpha})
+endsnippet
+
+snippet argb "argb(@color)"
+argb(${1:@color})
+endsnippet
+
+snippet hsl "hsl(@hue, @saturation, @lightness)"
+hsl(${1:@hue}, ${2:@saturation}, ${3:@lightness})
+endsnippet
+
+snippet hsla "hsla(@hue, @saturation, @lightness, @alpha)"
+hsla(${1:@hue}, ${2:@saturation}, ${3:@lightness}, ${4:@alpha})
+endsnippet
+
+snippet hsv "hsv(@hue, @saturation, @value)"
+hsv(${1:@hue}, ${2:@saturation}, ${3:@value})
+endsnippet
+
+snippet hsva "hsva(@hue, @saturation, @value, @alpha)"
+hsva(${1:@hue}, ${2:@saturation}, ${3:@value}, ${4:@alpha})
+endsnippet
+
+#
+# Color Channel Functions
+#
+snippet hue "hue(@color)"
+hue(${1:@color})
+endsnippet
+
+snippet saturation "saturation(@color)"
+saturation(${1:@color})
+endsnippet
+
+snippet lightness "lightness(@color)"
+lightness(${1:@color})
+endsnippet
+
+snippet hsvhue "hsvhue(@color)"
+hsvhue(${1:@color})
+endsnippet
+
+snippet hsvsaturation "hsvsaturation(@color)"
+hsvsaturation(${1:@color})
+endsnippet
+
+snippet hsvvalue "hsvvalue(@color)"
+hsvvalue(${1:@color})
+endsnippet
+
+snippet red "red(@color)"
+red(${1:@color})
+endsnippet
+
+snippet green "green(@color)"
+green(${1:@color})
+endsnippet
+
+snippet blue "blue(@color)"
+blue(${1:@color})
+endsnippet
+
+snippet alpha "alpha(@color)"
+alpha(${1:@color})
+endsnippet
+
+snippet luma "luma(@color)"
+luma(${1:@color})
+endsnippet
+
+snippet luminance "luminance(@color)"
+luminance(${1:@color})
 endsnippet
 
 #
@@ -45,7 +310,7 @@ spin(${1:${VISUAL}}, ${2:10})
 endsnippet
 
 snippet mix "mix(@color1, @color2, @weight)"
-mix(${1:${VISUAL}}, ${2:color2}, ${3:50}%)
+mix(${1:${VISUAL}}, ${2:@color2}, ${3:50}%)
 endsnippet
 
 snippet greyscale "greyscale(@color)"
@@ -54,4 +319,43 @@ endsnippet
 
 snippet contrast "contrast(@color1, ...)"
 contrast(${1:${VISUAL}})
+endsnippet
+
+#
+# Color Blending Functions
+#
+snippet multiply "multiply(@color1, @color2)"
+multiply(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet screen "screen(@color1, @color2)"
+screen(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet overlay "overlay(@color1, @color2)"
+overlay(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet softlight "softlight(@color1, @color2)"
+softlight(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet hardlight "hardlight(@color1, @color2)"
+hardlight(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet difference "difference(@color1, @color2)"
+difference(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet exclusion "exclusion(@color1, @color2)"
+exclusion(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet average "average(@color1, @color2)"
+average(${1:@color1}, ${2:@color2})
+endsnippet
+
+snippet negation "negation(@color1, @color2)"
+negation(${1:@color1}, ${2:@color2})
 endsnippet
