@@ -251,11 +251,10 @@ if has("autocmd")
   augroup vimrc
     autocmd!
 
-    " Prevent UltiSnips files from being hijacked by the conf filetype
-    autocmd BufNewFile,BufRead *.snippets silent! call plug#load('ultisnips') |
-          \ set filetype=snippets
+    autocmd BufNewFile,BufRead *.snippets set filetype=snippets
+    autocmd BufNewFile,BufRead *Test.php set filetype=php.phpunit
 
-    autocmd FileType c,cpp,css,javascript,php call util#filetype#MakeSemicolonMaps()
+    autocmd FileType c,cpp,css,javascript,less,php call util#filetype#MakeSemicolonMaps()
     autocmd FileType php,rubycall call util#filetype#MakeRocketMaps()
 
     autocmd FileType html,liquid,markdown,php,xhtml,xml call util#filetype#MakeXMLMaps()
