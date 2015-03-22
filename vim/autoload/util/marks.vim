@@ -3,7 +3,12 @@
 
 function! util#marks#Choose(bang) abort
   if a:bang ==# ''
-    marks abcdefghijklmnopqrstuvwxyz.
+    try
+      marks abcdefghijklmnopqrstuvwxyz.
+    catch /^Vim\%((\a\+)\)\=:E283/
+      echo 'No marks'
+      return
+    endtry
   else
     marks
   endif
