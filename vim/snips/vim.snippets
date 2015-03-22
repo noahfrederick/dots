@@ -62,6 +62,13 @@ augroup ${1:`!v expand('%:t:r')`}
 augroup END
 endsnippet
 
+snippet try "try/catch" b
+try
+	${0:${VISUAL}}
+catch /^Vim\%((\a\+)\)\=:E${1:000}/
+endtry
+endsnippet
+
 snippet it "vspec it block" b
 it '${1:does something}'
 	${0:${VISUAL:TODO}}
