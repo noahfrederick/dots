@@ -61,6 +61,11 @@ Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
    `(header-line ((,class (:box nil :background ,nox-bg-dark :foreground ,nox-comment))))
    `(mode-line ((,class (:box ,nox-bg-dark :background ,nox-bg-dark :foreground ,nox-fg))))
    `(mode-line-inactive ((,class (:box ,nox-bg-dark :background ,nox-bg-darkish :foreground ,nox-comment))))
+   ;; Custom mode-line faces
+   `(mode-line-modified-face ((,class (:foreground ,nox-red))))
+   `(mode-line-read-only-face ((,class (:foreground ,nox-blue))))
+   `(mode-line-mode-face ((,class (:foreground ,nox-comment))))
+   `(mode-line-vc-face ((,class (:foreground ,nox-comment))))
    ;; Escape and prompt faces
    `(minibuffer-prompt ((,class (:weight bold :foreground ,nox-keyword))))
    `(escape-glyph ((,class (:foreground ,nox-function))))
