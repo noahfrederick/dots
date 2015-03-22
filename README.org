@@ -1,6 +1,3 @@
-Personal configuration files and miscellaneous scripts for the
-platforms I work on (mostly OS X).
-
 * Installation
 
 #+BEGIN_SRC sh
@@ -24,30 +21,13 @@ in existence. Although Vim is admittedly better suited for writing
 code than prose (largely because of its poor handling of soft-wrapped
 lines), I use it for pretty much everything.
 
-On OS X, install Vim with Homebrew:
-
-#+BEGIN_SRC sh
-  brew install macvim --override-system-vim --with-lua --with-luajit
-#+END_SRC
-
-Ruby and Python support is compiled in by default as of this writing.
-
 ** Emacs
 
 [[http://www.gnu.org/software/emacs/][Emacs]] is a free, cross-platform text editor, mail client, news reader,
 organizer, and more. It is the second-best text editor currently in
 existence. It does not take the streamlined, minimalistic approach
 that Vim does, but it can be made to emulate Vim. I use Emacs for the
-excellent [[http://orgmode.org][Org mode]].
-
-On OS X, install Emacs with Homebrew:
-
-#+BEGIN_SRC sh
-  brew install emacs --cocoa --srgb
-#+END_SRC
-
-For instructions on how to install packages etc., see my [[emacs.d/emacs.org][emacs.org]]
-file.
+excellent [[http://orgmode.org][Org mode]]. See my [[emacs.d/emacs.org][emacs.org]] file for more.
 
 ** Fish
 
@@ -55,14 +35,6 @@ My shell of choice is the [[http://fishshell.com][fish shell]].
 More software ought to be developed with [[http://fishshell.com/docs/current/design.html][fish's design guidelines]] in
 mind.
 
-#+BEGIN_SRC sh
-  brew install fish
-#+END_SRC
-
 ** Tmux
 
 [[http://tmux.sourceforge.net][Tmux]] is a popular terminal multiplexer.
-
-#+BEGIN_SRC sh
-  brew install tmux
-#+END_SRC
