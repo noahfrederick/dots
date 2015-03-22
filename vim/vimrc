@@ -213,7 +213,7 @@ let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
 let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
 let &statusline .= "%="
 let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
-let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
+let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
 let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
 let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
