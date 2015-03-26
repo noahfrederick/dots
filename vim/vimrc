@@ -346,9 +346,11 @@ command! -nargs=0 -bar Colorscheme call fzf#run({
       \   'down':    20
       \ })
 
-" 'Quickfix do' analogous to :argdo, :bufdo, etc.
-command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
-command! -nargs=1 Cdofile call util#Cdo(1, <q-args>)
+if !exists(":cdo")
+  " 'Quickfix do' analogous to :argdo, :bufdo, etc.
+  command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
+  command! -nargs=1 Cdofile call util#Cdo(1, <q-args>)
+endif
 
 if executable('osascript')
   command! -nargs=? -bang -bar -complete=file Transmit call util#transmit#Send(<q-bang>, <q-args>)
