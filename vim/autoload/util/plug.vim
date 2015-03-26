@@ -4,6 +4,7 @@
 function! util#plug#LoadInsert()
   call plug#load('ultisnips')
   call plug#load('YouCompleteMe')
+  call plug#load('lexima.vim')
   call youcompleteme#Enable()
 
   doautocmd FileType

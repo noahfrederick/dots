@@ -37,7 +37,7 @@ if has("vim_starting")
   Plug 'tpope/vim-speeddating'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
-  Plug 'cohama/lexima.vim'
+  Plug 'cohama/lexima.vim',              { 'on': [] }
   Plug 'wellle/targets.vim'
   if has("mac")
     Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
