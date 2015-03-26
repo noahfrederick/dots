@@ -20,6 +20,7 @@ if has("vim_starting")
   Plug 'airblade/vim-gitgutter'
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
+  Plug 'justinmk/vim-dirvish'
   Plug 'scrooloose/syntastic',           { 'on': [] }
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
@@ -483,6 +484,8 @@ nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
 nnoremap <F4> :Start<CR>
 
+nnoremap - :Dirvish %<CR>
+
 " Write buffer and source current file
 nnoremap <silent> <Leader>W :write<CR>:source %<CR>
 
@@ -671,6 +674,8 @@ let g:ruby_no_comment_fold = 1
 " :help menu.vim
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1
+
+let g:loaded_netrwPlugin = 1
 
 " }}}
 " Local vimrc                                                                  {{{
