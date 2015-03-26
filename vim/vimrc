@@ -354,6 +354,10 @@ if executable('osascript')
   command! -nargs=? -bang -bar -complete=file Transmit call util#transmit#Send(<q-bang>, <q-args>)
 endif
 
+if exists(":terminal")
+  command! -nargs=0 -bang -bar Shell terminal<bang> $SHELL
+endif
+
 " }}}
 " Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
@@ -584,6 +588,10 @@ nnoremap <Leader>b :buffer <C-z><S-Tab>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
 nnoremap <Leader>n :Note<CR>
+
+if exists(":tnoremap")
+  tnoremap <Esc> <C-\><C-n>
+endif
 
 " }}}
 " Plug-in Settings                                                             {{{
