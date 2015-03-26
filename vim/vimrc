@@ -19,8 +19,7 @@ if has("vim_starting")
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'airblade/vim-gitgutter'
   Plug 'godlygeek/tabular'
-  Plug 'jeetsukumaran/vim-filebeagle'
-  Plug 'kien/ctrlp.vim',                 { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPBookmarkDir', 'CtrlPBookmarkDirAdd', 'CtrlPTag', 'CtrlPLine', 'CtrlPMRU', 'CtrlPDir', 'CtrlPMixed', 'CtrlPRTS'] }
+  Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
   Plug 'scrooloose/syntastic',           { 'on': [] }
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
@@ -305,13 +304,8 @@ command! -nargs=0 -bar FollowSymlink call util#path#FollowSymlink()
 command! -bang -nargs=0 -bar Marks call util#marks#Choose(<q-bang>)
 
 if exists("$NOTES")
-  function! s:complete_note(A, L, P)
-    return util#path#CompleteHead($NOTES, '*.md', a:A, a:L, a:P)
-  endfunction
-  command! -bang Today execute "edit<bang> $LOGBOOK/" . strftime("%Y-%m-%d") . ".md"
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=1 -bang -complete=customlist,<SID>complete_note Note
-        \ execute "edit<bang> $NOTES/" . fnameescape(<q-args>) . ".md"
+  command! -nargs=0 -bang Note FZF<bang> $NOTES
   command! -nargs=0 -bar ShoppingList call util#ShoppingList()
 endif
 
@@ -319,6 +313,37 @@ endif
 " file it was loaded from, thus the changes you made.
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
+
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+command! -nargs=0 -bar FZFBuffer call fzf#run({
+      \   'source':  reverse(<SID>buflist()),
+      \   'sink':    function('<SID>bufopen'),
+      \   'options': '+m',
+      \   'down':    len(<SID>buflist()) + 2
+      \ })
+command! -nargs=0 -bar -bang FZFMru call fzf#run({
+      \   'source':  v:oldfiles,
+      \   'sink':    'edit<bang>',
+      \   'options': '-m',
+      \   'down':    20
+      \ })
+command! -nargs=0 -bar Colorscheme call fzf#run({
+      \   'source':  map(globpath(&runtimepath, "colors/*.vim", 0, 1),
+      \                  "fnamemodify(v:val, ':t:r')"),
+      \   'sink':    'colorscheme',
+      \   'options': '+m',
+      \   'down':    20
+      \ })
 
 " 'Quickfix do' analogous to :argdo, :bufdo, etc.
 command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
@@ -541,14 +566,9 @@ nnoremap _vi :set filetype=vim<CR>
 nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
-nnoremap <Leader><Leader> :CtrlPBuffer<CR>
-nnoremap <Leader>; :CtrlP<CR>
-nnoremap <Leader>. :CtrlP .<CR>
-nnoremap <Leader>- :CtrlPBookmarkDir<CR>
-nnoremap <Leader>_ :CtrlPBookmarkDirAdd<CR>
+nnoremap <Leader><Leader> :FZFBuffer<CR>
+nnoremap <Leader>? :FZFMru<CR>
 nnoremap <Leader>` :Marks<CR>
-nnoremap <Leader>, :CtrlPTag<CR>
-nnoremap <Leader>? :CtrlPMRU<CR>
 nnoremap <Leader>] :tjump /
 nnoremap <Leader>D :edit README*<CR>
 nnoremap <Leader>E :edit Gemfile<CR>
@@ -558,13 +578,9 @@ nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
-nnoremap <Leader>d :CtrlPDir<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
-nnoremap <Leader>l :CtrlPLine<CR>
-nnoremap <Leader>m :CtrlPMixed<CR>
-nnoremap <Leader>n :CtrlP $NOTES<CR>
-nnoremap <Leader>p :CtrlP $PROJECTS<CR>
-nnoremap <Leader>v :CtrlPRTS<CR>
+nnoremap <Leader>f :FZF<CR>
+nnoremap <Leader>n :Note<CR>
 
 " }}}
 " Plug-in Settings                                                             {{{
@@ -607,42 +623,6 @@ let g:splitjoin_join_mapping = ''
 
 " Default of 'a' conflicts with Sideways argument text objects mapped above
 let g:targets_argTrigger = 'A'
-
-" :help ctrlp-options
-let g:ctrlp_cache_dir = $HOME."/.vim/tmp/cache/ctrlp"
-if !isdirectory(g:ctrlp_cache_dir) && exists("*mkdir")
-  call mkdir(g:ctrlp_cache_dir, "p", 0700)
-endif
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_extensions = ["tag", "dir", "bookmarkdir", "line", "rtscript"]
-let g:ctrlp_user_command = {
-      \ 'types': {
-      \   1: [".git", "cd %s && git ls-files -co --exclude-standard"],
-      \   2: ['.hg', 'hg --cwd %s locate -I .'],
-      \ },
-      \ 'fallback': 'find %s -path .git -prune -o -type f'
-      \ }
-let g:ctrlp_abbrev = {
-      \ 'gmode': 't',
-      \ 'abbrevs': [
-      \   { 'pattern': '^a ', 'expanded': 'app/'        },
-      \   { 'pattern': '^b ', 'expanded': 'bin/'        },
-      \   { 'pattern': '^c ', 'expanded': 'controller/' },
-      \   { 'pattern': '^e ', 'expanded': 'message/'    },
-      \   { 'pattern': '^f ', 'expanded': 'config/'     },
-      \   { 'pattern': '^h ', 'expanded': 'helper/'     },
-      \   { 'pattern': '^l ', 'expanded': 'lib/'        },
-      \   { 'pattern': '^m ', 'expanded': 'model/'      },
-      \   { 'pattern': '^o ', 'expanded': 'log/'        },
-      \   { 'pattern': '^p ', 'expanded': 'template/'   },
-      \   { 'pattern': '^s ', 'expanded': 'spec/'       },
-      \   { 'pattern': '^t ', 'expanded': 'test/'       },
-      \   { 'pattern': '^v ', 'expanded': 'view/'       },
-      \ ]}
-let g:ctrlp_status_func = {
-      \   "main": "util#ctrlp#Statusline1",
-      \   "prog": "util#ctrlp#Statusline2",
-      \ }
 
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
