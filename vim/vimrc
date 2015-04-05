@@ -599,11 +599,6 @@ endif
 " Plug-in Settings                                                             {{{
 " --------------------------------------------------------------------------------
 
-" delimitMate settings
-let g:delimitMate_balance_matchpairs = 1
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-
 let g:UltiSnipsListSnippets = "<C-g><Tab>"
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
