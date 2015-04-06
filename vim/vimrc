@@ -490,10 +490,7 @@ nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
 nnoremap <F4> :Start<CR>
 
-nnoremap - :Dirvish %<CR>
-
-" Write buffer and source current file
-nnoremap <silent> <Leader>W :write<CR>:source %<CR>
+nnoremap - :Dirvish %:p:h<CR>
 
 " Write a one-off timestamped version of the current buffer
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
@@ -511,7 +508,7 @@ nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
 " Yank entire buffer content
 nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
 
-nnoremap <Leader>gg :Git<Space>
+nnoremap <Leader>g<Space> :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gs :Gstatus<CR>
@@ -522,6 +519,11 @@ nnoremap <Leader>gb :Gblame<CR>
 xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
+if exists(":terminal")
+  nnoremap <silent> <Leader>gg <C-w>v:lcd <C-r>=expand('%:p:h')<CR><Bar>terminal git graph -<C-r>=&lines-6<CR><CR>
+else
+  nnoremap <Leader>gg :Git graph<CR>
+endif
 
 nnoremap <Leader>t :Transmit<CR>
 
