@@ -47,26 +47,25 @@ set -gx PINENTRY_USER_DATA "USE_CURSES=1"
 set -gx GPG_TTY (tty)
 
 #
-# ALIASES
+# ABBREVIATIONS
 #
-function o;   if [ -z $argv[1] ]; open .; else; open $argv; end; end
-function g;   if [ -z $argv[1] ]; git status --short; else; git $argv; end; end
-function ga;  git add $argv; end
-function gb;  git branch $argv; end
-function gc;  git commit $argv; end
-function gca; git commit --all $argv; end
-function gcl; git clone $argv; end
-function gco; git checkout $argv; end
-function gd;  git diff $argv; end
-function gdc; git diff --cached $argv; end
-function gf;  git fetch $argv; end
-function gg;  git graph $argv; end
-function gl;  git log $argv; end
-function gp;  git push $argv; end
-function gpu; git pull $argv; end
-function gs;  git status $argv; end
-function gst; git stash $argv; end
-function gsp; git stash pop $argv; end
+abbr --add g   git
+abbr --add ga  git add
+abbr --add gb  git branch
+abbr --add gc  git commit
+abbr --add gca git commit --all
+abbr --add gcl git clone
+abbr --add gco git checkout
+abbr --add gd  git diff
+abbr --add gdc git diff --cached
+abbr --add gf  git fetch
+abbr --add gg  git graph
+abbr --add gl  git log
+abbr --add gp  git push
+abbr --add gpu git pull
+abbr --add gs  git status
+abbr --add gst git stash
+abbr --add gsp git stash pop
 
 # Make fish work with boxen
 set -l FISH_BOXEN ~/.config/fish/boxen.fish
