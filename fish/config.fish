@@ -13,11 +13,9 @@ set -g fish_greeting
 # DIRECTORIES
 #
 set -gx DOCS     "$HOME/Documents"
-set -gx LOGBOOK  "$DOCS/Logbook"
 set -gx DROPBOX  "$HOME/Dropbox"
 set -gx NOTES    "$DROPBOX/Notes"
 set -gx CODE     "$HOME/src"
-set -gx BLOG     "$CODE/noahfrederick.com"
 
 append_to_cdpath "."
 append_to_cdpath "$CODE"
