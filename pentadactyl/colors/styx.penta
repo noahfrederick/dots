@@ -15,7 +15,7 @@ hi -a -link=FontFixed Hint
 hi -a -link=FontFixed CompItem
 hi -a -link=FontFixed CompTitle
 
-hi Hint font-size: 18px; background: rgba(162,114,209,0.8) !important; border: 2px solid rgb(162,114,209); padding: 4px; border-radius: 3px; font-weight: bold; color: white; line-height:1em;
+hi Hint font-size: 12px; background: rgba(162,114,209,0.8) !important; border: 2px solid rgb(162,114,209); padding: 2px; border-radius: 3px; font-weight: bold; color: white; line-height: 1em; text-transform: uppercase;
 hi HintActive background: rgba(200, 255, 0, 0.6) !important;
 " This one isn't being respected
 hi HintElem background: rgba(255, 195, 0, 0.6) !important;
@@ -38,8 +38,8 @@ hi -a WarningMsg background: linear-gradient(to bottom, #f05, #b03) !important;
 " hi -a InlineHelpLink color: #93c3d6 !important;
 hi -a URL color: #93c3d6 !important;
 
-hi -a StatusLine background: linear-gradient(to bottom, #444, #222) !important;
-" hi -a StatusLine padding-right: .4em !important;
+hi -a StatusLine background: #222 !important;
+hi -a StatusLine padding-right: .5em !important;
 hi -a StatusLine height: 1.8em !important;
 hi -a StatusLine font-weight: normal !important;
 hi -a StatusLine text-shadow: 0 -1px 1px #000 !important;
