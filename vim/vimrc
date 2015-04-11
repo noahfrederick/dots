@@ -588,14 +588,10 @@ nnoremap <Leader>I :edit .gitignore<CR>
 nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
-nnoremap <Leader>b :buffer <C-z><S-Tab>
+nnoremap <Leader>b :FZFBuffer<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
 nnoremap <Leader>n :Note<CR>
-
-if exists(":tnoremap")
-  tnoremap <Esc> <C-\><C-n>
-endif
 
 " }}}
 " Plug-in Settings                                                             {{{
