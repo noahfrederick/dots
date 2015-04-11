@@ -67,6 +67,7 @@ if has("vim_starting")
 
   " File-type runtime files
   Plug 'dag/vim-fish'
+  Plug 'joedicastro/vim-pentadactyl'
   Plug 'kana/vim-vspec'
   Plug 'sheerun/vim-polyglot'
   Plug 'vim-scripts/smarty-syntax'
