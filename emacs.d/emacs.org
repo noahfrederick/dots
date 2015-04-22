@@ -195,6 +195,64 @@ Circle icon set]] instead:
 
 This SVG can be converted into an ICNS file [[http://iconverticons.com/online/][here]].
 
+** Mode-line
+
+The mode-line displays information about the visible buffer at the
+bottom of the window. This defines a custom mode line format:
+
+#+NAME: appearance
+#+BEGIN_SRC emacs-lisp :tangle no
+  (make-face 'mode-line-read-only-face)
+  (make-face 'mode-line-modified-face)
+  (make-face 'mode-line-mode-face)
+  (make-face 'mode-line-vc-face)
+
+  (defvar nox/mode-line-projectile
+    '(:propertize
+      (:eval (when (ignore-errors (projectile-project-root))
+               (concat (projectile-project-name) " ")))
+      face font-lock-constant-face)
+    "Mode line format for Projectile.")
+  (put 'nox/mode-line-projectile 'risky-local-variable t)
+
+  (defvar nox/mode-line-vc
+    '(:propertize
+      ;; Strip the backend name from the VC status information
+      (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+               (substring vc-mode (+ (length backend) 2))))
+      face mode-line-vc-face)
+    "Mode line format for VC Mode.")
+  (put 'nox/mode-line-vc 'risky-local-variable t)
+
+  (defvar nox/mode-line-modified
+    '(:eval (cond (buffer-read-only
+                   (propertize "○" 'face 'mode-line-read-only-face))
+                  ((buffer-modified-p)
+                   (propertize "●" 'face 'mode-line-modified-face))
+                  (t " ")))
+    "Mode line buffer modified/read-only indicator.")
+  (put 'nox/mode-line-modified 'risky-local-variable t)
+
+  (defvar nox/mode-line-major-mode
+    '(:eval (propertize "%m" 'face 'mode-line-mode-face))
+    "Mode line format for major mode.")
+  (put 'nox/mode-line-major-mode 'risky-local-variable t)
+
+  (setq-default mode-line-format
+                '("%e" ; Lisp memory error message
+                  mode-line-front-space
+                  nox/mode-line-projectile
+                  mode-line-buffer-identification
+                  (vc-mode nox/mode-line-vc)
+                  " "
+                  nox/mode-line-modified
+                  "    "
+                  nox/mode-line-major-mode
+                  " "
+                  (global-mode-string global-mode-string)
+                  mode-line-end-spaces))
+#+END_SRC
+
 ** UI
 
 Hide parts of the GUI that we don't need, namely the graphical tool
@@ -315,23 +373,6 @@ for five digits with some padding to the right of the numbers.
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq linum-format "%5d ")
   (add-hook 'prog-mode-hook 'linum-mode)
-#+END_SRC
-
-** Mode-line
-
-[[https://github.com/Bruce-Connor/smart-mode-line][Smart Mode Line]] provides a fairly understandable mode-line format.
-
-#+NAME: appearance
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package smart-mode-line
-    :init
-    (progn
-      (if after-init-time (sml/setup)
-        (add-hook 'after-init-hook 'sml/setup))
-
-      (setq sml/override-theme nil
-            sml/shorten-directory nil
-            sml/mode-width 'right)))
 #+END_SRC
 
 ** Popwin
