@@ -9,9 +9,10 @@
 
 In addition to the basic and font-lock faces, faces are provided for
 Ace-Jump, Ansi-Color, Auto-Complete, Dired, Ediff, ERC, Eshell, Evil,
-Flycheck, Flyspell, Gnus, Guide Key, Helm, Ido, Isearch, Magit,
-Markdown, Message, Org, Rainbow Delimiters, Semantic, Smart Mode Line,
-Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
+Flycheck, Flyspell, Gnus, Guide Key, Helm, Ido, Isearch, Ledger,
+Magit, Markdown, Message, Org, Rainbow Delimiters, Semantic, Smart
+Mode Line, Smartparens, Speedbar, Undo Tree, Whitespace, and
+YASnippet.")
 
 (let* ((class '((class color) (min-colors 89)))
        ;; Enox palette colors
@@ -129,6 +130,18 @@ Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
    `(diff-context ((,class (:foreground ,nox-comment))))
    `(diff-hunk-header ((,class (:background ,nox-fg-subtle))))
    `(diff-file-header ((,class (:weight bold :background ,nox-fg-subtle :foreground ,nox-em))))
+   ;; Ledger faces
+   `(ledger-font-comment-face ((,class (:inherit font-lock-comment-face))))
+   `(ledger-font-directive-face ((,class (:weight bold :foreground ,nox-fg-subtle))))
+   `(ledger-font-posting-account-face ((,class (:foreground ,nox-constant))))
+   `(ledger-font-posting-account-cleared-face ((,class (:foreground ,nox-constant))))
+   `(ledger-font-posting-amount-face ((,class (:foreground ,nox-green))))
+   `(ledger-font-posting-amount-pending-face ((,class (:foreground ,nox-red))))
+   `(ledger-font-posting-amount-cleared-face ((,class (:foreground ,nox-special))))
+   `(ledger-font-posting-date-face ((,class (:foreground ,nox-fg-subtle))))
+   `(ledger-font-payee-cleared-face ((,class (:foreground ,nox-green))))
+   `(ledger-font-payee-pending-face ((,class (:foreground ,nox-special))))
+   `(ledger-font-payee-uncleared-face ((,class (:foreground ,nox-yellow))))
    ;; Ido faces
    `(ido-first-match ((,class (:weight bold :foreground ,nox-em))))
    `(ido-only-match ((,class (:weight bold :foreground ,nox-green))))
@@ -344,7 +357,7 @@ Smartparens, Speedbar, Undo Tree, Whitespace, and YASnippet.")
                                         (:line-width -1 :style released-button)))))
    `(org-date ((,class (:underline ,nox-special :foreground ,nox-special))))
    `(org-link ((,class (:underline ,nox-constant :foreground ,nox-constant))))
-   `(org-level-1 ((,class (:height 200 :weight bold :foreground ,nox-em))))
+   `(org-level-1 ((,class (:weight bold :foreground ,nox-em))))
    `(org-level-2 ((,class (:weight bold :foreground ,nox-variable))))
    `(org-level-3 ((,class (:weight bold :foreground ,nox-fg))))
    `(org-level-4 ((,class (:weight bold :foreground ,nox-comment))))
