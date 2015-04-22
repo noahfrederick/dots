@@ -950,6 +950,17 @@ Magit provides featureful Git integration.
   (add-hook 'after-save-hook 'nox/byte-compile-current-buffer)
 #+END_SRC
 
+*** Ledger
+
+Ledger mode is for working with the file format associated with the
+command-line accounting program.
+
+#+NAME: editing
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package ledger-mode
+    :mode (("\\.ledger$" . ledger-mode)))
+#+END_SRC
+
 *** Puppet
 
 #+NAME: editing
