@@ -274,20 +274,11 @@ if has("autocmd")
     autocmd QuickFixCmdPost *grep* cwindow
 
     highlight default link TrailingWhitespace ErrorMsg
-    highlight default link MixedWhitespace    WarningMsg
 
-    autocmd BufWinEnter *
-          \ if &modifiable |
-          \   if &expandtab |
-          \     2match MixedWhitespace /^ *\zs\t\+/ |
-          \   else |
-          \     2match MixedWhitespace /^\t*\zs  \+/ |
-          \   endif |
-          \ endif
     autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
-    autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
+    autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
 
     " Never show line numbers in command-line window as they are not useful
     " and take up space (normally it inherits this setting like any other
