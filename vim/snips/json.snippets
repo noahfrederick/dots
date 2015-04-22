@@ -1,0 +1,12 @@
+# json.snippets - Snippets for json file type
+
+snippet _vim "Vim plug-in addon-info.json" b
+{
+	"name": "${1:`!v util#snippet#ProjectTitle()`}",
+	"version": "0.1.0",
+	"author": "`!v util#snippet#ProjectAuthor()`",
+	"description": "$2",
+	"homepage": "https://github.com/`!v util#snippet#GitHubUsername()`/vim-$1",
+	"script_id": "$3"
+}
+endsnippet
