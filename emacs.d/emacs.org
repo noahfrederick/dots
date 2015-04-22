@@ -36,7 +36,8 @@ of packages that might otherwise slow down Emacs's startup.
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (require 'use-package)
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 * Emacs Initialization
@@ -120,7 +121,7 @@ new frame in a terminal:
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package server
     :if window-system
-    :init
+    :config
     (unless (server-running-p)
       (server-start)))
 #+END_SRC
@@ -384,9 +385,10 @@ height that spans the entire width of the frame.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package popwin
     :commands popwin-mode
-    :idle (popwin-mode 1)
+    :defer 2
     :config
     (progn
+      (popwin-mode 1)
       (push '("*Org Agenda*" :width 82 :position right :dedicated t :stick t) popwin:special-display-config)
       (push '("*helm*" :height 20) popwin:special-display-config)
       (push '("^\*helm .+\*$" :regexp t :height 20) popwin:special-display-config)
@@ -456,12 +458,11 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil
-    :pre-load
-    (setq evil-want-C-w-in-emacs-state t)
     :init
     (progn
+      (setq evil-want-C-w-in-emacs-state t)
       (use-package evil-leader
-        :init
+        :config
         (progn
           (evil-leader/set-leader "<SPC>")
           (global-evil-leader-mode 1)
@@ -533,7 +534,7 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 
       ;; Commentary.vim
       (use-package evil-operator-comment
-        :init
+        :config
         (global-evil-operator-comment-mode 1))
 
       ;; Vinegar.vim
@@ -631,13 +632,15 @@ These packages provide various conveniences for editing.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil-surround
     :commands global-evil-surround-mode
-    :idle (global-evil-surround-mode 1))
+    :config (global-evil-surround-mode 1)
+    :defer 2)
 
   (use-package smartparens-config
     :commands smartparens-global-mode
-    :idle (smartparens-global-mode t)
+    :defer 2
     :config
     (progn
+      (smartparens-global-mode t)
       ;; Smartparens manipulations
       ;; See all of them here:
       ;; https://github.com/Fuco1/smartparens/wiki/Working-with-expressions
@@ -721,9 +724,8 @@ works like that from [[https://github.com/tpope/vim-eunuch][eunuch.vim]].
         (delete-file current))))
 
 
-  (eval-after-load 'evil
-    '(progn
-       (evil-ex-define-cmd "R[emove]" 'nox/delete-current-file)))
+  (with-eval-after-load 'evil
+    (evil-ex-define-cmd "R[emove]" 'nox/delete-current-file))
 #+END_SRC
 
 ** Scrolling
@@ -798,7 +800,7 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
   (add-hook 'web-mode-hook 'nox/indent-use-tabs)
 
   (use-package dtrt-indent
-    :init (dtrt-indent-mode 1))
+    :config (dtrt-indent-mode 1))
 #+END_SRC
 
 #+NAME: editing
@@ -855,14 +857,16 @@ Use aspell for spell checking: =brew install aspell --lang=en=
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package flyspell
-    :defer t
-    :idle (nox/flyspell-setup)
-    :init (setq ispell-program-name "aspell"))
-
-  (defun nox/flyspell-setup ()
-    "Deferred setup of flyspell-mode."
-    (add-hook 'text-mode-hook 'flyspell-mode)
-    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+    :defer 2
+    :init
+    (defun nox/flyspell-setup ()
+      "Setup of flyspell-mode."
+      (add-hook 'text-mode-hook 'flyspell-mode)
+      (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+    :config
+    (progn
+      (setq ispell-program-name "aspell")
+      (nox/flyspell-setup)))
 #+END_SRC
 
 ** Syntax Checking
@@ -873,8 +877,11 @@ Use [[https://github.com/flycheck/flycheck][Flycheck]] to validate syntax on the
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package flycheck
     :commands global-flycheck-mode
-    :idle (global-flycheck-mode 1)
-    :config (setq-default flycheck-disabled-checkers '(html-tidy emacs-lisp-checkdoc)))
+    :defer 2
+    :config
+    (progn
+      (global-flycheck-mode 1)
+      (setq-default flycheck-disabled-checkers '(html-tidy emacs-lisp-checkdoc))))
 #+END_SRC
 
 ** Version Control and History
@@ -1014,14 +1021,14 @@ Use [[https://github.com/capitaomorte/yasnippet][YASnippet]] for snippets:
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package yasnippet
-    :commands yas-global-mode
-    :idle (yas-global-mode t)
-    :init
+    :defer 2
+    :config
     (progn
       ;; Suppress excessive log messages
       (setq yas-verbosity 1
             yas-prompt-functions '(yas-ido-prompt)
-            yas-snippet-dir (expand-file-name "snippets" user-emacs-directory))))
+            yas-snippet-dir (expand-file-name "snippets" user-emacs-directory))
+      (yas-global-mode t)))
 #+END_SRC
 
 ** Expansion
@@ -1056,13 +1063,12 @@ Place the point where we left it when last visiting the same file.
     :init
     (progn
       (setq ido-save-directory-list-file (expand-file-name "ido.last" nox/ephemeral-directory))
-
+    :config
+    (progn
       (ido-mode t)
       (ido-everywhere t)
       (ido-ubiquitous-mode t))
 
-    :config
-    (progn
       (setq ido-enable-flex-matching t
             ido-use-virtual-buffers t
             ido-create-new-buffer 'always) ; Do not prompt when creating new file
@@ -1079,7 +1085,7 @@ Place the point where we left it when last visiting the same file.
         (define-key ido-file-completion-map (kbd "C--") 'ido-enter-dired)) ; Originally C-d
 
       (use-package ido-vertical-mode
-        :init
+        :config
         (ido-vertical-mode))))
 #+END_SRC
 
@@ -1092,7 +1098,7 @@ Smex provides Ido completion for =M-x=.
   (use-package smex
     :bind (("M-x" . smex)
            ("M-X" . smex-major-mode-commands))
-    :init
+    :config
     (progn
       (setq smex-save-file (expand-file-name "smex-items" nox/ephemeral-directory))
       (setq smex-history-length 10)
@@ -1114,7 +1120,7 @@ ibuffer that categorize buffers by version control repository root.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ibuffer
     :commands ibuffer
-    :init
+    :config
     (progn
       (setq ibuffer-saved-filter-groups
             '(("Config" (or
@@ -1219,7 +1225,7 @@ Projectile's bindings start with =C-c p=.
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package projectile
-    :init
+    :config
     (progn
       (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
       (add-to-list 'projectile-globally-ignored-files ".DS_Store") ; FIXME: Only works for file in root
@@ -1234,7 +1240,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package auto-complete-config
     :commands ac-config-default
-    :idle (ac-config-default)
+    :defer 2
     :init
     (progn
       ;; The default value of ac-sources is
@@ -1251,6 +1257,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
             ac-auto-start 1)) ; Number of characters typed before completion starts
     :config
     (progn
+      (ac-config-default)
       (use-package pos-tip)
 
       (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
@@ -1268,7 +1275,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package guide-key
     :commands guide-key-mode
-    :idle (guide-key-mode 1)
+    :defer 2
     :config
     (progn
       (setq guide-key/recursive-key-sequence-flag t
@@ -1294,7 +1301,9 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (defun guide-key/my-hook-function-for-markdown-mode ()
         (guide-key/add-local-guide-key-sequence "C-c")
         (guide-key/add-local-highlight-command-regexp "markdown-\\|outline-"))
-      (add-hook 'markdown-mode-hook 'guide-key/my-hook-function-for-markdown-mode)))
+      (add-hook 'markdown-mode-hook 'guide-key/my-hook-function-for-markdown-mode)
+
+      (guide-key-mode 1)))
 #+END_SRC
 
 * Org
@@ -1325,30 +1334,27 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 
       (setq org-capture-templates
-            '(("t" "To-do" entry
-                (file "")
-                "* TODO %u %^{Task}"
-                :clock-keep t :kill-buffer t)
-              ("d" "To-do (done)" entry
-                (file "")
-                "* DONE %u %^{Task}"
-                :clock-keep t :kill-buffer t)
+            '(("t" "To-do")
+              ("tt" "To-do" entry
+               (file "")
+               "* TODO %u %^{Task}"
+               :clock-keep t :kill-buffer t)
+              ("td" "To-do (done)" entry
+               (file "")
+               "* DONE %u %^{Task}"
+               :clock-keep t :kill-buffer t)
               ("u" "Quick to-do" entry
-                (file "")
-                "* TODO %^{Task}\nSCHEDULED: %t"
-                :clock-keep t :kill-buffer t :immediate-finish t)
-              ("j" "Journal entry (prompt for date)" entry
-                (file+datetree+prompt "~/org/diary.org")
-                "* %?\n%U\n"
-                :clock-keep t :kill-buffer t)
-              ("J" "Journal entry" entry
-                (file+datetree "~/org/diary.org")
-                "* %?\n%U\n"
-                :clock-keep t :kill-buffer t)
+               (file "")
+               "* TODO %^{Task}\nSCHEDULED: %t"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("j" "Journal entry" entry
+               (file+datetree+prompt "~/org/diary.org")
+               "* %?\n%U\n"
+               :clock-keep t :kill-buffer t)
               ("p" "TeamworkPM task" entry
-                (file+headline "~/org/bigtech.org" "Tasks")
-                "* TODO %^{TWPMLink}p%^{Task}"
-                :clock-keep t :clock-in t :immediate-finish t)))
+               (file+headline "~/org/bigtech.org" "Tasks")
+               "* TODO %^{TWPMLink}p%^{Task}"
+               :clock-keep t :clock-in t :immediate-finish t)))
 
       (setq org-goto-interface 'outline-path-completion
             org-log-done 'time
@@ -1365,13 +1371,13 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
             org-catch-invisible-edits 'show-and-error)
 
       (setq org-todo-keywords '((sequence
-                                  "TODO(t)"
-                                  "STARTED(s!)"
-                                  "WAITING(w@/!)"
-                                  "|"
-                                  "CANCELED(c@)"
-                                  "DONE(d!)"
-                                  )))
+                                 "TODO(t)"
+                                 "STARTED(s!)"
+                                 "WAITING(w@/!)"
+                                 "|"
+                                 "CANCELED(c@)"
+                                 "DONE(d!)"
+                                 )))
 
       (defun nox/verify-refile-target ()
         "Exclude TODO keywords with a done state from refile targets"
@@ -1381,9 +1387,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 
       ;; Code blocks
       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)
-          (sh . t)))
+       'org-babel-load-languages
+       '((emacs-lisp . t)
+         (ledger . t)
+         (sh . t)))
       (setq org-src-fontify-natively t
             org-src-tab-acts-natively t)))
 #+END_SRC
@@ -1526,14 +1533,13 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
     "c"   'org-capture
     "r l" 'org-store-link)
 
-  (eval-after-load 'org-agenda
-    '(progn
-       ;; Use the standard Org agenda bindings as a base
-       (evil-make-overriding-map org-agenda-mode-map 'emacs t)
-       (evil-define-key 'emacs org-agenda-mode-map "j" 'org-agenda-next-line)
-       (evil-define-key 'emacs org-agenda-mode-map "k" 'org-agenda-previous-line)
-       (evil-define-key 'emacs org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date) ; "j"
-       (evil-define-key 'emacs org-agenda-mode-map "n" 'org-agenda-capture)))         ; "k"
+  (with-eval-after-load 'org-agenda
+    ;; Use the standard Org agenda bindings as a base
+    (evil-make-overriding-map org-agenda-mode-map 'emacs t)
+    (evil-define-key 'emacs org-agenda-mode-map "j" 'org-agenda-next-line)
+    (evil-define-key 'emacs org-agenda-mode-map "k" 'org-agenda-previous-line)
+    (evil-define-key 'emacs org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date) ; "j"
+    (evil-define-key 'emacs org-agenda-mode-map "n" 'org-agenda-capture))          ; "k"
 #+END_SRC
 
 ** Clocking Time
@@ -1541,7 +1547,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org-clock
-    :init
+    :config
     (progn
       (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" org-directory)
             org-clock-persist t
@@ -1594,45 +1600,45 @@ Below are our custom agenda commands:
 
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
-  (eval-after-load 'org-agenda
-    '(setq org-agenda-custom-commands
-           '(("r" "Agenda"
-              ((agenda "")
-               (tags-todo "/!STARTED"
-                          ((org-agenda-overriding-header "In Progress")
-                           (org-tags-match-list-sublevels nil)
-                           (org-agenda-sorting-strategy '(priority-down
-                                                          category-keep
-                                                          effort-up))))
-               (tags "REFILE"
-                     ((org-agenda-overriding-header "Entries to Refile")
-                      (org-tags-match-list-sublevels nil)))
-               (tags "-REFILE/"
-                     ((org-agenda-overriding-header "Entries to Archive")
-                      (org-agenda-skip-function 'nox/skip-non-archivable-tasks)
-                      (org-tags-match-list-sublevels nil)))))
-             ("d" "Timeline for today"
-              ((agenda ""))
-              ((org-agenda-ndays 1)
-               (org-agenda-show-log t)
-               (org-agenda-log-mode-items '(clock closed))
-               (org-agenda-clockreport-mode t)
-               (org-agenda-entry-types '())))
-             ("w" "Waiting for"
-              todo "WAITING"
-              ((org-agenda-sorting-strategy '(priority-down))))
-             ("U" "Important stuff I don't want to do"
-              ((tags-todo "focus")))
-             ("P" "By priority"
-              ((tags-todo "+PRIORITY=\"A\"")
-               (tags-todo "+PRIORITY=\"B\"")
-               (tags-todo "+PRIORITY=\"\"")
-               (tags-todo "+PRIORITY=\"C\""))
-              ((org-agenda-prefix-format "%-10c %-10T %e ")
-               (org-agenda-sorting-strategy '(priority-down
-                                              tag-up
-                                              category-keep
-                                              effort-down)))))))
+  (with-eval-after-load 'org-agenda
+    (setq org-agenda-custom-commands
+          '(("r" "Agenda"
+             ((agenda "")
+              (tags-todo "/!STARTED"
+                         ((org-agenda-overriding-header "In Progress")
+                          (org-tags-match-list-sublevels nil)
+                          (org-agenda-sorting-strategy '(priority-down
+                                                         category-keep
+                                                         effort-up))))
+              (tags "REFILE"
+                    ((org-agenda-overriding-header "Entries to Refile")
+                     (org-tags-match-list-sublevels nil)))
+              (tags "-REFILE/"
+                    ((org-agenda-overriding-header "Entries to Archive")
+                     (org-agenda-skip-function 'nox/skip-non-archivable-tasks)
+                     (org-tags-match-list-sublevels nil)))))
+            ("d" "Timeline for today"
+             ((agenda ""))
+             ((org-agenda-ndays 1)
+              (org-agenda-show-log t)
+              (org-agenda-log-mode-items '(clock closed))
+              (org-agenda-clockreport-mode t)
+              (org-agenda-entry-types '())))
+            ("w" "Waiting for"
+             todo "WAITING"
+             ((org-agenda-sorting-strategy '(priority-down))))
+            ("U" "Important stuff I don't want to do"
+             ((tags-todo "focus")))
+            ("P" "By priority"
+             ((tags-todo "+PRIORITY=\"A\"")
+              (tags-todo "+PRIORITY=\"B\"")
+              (tags-todo "+PRIORITY=\"\"")
+              (tags-todo "+PRIORITY=\"C\""))
+             ((org-agenda-prefix-format "%-10c %-10T %e ")
+              (org-agenda-sorting-strategy '(priority-down
+                                             tag-up
+                                             category-keep
+                                             effort-down)))))))
 #+END_SRC
 
 #+NAME: org
@@ -1671,7 +1677,7 @@ list.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package appt
-    :init
+    :config
     (progn
       (setq appt-message-warning-time '30) ;; Send first warning 30 minutes before appointment
       (setq appt-display-interval '15)     ;; Warn every 15 minutes from appt-message-warning-time
@@ -1684,7 +1690,7 @@ list.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org-mobile
     :disabled t
-    :init
+    :config
     (progn
       ;; Set to the name of the file where new notes will be stored
       (setq org-mobile-inbox-for-pull (expand-file-name "mobile-flagged.org" org-directory)
@@ -1993,7 +1999,7 @@ left disabled for now.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package mu4e
     :disabled t
-    :pre-load
+    :init
     (add-to-list 'load-path "~/src/mu/mu4e")
     :config
     (progn
