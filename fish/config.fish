@@ -35,6 +35,8 @@ set -g fish_color_cwd         yellow
 set -g fish_color_end         green
 set -g fish_color_error       red     --bold
 set -g fish_color_escape      purple
+set -g fish_color_param       blue
+set -g fish_color_quote       yellow
 set -g fish_color_valid_path  blue    --underline
 
 #
@@ -45,8 +47,19 @@ set -gx PINENTRY_USER_DATA "USE_CURSES=1"
 set -gx GPG_TTY (tty)
 
 #
+# FZF
+#
+set -gx FZF_DEFAULT_OPTS "--inline-info"
+
+#
 # ABBREVIATIONS
 #
+abbr --add br  brew
+abbr --add bru brew upgrade
+abbr --add e   emacsclient
+abbr --add ee  emacsclient --eval
+abbr --add en  emacsclient --no-wait
+abbr --add et  emacsclient --tty
 abbr --add g   git
 abbr --add ga  git add
 abbr --add gb  git branch
@@ -64,6 +77,15 @@ abbr --add gpu git pull
 abbr --add gs  git status
 abbr --add gst git stash
 abbr --add gsp git stash pop
+abbr --add lba ledger balance
+abbr --add leq ledger equity
+abbr --add lst ledger stats
+abbr --add lre ledger register
+abbr --add lxa ledger xact
+abbr --add v   nvim
+abbr --add vs  nvim -S
+abbr --add vn  nvim -u NONE
+abbr --add vd  nvim --noplugin -u minimal.vim
 
 # Make fish work with boxen
 set -l FISH_BOXEN ~/.config/fish/boxen.fish

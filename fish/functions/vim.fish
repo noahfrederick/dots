@@ -4,6 +4,6 @@ function vim --description 'Vim with default arguments'
 	else if test -r Session.vim
 		command vim -S
 	else
-		command vim .
+		command vim
 	end
 end
