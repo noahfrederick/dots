@@ -69,6 +69,7 @@ if has("vim_starting")
   Plug 'dag/vim-fish'
   Plug 'joedicastro/vim-pentadactyl'
   Plug 'kana/vim-vspec'
+  Plug 'ledger/vim-ledger'
   Plug 'sheerun/vim-polyglot'
   Plug 'vim-scripts/smarty-syntax'
 
@@ -663,6 +664,8 @@ let g:syntastic_php_phpcs_post_args .= " --standard=PSR2"
 
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
 let g:sparkupDoMaps = 0
+
+let g:ledger_fold_blanks = 1
 
 let g:markdown_fold_override_foldtext = 0
 
