@@ -138,7 +138,7 @@ if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let &fillchars = "vert:\u2502,diff: "
   let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,nbsp:\u2334"
   if has("linebreak")
-    let &showbreak = "\u21aa"
+    let &showbreak = "\u21aa "
   endif
   highlight VertSplit ctermbg=NONE guibg=NONE
 endif
