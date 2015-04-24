@@ -311,22 +311,11 @@ endif
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
-function! s:buflist()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
-
 command! -nargs=0 -bar FZFBuffer call fzf#run({
-      \   'source':  reverse(<SID>buflist()),
-      \   'sink':    function('<SID>bufopen'),
+      \   'source':  reverse(util#fzf#Buffers()),
+      \   'sink':    function('util#fzf#BufferOpen'),
       \   'options': '+m',
-      \   'down':    len(<SID>buflist()) + 2
+      \   'down':    len(util#fzf#Buffers()) + 1
       \ })
 command! -nargs=0 -bar -bang FZFMru call fzf#run({
       \   'source':  v:oldfiles,
@@ -340,6 +329,12 @@ command! -nargs=0 -bar Colorscheme call fzf#run({
       \   'sink':    'colorscheme',
       \   'options': '+m',
       \   'down':    20
+      \ })
+command! -nargs=0 -bar Lines call fzf#run({
+      \   'source':  nox#fzf#BufferLines(),
+      \   'sink':    function('nox#fzf#JumpToLine'),
+      \   'options': '+m --reverse',
+      \   'up':      20
       \ })
 
 if !exists(":cdo")
@@ -573,7 +568,7 @@ nnoremap _vi :set filetype=vim<CR>
 nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
-nnoremap <Leader><Leader> :FZFBuffer<CR>
+nnoremap <silent> <Leader><Leader> :FZFBuffer<CR>
 nnoremap <Leader>? :FZFMru<CR>
 nnoremap <Leader>` :Marks<CR>
 nnoremap <Leader>] :tjump /
