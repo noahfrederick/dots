@@ -1,7 +1,7 @@
-" autoload/util/plug.vim - Plug helpers
+" autoload/nox/plug.vim - Plug helpers
 " Maintainer: Noah Frederick
 
-function! util#plug#LoadInsert()
+function! nox#plug#LoadInsert()
   call plug#load('ultisnips')
   call plug#load('YouCompleteMe')
   call plug#load('lexima.vim')
@@ -13,7 +13,7 @@ function! util#plug#LoadInsert()
   echomsg "Loaded insert-mode plug-ins"
 endfunction
 
-function! util#plug#LoadIdle()
+function! nox#plug#LoadIdle()
   call plug#load('syntastic')
 
   doautocmd FileType

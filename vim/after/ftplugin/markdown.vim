@@ -53,5 +53,5 @@ silent! compiler pandoc
 " Recompile file on save if compiled version already exists
 augroup AfterMarkdown
   autocmd!
-  autocmd BufWritePost *.md call util#make#Recompile(expand('<afile>'))
+  autocmd BufWritePost *.md call nox#make#Recompile(expand('<afile>'))
 augroup END

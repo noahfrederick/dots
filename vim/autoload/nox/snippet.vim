@@ -1,26 +1,26 @@
-" autoload/util/snippets.vim - Global helpers for snippets
+" autoload/nox/snippets.vim - Global helpers for snippets
 " Maintainer:   Noah Frederick
 
-function! util#snippet#Author()
+function! nox#snippet#Author()
   return s:get_git_config_value('user.name')
 endfunction
 
-function! util#snippet#ProjectAuthor()
+function! nox#snippet#ProjectAuthor()
   if exists("$PROJECT_AUTHOR") && $PROJECT_AUTHOR != ""
     return $PROJECT_AUTHOR
   endif
   let project_author = s:get_git_config_value('project.author')
-  return empty(project_author) ? util#snippet#Author() : project_author
+  return empty(project_author) ? nox#snippet#Author() : project_author
 endfunction
 
-function! util#snippet#Email()
+function! nox#snippet#Email()
   if exists("$PROJECT_EMAIL") && $PROJECT_EMAIL != ""
     return $PROJECT_EMAIL
   endif
   return s:get_git_config_value('user.email')
 endfunction
 
-function! util#snippet#GitHubUsername()
+function! nox#snippet#GitHubUsername()
   if exists("$PROJECT_GITHUB_USERNAME") && $PROJECT_GITHUB_USERNAME != ""
     return $PROJECT_GITHUB_USERNAME
   endif
@@ -34,7 +34,7 @@ function! s:get_git_config_value(key)
   return 0
 endfunction
 
-function! util#snippet#Title(basename)
+function! nox#snippet#Title(basename)
   if exists("g:template_title")
     " Setting g:template_title lets us override the title (once)
     let title = g:template_title
@@ -52,16 +52,16 @@ function! util#snippet#Title(basename)
   return title
 endfunction
 
-function! util#snippet#Copyright()
+function! nox#snippet#Copyright()
   if exists("$PROJECT_COPYRIGHT") && $PROJECT_COPYRIGHT != ""
     let name = $PROJECT_COPYRIGHT
   else
-    let name = util#snippet#ProjectAuthor()
+    let name = nox#snippet#ProjectAuthor()
   endif
   return join(['©', strftime('%Y'), name])
 endfunction
 
-function! util#snippet#ProjectTitle()
+function! nox#snippet#ProjectTitle()
   if exists("$PROJECT_NAME") && $PROJECT_NAME != ""
     return $PROJECT_NAME
   endif
@@ -69,14 +69,10 @@ function! util#snippet#ProjectTitle()
   return empty(project_title) ? "(Project Name)" : project_title
 endfunction
 
-function! util#snippet#ExpandSnippetOrCompleteMaybe()
+function! nox#snippet#ExpandSnippetOrCompleteMaybe()
   call UltiSnips#ExpandSnippetOrJump()
 
-  if !exists("g:ulti_expand_or_jump_res")
-    return "\<Tab>"
-  endif
-
-  if g:ulti_expand_or_jump_res == 0
+  if !exists("g:ulti_expand_or_jump_res") || g:ulti_expand_or_jump_res == 0
     if pumvisible()
       return "\<C-n>"
     else
@@ -97,7 +93,7 @@ function! s:try_insert(skel)
   return g:ulti_expand_res
 endfunction
 
-function! util#snippet#InsertSkeleton() abort
+function! nox#snippet#InsertSkeleton() abort
   " Load UltiSnips in case it was deferred via vim-plug
   if !exists('g:did_UltiSnips_plugin') && exists(':PlugStatus')
     call plug#load('ultisnips')

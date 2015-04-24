@@ -1,4 +1,4 @@
-" autoload/util/transmit.vim - FTP current file via Transmit.app
+" autoload/nox/transmit.vim - FTP current file via Transmit.app
 " Maintainer:   Noah Frederick
 "
 " This plug-in exposes a single :Transmit command, which sends the current
@@ -13,7 +13,7 @@
 "
 " The process is aborted if the current buffer is modified unless the bang
 " parameter is non-empty.
-function! util#transmit#Send(bang, path) abort
+function! nox#transmit#Send(bang, path) abort
   if a:path ==# ''
     if a:bang == '' && &modified
       echoerr "There are unwritten changes. Save your file or add ! to upload it anyway."
@@ -30,7 +30,7 @@ function! util#transmit#Send(bang, path) abort
     return
   endif
 
-  let l:alternate = util#path#CompiledVersion(l:path)
+  let l:alternate = nox#path#CompiledVersion(l:path)
 
   if filereadable(l:alternate)
     let l:path = l:alternate

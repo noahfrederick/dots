@@ -12,7 +12,7 @@ function! puppet#PathToClassName(...)
     let path = expand('%:p')
   endif
 
-  let suffix = util#path#RemovePrefix('/modules/', path)
+  let suffix = nox#path#RemovePrefix('/modules/', path)
 
   if suffix ==# path
     let suffix = fnamemodify(suffix, ':t')

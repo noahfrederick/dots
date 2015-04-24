@@ -79,12 +79,12 @@ if has("vim_starting")
   " (see https://github.com/junegunn/vim-plug/issues/48#issuecomment-67436470)
   augroup insert_mode_plugins
     autocmd!
-    autocmd InsertEnter * call util#plug#LoadInsert()
+    autocmd InsertEnter * call nox#plug#LoadInsert()
   augroup END
 
   augroup idle_plugins
     autocmd!
-    autocmd CursorHold * call util#plug#LoadIdle()
+    autocmd CursorHold * call nox#plug#LoadIdle()
   augroup END
 
   if &t_Co >= 16
@@ -104,7 +104,7 @@ set hidden                      " Do not unload buffers when no longer displayed
 set autoread                    " Reload unchanged buffer when file changes
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
-set foldtext=util#folding#Text()
+set foldtext=nox#folding#Text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
@@ -256,14 +256,14 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
     autocmd BufNewFile,BufRead *Test.php set filetype=php.phpunit
 
-    autocmd FileType c,cpp,css,javascript,less,php call util#filetype#MakeSemicolonMaps()
-    autocmd FileType php,rubycall call util#filetype#MakeRocketMaps()
+    autocmd FileType c,cpp,css,javascript,less,php call nox#filetype#MakeSemicolonMaps()
+    autocmd FileType php,rubycall call nox#filetype#MakeRocketMaps()
 
-    autocmd FileType html,liquid,markdown,php,xhtml,xml call util#filetype#MakeXMLMaps()
+    autocmd FileType html,liquid,markdown,php,xhtml,xml call nox#filetype#MakeXMLMaps()
     autocmd FileType html,liquid,xhtml,xml setlocal textwidth=120
 
     autocmd FileType css,html,javascript,json
-          \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call util#format#JsBeautify()
+          \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call nox#format#JsBeautify()
 
     set cursorline
 
@@ -291,11 +291,11 @@ endif
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
 
-command! -bang -bar Bdelete call util#buffer#Bdelete(<q-bang>)
+command! -bang -bar Bdelete call nox#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
-      \ call util#buffer#Bufonly(<q-args>, <q-bang>)
-command! -nargs=0 -bar FollowSymlink call util#path#FollowSymlink()
-command! -bang -nargs=0 -bar Marks call util#marks#Choose(<q-bang>)
+      \ call nox#buffer#Bufonly(<q-args>, <q-bang>)
+command! -nargs=0 -bar FollowSymlink call nox#path#FollowSymlink()
+command! -bang -nargs=0 -bar Marks call nox#marks#Choose(<q-bang>)
 command! -bang -nargs=? -bar -complete=filetype Scratch
       \ tabedit | if <q-bang> ==# '' | put | 1 | delete _ | endif
       \ | setlocal filetype=<args> buftype=nofile bufhidden=hide noswapfile
@@ -303,7 +303,7 @@ command! -bang -nargs=? -bar -complete=filetype Scratch
 if exists("$NOTES")
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
   command! -nargs=0 -bang Note FZF<bang> $NOTES
-  command! -nargs=0 -bar ShoppingList call util#ShoppingList()
+  command! -nargs=0 -bar ShoppingList call nox#org#ShoppingList()
 endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -312,10 +312,10 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
 command! -nargs=0 -bar FZFBuffer call fzf#run({
-      \   'source':  reverse(util#fzf#Buffers()),
-      \   'sink':    function('util#fzf#BufferOpen'),
-      \   'options': '+m',
-      \   'down':    len(util#fzf#Buffers()) + 1
+      \   'source':  reverse(nox#fzf#Buffers()),
+      \   'sink':    function('nox#fzf#BufferOpen'),
+      \   'options': '+m --reverse',
+      \   'up':      len(nox#fzf#Buffers()) + 1
       \ })
 command! -nargs=0 -bar -bang FZFMru call fzf#run({
       \   'source':  v:oldfiles,
@@ -339,12 +339,12 @@ command! -nargs=0 -bar Lines call fzf#run({
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
-  command! -nargs=1 Cdo     call util#Cdo(0, <q-args>)
-  command! -nargs=1 Cdofile call util#Cdo(1, <q-args>)
+  command! -nargs=1 Cdo     call nox#quickfix#Cdo(0, <q-args>)
+  command! -nargs=1 Cdofile call nox#quickfix#Cdo(1, <q-args>)
 endif
 
 if executable('osascript')
-  command! -nargs=? -bang -bar -complete=file Transmit call util#transmit#Send(<q-bang>, <q-args>)
+  command! -nargs=? -bang -bar -complete=file Transmit call nox#transmit#Send(<q-bang>, <q-args>)
 endif
 
 if exists(":terminal")
@@ -425,7 +425,7 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader>k util#editing#NormalModeDigraph(nr2char(getchar()))
+nnoremap <expr> <Leader>k nox#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
@@ -491,13 +491,13 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>w :call util#editing#NormalizeWhitespace()<CR>
+nnoremap <silent> <Leader>w :call nox#editing#NormalizeWhitespace()<CR>
 
 " Re-indent entire buffer content
-nnoremap <silent> <Leader>= :call util#editing#ReindentBuffer()<CR>
+nnoremap <silent> <Leader>= :call nox#editing#ReindentBuffer()<CR>
 
 " Yank entire buffer content
-nnoremap <silent> <Leader>y :call util#editing#YankBuffer()<CR>
+nnoremap <silent> <Leader>y :call nox#editing#YankBuffer()<CR>
 
 nnoremap <Leader>g<Space> :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>

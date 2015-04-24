@@ -9,7 +9,7 @@ endif
 
 " Abbreviated function name
 function! Select(line_number, object)
-  return util#test#SelectTextObject(a:line_number, a:object)
+  return nox#test#SelectTextObject(a:line_number, a:object)
 endfunction
 
 describe 'PHP function text object'
@@ -17,7 +17,7 @@ describe 'PHP function text object'
     new
     set filetype=php
     runtime after/ftplugin/php.vim
-    call util#test#ReadFixture('php')
+    call nox#test#ReadFixture('php')
   end
 
   after

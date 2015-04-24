@@ -1,23 +1,23 @@
-" autoload/util/filetype.vim - Global helpers for filetype plug-ins
+" autoload/nox/filetype.vim - Global helpers for filetype plug-ins
 " Maintainer:   Noah Frederick
 
 " Append semicolon or comma to end of line in insert mode
-function! util#filetype#MakeSemicolonMaps()
-  call util#filetype#Map("inoremap", ";;", "<Esc>A;")
-  call util#filetype#Map("inoremap", ",,", "<Esc>A,")
+function! nox#filetype#MakeSemicolonMaps()
+  call nox#filetype#Map("inoremap", ";;", "<Esc>A;")
+  call nox#filetype#Map("inoremap", ",,", "<Esc>A,")
 endfunction
 
 " Quickly type hash rockets ("=>")
-function! util#filetype#MakeRocketMaps()
-  call util#filetype#Map("inoremap", "<C-l>", "<Space>=><Space>")
+function! nox#filetype#MakeRocketMaps()
+  call nox#filetype#Map("inoremap", "<C-l>", "<Space>=><Space>")
 endfunction
 
-function! util#filetype#MakeXMLMaps()
+function! nox#filetype#MakeXMLMaps()
   " Automatically close tags when typing "</"
-  call util#filetype#Map("inoremap", "</", "</<C-x><C-o>")
+  call nox#filetype#Map("inoremap", "</", "</<C-x><C-o>")
 endfunction
 
-function! util#filetype#Map(type, lhs, rhs)
+function! nox#filetype#Map(type, lhs, rhs)
   execute join([a:type, "<buffer>", a:lhs, a:rhs])
   if a:type == "nnoremap" || a:type == "nmap"
     let l:unmap = "nunmap"

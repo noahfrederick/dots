@@ -1,7 +1,7 @@
-" autoload/util/marks.vim - Mark helpers
+" autoload/nox/marks.vim - Mark helpers
 " Maintainer: Noah Frederick
 
-function! util#marks#Choose(bang) abort
+function! nox#marks#Choose(bang) abort
   if a:bang ==# ''
     try
       marks abcdefghijklmnopqrstuvwxyz.

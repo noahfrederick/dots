@@ -1,6 +1,6 @@
-" autoload/util/format.vim - Formatting helpers
+" autoload/nox/format.vim - Formatting helpers
 
-function! util#format#JsBeautify() range abort
+function! nox#format#JsBeautify() range abort
   if !executable('js-beautify')
     throw "js-beautify is not available"
   endif

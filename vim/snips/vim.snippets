@@ -1,8 +1,8 @@
 # vim.snippets - Snippets for vim file type
 
 snippet _skel "Generic Vim Script file" b
-" `!v expand("%")` - `!v util#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v util#snippet#ProjectAuthor()`
+" `!v expand("%")` - `!v nox#snippet#Title(expand("%:t:r"))`
+" Maintainer: `!v nox#snippet#ProjectAuthor()`
 
 $0
 
@@ -10,8 +10,8 @@ $0
 endsnippet
 
 snippet _plugin "Plugin file" b
-" `!v expand("%")` - `!v util#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v util#snippet#ProjectAuthor()`
+" `!v expand("%")` - `!v nox#snippet#Title(expand("%:t:r"))`
+" Maintainer: `!v nox#snippet#ProjectAuthor()`
 
 if exists("g:loaded_`!v expand("%:t:r")`") || v:version < 700 || &cp
 	finish

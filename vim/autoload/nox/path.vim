@@ -1,4 +1,4 @@
-" autoload/util/path.vim - Global helpers for dealing with file paths
+" autoload/nox/path.vim - Global helpers for dealing with file paths
 " Maintainer:   Noah Frederick
 
 let g:compiled_file_locations = {
@@ -12,15 +12,15 @@ let g:compiled_file_locations = {
       \ 'md':     [['.', '.pdf']],
       \ }
 
-function! util#path#CompiledVersion(path)
+function! nox#path#CompiledVersion(path)
   let l:ext = fnamemodify(a:path, ':e')
 
   if has_key(g:compiled_file_locations, l:ext)
-    return util#path#FindFileWithAlternateName(a:path, g:compiled_file_locations[l:ext])
+    return nox#path#FindFileWithAlternateName(a:path, g:compiled_file_locations[l:ext])
   endif
 endfunction
 
-function! util#path#FindFileWithAlternateName(path, alternates)
+function! nox#path#FindFileWithAlternateName(path, alternates)
   let l:head = fnamemodify(a:path, ':h')
   let l:base = fnamemodify(a:path, ':t:r')
 
@@ -43,13 +43,13 @@ function! s:construct_path_with_new_suffix(head, dir, base, new_suffix)
   return resolve(a:head . '/' . a:dir . '/' . l:filename)
 endfunction
 
-function! util#path#CompleteHead(path_prefix, filename_pattern, A, L, P)
+function! nox#path#CompleteHead(path_prefix, filename_pattern, A, L, P)
   let matches = globpath(a:path_prefix, '**/' . a:A . a:filename_pattern, 0, 1)
   return map(matches, 'fnamemodify(v:val, ":s?' . a:path_prefix . '/??:r")')
 endfunction
 
 " Follow symlink to actual file
-function! util#path#FollowSymlink()
+function! nox#path#FollowSymlink()
   " Get path of actual file
   let fname = resolve(expand("%:p"))
   " Rename buffer with new path
@@ -60,7 +60,7 @@ endfunction
 
 ""
 " Remove {prefix} and everything before it from {path}, returning the result
-function! util#path#RemovePrefix(prefix, path)
+function! nox#path#RemovePrefix(prefix, path)
   if type(a:prefix) ==# type([])
     let prefixes = a:prefix
   else

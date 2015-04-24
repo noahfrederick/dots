@@ -1,7 +1,7 @@
-" autoload/util/fzf.vim - Sources and sinks for fzf
+" autoload/nox/fzf.vim - Sources and sinks for fzf
 " Maintainer:   Noah Frederick
 
-function! util#fzf#Buffers()
+function! nox#fzf#Buffers()
   redir => output
   silent buffers
   redir END
@@ -19,7 +19,7 @@ function! util#fzf#Buffers()
   return buf_list
 endfunction
 
-function! util#fzf#BufferOpen(e)
+function! nox#fzf#BufferOpen(e)
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
