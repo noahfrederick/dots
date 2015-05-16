@@ -481,7 +481,7 @@ nnoremap <F2> :Make<CR>
 nnoremap <F3> :Dispatch<CR>
 nnoremap <F4> :Start<CR>
 
-nnoremap - :Dirvish %:p:h<CR>
+nnoremap <silent> - :Dirvish %:p:h<CR>
 
 " Write a one-off timestamped version of the current buffer
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
@@ -530,8 +530,7 @@ nnoremap <silent> <Leader>6 :if winnr("$") > 1
       \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
 nnoremap <Leader>8 :set hlsearch<CR>*<C-o>
-nnoremap <Leader>/ :vimgrep // **/*.<C-r>=expand("%:e")<CR>
-      \ <Home><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+nnoremap <Leader>/ :Lines<CR>
 map <BS> %
 
 " Unimpaired.vim-like toggles
@@ -580,6 +579,7 @@ nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
 nnoremap <Leader>b :FZFBuffer<CR>
+nnoremap <Leader>d :FZF ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
 nnoremap <Leader>n :Note<CR>
@@ -590,8 +590,8 @@ nnoremap <Leader>n :Note<CR>
 
 let g:UltiSnipsListSnippets = "<C-g><Tab>"
 let g:UltiSnipsExpandTrigger = "<Tab>"
-let g:UltiSnipsJumpForwardTrigger = "<Tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips"
 let g:UltiSnipsSnippetDirectories = ["snips"]
 
@@ -617,6 +617,8 @@ let g:ycm_key_list_previous_completion = ['<Up>']
 " Disable splitjoin.vim maps (we define our own above)
 let g:splitjoin_split_mapping = ''
 let g:splitjoin_join_mapping = ''
+
+let g:switch_mapping = ''
 
 " Default of 'a' conflicts with Sideways argument text objects mapped above
 let g:targets_argTrigger = 'A'
