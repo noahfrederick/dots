@@ -21,6 +21,7 @@ if has("vim_starting")
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
   Plug 'justinmk/vim-dirvish'
+  Plug 'pgdouyon/vim-evanesco'
   Plug 'scrooloose/syntastic',           { 'on': [] }
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
