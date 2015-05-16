@@ -35,7 +35,7 @@ set -g fish_color_cwd         yellow
 set -g fish_color_end         green
 set -g fish_color_error       red     --bold
 set -g fish_color_escape      purple
-set -g fish_color_param       blue
+set -g fish_color_param       green
 set -g fish_color_quote       yellow
 set -g fish_color_valid_path  blue    --underline
 
