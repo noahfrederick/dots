@@ -8,11 +8,11 @@
   "Enox theme: a medium-contrast theme with dark background.
 
 In addition to the basic and font-lock faces, faces are provided for
-Ace-Jump, Ansi-Color, Auto-Complete, Dired, Ediff, ERC, Eshell, Evil,
-Flycheck, Flyspell, Gnus, Guide Key, Helm, Ido, Isearch, Ledger,
-Magit, Markdown, Message, Org, Rainbow Delimiters, Semantic, Smart
-Mode Line, Smartparens, Speedbar, Undo Tree, Whitespace, and
-YASnippet.")
+Ace-Jump, Ansi-Color, Auto-Complete, Calfw, Dired, Ediff, ERC, Eshell,
+Evil, Flycheck, Flyspell, Git Gutter, Gnus, Guide Key, Helm, Ido,
+Isearch, Ledger, Magit, Markdown, Message, Org, Rainbow Delimiters,
+Semantic, Smart Mode Line, Smartparens, Speedbar, Undo Tree,
+Whitespace, and YASnippet.")
 
 (let* ((class '((class color) (min-colors 89)))
        ;; Enox palette colors
@@ -45,7 +45,7 @@ YASnippet.")
    'enox
    `(default ((,class (:foreground ,nox-fg :background ,nox-bg))))
    `(cursor ((,class (:background ,nox-keyword))))
-   `(fringe ((,class (:background ,nox-bg :foreground ,nox-fg-subtle))))
+   `(fringe ((,class (:background ,nox-bg-subtle :foreground ,nox-fg-subtle))))
    `(vertical-border ((,class (:background ,nox-bg :foreground ,nox-bg-dark))))
    ;; Highlighting faces
    `(highlight ((,class (:inverse-video t))))
@@ -130,6 +130,11 @@ YASnippet.")
    `(diff-context ((,class (:foreground ,nox-comment))))
    `(diff-hunk-header ((,class (:background ,nox-fg-subtle))))
    `(diff-file-header ((,class (:weight bold :background ,nox-fg-subtle :foreground ,nox-em))))
+   ;; Git gutter
+   `(git-gutter:added ((,class (:background ,nox-green :foreground ,nox-green))))
+   `(git-gutter:deleted ((,class (:background ,nox-red :foreground ,nox-red))))
+   `(git-gutter:modified ((,class (:background ,nox-yellow :foreground ,nox-yellow))))
+   `(git-gutter:unchanged ((,class (:background ,nox-bg-subtle :foreground ,nox-bg-subtle))))
    ;; Ledger faces
    `(ledger-font-comment-face ((,class (:inherit font-lock-comment-face))))
    `(ledger-font-directive-face ((,class (:weight bold :foreground ,nox-fg-subtle))))
@@ -142,6 +147,22 @@ YASnippet.")
    `(ledger-font-payee-cleared-face ((,class (:foreground ,nox-green))))
    `(ledger-font-payee-pending-face ((,class (:foreground ,nox-special))))
    `(ledger-font-payee-uncleared-face ((,class (:foreground ,nox-yellow))))
+   `(ledger-font-periodic-xact-face ((,class (:foreground ,nox-special))))
+   `(ledger-font-auto-xact-face ((,class (:foreground ,nox-special))))
+   ;; Calfw faces
+   `(cfw:face-grid ((,class (:foreground ,nox-fg-subtle))))
+   `(cfw:face-toolbar ((,class (:foreground ,nox-bg-subtle :background ,nox-bg-dark))))
+   `(cfw:face-toolbar-button-off ((,class (:foreground ,nox-comment :background ,nox-bg-dark))))
+   `(cfw:face-toolbar-button-on ((,class (:foreground ,nox-em :background ,nox-selection))))
+   `(cfw:face-select ((,class (:foreground ,nox-em :background ,nox-selection))))
+   `(cfw:face-disable ((,class (:foreground ,nox-fg-subtle))))
+   `(cfw:face-header ((,class (:foreground ,nox-yellow :weight bold))))
+   `(cfw:face-saturday ((,class (:foreground ,nox-yellow))))
+   `(cfw:face-sunday ((,class (:inherit cfw:face-saturday))))
+   `(cfw:face-holiday ((,class (:foreground ,nox-special))))
+   `(cfw:face-today ((,class (:foreground ,nox-green :background ,nox-bg-subtle))))
+   `(cfw:face-today-title ((,class (:foreground ,nox-green :background ,nox-selection-2))))
+   `(cfw:face-title ((,class (:foreground ,nox-yellow :height 2.0))))
    ;; Ido faces
    `(ido-first-match ((,class (:weight bold :foreground ,nox-em))))
    `(ido-only-match ((,class (:weight bold :foreground ,nox-green))))
@@ -281,9 +302,9 @@ YASnippet.")
    `(eshell-ls-unreadable ((,class (:slant italic :foreground ,nox-comment))))
    ;; Flycheck
    `(flycheck-warning ((,class (:underline (:style wave :color ,nox-yellow)))))
-   `(flycheck-fringe-warning ((,class (:background ,nox-yellow :foreground ,nox-bg-dark))))
+   `(flycheck-fringe-warning ((,class (:foreground ,nox-yellow))))
    `(flycheck-error ((,class (:underline (:style wave :color ,nox-string)))))
-   `(flycheck-fringe-error ((,class (:background ,nox-red :foreground ,nox-em))))
+   `(flycheck-fringe-error ((,class (:foreground ,nox-red))))
    ;; Flyspell
    `(flyspell-duplicate ((,class (:inherit nil :underline (:style wave :color ,nox-yellow)))))
    `(flyspell-incorrect ((,class (:inherit nil :underline (:style wave :color ,nox-red)))))
@@ -356,6 +377,7 @@ YASnippet.")
    `(org-checkbox ((,class (:foreground ,nox-comment :background ,nox-bg-subtle :box
                                         (:line-width -1 :style released-button)))))
    `(org-date ((,class (:underline ,nox-special :foreground ,nox-special))))
+   `(org-sexp-date ((,class (:foreground ,nox-special))))
    `(org-link ((,class (:underline ,nox-constant :foreground ,nox-constant))))
    `(org-level-1 ((,class (:weight bold :foreground ,nox-em))))
    `(org-level-2 ((,class (:weight bold :foreground ,nox-variable))))
