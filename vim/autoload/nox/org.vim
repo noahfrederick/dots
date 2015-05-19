@@ -6,7 +6,7 @@ function! nox#org#ShoppingList() abort
 
   " If today's list already exists, just edit it
   if filereadable(today)
-    execute join(["edit", today])
+    execute "edit" today
     return
   endif
 
@@ -16,12 +16,13 @@ function! nox#org#ShoppingList() abort
   let fn = substitute(fn, "\n", "", "")
 
   " Copy to today list
-  execute join(["silent", "edit", fn])
-  execute join(["keepalt", "file", today])
+  execute "silent edit" fn
+  execute "keepalt file" today
 
   normal! zi
   " Uncheck all checkboxes
-  silent keeppatterns %s/^\s*++ /-- /e
+  silent keeppatterns %s/^\s*\zs++ /-- /e
+  silent keeppatterns %s/^\s*\zs- [x] /- [ ] /e
   set modified
   1
 endfunction
