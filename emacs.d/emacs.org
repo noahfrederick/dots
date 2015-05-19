@@ -976,6 +976,23 @@ command-line accounting program.
     :mode (("\\.pp$" . puppet-mode)))
 #+END_SRC
 
+*** Rest Client
+
+The [[https://github.com/pashky/restclient.el][restclient]] package provides a REPL-like interface for HTTP
+requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode showing it off]].
+
+#+NAME: editing
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package restclient
+    :mode ("\\.http\\'" . restclient-mode)
+    :config
+    (progn
+      (evil-leader/set-key-for-mode 'restclient-mode
+        "m m" 'restclient-http-send-current-stay-in-window
+        "m s" 'restclient-http-send-current-stay-in-window
+        "m S" 'restclient-http-send-current)))
+#+END_SRC
+
 *** Ruby
 
 #+NAME: editing
