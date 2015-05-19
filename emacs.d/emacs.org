@@ -1831,6 +1831,39 @@ list.
           (org-capture-finalize))))
 #+END_SRC
 
+** Calendar
+
+The [[https://github.com/kiwanami/emacs-calfw][Calfw]] package provides a graphical calendar representation of the
+Org agenda (as well as other calendar formats).
+
+#+NAME: org
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package calfw-org
+    :config
+    (setq cfw:fchar-junction ?╋
+          cfw:fchar-vertical-line ?┃
+          cfw:fchar-horizontal-line ?━
+          cfw:fchar-left-junction ?┣
+          cfw:fchar-right-junction ?┫
+          cfw:fchar-top-junction ?┳
+          cfw:fchar-top-left-corner ?┏
+          cfw:fchar-top-right-corner ?┓))
+
+  (defun nox/open-org-calendar ()
+    "Open an org schedule calendar in a new buffer.
+
+  This function is adapted from cfw:open-org-calendar."
+    (interactive)
+    (save-excursion
+      (let* ((source1 (cfw:org-create-source "SkyBlue"))
+             (cp (cfw:create-calendar-component-buffer
+                  :view 'month
+                  :contents-sources (list source1)
+                  :custom-map cfw:org-schedule-map
+                  :sorter 'cfw:org-schedule-sorter)))
+        (switch-to-buffer (cfw:cp-get-buffer cp)))))
+#+END_SRC
+
 ** TeamworkPM Integration
 
 #+NAME: org

@@ -4,6 +4,7 @@
 
 (depends-on "auto-complete")
 (depends-on "bind-key")
+(depends-on "calfw")
 (depends-on "cask")
 (depends-on "dash")
 (depends-on "dash-at-point")
