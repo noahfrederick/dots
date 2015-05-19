@@ -1,132 +1,199 @@
 body {
-  margin: 0;
-  padding: 3em;
-  font-family: Ubuntu, sans-serif;
-  line-height: 1.6em;
+    margin: 0;
+    padding: 3em;
+    font-family: "Fira Sans", Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 1.6em;
+    font-weight: 200;
 }
 a {
-  color: #419886;
+    color: #419886;
+}
+h1,
+h2,
+h4 {
+    font-weight: 100;
+    color: #7B51CA;
 }
 h1 {
-  text-align: center;
+    text-align: center;
 }
 h2 {
-  text-align: center;
-  margin-top: 3em;
+    text-align: center;
+    margin-top: 3em;
+    padding-top: .5em;
+    border-top: 1px solid #C4E3FF;
 }
 h3 {
-  color: #503d15;
+    margin-top: 2em;
+    color: #503d15;
 }
 ul ul,
 ul ul ul {
-  list-style: disc;
+    list-style: disc;
 }
 table {
-  width: 100%;
+    width: 100%;
+    border-collapse: collapse;
 }
 th {
-  text-align: left;
+    text-align: left;
+}
+th,
+td {
+    border-bottom: 1px solid #ddd;
+    padding: 4px;
+}
+th.left,
+td.left {
+    text-align: left;
+}
+th.center,
+td.center {
+    text-align: center;
+}
+th.right,
+td.right {
+    text-align: right;
+}
+tbody > tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+caption {
+    color: #888;
 }
 code,
 kbd,
 pre {
-  padding: .1em .2em;
-  font-family: "Source Code Pro", "Ubuntu Mono", monospace;
-  font-size: 100%;
-  color: #555;
+    padding: .1em .2em;
+    font-family: "Fira Mono", "Source Code Pro", "Ubuntu Mono", monospace;
+    font-size: 90%;
+    color: #555;
 }
 kbd {
-  padding: .1em .3em;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 1px 0 #bbb;
+    padding: .1em .3em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 #bbb;
 }
 pre {
-  padding: .8em .6em;
-  overflow: auto;
-  border: 1px solid #222222;
-  border-radius: 5px;
-  background: #1d2124;
-  line-height: 1.2em;
-  color: #ddd;
-  box-shadow: inset 0 0 80px rgba(0,0,0,.3);
+    padding: .8em .6em;
+    overflow: auto;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    background: #1d2124;
+    line-height: 1.2em;
+    color: #ddd;
+    box-shadow: inset 0 0 80px rgba(0,0,0,.3);
 }
 pre.example {
-  color: inherit;
-  background-color: #fafafa;
-  border-color: #ddd;
-  box-shadow: inset 0 0 80px rgba(0,0,0,.05);
+    color: inherit;
+    background-color: #fefefe;
+    border-color: #ddd;
+    box-shadow: inset 0 0 80px rgba(0,0,0,.05);
 }
 .todo {
-  color: #f05;
+    color: #f05;
+}
+.tag {
+    float: right;
+    font-size: .7rem;
+}
+.tag span {
+    padding: .2em .5em;
+    text-transform: uppercase;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-weight: 200;
+}
+.timestamp {
+    color: #aaa;
 }
 #text-table-of-contents ul {
-  list-style: none;
+    list-style: none;
 }
 #text-table-of-contents > ul {
-  padding-left: 0;
-  margin-left: 0;
-  padding-right: 0;
-  margin-right: 0;
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
 }
 #text-table-of-contents > ul > li {
-  border-bottom: 1px solid #ddd;
-  padding-top: .6em;
-  padding-bottom: .6em;
+    border-bottom: 1px solid #ddd;
+    padding-top: .6em;
+    padding-bottom: .6em;
 }
 #text-table-of-contents > ul > li:first-child {
-  border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 #text-table-of-contents > ul > li > a {
-  font-weight: bold;
+    font-weight: bold;
 }
 #text-table-of-contents ul a {
-  text-decoration: none;
+    text-decoration: none;
 }
 #text-table-of-contents ul a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 #content {
-  max-width: 50em;
-  margin: 0 auto;
+    max-width: 50em;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#postamble {
+    margin-top: 3em;
+    color: #ccc;
 }
 @media only screen and (min-width: 1300px) {
-  #table-of-contents {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    overflow: scroll;
-    padding: 0 2em;
-    width: 300px;
-    background: #fafafa;
-    border-right: 1px solid #eee;
-  }
-  #table-of-contents h2 {
-    margin-top: 1.5em;
-    text-align: left;
-  }
-  #text-table-of-contents > ul > li {
-    border-bottom: 0;
-  }
-  #text-table-of-contents > ul > li:first-child {
-    border-top: 0;
-  }
+    #table-of-contents {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow: scroll;
+        padding: 0 2em;
+        width: 300px;
+        background: #fefefe;
+        border-right: 1px solid #eee;
+    }
+    #table-of-contents h2 {
+        margin-top: 1.5em;
+        padding-top: 0;
+        text-align: left;
+        border: 0;
+    }
+    #text-table-of-contents > ul {
+        padding-bottom: 2em; /* Account for underlapping postamble */
+    }
+    #text-table-of-contents > ul > li {
+        border-bottom: 0;
+    }
+    #text-table-of-contents > ul > li:first-child {
+        border-top: 0;
+    }
+    #postamble {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+        padding: .2em 2em;
+        background: #fefefe;
+        border-top: 1px solid #eee;
+    }
 }
 @media only screen and (max-width: 1700px) and (min-width: 1300px) {
-  #content {
-    /* Prevent underlapping the table of contents */
-    margin-left: 400px;
-  }
+    #content {
+        /* Prevent underlapping the table of contents */
+        margin-left: 400px;
+    }
 }
 @media only screen and (max-width: 600px) {
-  body {
-    font-size: 80%;
-  }
+    body {
+        font-size: 80%;
+    }
 }
 @media only screen and (max-width: 500px) {
-  body {
-    padding-left: 1em;
-    padding-right: 1em;
-  }
+    body {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 }
