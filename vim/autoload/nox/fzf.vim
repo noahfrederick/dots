@@ -36,7 +36,7 @@ endfunction
 function! nox#fzf#JumpToLine(l)
   let keys = split(a:l, ':\t')
   execute keys[0]
-  normal! zz
+  normal! zOzz
 endfunction
 
 " vim:set et sw=2:
