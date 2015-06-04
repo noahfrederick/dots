@@ -16,7 +16,10 @@ endfunction
 function! nox#plug#LoadIdle()
   call plug#load('syntastic')
 
-  doautocmd FileType
+  if &modifiable
+    doautocmd FileType
+  endif
+
   autocmd! idle_plugins
 
   echomsg "Loaded deferred plug-ins"
