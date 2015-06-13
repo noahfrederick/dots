@@ -153,6 +153,7 @@ endif
 
 "" Command line and completion
 set wildmenu                    " Show command line completion candidates
+set wildmode=full               " 'wildchar' completes first match, no extra line of candidates shown
 set wildcharm=<C-z>             " Trigger for completion in macros
 set wildignore=*.swp,*.bak
 set wildignore+=*.min.*,*.css.map
