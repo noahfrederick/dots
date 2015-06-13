@@ -580,6 +580,11 @@ nnoremap <Leader>I :edit .gitignore<CR>
 nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
+if has('nvim')
+  nnoremap <Leader>X :edit .nvimrc<CR>
+else
+  nnoremap <Leader>X :edit .vimrc<CR>
+endif
 nnoremap <Leader>b :FZFBuffer<CR>
 nnoremap <Leader>d :FZF ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
