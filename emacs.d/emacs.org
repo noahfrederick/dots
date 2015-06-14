@@ -1340,6 +1340,15 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 
 * Org
 
+** Org Files
+
+| contacts.org | Database of contacts; provides completion for email addresses  |
+| diary.org    | Date-based notes; where events and daily notes are logged      |
+| food.org     | Cooking recipes and notes on restaurants                       |
+| inbox.org    | Where new, unfiled tasks and notes are collected               |
+| routine.org  | Where recurring tasks are stored                               |
+| zombies.org  | Notes and tasks related to survival in catastrophic conditions |
+
 ** Basic Settings
 
 #+NAME: org
