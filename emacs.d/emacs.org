@@ -1427,6 +1427,20 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
             org-src-tab-acts-natively t)))
 #+END_SRC
 
+** Lists
+
+[[https://github.com/calvinwyoung/org-autolist][org-autolist]] provides automatic list continuation on =RET=. This does
+not presently work with Evil's =o= and =O=.
+
+#+NAME: org
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package org-autolist
+    :commands org-autolist-mode
+    :init
+    (progn
+      (add-hook 'org-mode-hook #'org-autolist-mode)))
+#+END_SRC
+
 ** Templates
 
 Org mode provides a mechanism for inserting [[http://orgmode.org/manual/Easy-Templates.html][templates]] into Org
