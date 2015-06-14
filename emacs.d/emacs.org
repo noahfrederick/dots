@@ -289,6 +289,9 @@ as well.
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (cond
+   ((find-font (font-spec :name "Fira Mono"))
+    (set-frame-font "Fira Mono-14" t t)
+    (setq-default line-spacing 4))
    ((find-font (font-spec :name "Source Code Pro"))
     (set-frame-font "Source Code Pro-14" t t))
    ((find-font (font-spec :name "Panic Sans"))
