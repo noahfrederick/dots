@@ -447,6 +447,15 @@ corresponding colored background.
 
 * Key Bindings
 
+** General
+
+Instantly display current key sequence in mini buffer:
+
+#+NAME: evil
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq echo-keystrokes 0.02)
+#+END_SRC
+
 ** Evil
 
 Evil mode is a minor mode providing Vim emulation for Emacs. It
