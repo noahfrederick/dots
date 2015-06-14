@@ -380,13 +380,12 @@ Never require full word answers to yes/no prompts:
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-Show line numbers in programming modes with a format that allows
-for five digits with some padding to the right of the numbers.
+Use a line number format that allows for five digits with some padding
+to the right of the numbers.
 
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq linum-format "%5d ")
-  (add-hook 'prog-mode-hook 'linum-mode)
 #+END_SRC
 
 ** Popwin
