@@ -918,6 +918,21 @@ Magit provides featureful Git integration.
       (evil-define-key 'emacs magit-mode-map "K" 'magit-discard-item))) ; k
 #+END_SRC
 
+[[https://github.com/syohex/emacs-git-gutter-fringe][git-gutter-fringe]] shows the version control status of lines in the
+fringe. There are at least four different implementations out
+there. Some use the window margin (and conflict with linum-mode), some
+use the fringe (and don't work in a terminal).
+
+#+NAME: editing
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package git-gutter-fringe
+    :config
+    (progn
+      (global-git-gutter-mode t)
+
+      (evil-leader/set-key "g u u" 'global-git-gutter-mode)))
+#+END_SRC
+
 ** Languages
 
 *** Emacs-Lisp

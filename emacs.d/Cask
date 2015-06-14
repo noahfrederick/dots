@@ -19,6 +19,7 @@
 (depends-on "exec-path-from-shell")
 (depends-on "f")
 (depends-on "flycheck")
+(depends-on "git-gutter")
 (depends-on "guide-key")
 (depends-on "helm")
 (depends-on "helm-projectile")
