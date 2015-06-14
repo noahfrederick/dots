@@ -1004,6 +1004,46 @@ command-line accounting program.
     :mode (("\\.ledger$" . ledger-mode)))
 #+END_SRC
 
+These are helper functions I use to manage my ledger file.
+
+#+NAME: editing
+#+BEGIN_SRC emacs-lisp :tangle no
+  (with-eval-after-load 'ledger-mode
+    (defun nox/ledger-post-split (account amount)
+      "Split a ledger posting at point between original account and
+  ACCOUNT, with AMOUNT allotted to the second account."
+      (interactive (list (nox/ledger-org-read-account)
+                         (string-to-number (read-string "Amount ($): "))))
+      (nox/ledger-post-make-split account amount))
+
+    (defun nox/ledger-post-split-evenly (account)
+      "Split a ledger posting at point evenly between original account and ACCOUNT."
+      (interactive (list (nox/ledger-org-read-account)))
+      (nox/ledger-post-make-split account))
+
+    (defun nox/ledger-post-make-split (account &optional amount)
+      "Split a ledger posting at point between original account and ACCOUNT."
+      (goto-char (line-beginning-position))
+      (when (re-search-forward ledger-post-line-regexp (line-end-position) t)
+        ;; Go to the end of the account to search forward for an amount
+        (goto-char (match-end ledger-regex-post-line-group-account))
+        (let ((end-of-amount (re-search-forward "[-.,0-9]+" (line-end-position) t)))
+          (if end-of-amount
+              (let* ((val-original (string-to-number (match-string 0)))
+                     (amount (if amount amount
+                               ;; Else split evenly, allowing for a 1-cent remainder
+                               (/ (floor (* 50.0 val-original)) 100.0)))
+                     (val-1 (format "%.2f" (- val-original amount)))
+                     (val-2 (format "%.2f" amount)))
+                (goto-char (match-beginning 0))
+                (delete-region (match-beginning 0) (match-end 0))
+                (insert val-1)
+                (ledger-post-align-postings)
+                (insert "\n    " account "  $" val-2)
+                (ledger-post-align-postings))
+            (message "This posting has no amount"))))))
+#+END_SRC
+
 *** Puppet
 
 #+NAME: editing
