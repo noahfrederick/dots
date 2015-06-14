@@ -1562,6 +1562,44 @@ filter. Here we set up reusable tags with mnemonic shortcuts.
                                      (verbatim . "<kbd>%s</kbd>")))
 #+END_SRC
 
+[[http://orgmode.org/manual/Project-alist.html#Project-alist][Projects]] are predefined rules for exporting files or groups of
+files. This Org document is part of the "emacs" project. You can
+publish a project by issuing =M-x org-publish-current-project RET= or
+=M-x org-publish RET= and then typing the project name at the prompt, or
+you can publish all projects by issuing =M-x org-publish-all RET=.
+
+#+NAME: org
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq org-publish-project-alist
+        '(("emacs"
+           :base-directory "~/.emacs.d/"
+           :recursive nil
+           :base-extension "org"
+           :publishing-directory "~/.emacs.d/"
+           :publishing-function org-html-publish-to-html
+           :headline-levels 9)
+          ("org-assets"
+           :base-directory "~/.emacs.d/"
+           :recursive nil
+           :base-extension "css\\|js"
+           :publishing-directory "~/org/"
+           :publishing-function org-publish-attachment)
+          ("ledger-assets"
+           :base-directory "~/org/"
+           :recursive nil
+           :base-extension "css\\|js"
+           :publishing-directory "~/ledger/reports/"
+           :publishing-function org-publish-attachment)
+          ("ledger-reports"
+           :base-directory "~/ledger/"
+           :recursive nil
+           :base-extension "org"
+           :publishing-directory "~/ledger/reports/"
+           :publishing-function org-html-publish-to-html
+           :headline-levels 9)
+          ("ledger" :components ("org-assets" "ledger-assets" "ledger-reports"))))
+#+END_SRC
+
 ** Key Bindings
 
 *** Hierarchy
