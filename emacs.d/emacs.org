@@ -358,11 +358,12 @@ disable it.
   (setq inhibit-startup-screen t)
 #+END_SRC
 
-Set the initial text contents of the =*scratch*= buffer:
+Set the initial text contents of the =*scratch*= buffer. A value of ~nil~
+suppresses the message altogether.
 
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
-  (setq initial-scratch-message ";; Hello, Nox.\n")
+  (setq initial-scratch-message nil)
 #+END_SRC
 
 Use ANSI color in shell:
