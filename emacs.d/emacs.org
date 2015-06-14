@@ -1301,6 +1301,7 @@ list, such as files, buffers, and so on.
       "h /" 'helm-occur)
     :config
     (progn
+      (setq helm-M-x-fuzzy-match t)
       (use-package helm-config)
       (define-key helm-map (kbd "C-j") 'helm-next-line)
       (define-key helm-map (kbd "C-k") 'helm-previous-line)))
