@@ -88,6 +88,9 @@ abbr --add vs  nvim -S
 abbr --add vn  nvim -u NONE
 abbr --add vd  nvim --noplugin -u minimal.vim
 abbr --add wk  webkit2png --fullsize --timestamp
+abbr --add ww  words
+abbr --add we  words --english
+abbr --add wi  words --interactive
 
 # Make fish work with boxen
 set -l FISH_BOXEN ~/.config/fish/boxen.fish
