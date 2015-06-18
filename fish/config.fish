@@ -54,6 +54,7 @@ set -gx FZF_DEFAULT_OPTS "--inline-info"
 #
 # ABBREVIATIONS
 #
+abbr --add art php artisan
 abbr --add br  brew
 abbr --add bru brew upgrade
 abbr --add e   emacsclient
@@ -86,6 +87,7 @@ abbr --add v   nvim
 abbr --add vs  nvim -S
 abbr --add vn  nvim -u NONE
 abbr --add vd  nvim --noplugin -u minimal.vim
+abbr --add wk  webkit2png --fullsize --timestamp
 
 # Make fish work with boxen
 set -l FISH_BOXEN ~/.config/fish/boxen.fish
