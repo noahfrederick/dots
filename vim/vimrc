@@ -289,6 +289,10 @@ if has("autocmd")
     " and take up space (normally it inherits this setting like any other
     " window)
     autocmd CmdwinEnter * set nonumber
+
+    if exists('##TermOpen')
+      autocmd TermOpen *FZF setlocal statusline=%9*
+    endif
   augroup END
 endif
 
