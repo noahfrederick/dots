@@ -8,11 +8,11 @@
   "Enox theme: a medium-contrast theme with dark background.
 
 In addition to the basic and font-lock faces, faces are provided for
-Ace-Jump, Ansi-Color, Auto-Complete, Calfw, Dired, Ediff, ERC, Eshell,
-Evil, Flycheck, Flyspell, Git Gutter, Gnus, Guide Key, Helm, Ido,
-Isearch, Ledger, Magit, Markdown, Message, Org, Rainbow Delimiters,
-Semantic, Smart Mode Line, Smartparens, Speedbar, Undo Tree,
-Whitespace, and YASnippet.")
+Ace-Jump, Ansi-Color, Auto-Complete, Calfw, Dired, Ediff, Elfeed, ERC,
+Eshell, Evil, Flycheck, Flyspell, Git Gutter, Gnus, Guide Key, Helm,
+Ido, Isearch, Ledger, Magit, Markdown, Message, Mu4e, Org, Rainbow
+Delimiters, Semantic, Smart Mode Line, Smartparens, Speedbar, Undo
+Tree, Whitespace, and YASnippet.")
 
 (let* ((class '((class color) (min-colors 89)))
        ;; Enox palette colors
@@ -155,6 +155,19 @@ Whitespace, and YASnippet.")
    `(ledger-font-payee-uncleared-face ((,class (:foreground ,nox-yellow))))
    `(ledger-font-periodic-xact-face ((,class (:foreground ,nox-special))))
    `(ledger-font-auto-xact-face ((,class (:foreground ,nox-special))))
+   ;; Elfeed faces
+   `(elfeed-search-date-face ((,class (:foreground ,nox-comment))))
+   `(elfeed-search-title-face ((,class (:foreground ,nox-fg))))
+   `(elfeed-search-unread-title-face ((,class (:weight bold :foreground ,nox-blue))))
+   `(elfeed-search-feed-face ((,class (:foreground ,nox-yellow))))
+   `(elfeed-search-tag-face ((,class (:foreground ,nox-comment))))
+   ;; Mu4e faces
+   `(mu4e-header-highlight-face ((,class (:background ,nox-bg-subtle))))
+   `(mu4e-trashed-face ((,class (:foreground ,nox-fg-subtle :strike-through t))))
+   `(mu4e-flagged-face ((,class (:foreground ,nox-yellow))))
+   `(mu4e-replied-face ((,class (:foreground ,nox-bg-em))))
+   `(mu4e-unread-face ((,class (:foreground ,nox-blue :weight bold))))
+   `(mu4e-compose-separator-face ((,class (:foreground ,nox-fg-subtle :slant italic))))
    ;; Calfw faces
    `(cfw:face-grid ((,class (:foreground ,nox-fg-subtle))))
    `(cfw:face-toolbar ((,class (:foreground ,nox-bg-subtle :background ,nox-bg-dark))))
