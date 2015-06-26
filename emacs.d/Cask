@@ -30,6 +30,7 @@
 (depends-on "magit")
 (depends-on "markdown-mode")
 (depends-on "org-autolist")
+(depends-on "org-bullets")
 (depends-on "org-plus-contrib")
 (depends-on "pallet")
 (depends-on "paradox")
