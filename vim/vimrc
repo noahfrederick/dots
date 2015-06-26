@@ -56,6 +56,7 @@ if has("vim_starting")
   " Language-/framework-specific utilities
   Plug '$PLUG_SRC/vim-jekyll'
   Plug '$PLUG_SRC/vim-kohana'
+  Plug '$PLUG_SRC/vim-laravel'
   Plug 'dbakker/vim-lint',               { 'for': 'vim' }
   Plug 'dbakker/vim-sparkup',            { 'for': 'html' }
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
@@ -266,6 +267,8 @@ if has("autocmd")
 
     autocmd FileType css,html,javascript,json
           \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call nox#format#JsBeautify()
+
+    autocmd User Laravel call nox#laravel#BufferSetup()
 
     set cursorline
 
