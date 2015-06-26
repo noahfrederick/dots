@@ -308,6 +308,8 @@ command! -bang -nargs=0 -bar Marks call nox#marks#Choose(<q-bang>)
 command! -bang -nargs=? -bar -complete=filetype Scratch
       \ tabedit | if <q-bang> ==# '' | put | 1 | delete _ | endif
       \ | setlocal filetype=<args> buftype=nofile bufhidden=hide noswapfile
+command! -nargs=0 -bar Unix set fileformat=unix
+command! -bang -nargs=0 -bar Cd cd<bang> .
 
 if exists("$NOTES")
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
