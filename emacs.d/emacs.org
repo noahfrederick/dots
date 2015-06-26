@@ -2219,6 +2219,21 @@ left disabled for now.
 
 Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
 
+** RSS
+
+[[https://github.com/skeeto/elfeed][Elfeed]] is an RSS/Atom reader. A list of feeds to fetch should be
+listed in ~elfeed-feeds~. Unfortunately, it fails to retrieve or parse a
+large proportion of feeds.
+
+#+NAME: communications
+#+BEGIN_SRC emacs-lisp :tangle no
+  (with-eval-after-load 'elfeed
+    (evil-make-overriding-map elfeed-search-mode-map 'motion)
+    (evil-make-overriding-map elfeed-show-mode-map 'motion))
+#+END_SRC
+
+Open the Elfeed buffer by issuing =M-x elfeed RET=.
+
 ** ERC
 
 ERC is an extensible IRC client for Emacs.
@@ -2386,11 +2401,8 @@ the ~NAME~ directives above the ~SRC~ blocks throughout this document.
 Functionality I want or things that need to be fixed:
 
 - Use Emacs for RSS. =newsticker.el= seemed promising, but it
-caused Emacs to hang on startup while it fetched feeds and it
-couldn't handle half the feeds for some reason. =elfeed.el= was
-overly complicated and also couldn't handle some feeds. Gnus is
-ridiculous.
-- Port =<Space>= maps from Vim. May require a macro, which would
-take a hash of uppercase letters and file names and map them to
-(locate-dominating-file FILE NAME)~.
+  caused Emacs to hang on startup while it fetched feeds and it
+  couldn't handle half the feeds for some reason. =elfeed.el= can't
+  retrieve or parse feeds reliably either. Gnus is ridiculous.
+- Use Emacs for email.
 - Sleuth.vim ported to Emacs.

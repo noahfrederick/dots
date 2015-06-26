@@ -10,6 +10,7 @@
 (depends-on "dash-at-point")
 (depends-on "diminish")
 (depends-on "dtrt-indent")
+(depends-on "elfeed")
 (depends-on "enh-ruby-mode")
 (depends-on "evil")
 (depends-on "evil-god-state")
