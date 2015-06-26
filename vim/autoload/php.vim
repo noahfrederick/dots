@@ -36,6 +36,8 @@ function! php#Open()
     else
       let out = out . " defined('SYSPATH') OR die('No direct script access.');"
     endif
+  elseif framework ==# "laravel"
+    let out = out . " namespace App;"
   elseif framework ==# "prestashop"
     let out = out . " if (!defined('_PS_VERSION_')) exit;"
   endif
