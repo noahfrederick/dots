@@ -651,14 +651,7 @@ let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol
 let g:syntastic_stl_format .= ' (line %fw)} '
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_php_checkers = ['php']
-
-" :help syntastic-config-makeprg
-" Don't complain about indentation with tabs, set encoding
-let g:syntastic_php_phpcs_post_args = "--tab-width=4 --encoding=utf-8"
-" Use PSR2 standard instead of default PEAR
-" http://www.php-fig.org/psr/2/
-let g:syntastic_php_phpcs_post_args .= " --standard=PSR2"
+let g:syntastic_php_checkers = ['php', 'phpcs']
 
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
 let g:sparkupDoMaps = 0
