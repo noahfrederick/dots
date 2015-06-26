@@ -2304,7 +2304,8 @@ and restore previous window configuration again.
     (progn
       (setq alert-default-style 'terminal-notifier)
 
-      (alert-define-style 'terminal-notifier :title "Terminal Notifier"
+      (alert-define-style 'terminal-notifier
+                          :title "Terminal Notifier"
                           :notifier
                           (lambda (info)
                             (nox/send-notification
@@ -2325,10 +2326,14 @@ and restore previous window configuration again.
       ;; Pass notifications through to alert.el
       (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter)
 
-      (setq sauron-hide-mode-line t)
+      (setq sauron-hide-mode-line t
+            sauron-modules '(sauron-erc
+                             sauron-org
+                             sauron-notifications))
 
-      (global-set-key (kbd "C-c s") 'sauron-toggle-hide-show)
-      (global-set-key (kbd "C-c t") 'sauron-clear)))
+      (evil-leader/set-key "s" 'sauron-toggle-hide-show)
+
+      (sauron-start-hidden)))
 #+END_SRC
 
 * Configuration Layout
@@ -2367,7 +2372,7 @@ the ~NAME~ directives above the ~SRC~ blocks throughout this document.
 ;; Configuration group: org
 <<org>>
 
-;; Configuration group: notifications
+;; Configuration group: communications
 <<communications>>
 
 ;; Configuration group: init-after
