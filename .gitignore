@@ -1,5 +1,6 @@
 emacs.d/recentf
 fish/completions/*.fish
+fish/fish_read_history
 vim/.netrwhist
 vim/bundle/*
 vim/plugged/*
