@@ -94,6 +94,9 @@ pre.example {
 .todo {
     color: #f05;
 }
+.done {
+    color: #bbb;
+}
 .tag {
     float: right;
     font-size: .7rem;
