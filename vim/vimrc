@@ -221,6 +221,7 @@ let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
 let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
 let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
 let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
+let &statusline .= '%6*%{exists("*ObsessionStatus")?ObsessionStatus("\u24e2 ", "\u24e2 paused"):""}%*'
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 function! StatuslineGit()
