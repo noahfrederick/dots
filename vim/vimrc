@@ -68,12 +68,12 @@ if has("vim_starting")
   Plug 'tpope/vim-scriptease'
 
   " File-type runtime files
+  Plug 'blueyed/smarty.vim'
   Plug 'dag/vim-fish'
   Plug 'joedicastro/vim-pentadactyl'
   Plug 'kana/vim-vspec'
   Plug 'ledger/vim-ledger'
   Plug 'sheerun/vim-polyglot'
-  Plug 'vim-scripts/smarty-syntax'
 
   call plug#end()
 
