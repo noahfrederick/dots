@@ -1,8 +1,5 @@
-setlocal spell
+" after/ftplugin/gitcommit.vim - Git commit file-type settings
 
-" Smart <Enter> in insert mode
-inoremap <buffer><expr> <CR> markdown#OpenLine("\<CR>")
+runtime! after/ftplugin/text.vim
 
-" Also for normal mode o/O
-nnoremap <buffer><expr> o markdown#OpenLine("o")
-nnoremap <buffer><expr> O markdown#OpenLine("O")
+" vim: fdm=marker:sw=2:sts=2:et

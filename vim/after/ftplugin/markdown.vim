@@ -1,3 +1,7 @@
+" after/ftplugin/markdown.vim - Markdown file-type settings
+
+runtime! after/ftplugin/text.vim
+
 " Turn on concealing of bold, italic markers
 set conceallevel=2
 set concealcursor=nc
@@ -26,13 +30,6 @@ if exists(':Switch')
   nnoremap <buffer> <CR> :Switch<CR>
 endif
 
-" Smart <Enter> in insert mode
-inoremap <buffer><expr> <CR> markdown#OpenLine("\<CR>")
-
-" Also for normal mode o/O
-nnoremap <buffer><expr> o markdown#OpenLine("o")
-nnoremap <buffer><expr> O markdown#OpenLine("O")
-
 " Timestamp insertion
 inoremap <buffer> <C-g>. [<C-r>=strftime("%Y-%m-%d %a")<CR>]
 inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
@@ -55,3 +52,5 @@ augroup AfterMarkdown
   autocmd!
   autocmd BufWritePost *.md call nox#make#Recompile(expand('<afile>'))
 augroup END
+
+" vim: fdm=marker:sw=2:sts=2:et
