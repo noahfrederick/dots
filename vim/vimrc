@@ -349,8 +349,8 @@ command! -nargs=0 -bar Lines call fzf#run({
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
-  command! -nargs=1 Cdo     call nox#quickfix#Cdo(0, <q-args>)
-  command! -nargs=1 Cdofile call nox#quickfix#Cdo(1, <q-args>)
+  command! -nargs=1 Cdo  call nox#quickfix#Cdo(0, <q-args>)
+  command! -nargs=1 Cfdo call nox#quickfix#Cdo(1, <q-args>)
 endif
 
 if executable('osascript')
