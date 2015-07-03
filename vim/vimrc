@@ -197,6 +197,7 @@ if executable('ag')
   set grepprg=ag\ --vimgrep
   "                 |
   "                 `------------ Format results for Vim, include multiple matches per line
+  set grepformat=%f:%l:%c:%m
 else
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
   "                  |||
