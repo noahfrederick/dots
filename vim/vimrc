@@ -13,7 +13,7 @@ if has("vim_starting")
 
   " General-purpose utilities
   Plug 'AndrewRadev/sideways.vim'
-  Plug 'AndrewRadev/splitjoin.vim',      { 'on': ['SplitjoinJoin', 'SplitjoinSplit'] }
+  Plug 'AndrewRadev/splitjoin.vim'
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
