@@ -10,8 +10,20 @@ if &modifiable
   nnoremap <buffer><expr> o markdown#OpenLine("o")
   nnoremap <buffer><expr> O markdown#OpenLine("O")
 
-  iabbrev <buffer> eg e.g.,
-  iabbrev <buffer> ie i.e.,
+  if exists(":Abolish")
+    Abolish -buffer Bb Bitbucket
+    Abolish -buffer Gh GitHub
+    Abolish -buffer Im I'm
+    Abolish -buffer Tw Teamwork
+    Abolish -buffer Wp WordPress
+    Abolish -buffer eg e.g.,
+    Abolish -buffer ie i.e.,
+    Abolish -buffer plugin{,s} plug-in{}
+    Abolish -buffer thats that's
+    Abolish -buffer {I,we,you,they}ve {}'ve
+    Abolish -buffer {is,was,do,does,did,would,could,should,wo,ca}nt {}n't
+    Abolish -buffer {you,they}re {}'re
+  endif
 endif
 
 " vim: fdm=marker:sw=2:sts=2:et
