@@ -1556,6 +1556,11 @@ filter. Here we set up reusable tags with mnemonic shortcuts.
 
 ** Exporting
 
+These settings control how Org files are exported to other formats. In
+particular, we specify HTML5 instead of the default XHTML for HTML
+export and clean up some of the generated markup. A [[file:~/.emacs.d/emacs.org][custom style sheet]]
+for exported files lives in the =~/.emacs.d= directory.
+
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq org-hide-emphasis-markers t
@@ -1563,8 +1568,10 @@ filter. Here we set up reusable tags with mnemonic shortcuts.
         org-export-backends '(html
                               latex
                               md)
+        org-html-doctype "html5"
         org-html-preamble nil
-        org-html-postamble nil
+        org-html-postamble t
+        org-html-postamble-format '(("en" "<div class=\"date\">%T</div>"))
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
         org-html-head (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />\n"
