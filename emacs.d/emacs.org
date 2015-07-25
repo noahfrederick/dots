@@ -2411,5 +2411,25 @@ Functionality I want or things that need to be fixed:
   caused Emacs to hang on startup while it fetched feeds and it
   couldn't handle half the feeds for some reason. =elfeed.el= can't
   retrieve or parse feeds reliably either. Gnus is ridiculous.
-- Use Emacs for email.
+- Use Emacs for email. My last attempt with mu4e was unsuccessful because:
+  - Managing windows in a frame shared with other text editing
+    activities was awkward.
+  - It didn't automatically decrypt mail when viewing (and I can't get
+    gpgagent to work).
+  - It failed to decrypt email sent to myself if it included an
+    attachment.
+  - New-mail notifications had to be hacked together, and ultimately
+    they were unreliable.
+  - Having to first mark messages and then act on them was an annoying
+    paradigm. Can be solved with custom key bindings.
+  - I receive too much HTML email and don't have a suitable way to
+    display it. Various HTML-to-text solutions were insufficient and
+    viewing the message in the browser allows for nefarious tracking
+    to take place. Look into mu4e's [[https://github.com/djcb/mu/blob/master/mu4e/mu4e-contrib.el][contrib file]], which includes a
+    potential solution.
+  - Once offlineimap stopped fetching mail, and I didn't realize it
+    for a whole day.
 - Sleuth.vim ported to Emacs.
+- Paredit for Evil mode.
+- Ex commands for specific modes (e.g., org-capture-mode):
+  https://bitbucket.org/lyro/evil/issue/399/issues-with-org-src-mode
