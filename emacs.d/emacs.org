@@ -1432,37 +1432,150 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (setq org-directory "~/org"
             org-default-notes-file (expand-file-name "inbox.org" org-directory))
 
-      ;; http://lists.gnu.org/archive/html/emacs-orgmode/2013-02/msg00644.html
-      (run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
-      (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+      (use-package org-contacts
+        :config
+        (setq org-contacts-files `(,(expand-file-name "contacts.org" org-directory))
+              org-contacts-icon-use-gravatar nil))
+
+      (defun nox/ledger-org-read-date ()
+        "Read date in an Org mode capture template in the format that
+  Ledger expects. Includes a custom prompt string."
+        (let ((org-read-date-prefer-future nil))
+          (replace-regexp-in-string "-" "/"
+                                    (org-read-date nil nil nil "Transaction"))))
+
+      (defun nox/ledger-org-read-account ()
+        "Read account name using `ido-completing-read'"
+        (ido-completing-read "Account: "
+                             (split-string
+                              (with-output-to-string
+                                (shell-command "ledger accounts" standard-output))
+                              "\n" t)))
+
+      (defun nox/ledger-org-read-payee ()
+        "Read payee name using `ido-completing-read'"
+        (ido-completing-read "Payee: "
+                             (split-string
+                              (with-output-to-string
+                                (shell-command "ledger payees" standard-output))
+                              "\n" t)))
 
       (setq org-capture-templates
-            '(("t" "To-do")
+            '(("t" "☑️ To-do")
               ("tt" "To-do" entry
                (file "")
-               "* TODO %u %^{Task}"
+               "* TODO %?"
                :clock-keep t :kill-buffer t)
-              ("td" "To-do (done)" entry
-               (file "")
-               "* DONE %u %^{Task}"
-               :clock-keep t :kill-buffer t)
-              ("u" "Quick to-do" entry
+              ("tu" "️Quick to-do" entry
                (file "")
                "* TODO %^{Task}\nSCHEDULED: %t"
                :clock-keep t :kill-buffer t :immediate-finish t)
-              ("j" "Journal entry" entry
-               (file+datetree+prompt "~/org/diary.org")
+              ("j" "📆 Journal entry" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* %?\n%U\n"
                :clock-keep t :kill-buffer t)
-              ("p" "TeamworkPM task" entry
-               (file+headline "~/org/bigtech.org" "Tasks")
+              ("c" "👤 Contact" entry
+               (file+headline (expand-file-name "contacts.org" org-directory) "People")
+               "* %(org-contacts-template-name)\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:END:"
+               :clock-keep t :kill-buffer t)
+              ("p" "📘 TeamworkPM task" entry
+               (file+headline (expand-file-name "bigtech.org" org-directory) "Tasks")
                "* TODO %^{TWPMLink}p%^{Task}"
-               :clock-keep t :clock-in t :immediate-finish t)))
+               :clock-keep t :clock-in t :immediate-finish t)
+              ("r" "🍲 Recipe" entry
+               (file+headline (expand-file-name "food.org" org-directory) "Recipes")
+               "* %^{Recipe Name}%^{source}p%^{serves}p%^{time}p\n\n** Ingredients\n\n** Preparation"
+               :clock-keep t :empty-lines 1 :kill-buffer t)
+              ("R" "🍴 Restaurant" entry
+               (file+headline (expand-file-name "food.org" org-directory) "Restaurants")
+               "* %^{Restaurant Name}\n%u\n"
+               :clock-keep t :empty-lines 1 :kill-buffer t)
+              ("k" "🔠 Keyboards" entry
+               (file+headline (expand-file-name "keyboards.org" org-directory) "Keyboard Gallery")
+               "* %^{Title}%^{source}p\n#+CAPTION: %^{Caption text}\n%?"
+               :clock-keep t :jump-to-captured t)
+              ("l" "📒️ Ledger")
+              ("lg" "🍏 Groceries" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/groceries.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("ld" "🍴 Dining" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/dining.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("lt" "Ⓜ️ Transit" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/mta.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lc" "💵 Cash Withdrawal" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/cash.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("lp" "💰 Paycheck" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/salary.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("la" "💳 American Express Payment" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/amex.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("le" "💡️ Electric" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/coned.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("ls" "🔥️ Gas" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/nationalgrid.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("li" "☁️️ Internet Service" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/cablevision.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lr" "🏠 Rent" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/rent.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("ll" "👖 Laundry" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/laundry.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("lI" "💸 Transfer to IRA" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/ira.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lD" "🕐 Monthly Dividends" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/dividends_monthly.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lE" "🕒 Quarterly Dividends" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/dividends_quarterly.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("l?" "❔ Other" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/generic.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)))
+
+      (defun nox/make-org-capture-mode-evil ()
+        "Turn the Org capture buffer evil."
+        (evil-define-key 'normal org-capture-mode-map "ZZ" 'org-capture-finalize)
+        (evil-define-key 'normal org-capture-mode-map "ZQ" 'org-capture-kill)
+        (evil-leader/set-key-for-mode 'org-capture-mode "m m" 'org-capture-finalize)
+        (evil-leader/set-key-for-mode 'org-capture-mode "m r" 'org-capture-refile)
+
+        (add-hook 'org-capture-mode-hook
+                  '(lambda ()
+                     (org-set-local
+                      'header-line-format
+                      "Capture buffer.  Finish `Z Z', refile `<Leader> m r', abort `Z Q'."))))
+
+      (nox/make-org-capture-mode-evil)
 
       (setq org-goto-interface 'outline-path-completion
             org-log-done 'time
             org-log-into-drawer t
             org-treat-S-cursor-todo-selection-as-state-change nil ; Cycle through TODO states with S-Left/Right skipping logging
+            org-deadline-warning-days 1
             org-refile-targets '((org-agenda-files :maxlevel . 2))
             org-refile-target-verify-function 'nox/verify-refile-target
             org-refile-allow-creating-parent-nodes 'confirm
@@ -1495,7 +1608,8 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
          (ledger . t)
          (sh . t)))
       (setq org-src-fontify-natively t
-            org-src-tab-acts-natively t)))
+            org-src-tab-acts-natively t
+            org-confirm-babel-evaluate nil)))
 #+END_SRC
 
 ** Appearance
@@ -1703,12 +1817,24 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; Org mode - http://orgmode.org/guide/Activation.html#Activation
   (evil-leader/set-key
-    "r a" 'org-agenda
     "a"   'org-agenda
-    "r b" 'org-iswitchb
-    "r c" 'org-capture
     "c"   'org-capture
+    "r b" 'org-iswitchb
+    "r c" 'nox/open-org-calendar
     "r l" 'org-store-link)
+
+  (evil-leader/set-key-for-mode 'org-mode
+    "m A" 'org-archive-subtree-default
+    "m a" 'org-archive-subtree-default-with-confirmation
+    "m d" 'org-deadline
+    "m e" 'org-export-dispatch
+    "m m" 'org-ctrl-c-ctrl-c
+    "m P" 'org-set-property-and-value
+    "m p" 'org-set-property
+    "m q" 'org-set-tags-command
+    "m r" 'org-refile
+    "m s" 'org-schedule
+    "m t" 'org-todo)
 
   (with-eval-after-load 'org-agenda
     ;; Use the standard Org agenda bindings as a base
@@ -1726,7 +1852,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
   (use-package org-clock
     :config
     (progn
-      (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" org-directory)
+      (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" nox/ephemeral-directory)
             org-clock-persist t
             ;; Do not prompt to resume an active clock
             ;org-clock-persist-query-resume nil
@@ -1752,7 +1878,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
   (use-package org-agenda
     :commands (org-agenda org-agenda-list)
     :config
-    (setq org-agenda-files '("~/org")
+    (setq org-agenda-files `(,org-directory)
           org-agenda-skip-unavailable-files t
           org-agenda-skip-deadline-if-done nil
           org-agenda-skip-scheduled-if-done nil
@@ -1802,7 +1928,7 @@ Below are our custom agenda commands:
               (org-agenda-clockreport-mode t)
               (org-agenda-entry-types '())))
             ("w" "Waiting for"
-             todo "WAITING"
+             ((todo "WAITING"))
              ((org-agenda-sorting-strategy '(priority-down))))
             ("U" "Important stuff I don't want to do"
              ((tags-todo "focus")))
@@ -1856,9 +1982,12 @@ list.
   (use-package appt
     :config
     (progn
-      (setq appt-message-warning-time '30) ;; Send first warning 30 minutes before appointment
-      (setq appt-display-interval '15)     ;; Warn every 15 minutes from appt-message-warning-time
-      (appt-activate 1)))                  ;; Activate appointment notification
+      (run-at-time "24:01" 3600 'org-agenda-to-appt)           ; Update appt list hourly
+      (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ; Update appt list on agenda view
+
+      (setq appt-message-warning-time '60) ; Send first warning 30 minutes before appointment
+      (setq appt-display-interval '30)     ; Warn every 15 minutes from appt-message-warning-time
+      (appt-activate 1)))                  ; Activate appointment notification
 #+END_SRC
 
 ** Mobile
