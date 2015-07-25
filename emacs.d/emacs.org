@@ -235,7 +235,7 @@ bottom of the window. This defines a custom mode line format:
   (put 'nox/mode-line-modified 'risky-local-variable t)
 
   (defvar nox/mode-line-major-mode
-    '(:eval (propertize "%m" 'face 'mode-line-mode-face))
+    '(:propertize "%m" face mode-line-mode-face)
     "Mode line format for major mode.")
   (put 'nox/mode-line-major-mode 'risky-local-variable t)
 
@@ -244,12 +244,13 @@ bottom of the window. This defines a custom mode line format:
                   mode-line-front-space
                   nox/mode-line-projectile
                   mode-line-buffer-identification
+                  " "
                   (vc-mode nox/mode-line-vc)
                   " "
                   nox/mode-line-modified
                   "    "
                   nox/mode-line-major-mode
-                  " "
+                  "    "
                   (global-mode-string global-mode-string)
                   mode-line-end-spaces))
 #+END_SRC
