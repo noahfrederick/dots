@@ -1049,7 +1049,7 @@ These are helper functions I use to manage my ledger file.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package puppet-mode
-    :mode (("\\.pp$" . puppet-mode)))
+    :mode (("\\.pp\\'" . puppet-mode)))
 #+END_SRC
 
 *** Rest Client
@@ -1074,14 +1074,14 @@ requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package enh-ruby-mode
-    :mode (("\\.rake$" . enh-ruby-mode)
-           ("\\.gemspec$" . enh-ruby-mode)
-           ("\\.ru$" . enh-ruby-mode)
-           ("Rakefile$" . enh-ruby-mode)
-           ("Gemfile$" . enh-ruby-mode)
-           ("Capfile$" . enh-ruby-mode)
-           ("Puppetfile$" . enh-ruby-mode)
-           ("Guardfile$" . enh-ruby-mode))
+    :mode (("\\.rake\\'" . enh-ruby-mode)
+           ("\\.gemspec\\'" . enh-ruby-mode)
+           ("\\.ru\\'" . enh-ruby-mode)
+           ("Rakefile\\'" . enh-ruby-mode)
+           ("Gemfile\\'" . enh-ruby-mode)
+           ("Capfile\\'" . enh-ruby-mode)
+           ("Puppetfile\\'" . enh-ruby-mode)
+           ("Guardfile\\'" . enh-ruby-mode))
     :init
     (progn
       (add-hook 'enh-ruby-mode-hook 'robe-mode)
