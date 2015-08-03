@@ -3,8 +3,10 @@ CISC
 CLI
 CMS
 CSS
+CSV
 CUNY
 DHCP
+DNS
 DVD
 DVDs
 GitHub
@@ -19,7 +21,9 @@ PDF
 PHP
 POSIX
 Posix
+PrestaShop
 RESTful
+SSL
 Sempronia
 UI
 URL
@@ -31,6 +35,7 @@ Vergil
 VirtualBox
 WordPress
 YAML
+admin
 analyses
 arugula
 blog
@@ -44,6 +49,7 @@ fundraiser
 hyperlink
 jQuery
 kyriarchy
+misconfigure
 online
 osCommerce
 overfitting
@@ -57,6 +63,7 @@ refactor
 spellchecking
 symlink
 templating
+teriyaki
 timestamp
 toolbar
 tradeoff
