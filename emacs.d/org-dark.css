@@ -1,0 +1,83 @@
+body {
+    color: #ddd;
+    background: #141414;
+}
+a {
+    color: #58D2B9;
+}
+h1 {
+    color: #555;
+}
+h2,
+h4 {
+    color: #AE81FF;
+}
+h2 {
+    border-top-color: #333;
+}
+h3 {
+    color: #666;
+}
+th,
+td {
+    border-bottom-color: #ddd;
+}
+tbody > tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+caption,
+.figure {
+    color: #888;
+}
+.figure-number {
+    color: #444;
+}
+code,
+kbd,
+pre {
+    color: #555;
+}
+kbd {
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 0 #bbb;
+}
+pre {
+    border: 1px solid #333;
+    background: #1d2124;
+    color: #ddd;
+}
+pre.example {
+    background-color: #fefefe;
+    border-color: #ddd;
+}
+.todo {
+    color: #f05;
+}
+.done {
+    color: #bbb;
+}
+.tag span {
+    border-color: #333;
+}
+.timestamp {
+    color: #aaa;
+}
+#text-table-of-contents > ul > li {
+    border-bottom-color: #333;
+}
+#text-table-of-contents > ul > li:first-child {
+    border-top-color: #333;
+}
+#postamble {
+    color: #555;
+}
+@media only screen and (min-width: 1300px) {
+    #table-of-contents {
+        background: #181818;
+        border-right-color: #282828;
+    }
+    #postamble {
+        background: #1b1b1b;
+        border-top: 1px solid #282828;
+    }
+}

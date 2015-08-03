@@ -1,3 +1,5 @@
+@import "syntax.css";
+
 body {
     margin: 0;
     padding: 3em;
@@ -58,8 +60,14 @@ td.right {
 tbody > tr:nth-child(odd) {
     background-color: #fafafa;
 }
+img {
+    max-width: 100%;
+}
 caption {
     color: #888;
+}
+.figure {
+    margin-bottom: 3em;
 }
 code,
 kbd,
@@ -136,6 +144,9 @@ pre.example {
 }
 #text-table-of-contents ul a:hover {
     text-decoration: underline;
+}
+#text-table-of-contents .tag {
+    display: none;
 }
 #content {
     max-width: 50em;

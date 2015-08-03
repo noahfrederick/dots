@@ -1,0 +1,104 @@
+.org-bookmark-menu-heading {
+    color: #b1d631;
+}
+.org-builtin {
+    color: #7AAAEB;
+}
+.org-comment,
+.org-comment-delimiter {
+    color: #7c98aa;
+    font-style: italic;
+}
+.org-comment-delimiter {
+    color: #555555;
+}
+.org-paren {
+    color: #7c98aa;
+}
+.org-variable-name,
+.org-constant {
+    color: #53D5E9;
+}
+.org-constant {
+    font-weight: bold;
+}
+.org-string,
+.org-doc {
+    color: #8ff0aa;
+}
+.org-doc {
+    font-style: italic;
+}
+.org-doc .org-constant {
+    color: inherit;
+}
+.org-keyword {
+    color: #ffffff;
+    font-weight: bold;
+}
+.org-diff-added {
+    color: #16191b;
+    background-color: #b1d631;
+}
+.org-diff-changed {
+}
+.org-diff-context {
+    color: #7c98aa;
+}
+.org-diff-file-header {
+    color: #ffffff;
+    background-color: #434e57;
+    font-weight: bold;
+}
+.org-diff-function {
+    background-color: #737373;
+}
+.org-diff-header {
+    background-color: #737373;
+}
+.org-diff-hunk-header {
+    background-color: #434e57;
+}
+.org-diff-index {
+    color: #ffffff;
+    background-color: #434e57;
+    font-weight: bold;
+}
+.org-diff-indicator-added {
+    color: #16191b;
+    background-color: #b1d631;
+}
+.org-diff-indicator-changed {
+}
+.org-diff-indicator-removed {
+    color: #ffffff;
+    background-color: #ff0044;
+}
+.org-diff-nonexistent {
+    color: #ffffff;
+    background-color: #434e57;
+    font-weight: bold;
+}
+.org-diff-refine-added {
+    background-color: #22aa22;
+}
+.org-diff-refine-changed {
+    background-color: #aaaa22;
+}
+.org-diff-refine-removed {
+    background-color: #aa2222;
+}
+.org-diff-removed {
+    color: #ffffff;
+    background-color: #ff0044;
+}
+.org-sh-escaped-newline {
+    color: #8ff0aa;
+}
+.org-sh-heredoc {
+    color: #ffff00;
+    font-weight: bold;
+}
+.org-sh-quoted-exec {
+    color: #fa8072;
+}
