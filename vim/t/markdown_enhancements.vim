@@ -1,4 +1,4 @@
-set runtimepath+=$HOME/.vim/bundle/switch.vim
+set runtimepath+=$HOME/.vim/plugged/switch.vim
 runtime! plugin/switch.vim
 
 describe 'Markdown enhancement'
@@ -217,7 +217,9 @@ describe 'Markdown enhancement'
 
   context 'Switch features'
     it 'cycles checked/unchecked states of - [ ] style list items'
-      if !exists(':Switch') | SKIP 'Switch.vim not available' | endif
+      if !exists(':Switch')
+        SKIP 'Switch.vim not available'
+      endif
 
       0put = '- [ ] A task'
       execute "normal \<CR>"
@@ -227,7 +229,9 @@ describe 'Markdown enhancement'
     end
 
     it 'cycles checked/unchecked states of -- style list items'
-      if !exists(':Switch') | SKIP 'Switch.vim not available' | endif
+      if !exists(':Switch')
+        SKIP 'Switch.vim not available'
+      endif
 
       0put = '-- A task'
       execute "normal \<CR>"
@@ -237,7 +241,9 @@ describe 'Markdown enhancement'
     end
 
     it 'cycles TODO keywords in plain list items'
-      if !exists(':Switch') | SKIP 'Switch.vim not available' | endif
+      if !exists(':Switch')
+        SKIP 'Switch.vim not available'
+      endif
 
       0put = '- A task'
       execute "normal \<CR>"
