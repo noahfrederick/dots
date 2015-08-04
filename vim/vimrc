@@ -268,7 +268,12 @@ if has("autocmd")
     autocmd FileType css,html,javascript,json
           \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call nox#format#JsBeautify()
 
-    autocmd User Laravel call nox#laravel#BufferSetup()
+    autocmd User ProjectionistActivate
+          \ if &filetype !~# '\.' |
+          \   for [root, value] in projectionist#query("framework") |
+          \     let &filetype = join([&filetype, value], ".") |
+          \   endfor |
+          \ endif
 
     set cursorline
 
