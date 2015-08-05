@@ -6,6 +6,10 @@ if &filetype =~# '^php'
   let b:syntastic_php_phpcs_post_args = "--standard=PSR2"
 endif
 
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+endif
+
 let b:undo_ftplugin .= '
       \ | unlet! b:syntastic_checkers b:syntastic_php_phpcs_post_args
       \ '
