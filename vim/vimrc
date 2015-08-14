@@ -112,6 +112,8 @@ set foldtext=nox#folding#Text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=j            " Remove extra comment char when joining lines
+set formatoptions+=r            " Insert comment leader after <Enter>
+set formatoptions+=o            " Insert comment leader after o and O
 set scrolloff=2                 " Keep n lines above/below cursor visible
 set sidescrolloff=5             " Keep n columns left/right of cursor visible
 if &shell =~# "fish$"
