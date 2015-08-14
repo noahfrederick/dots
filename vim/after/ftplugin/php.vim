@@ -46,6 +46,9 @@ endif
 " https://github.com/kana/vim-textobj-function
 let b:textobj_function_select = function('php#FunctionSelect')
 
+call nox#filetype#MakeSemicolonMaps()
+call nox#filetype#MakeRocketMaps()
+
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''
 endif

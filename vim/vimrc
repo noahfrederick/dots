@@ -257,21 +257,13 @@ if has("autocmd")
     autocmd!
 
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
-    autocmd BufNewFile,BufRead *Test.php set filetype=php.phpunit
-
-    autocmd FileType c,cpp,css,javascript,less,php call nox#filetype#MakeSemicolonMaps()
-    autocmd FileType php,rubycall call nox#filetype#MakeRocketMaps()
-
-    autocmd FileType html,liquid,markdown,php,xhtml,xml call nox#filetype#MakeXMLMaps()
-    autocmd FileType html,liquid,xhtml,xml setlocal textwidth=120
-
-    autocmd FileType css,html,javascript,json
-          \ command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call nox#format#JsBeautify()
 
     autocmd User ProjectionistActivate
-          \ if &filetype !~# '\.' |
+          \ if &filetype !=# '' && &filetype !=# 'dirvish' |
           \   for [root, value] in projectionist#query("framework") |
-          \     let &filetype = join([&filetype, value], ".") |
+          \     if &filetype . '.' !~# '\.' . value . '\.' |
+          \       let &filetype = join([&filetype, value], ".") |
+          \     endif |
           \   endfor |
           \ endif
 
@@ -663,6 +655,12 @@ let g:syntastic_stl_format .= ' (line %fw)} '
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_php_checkers = ['php', 'phpcs']
+
+let g:projectionist_heuristics = {
+      \   "wordpress/|wp-config.php": {
+      \     "*": { "framework": "wordpress" }
+      \   }
+      \ }
 
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
 let g:sparkupDoMaps = 0

@@ -19,6 +19,7 @@ endfunction
 
 function! nox#filetype#Map(type, lhs, rhs)
   execute join([a:type, "<buffer>", a:lhs, a:rhs])
+
   if a:type == "nnoremap" || a:type == "nmap"
     let l:unmap = "nunmap"
   elseif a:type == "noremap" || a:type == "map"
@@ -32,7 +33,12 @@ function! nox#filetype#Map(type, lhs, rhs)
   elseif a:type == "inoremap" || a:type == "imap"
     let l:unmap = "iunmap"
   endif
-  let b:undo_ftplugin .= join(["|", l:unmap, "<buffer>", a:lhs])
+
+  if !exists('b:undo_ftplugin')
+    let b:undo_ftplugin = ''
+  endif
+
+  let b:undo_ftplugin .= join(["| silent!", l:unmap, "<buffer>", a:lhs])
 endfunction
 
 " vim:set et sw=2:
