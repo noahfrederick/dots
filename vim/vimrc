@@ -54,6 +54,7 @@ if has("vim_starting")
   Plug 'whatyouhide/vim-textobj-xmlattr'
 
   " Language-/framework-specific utilities
+  Plug '$PLUG_SRC/vim-composer'
   Plug '$PLUG_SRC/vim-jekyll'
   Plug '$PLUG_SRC/vim-kohana'
   Plug '$PLUG_SRC/vim-laravel'
