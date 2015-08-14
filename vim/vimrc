@@ -209,8 +209,9 @@ else
 endif
 
 "" Status line
-let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
-let &statusline .= "%f"
+let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus("\u25cf", "\u25cb"):""}'
+let &statusline .= "%#StatusLineNC# %{StatuslineProject()}"
+let &statusline .= "%* %f"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
 let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
 let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
@@ -219,9 +220,8 @@ let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
 let &statusline .= "%="
 let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
 let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
-let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
+let &statusline .= '%{&fileformat!="unix"?" ".&fileformat." ":""}%*'
 let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
-let &statusline .= '%6*%{exists("*ObsessionStatus")?ObsessionStatus("\u24e2 ", "\u24e2 paused"):""}%*'
 let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 function! StatuslineGit()
@@ -239,9 +239,23 @@ function! StatuslineIndent()
   if !&modifiable
     return ''
   endif
+
+  if &expandtab == 0 && &tabstop == 8
+    " Sleuth.vim has detected mixed indentation
+    return "!!"
+  endif
+
   let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
   let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
   return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
+endfunction
+
+function! StatuslineProject()
+  if getcwd() == $HOME
+    return "~"
+  endif
+
+  return fnamemodify(getcwd(), ':t')
 endfunction
 
 " Load matchit.vim, if a newer version isn't already installed
