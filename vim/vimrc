@@ -426,8 +426,6 @@ if exists(":tnoremap")
   tnoremap <A-j> <C-\><C-n><C-w>j
   tnoremap <A-k> <C-\><C-n><C-w>k
   tnoremap <A-l> <C-\><C-n><C-w>l
-
-  tnoremap <Esc><Esc> <C-\><C-n>
 endif
 
 " Make Y consistent with C and D
@@ -460,7 +458,7 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader>k nox#editing#NormalModeDigraph(nr2char(getchar()))
+nnoremap <expr> <Leader><C-k> nox#editing#NormalModeDigraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
@@ -611,6 +609,7 @@ nnoremap <Leader>D :edit README*<CR>
 nnoremap <Leader>E :edit Gemfile<CR>
 nnoremap <Leader>H :edit .htaccess<CR>
 nnoremap <Leader>I :edit .gitignore<CR>
+nnoremap <Leader>K :Bufonly<CR>
 nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
@@ -623,6 +622,7 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>d :FZF ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
+nnoremap <Leader>k :Bdelete<CR>
 nnoremap <Leader>n :Note<CR>
 
 " }}}
