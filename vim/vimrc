@@ -277,9 +277,9 @@ if has("autocmd")
 
     autocmd User ProjectionistActivate
           \ if &filetype !=# '' && &filetype !=# 'dirvish' |
-          \   for [root, value] in projectionist#query("framework") |
-          \     if &filetype . '.' !~# '\.' . value . '\.' |
-          \       let &filetype = join([&filetype, value], ".") |
+          \   for [s:root, s:value] in projectionist#query("framework") |
+          \     if index(split(&filetype, '\.'), s:value) < 0 |
+          \       let &filetype = join([&filetype, s:value], ".") |
           \     endif |
           \   endfor |
           \ endif
