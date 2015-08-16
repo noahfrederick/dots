@@ -10,4 +10,4 @@ inoremap <buffer> <C-p> <C-g>u<C-o>:call sparkup#prev()<CR>
 
 call nox#filetype#MakeXMLMaps()
 
-command! -nargs=0 -range=% -buffer JsBeautify <line1>,<line2>call nox#format#JsBeautify()
+command! -nargs=0 -range=% -buffer Format <line1>,<line2>call nox#format#JsBeautify()
