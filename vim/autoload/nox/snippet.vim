@@ -95,13 +95,13 @@ endfunction
 
 function! nox#snippet#InsertSkeleton() abort
   " Load UltiSnips in case it was deferred via vim-plug
-  if !exists('g:did_UltiSnips_plugin') && exists(':PlugStatus')
+  if !exists('g:did_plugin_ultisnips') && exists(':PlugStatus')
     call plug#load('ultisnips')
     doautocmd FileType
   endif
 
   " Abort on non-empty buffer or extant file
-  if !exists('g:did_UltiSnips_plugin') || !(line('$') == 1 && getline('$') == '') || filereadable(expand('%:p'))
+  if !exists('g:did_plugin_ultisnips') || !(line('$') == 1 && getline('$') == '') || filereadable(expand('%:p'))
     return
   endif
 
