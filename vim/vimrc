@@ -305,7 +305,7 @@ if has("autocmd")
     autocmd CmdwinEnter * set nonumber
 
     if exists('##TermOpen')
-      autocmd TermOpen *FZF setlocal statusline=%9*
+      autocmd TermOpen *FZF execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
     endif
   augroup END
 endif
@@ -336,13 +336,9 @@ endif
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
-command! -nargs=0 -bar FZFBuffer call fzf#run({
-      \   'source':  reverse(nox#fzf#Buffers()),
-      \   'sink':    function('nox#fzf#BufferOpen'),
-      \   'options': '+m --reverse',
-      \   'up':      len(nox#fzf#Buffers()) + 1
-      \ })
-command! -nargs=0 -bar -bang FZFMru call fzf#run({
+command! -nargs=0 -bar -bang Buffers call nox#fzf#Buffers(<bang>0)
+command! -nargs=0 -bar -bang Tags call nox#fzf#Tags(<bang>0)
+command! -nargs=0 -bar -bang Mru call fzf#run({
       \   'source':  v:oldfiles,
       \   'sink':    'edit<bang>',
       \   'options': '-m',
@@ -607,8 +603,8 @@ nnoremap _vi :set filetype=vim<CR>
 nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
-nnoremap <silent> <Leader><Leader> :FZFBuffer<CR>
-nnoremap <Leader>? :FZFMru<CR>
+nnoremap <Leader><Leader> :
+nnoremap <Leader>? :Mru<CR>
 nnoremap <Leader>` :Marks<CR>
 nnoremap <Leader>] :tjump /
 nnoremap <Leader>D :edit README*<CR>
@@ -623,7 +619,7 @@ if has('nvim')
 else
   nnoremap <Leader>X :edit .vimrc<CR>
 endif
-nnoremap <Leader>b :FZFBuffer<CR>
+nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>d :FZF ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
