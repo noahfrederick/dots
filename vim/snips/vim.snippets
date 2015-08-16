@@ -2,7 +2,7 @@
 
 snippet _skel "Generic Vim Script file" b
 " `!v expand("%")` - `!v nox#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v nox#snippet#ProjectAuthor()`
+" Maintainer: `!v nox#project#get("author")`
 
 $0
 
@@ -11,7 +11,7 @@ endsnippet
 
 snippet _plugin "Plugin file" b
 " `!v expand("%")` - `!v nox#snippet#Title(expand("%:t:r"))`
-" Maintainer: `!v nox#snippet#ProjectAuthor()`
+" Maintainer: `!v nox#project#get("author")`
 
 if exists("g:loaded_`!v expand("%:t:r")`") || v:version < 700 || &cp
 	finish

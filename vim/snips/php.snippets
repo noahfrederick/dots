@@ -111,10 +111,10 @@ snippet class "Class definition" b
 /**
  * ${4:$1 class}.
  *
- * @package    `!v nox#snippet#ProjectTitle()`
+ * @package    `!v nox#project#get("title")`
  * @category   `!v php#PathToClassCategory(expand("%"))`
- * @author     `!v nox#snippet#ProjectAuthor()`
- * @copyright  `!v nox#snippet#Copyright()`
+ * @author     `!v nox#project#get("author")`
+ * @copyright  `!v nox#project#get("copyright")`
  */
 class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
 	${0:${VISUAL:\/\/ TODO}}
@@ -127,10 +127,10 @@ snippet _class "Class definition" b
 /**
  * `!v php#PathToClassName(expand("%"))` class.
  *
- * @package    `!v nox#snippet#ProjectTitle()`
+ * @package    `!v nox#project#get("title")`
  * @category   `!v php#PathToClassCategory(expand("%"))`
- * @author     `!v nox#snippet#ProjectAuthor()`
- * @copyright  `!v nox#snippet#Copyright()`
+ * @author     `!v nox#project#get("author")`
+ * @copyright  `!v nox#project#get("copyright")`
  */
 class `!v php#PathToClassName(expand("%"))` extends `!v php#PathToParentClassName(expand("%"))` {
 	${0:${VISUAL}}

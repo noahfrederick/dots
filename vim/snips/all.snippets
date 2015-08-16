@@ -1,11 +1,11 @@
 # all.snippets - Global snippets
 
 snippet author "Author's name"
-`!v nox#snippet#Author()`
+`!v nox#project#get("author")`
 endsnippet
 
 snippet email "Author's email"
-`!v nox#snippet#Email()`
+`!v nox#project#get("email")`
 endsnippet
 
 snippet date "Current date (%Y-%m-%d)"
@@ -17,6 +17,6 @@ snippet Date "Current date (%B %e, %Y)"
 endsnippet
 
 snippet "copy(right)?" "Copyright notice" r
-`!v nox#snippet#Copyright()`
+`!v nox#project#get("copyright")`
 endsnippet
 

@@ -1,39 +1,6 @@
 " autoload/nox/snippets.vim - Global helpers for snippets
 " Maintainer:   Noah Frederick
 
-function! nox#snippet#Author()
-  return s:get_git_config_value('user.name')
-endfunction
-
-function! nox#snippet#ProjectAuthor()
-  if exists("$PROJECT_AUTHOR") && $PROJECT_AUTHOR != ""
-    return $PROJECT_AUTHOR
-  endif
-  let project_author = s:get_git_config_value('project.author')
-  return empty(project_author) ? nox#snippet#Author() : project_author
-endfunction
-
-function! nox#snippet#Email()
-  if exists("$PROJECT_EMAIL") && $PROJECT_EMAIL != ""
-    return $PROJECT_EMAIL
-  endif
-  return s:get_git_config_value('user.email')
-endfunction
-
-function! nox#snippet#GitHubUsername()
-  if exists("$PROJECT_GITHUB_USERNAME") && $PROJECT_GITHUB_USERNAME != ""
-    return $PROJECT_GITHUB_USERNAME
-  endif
-  return s:get_git_config_value('user.github')
-endfunction
-
-function! s:get_git_config_value(key)
-  if executable("git")
-    return system('git config --get ' . a:key)[0:-2]
-  endif
-  return 0
-endfunction
-
 function! nox#snippet#Title(basename)
   if exists("g:template_title")
     " Setting g:template_title lets us override the title (once)
@@ -50,23 +17,6 @@ function! nox#snippet#Title(basename)
   let title = substitute(title, '^.', '\u&', 'g')
   let title = substitute(title, '_\(.\)', ' \u\1', 'g')
   return title
-endfunction
-
-function! nox#snippet#Copyright()
-  if exists("$PROJECT_COPYRIGHT") && $PROJECT_COPYRIGHT != ""
-    let name = $PROJECT_COPYRIGHT
-  else
-    let name = nox#snippet#ProjectAuthor()
-  endif
-  return join(['©', strftime('%Y'), name])
-endfunction
-
-function! nox#snippet#ProjectTitle()
-  if exists("$PROJECT_NAME") && $PROJECT_NAME != ""
-    return $PROJECT_NAME
-  endif
-  let project_title = s:get_git_config_value('project.title')
-  return empty(project_title) ? "(Project Name)" : project_title
 endfunction
 
 function! nox#snippet#ExpandSnippetOrCompleteMaybe()
