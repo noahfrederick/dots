@@ -15,6 +15,10 @@ setlocal foldlevel=1
 setlocal foldnestmax=2
 " These are window-local, so they have to be unset on tear-down
 
+" Copied here from indent/php.vim since the setting gets overridden by
+" ftplugin/html.vim when 'filetype' is reset:
+setlocal comments=s1:/*,mb:*,ex:*/,://,:#
+
 if exists(':Switch')
   let b:switch_custom_definitions = [
         \   {
