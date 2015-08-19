@@ -73,7 +73,10 @@ function! nox#fzf#Buffers(bang)
 
   " Remove current and alternate buffers from list
   call filter(bufs, "v:val != bufnr('#') && v:val != bufnr('%')")
-  call add(bufs, bufnr('#'))
+
+  if bufnr('#') > 0
+    call add(bufs, bufnr('#'))
+  endif
 
   let height = min([len(bufs), &lines * 4 / 10]) + 1
 
