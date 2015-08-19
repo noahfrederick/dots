@@ -17,6 +17,15 @@
 " - Git
 " - Use a placeholder
 
+function! s:git_config_get(key) abort
+  if exists(":Git")
+    let dir = fugitive#repo().dir()
+    return system("cd " . dir . " && git config --get " . a:key)[0:-2]
+  else
+    return system("git config --get " . a:key)[0:-2]
+  endif
+endfunction
+
 let s:strategies = {}
 
 function! s:strategies.projectionist(key)
@@ -35,14 +44,14 @@ function! s:strategies.git(key)
   endif
 
   let key = a:key
-  let value = system("git config --get project." . key)[0:-2]
+  let value = s:git_config_get("project." . key)
 
   if value == ""
     if key == "author"
       let key = "name"
     endif
 
-    let value = system("git config --get user." . key)[0:-2]
+    let value = s:git_config_get("user." . key)
   endif
 
   return value
