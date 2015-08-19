@@ -27,7 +27,7 @@ if has('conceal')
 endif
 
 " Pandoc
-syntax match markdownTitleBlock "%\%(\s\|$\)"
+syntax match markdownTitleBlock "^%\%(\s\|$\)"
 
 highlight default link markdownTitleBlock PreProc
 highlight default link markdownOrgTodo Todo
