@@ -668,8 +668,12 @@ let g:syntastic_stl_format .= ' (line %fw)} '
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 let g:projectionist_heuristics = {
-      \   "wordpress/|wp-config.php": {
-      \     "*": { "framework": "wordpress" }
+      \   "wordpress/|wp-config.php|style.css&header.php": {
+      \     "*": { "framework": "wordpress" },
+      \     "style.css": {
+      \       "type": "style",
+      \       "skeleton": "wordpress_theme_style",
+      \     }
       \   }
       \ }
 
