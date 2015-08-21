@@ -666,7 +666,6 @@ let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol
 let g:syntastic_stl_format .= ' (line %fw)} '
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_php_checkers = ['php', 'phpcs']
 
 let g:projectionist_heuristics = {
       \   "wordpress/|wp-config.php": {
