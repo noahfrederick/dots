@@ -44,6 +44,9 @@ if has("vim_starting")
     Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
     Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
   endif
+  if !has("nvim")
+    Plug '$PLUG_SRC/vim-neovim-defaults'
+  endif
 
   " Text objects
   Plug 'akiyan/vim-textobj-php',         { 'for': 'php' }
@@ -101,17 +104,14 @@ endif
 " --------------------------------------------------------------------------------
 
 "" Behavior
-set encoding=utf-8              " Use UTF-8 as internal encoding
 set spelllang=en_us             " Language and region to use for spellchecking
 set modeline modelines=5        " Look for modeline in first/last n lines of file
 set hidden                      " Do not unload buffers when no longer displayed
-set autoread                    " Reload unchanged buffer when file changes
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set foldtext=nox#folding#Text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
-set formatoptions+=j            " Remove extra comment char when joining lines
 set formatoptions+=r            " Insert comment leader after <Enter>
 set formatoptions+=o            " Insert comment leader after o and O
 set scrolloff=2                 " Keep n lines above/below cursor visible
@@ -119,16 +119,12 @@ set sidescrolloff=5             " Keep n columns left/right of cursor visible
 if &shell =~# "fish$"
   set shell=/bin/bash           " Use a POSIX-compatible shell
 endif
-if has("mouse")
-  set mouse=a                   " Enable mouse in all modes
-endif
 
 "" Display
 set shortmess+=I                " Suppress intro message when starting Vim
 set laststatus=2                " Always show status line
 set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
-set display+=lastline           " Show as much as possible of wrapped last line
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 if has("linebreak")
   set linebreak                 " Wrap lines at word boundaries
@@ -156,7 +152,6 @@ else
 endif
 
 "" Command line and completion
-set wildmenu                    " Show command line completion candidates
 set wildmode=full               " 'wildchar' completes first match, no extra line of candidates shown
 set wildcharm=<C-z>             " Trigger for completion in macros
 set wildignore=*.swp,*.bak
@@ -166,11 +161,8 @@ set suffixes+=.css,.html        " Extensions that get a lower priority when matc
 set cmdheight=2                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
-set history=500                 " Keep 500 lines of command-line history
 
 "" Whitespace
-set autoindent
-set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Display width of tabs--indentation style is handled by sleuth.vim
 set shiftround                  " Round indent to multiple of 'shiftwidth'
 set nojoinspaces                " Do not insert two spaces after '.' when using J
@@ -191,10 +183,8 @@ else
   set nowritebackup
   set noswapfile
 endif
-set sessionoptions-=options     " Do not save settings and mappings to sessions
 
 "" Searching
-set incsearch                   " Highlight first search match as you type
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
 
 if executable('ag')
@@ -259,11 +249,6 @@ function! StatuslineProject()
 
   return fnamemodify(getcwd(), ':t')
 endfunction
-
-" Load matchit.vim, if a newer version isn't already installed
-if !exists("g:loaded_matchit") && findfile("plugin/matchit.vim", &runtimepath) ==# ""
-  runtime! macros/matchit.vim
-endif
 
 " }}}
 " Autocommands                                                                 {{{
