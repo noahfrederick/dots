@@ -11,9 +11,10 @@
 "
 " These strategies are used in order:
 " - Projectionist
-" - TODO: Composer
-" - TODO: Bower
+" - TODO: Vim Addon Manager (VAM)
+" - Composer
 " - TODO: Ruby Gems
+" - TODO: Bower
 " - Git
 " - Use a placeholder
 
@@ -28,7 +29,7 @@ endfunction
 
 let s:strategies = {}
 
-function! s:strategies.projectionist(key)
+function! s:strategies.projectionist(key) abort
   if empty(b:projectionist)
     return ""
   endif
@@ -38,7 +39,24 @@ function! s:strategies.projectionist(key)
   return get(projectionist#query(key), 0, ["", ""])[1]
 endfunction
 
-function! s:strategies.git(key)
+function! s:strategies.composer(key) abort
+  if empty(b:composer_root)
+    return ""
+  endif
+
+  if a:key ==# "title"
+    return composer#query("name")
+  elseif a:key ==# "author"
+    let authors = composer#query("authors")
+    if authors !=# ""
+      return join(map(authors, "get(v:val, 'name')"), ", ")
+    endif
+  endif
+
+  return composer#query(a:key)
+endfunction
+
+function! s:strategies.git(key) abort
   if !executable("git")
     return ""
   endif
@@ -57,23 +75,26 @@ function! s:strategies.git(key)
   return value
 endfunction
 
-function! s:strategies.placeholder(key)
+function! s:strategies.placeholder(key) abort
   return "[project-" . a:key . "]"
 endfunction
 
-function! s:try_all_strategies(key)
-  for [name, Strat] in items(s:strategies)
+function! s:try_all_strategies(key) abort
+  for name in ['projectionist', 'composer', 'git', 'placeholder']
+    let Strat = s:strategies[name]
     let value = call(Strat, [a:key], {})
 
     if value != ""
       return value
     endif
   endfor
+
+  return ""
 endfunction
 
 ""
 " Query current buffer's project metadata by key.
-function! nox#project#get(key)
+function! nox#project#get(key) abort
   let value = s:try_all_strategies(a:key)
 
   if value == "[project-copyright]"
@@ -85,7 +106,7 @@ endfunction
 
 ""
 " Get current buffer's project's root directory.
-function! nox#project#root()
+function! nox#project#root() abort
   if !empty(b:projectionist)
     return projectionist#path()
   endif
