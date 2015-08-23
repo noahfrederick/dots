@@ -53,6 +53,8 @@ let b:textobj_function_select = function('php#FunctionSelect')
 call nox#filetype#MakeSemicolonMaps()
 call nox#filetype#MakeRocketMaps()
 
+command! -buffer -bar -nargs=0 Format call nox#format#PhpFmt()
+
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''
 endif
