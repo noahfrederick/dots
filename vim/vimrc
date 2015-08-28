@@ -532,6 +532,8 @@ else
   nnoremap <Leader>gg :Git graph<CR>
 endif
 
+nnoremap gs :Shell<CR>
+
 nnoremap <Leader>t :Transmit<CR>
 
 " Traversing folds
