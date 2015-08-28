@@ -43,6 +43,23 @@ function! s:expect()
   return ' --expect='.join(keys(s:default_action), ',')
 endfunction
 
+function! s:common_sink(lines) abort
+  if len(a:lines) < 2
+    return
+  endif
+  let key = remove(a:lines, 0)
+  let cmd = get(s:default_action, key, 'edit')
+  try
+    let autochdir = &autochdir
+    set noautochdir
+    for item in a:lines
+      execute cmd s:escape(item)
+    endfor
+  finally
+    let &autochdir = autochdir
+  endtry
+endfunction
+
 " ------------------------------------------------------------------
 " Buffers
 " ------------------------------------------------------------------
@@ -54,7 +71,7 @@ function! s:bufopen(lines)
   if !empty(cmd)
     execute 'silent' cmd
   endif
-  execute 'buffer' matchstr(a:lines[1], '\s*\zs[0-9]*\ze\s')
+  execute 'buffer' matchstr(a:lines[1], '\[*\zs[0-9]*\ze\]')
 endfunction
 
 function! s:format_buffer(b)
@@ -65,7 +82,7 @@ function! s:format_buffer(b)
   let modified = getbufvar(a:b, '&modified') ? s:red(" \u25cf") : ''
   let readonly = getbufvar(a:b, '&modifiable') ? '' : s:blue(" \u25cb")
   let extra = join(filter([modified, readonly], '!empty(v:val)'), '')
-  return s:strip(printf("%s %s\t%s\t%s", s:black(a:b, 1), flag, name, extra))
+  return s:strip(printf("[%s] %s\t%s\t%s", s:blue(a:b), flag, name, extra))
 endfunction
 
 function! nox#fzf#Buffers(bang)
@@ -85,8 +102,26 @@ function! nox#fzf#Buffers(bang)
   call fzf#run(extend({
         \ 'source':  reverse(bufs),
         \ 'sink*':   function('s:bufopen'),
-        \ 'options': '+m --reverse --ansi -d "\t" -n 2,1..2'.s:expect(),
-        \}, a:bang ? {} : {'up': height}))
+        \ 'options': '--prompt "Buffers > " +m -x --reverse --ansi -d "\t" -n 2,1..2'.s:expect(),
+        \}, a:bang ? {} : {'down': height}))
+endfunction
+
+" ------------------------------------------------------------------
+" History
+" ------------------------------------------------------------------
+function! s:all_files()
+  return extend(
+        \ filter(reverse(copy(v:oldfiles)),
+        \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+        \ filter(map(s:buflisted(), 'bufname(v:val)'), '!empty(v:val)'))
+endfunction
+
+function! nox#fzf#History(bang)
+  call s:fzf({
+        \ 'source':  reverse(s:all_files()),
+        \ 'sink*':   function('<SID>common_sink'),
+        \ 'options': '--prompt "History > " -m' . s:expect(),
+        \}, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -122,22 +157,99 @@ function! nox#fzf#Tags(bang)
 endfunction
 
 " ------------------------------------------------------------------
-" Buffer Lines
+" Lines
 " ------------------------------------------------------------------
-function! nox#fzf#BufferLines()
-  let lines = map(getline(0, '$'), '(v:key + 1) . ":\t" . v:val')
-
-  if exists('b:interesting_lines_filter')
-    call filter(lines, 'strpart(v:val, stridx(v:val, "\t") + 1) =~# b:interesting_lines_filter')
+function! s:line_handler(lines)
+  if len(a:lines) < 2
+    return
+  endif
+  let cmd = get(s:default_action, a:lines[0], '')
+  if !empty(cmd)
+    execute 'silent' cmd
   endif
 
-  return lines
+  let keys = split(a:lines[1], '\t')
+  execute 'buffer' keys[0][1:-2]
+  execute keys[1][0:-2]
+  normal! ^zz
 endfunction
 
-function! nox#fzf#JumpToLine(l)
-  let keys = split(a:l, ':\t')
-  execute keys[0]
-  normal! zOzz
+function! s:lines()
+  let cur = []
+  let rest = []
+  let buf = bufnr('')
+  for b in s:buflisted()
+    call extend(b == buf ? cur : rest,
+          \ map(getbufline(b, 1, "$"),
+          \ 'printf("[%s]\t%s:\t%s", s:blue(b), s:yellow(v:key + 1), v:val)'))
+  endfor
+  return extend(cur, rest)
+endfunction
+
+function! nox#fzf#Lines(bang)
+  call s:fzf({
+        \ 'source':  <SID>lines(),
+        \ 'sink*':   function('<SID>line_handler'),
+        \ 'options': '+m --tiebreak=index --prompt "Lines > " --ansi --extended --nth=3..'.s:expect()
+        \}, a:bang)
+endfunction
+
+" ------------------------------------------------------------------
+" BLines
+" ------------------------------------------------------------------
+function! s:buffer_line_handler(lines)
+  if len(a:lines) < 2
+    return
+  endif
+  let cmd = get(s:default_action, a:lines[0], '')
+  if !empty(cmd)
+    execute 'silent' cmd
+  endif
+
+  execute split(a:lines[1], '\t')[0][0:-2]
+  normal! ^zz
+endfunction
+
+function! s:buffer_lines()
+  return map(getline(1, "$"),
+        \ 'printf("%s:\t%s", s:yellow(v:key + 1), v:val)')
+endfunction
+
+function! nox#fzf#BLines(bang)
+  call s:fzf({
+        \ 'source':  <SID>buffer_lines(),
+        \ 'sink*':   function('<SID>buffer_line_handler'),
+        \ 'options': '+m --tiebreak=index --prompt "BLines > " --ansi --extended --nth=2..'.s:expect()
+        \}, a:bang)
+endfunction
+
+" ------------------------------------------------------------------
+" Marks
+" ------------------------------------------------------------------
+function! s:format_mark(line)
+  return substitute(a:line, '\S', '\=s:yellow(submatch(0))', '')
+endfunction
+
+function! s:mark_sink(lines)
+  if len(a:lines) < 2
+    return
+  endif
+  let cmd = get(s:default_action, a:lines[0], '')
+  if !empty(cmd)
+    execute 'silent' cmd
+  endif
+  execute 'normal! `'.matchstr(a:lines[1], '\S').'zz'
+endfunction
+
+function! nox#fzf#Marks(bang)
+  redir => cout
+  silent marks
+  redir END
+  let list = split(cout, "\n")
+  call s:fzf({
+        \ 'source':  extend(list[0:0], map(list[1:], 's:format_mark(v:val)')),
+        \ 'sink*':   function('s:mark_sink'),
+        \ 'options': '+m -x --ansi --tiebreak=index --header-lines 1 --tiebreak=begin --prompt "Marks > "'.s:expect()}, a:bang)
 endfunction
 
 " vim:set et sw=2:

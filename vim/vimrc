@@ -315,7 +315,6 @@ command! -bang -bar Bdelete call nox#buffer#Bdelete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
       \ call nox#buffer#Bufonly(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call nox#path#FollowSymlink()
-command! -bang -nargs=0 -bar Marks call nox#marks#Choose(<q-bang>)
 command! -bang -nargs=? -bar -complete=filetype Scratch
       \ tabedit | if <q-bang> ==# '' | put | 1 | delete _ | endif
       \ | setlocal filetype=<args> buftype=nofile bufhidden=hide noswapfile
@@ -328,32 +327,17 @@ if exists("$NOTES")
   command! -nargs=0 -bar ShoppingList call nox#org#ShoppingList()
 endif
 
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
+" See the difference between the current buffer and the file it was loaded
+" from, thus the changes you made.
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
 command! -nargs=0 -bar -bang Buffers call nox#fzf#Buffers(<bang>0)
-command! -nargs=0 -bar -bang Tags call nox#fzf#Tags(<bang>0)
-command! -nargs=0 -bar -bang Mru call fzf#run({
-      \   'source':  v:oldfiles,
-      \   'sink':    'edit<bang>',
-      \   'options': '-m',
-      \   'down':    20
-      \ })
-command! -nargs=0 -bar Colorscheme call fzf#run({
-      \   'source':  map(globpath(&runtimepath, "colors/*.vim", 0, 1),
-      \                  "fnamemodify(v:val, ':t:r')"),
-      \   'sink':    'colorscheme',
-      \   'options': '+m',
-      \   'down':    20
-      \ })
-command! -nargs=0 -bar Lines call fzf#run({
-      \   'source':  nox#fzf#BufferLines(),
-      \   'sink':    function('nox#fzf#JumpToLine'),
-      \   'options': '+m --reverse',
-      \   'up':      20
-      \ })
+command! -nargs=0 -bar -bang Tags    call nox#fzf#Tags(<bang>0)
+command! -nargs=0 -bar -bang History call nox#fzf#History(<bang>0)
+command! -nargs=0 -bar -bang Lines   call nox#fzf#Lines(<bang>0)
+command! -nargs=0 -bar -bang BLines  call nox#fzf#BLines(<bang>0)
+command! -nargs=0 -bar -bang Marks   call nox#fzf#Marks(<bang>0)
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
@@ -601,7 +585,7 @@ nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
 nnoremap <Leader><Leader> :
-nnoremap <Leader>? :Mru<CR>
+nnoremap <Leader>? :History<CR>
 nnoremap <Leader>` :Marks<CR>
 nnoremap <Leader>] :tjump /
 nnoremap <Leader>D :edit README*<CR>
