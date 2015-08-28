@@ -121,7 +121,6 @@ endif
 
 "" Display
 set shortmess+=I                " Suppress intro message when starting Vim
-set laststatus=2                " Always show status line
 set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
