@@ -212,7 +212,8 @@ let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
 let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
 let &statusline .= '%{&fileformat!="unix"?" ".&fileformat." ":""}%*'
 let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
-let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
+let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}'
+let &statusline .= "%{StatuslineTrailingWhitespace()}%*"
 
 function! StatuslineGit()
   if !exists('*fugitive#head')
@@ -241,12 +242,25 @@ function! StatuslineIndent()
 endfunction
 
 function! StatuslineProject()
-  if getcwd() == $HOME
-    return "~"
+  return getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
+endfunction
+
+function! StatuslineTrailingWhitespace()
+  if !exists("b:statusline_trailing_whitespace")
+    if !&modifiable || search('\s\+$', 'nw') == 0
+      let b:statusline_trailing_whitespace = ""
+    else
+      let b:statusline_trailing_whitespace = "  \u2334 "
+    endif
   endif
 
-  return fnamemodify(getcwd(), ':t')
+  return b:statusline_trailing_whitespace
 endfunction
+
+augroup vimrc_statusline
+  autocmd!
+  autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_whitespace
+augroup END
 
 " }}}
 " Autocommands                                                                 {{{
@@ -660,11 +674,9 @@ endif
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list            = 1
 let g:syntastic_enable_highlighting      = 0
-let g:syntastic_stl_format = ' %E{%e' . g:syntastic_error_symbol
-let g:syntastic_stl_format .= ' (line %fe)}'
-let g:syntastic_stl_format .= '%B{ }'
-let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol
-let g:syntastic_stl_format .= ' (line %fw)} '
+let g:syntastic_stl_format  = ' %E{ %e' . g:syntastic_error_symbol . '}'
+let g:syntastic_stl_format .= '%B{ | }'
+let g:syntastic_stl_format .= '%W{%w' . g:syntastic_warning_symbol . '} '
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
