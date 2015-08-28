@@ -57,6 +57,18 @@ set -gx FZF_DEFAULT_OPTS "--inline-info"
 abbr --add art php artisan
 abbr --add br  brew
 abbr --add bru brew upgrade
+abbr --add c   composer
+abbr --add ci  composer install
+abbr --add cu  composer update
+abbr --add cr  composer require
+abbr --add cgi composer global install
+abbr --add cgu composer global update
+abbr --add cgr composer global require
+abbr --add cda composer dump-autoload
+abbr --add ch  composer show
+abbr --add cm  composer remove
+abbr --add cs  composer search
+abbr --add cv  composer validate
 abbr --add e   emacsclient
 abbr --add ee  emacsclient --eval
 abbr --add en  emacsclient --no-wait
