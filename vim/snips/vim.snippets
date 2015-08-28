@@ -42,7 +42,7 @@ endif
 endsnippet
 
 snippet fun "function" b
-function! ${1:`!v vim#GuessFunctionPrefix(expand("%"))`}${2:fun_name}(${3})
+function! ${1:`!v vim#GuessFunctionPrefix(expand("%"))`}${2:fun_name}(${3}) abort
 	${0:${VISUAL}}
 endfunction
 endsnippet

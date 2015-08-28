@@ -1,5 +1,17 @@
 # css.snippets - Snippets for css file type
 
+snippet _wordpress_theme_style "WordPress theme style.css template" b
+/*
+Theme Name:  `!v nox#project#get("title")`
+Theme URI:   `!v nox#project#get("url")`
+Description: `!v nox#project#get("description")`
+Version:     `!v nox#project#get("version", "1.0")`
+Author:      `!v nox#project#get("author")`
+Author URI:  `!v nox#project#get("author-url")`
+Tags:
+*/
+endsnippet
+
 #
 # Imports
 #
@@ -76,23 +88,23 @@ snippet bs "box-sizing"
 box-sizing: ${1:border-box};
 endsnippet
 
-snippet ba "border-radius"
+snippet br "border-radius"
 border-radius: ${1}${2:px};
 endsnippet
 
-snippet ba "border-top-left-radius"
+snippet brtl "border-top-left-radius"
 border-top-left-radius: ${1}${2:px};
 endsnippet
 
-snippet ba "border-top-right-radius"
+snippet brtr "border-top-right-radius"
 border-top-right-radius: ${1}${2:px};
 endsnippet
 
-snippet ba "border-bottom-right-radius"
+snippet brbr "border-bottom-right-radius"
 border-bottom-right-radius: ${1}${2:px};
 endsnippet
 
-snippet ba "border-bottom-left-radius"
+snippet brbl "border-bottom-left-radius"
 border-bottom-left-radius: ${1}${2:px};
 endsnippet
 
@@ -206,6 +218,22 @@ endsnippet
 
 snippet w "width"
 width: ${1}${2:px};
+endsnippet
+
+snippet l "left"
+left: ${1}${2:px};
+endsnippet
+
+snippet r "right"
+right: ${1}${2:px};
+endsnippet
+
+snippet top "top"
+top: ${1}${2:px};
+endsnippet
+
+snippet bot "bottom"
+bottom: ${1}${2:px};
 endsnippet
 
 #
