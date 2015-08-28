@@ -16,21 +16,23 @@
 " - TODO: Ruby Gems
 " - TODO: Bower
 " - Git
-" - Use a placeholder
 
 function! s:git_config_get(key) abort
-  if exists(":Git")
-    let dir = fugitive#repo().dir()
-    return system("cd " . dir . " && git config --get " . a:key)[0:-2]
-  else
-    return system("git config --get " . a:key)[0:-2]
-  endif
+  let dir = exists(":Git") == 2 ? fugitive#repo().dir() : $HOME
+  let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd' : 'cd'
+  let cwd = getcwd()
+
+  execute cd fnameescape(dir)
+  let result = system("git config --get " . a:key)[0:-2]
+  execute cd fnameescape(cwd)
+
+  return result
 endfunction
 
 let s:strategies = {}
 
 function! s:strategies.projectionist(key) abort
-  if empty(b:projectionist)
+  if !exists("b:projectionist") || empty(b:projectionist)
     return ""
   endif
 
@@ -40,7 +42,7 @@ function! s:strategies.projectionist(key) abort
 endfunction
 
 function! s:strategies.composer(key) abort
-  if empty(b:composer_root)
+  if !exists("b:composer_root") || empty(b:composer_root)
     return ""
   endif
 
@@ -75,12 +77,8 @@ function! s:strategies.git(key) abort
   return value
 endfunction
 
-function! s:strategies.placeholder(key) abort
-  return "[project-" . a:key . "]"
-endfunction
-
 function! s:try_all_strategies(key) abort
-  for name in ['projectionist', 'composer', 'git', 'placeholder']
+  for name in ['projectionist', 'composer', 'git']
     let Strat = s:strategies[name]
     let value = call(Strat, [a:key], {})
 
@@ -94,24 +92,25 @@ endfunction
 
 ""
 " Query current buffer's project metadata by key.
-function! nox#project#get(key) abort
+function! nox#project#get(key, ...) abort
+  let default = get(a:000, 0, "[project-" . a:key . "]")
   let value = s:try_all_strategies(a:key)
 
-  if value == "[project-copyright]"
+  if value ==# "" && a:key ==# "copyright"
     let value = join(["©", strftime("%Y"), s:try_all_strategies("author")])
   endif
 
-  return value
+  return value ==# "" ? default : value
 endfunction
 
 ""
 " Get current buffer's project's root directory.
 function! nox#project#root() abort
-  if !empty(b:projectionist)
+  if exists("b:projectionist") && !empty(b:projectionist)
     return projectionist#path()
   endif
 
-  if !empty(b:git_dir)
+  if exists("b:git_dir") && !empty(b:git_dir)
     return fnamemodify(b:git_dir, ":h")
   endif
 
