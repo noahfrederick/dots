@@ -9,12 +9,13 @@ if exists("b:current_syntax")
 endif
 
 " A bunch of useful C keywords
-syn match	qfFileName	"^[^|]*" nextgroup=qfLocation
+syn match	qfFileName	"^[^|]*" nextgroup=qfLocation contains=qfReduntantPath
 syn match       qfLocation      "|[^|]*|" contains=qfSeparator,qfLineNr
 syn match	qfSeparator	"|" contained
 syn match	qfLineNr	"[^|]*" contained contains=qfError,qfWarning nextgroup=qfSeparator
 syn match	qfError		"error" contained
 syn match	qfWarning	"warning" contained
+execute "syn match       qfReduntantPath '" . getcwd() . "' conceal contained"
 
 " The default highlighting.
 hi def link qfFileName	Directory
