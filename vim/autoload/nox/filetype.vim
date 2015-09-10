@@ -7,9 +7,20 @@ function! nox#filetype#MakeSemicolonMaps()
   call nox#filetype#Map("inoremap", ",,", "<Esc>A,")
 endfunction
 
-" Quickly type hash rockets ("=>")
+" Insert "=>" or "->" depending on context
+function! s:rocket() abort
+  let prev_char = matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
+  if prev_char =~# '\k'
+    return '->'
+  elseif prev_char =~# '\s'
+    return '=> '
+  else
+    return ' => '
+  endif
+endfunction
+
 function! nox#filetype#MakeRocketMaps()
-  call nox#filetype#Map("inoremap", "<C-l>", "<Space>=><Space>")
+  call nox#filetype#Map("inoremap", "<expr> <C-l>", "<SID>rocket()")
 endfunction
 
 function! nox#filetype#MakeXMLMaps()
