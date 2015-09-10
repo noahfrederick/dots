@@ -1925,14 +1925,15 @@ Below are our custom agenda commands:
 |-----+-----------------------------------------------|
 | =d=   | Timeline for today, including a clock summary |
 | =w=   | Items with status WAITING                     |
-| =U=   | Important tasks that I might tend to avoid    |
-| =P=   | Items by priority                             |
+| =f=   | Important tasks that I might tend to avoid    |
+| =p=   | Items by priority                             |
+| =l=   | Scheduled ledger transactions by date         |
 
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (with-eval-after-load 'org-agenda
     (setq org-agenda-custom-commands
-          '(("r" "Agenda"
+          '(("A" "📆 Agenda"
              ((agenda "")
               (tags-todo "/!STARTED"
                          ((org-agenda-overriding-header "In Progress")
@@ -1947,19 +1948,19 @@ Below are our custom agenda commands:
                     ((org-agenda-overriding-header "Entries to Archive")
                      (org-agenda-skip-function 'nox/skip-non-archivable-tasks)
                      (org-tags-match-list-sublevels nil)))))
-            ("d" "Timeline for today"
-             ((agenda ""))
+            ("d" "🕑 Timeline for today"
+             agenda ""
              ((org-agenda-ndays 1)
               (org-agenda-show-log t)
               (org-agenda-log-mode-items '(clock closed))
               (org-agenda-clockreport-mode t)
               (org-agenda-entry-types '())))
-            ("w" "Waiting for"
-             ((todo "WAITING"))
+            ("w" "✋ Waiting for"
+             todo "WAITING"
              ((org-agenda-sorting-strategy '(priority-down))))
-            ("U" "Important stuff I don't want to do"
-             ((tags-todo "focus")))
-            ("P" "By priority"
+            ("f" "🎯 Focused tasks"
+             tags-todo "focus")
+            ("p" "❗ By priority"
              ((tags-todo "+PRIORITY=\"A\"")
               (tags-todo "+PRIORITY=\"B\"")
               (tags-todo "+PRIORITY=\"\"")
@@ -1968,7 +1969,18 @@ Below are our custom agenda commands:
               (org-agenda-sorting-strategy '(priority-down
                                              tag-up
                                              category-keep
-                                             effort-down)))))))
+                                             effort-down))))
+            ("l" "📒 Scheduled transactions"
+             agenda "transaction"
+             ((org-agenda-time-grid nil)
+              (org-agenda-ndays 90)
+              (org-agenda-include-diary nil)
+              (org-agenda-show-all-dates nil)
+              (org-agenda-remove-tags t)
+              (org-agenda-repeating-timestamp-show-all nil)
+              (org-deadline-warning-days 365)
+              (org-agenda-filter-preset '("+transaction"))
+              (org-agenda-entry-types '(:deadline)))))))
 #+END_SRC
 
 #+NAME: org
