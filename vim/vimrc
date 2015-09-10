@@ -351,6 +351,8 @@ endif
 
 if exists(":terminal")
   command! -nargs=0 -bang -bar Shell terminal<bang> $SHELL
+else
+  command! -nargs=0 -bar Shell shell
 endif
 
 " }}}
@@ -491,9 +493,12 @@ inoremap <expr> <C-y> matchstr(getline(line('.') - 1), '\%' . virtcol('.') . 'v\
 inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 " :help dispatch-commands
-nnoremap <F2> :Make<CR>
-nnoremap <F3> :Dispatch<CR>
-nnoremap <F4> :Start<CR>
+nnoremap <F2>  :Make<CR>
+nnoremap m<CR> :Make<CR>
+nnoremap <F3>  :Dispatch<CR>
+nnoremap d<CR> :Dispatch<CR>
+nnoremap <F4>  :Start<CR>
+nnoremap dr    :Start<CR>
 
 nnoremap <silent> - :Dirvish %:p:h<CR>
 
@@ -548,6 +553,8 @@ nnoremap <silent> <Leader>6 :if winnr("$") > 1
 nnoremap <Leader>8 :set hlsearch<CR>*<C-o>
 nnoremap <Leader>/ :Lines<CR>
 map <BS> %
+
+nnoremap <expr><silent> ZB ":<C-u>Bdelete" . (v:count ? "!" : "") . "<CR>"
 
 " Unimpaired.vim-like toggles
 nnoremap [oo :set colorcolumn=+1<CR>
@@ -605,7 +612,6 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>d :FZF ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :FZF<CR>
-nnoremap <Leader>k :Bdelete<CR>
 nnoremap <Leader>n :Note<CR>
 
 " }}}
@@ -646,6 +652,8 @@ let g:switch_mapping = ''
 
 " Default of 'a' conflicts with Sideways argument text objects mapped above
 let g:targets_argTrigger = 'A'
+
+let g:lexima_enable_space_rules = 0
 
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
