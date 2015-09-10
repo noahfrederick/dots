@@ -5,13 +5,12 @@ function! nox#format#JsBeautify() range abort
     throw "js-beautify is not available"
   endif
 
-  if &filetype =~# '^javascript' || &filetype =~# '^json'
+  let ft = &filetype =~# '\.' ? split(&filetype, '\.')[0] : &filetype
+
+  if ft ==# 'javascript' || ft ==# 'json'
     let ft = 'js'
-  elseif &filetype =~# '\.'
-    let parts = split(&filetype, '\.')
-    let ft = parts[0]
-  else
-    let ft = &filetype
+  elseif ft =~# '^\(smarty\|mustache\)$'
+    let ft = 'html'
   endif
 
   let cmd = [

@@ -5,6 +5,11 @@ function! nox#buffer#Bdelete(bang) abort
   let l:current_buffer = bufnr("%")
   let l:alternate_buffer = bufnr("#")
 
+  if &modified && a:bang ==# ""
+    echo "No write since last change (add ! to override)"
+    return
+  endif
+
   if buflisted(l:alternate_buffer)
     execute "buffer" . a:bang . " #"
   else
