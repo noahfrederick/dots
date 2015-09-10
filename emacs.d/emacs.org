@@ -1483,11 +1483,11 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (setq org-capture-templates
             '(("t" "☑️ To-do")
               ("tt" "To-do" entry
-               (file "")
+               (file+headline "")
                "* TODO %?"
                :clock-keep t :kill-buffer t)
               ("tu" "️Quick to-do" entry
-               (file "")
+               (file+headline "")
                "* TODO %^{Task}\nSCHEDULED: %t"
                :clock-keep t :kill-buffer t :immediate-finish t)
               ("j" "📆 Journal entry" entry
