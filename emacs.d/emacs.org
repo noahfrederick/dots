@@ -1002,7 +1002,26 @@ command-line accounting program.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ledger-mode
-    :mode (("\\.ledger$" . ledger-mode)))
+    :mode (("\\.ledger\\'" . ledger-mode))
+    :config
+    (progn
+      (setq ledger-post-use-completion-engine :ido)
+      (evil-leader/set-key-for-mode 'ledger-mode
+        "m a" 'ledger-add-transaction
+        "m b" 'ledger-post-edit-amount
+        "m c" 'ledger-toggle-current
+        "m D" 'ledger-delete-current-transaction
+        "m p" 'ledger-display-balance-at-point
+        "m q" 'ledger-post-align-xact
+        "m Q" 'ledger-mode-clean-buffer
+        "m r" 'ledger-report
+        "m R" 'ledger-reconcile
+        "m /" 'nox/ledger-post-split-evenly
+        "m ?" 'nox/ledger-post-split
+        "m s" 'ledger-display-ledger-stats
+        "m t" 'ledger-insert-effective-date
+        "m y" 'ledger-set-year
+        "m m" 'ledger-set-month)))
 #+END_SRC
 
 These are helper functions I use to manage my ledger file.
