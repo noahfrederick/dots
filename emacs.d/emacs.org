@@ -1702,6 +1702,7 @@ for exported files lives in the =~/.emacs.d= directory.
         org-export-backends '(html
                               latex
                               md)
+        org-html-htmlize-output-type 'css
         org-html-doctype "html5"
         org-html-preamble nil
         org-html-postamble t
@@ -1727,21 +1728,27 @@ you can publish all projects by issuing =M-x org-publish-all RET=.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq org-publish-project-alist
-        '(("emacs"
+        '(("emacs-assets"
            :base-directory "~/.emacs.d/"
            :recursive nil
-           :base-extension "org"
-           :publishing-directory "~/.emacs.d/"
-           :publishing-function org-html-publish-to-html
-           :headline-levels 9)
-          ("org-assets"
-           :base-directory "~/.emacs.d/"
-           :recursive nil
-           :base-extension "css\\|js"
-           :publishing-directory "~/org/"
+           :base-extension "css\\|js\\|svg"
+           :publishing-directory "~/html/"
            :publishing-function org-publish-attachment)
-          ("ledger-assets"
+          ("org-assets"
            :base-directory "~/org/"
+           :recursive t
+           :base-extension "jpg"
+           :publishing-directory "~/html/"
+           :publishing-function org-publish-attachment)
+          ("org-pages"
+           :base-directory "~/org/"
+           :base-extension "org"
+           :auto-sitemap t
+           :publishing-directory "~/html/"
+           :publishing-function org-html-publish-to-html)
+          ("org" :components ("emacs-assets" "org-assets" "org-pages"))
+          ("ledger-assets"
+           :base-directory "~/.emacs.d/"
            :recursive nil
            :base-extension "css\\|js"
            :publishing-directory "~/ledger/reports/"
@@ -1753,7 +1760,7 @@ you can publish all projects by issuing =M-x org-publish-all RET=.
            :publishing-directory "~/ledger/reports/"
            :publishing-function org-html-publish-to-html
            :headline-levels 9)
-          ("ledger" :components ("org-assets" "ledger-assets" "ledger-reports"))))
+          ("ledger" :components ("emacs-assets" "ledger-assets" "ledger-reports"))))
 #+END_SRC
 
 ** Key Bindings
