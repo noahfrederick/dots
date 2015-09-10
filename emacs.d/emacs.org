@@ -457,6 +457,13 @@ Instantly display current key sequence in mini buffer:
   (setq echo-keystrokes 0.02)
 #+END_SRC
 
+When opening a new line with =RET=, indent it appropriately:
+
+#+NAME: evil
+#+BEGIN_SRC emacs-lisp :tangle no
+  (global-set-key (kbd "RET") 'newline-and-indent)
+#+END_SRC
+
 ** Evil
 
 Evil mode is a minor mode providing Vim emulation for Emacs. It
@@ -489,8 +496,27 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
           (evil-leader/set-leader "<SPC>")
           (global-evil-leader-mode 1)
 
+          (defun nox/declare-prefix (prefix name)
+            "Declare a prefix PREFIX. PREFIX is a string describing
+  a key sequence. NAME is a symbol name used as the prefix command."
+            (let ((command (intern (concat "group:" name))))
+              ;; Define the prefix command only if it does not already exist
+              (unless (lookup-key evil-leader--default-map prefix)
+                (define-prefix-command command)
+                (evil-leader/set-key prefix command))))
+
+          ;; Define prefix commands for the sake of guide-key
+          (setq nox/key-binding-prefixes '(("g" . "git")
+                                           ("h" . "helm")
+                                           ("m" . "mode")
+                                           ("o" . "toggle")
+                                           ("r" . "org")))
+
+          (mapc (lambda (x) (nox/declare-prefix (car x) (cdr x)))
+                nox/key-binding-prefixes)
+
           (evil-leader/set-key
-            "SPC" 'smex
+            "m SPC" 'smex-major-mode-commands
             "=" 'nox/indent-buffer
             "b" 'ido-switch-buffer
             "B" 'ibuffer
@@ -512,7 +538,7 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
             "o l" 'whitespace-mode
             "o n" 'linum-mode
             "o q" 'auto-fill-mode
-            "o w" 'toggle-truncate-lines)))
+            "o w" 'visual-line-mode)))
 
       (use-package evil-numbers
         :config
@@ -536,12 +562,16 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
       (evil-set-initial-state 'org-agenda-mode 'emacs)
       (evil-set-initial-state 'package-menu-mode 'motion)
       (evil-set-initial-state 'paradox-menu-mode 'motion)
+      (evil-set-initial-state 'mu4e-main-mode 'motion)
+      (evil-set-initial-state 'mu4e-view-mode 'motion)
+      (evil-set-initial-state 'mu4e-headers-mode 'motion)
+      (evil-set-initial-state 'elfeed-search-mode 'motion)
+      (evil-set-initial-state 'elfeed-show-mode 'motion)
 
       ;; Reclaim useful keys from evil-motion-state-map
       (define-key evil-motion-state-map (kbd "RET") nil)
       (define-key evil-motion-state-map (kbd "TAB") nil)
 
-      (global-set-key (kbd "RET") 'newline-and-indent)
       (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
 
       (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -930,7 +960,8 @@ Magit provides featureful Git integration.
       "g s" 'magit-status
       "g b" 'magit-blame-mode
       "g l" 'magit-log
-      "g d" 'magit-diff)
+      "g d" 'magit-diff
+      "g r" 'vc-revert)
     :config
     (progn
       (evil-make-overriding-map magit-mode-map 'emacs)
@@ -964,15 +995,17 @@ use the fringe (and don't work in a terminal).
   (use-package emacs-lisp-mode
     :init
     (progn
+      (evil-leader/set-key-for-mode 'emacs-lisp-mode
+        "m C" 'byte-compile-file
+        "m e" 'eval-defun
+        "m E" 'eval-buffer
+        "m x" 'eval-last-sexp
+        "m X" 'eval-print-last-sexp)
+
+      (use-package evil-lisp-state)
       (use-package eldoc
         :commands turn-on-eldoc-mode
-        :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
-
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode "C" 'byte-compile-file)
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode "E" 'eval-buffer)
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode "D" 'eval-defun)
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode "x" 'eval-last-sexp)
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode "X" 'eval-print-last-sexp))
+        :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)))
     :mode ("Cask" . emacs-lisp-mode))
 
   (defun nox/byte-recompile ()
@@ -1318,7 +1351,9 @@ list, such as files, buffers, and so on.
       "h o" 'helm-org-headlines
       "h p" 'helm-projectile
       "h x" 'helm-M-x
-      "h /" 'helm-occur)
+      "SPC" 'helm-M-x
+      "h /" 'helm-occur
+      "/"   'helm-occur)
     :config
     (progn
       (setq helm-M-x-fuzzy-match t)
@@ -1377,6 +1412,9 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
       (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
       ;; User-defined dictionary goes in "~/.dict" by default.
 
+      (define-key evil-insert-state-map (kbd "C-l") 'ac-complete-with-helm)
+      (define-key ac-complete-mode-map (kbd "C-l") 'ac-complete-with-helm)
+
       (ac-flyspell-workaround)
       (ac-linum-workaround)))
 #+END_SRC
@@ -1396,26 +1434,36 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
             guide-key/align-command-by-space-flag t
             guide-key/popup-window-position 'bottom)
 
+      (setq guide-key/highlight-command-regexp
+            '("group:" . guide-key/prefix-command-face))
+
       ;; Sequences of interest globally
       (setq guide-key/guide-key-sequence '("SPC"     ; Evil leader key
+                                           "\["
+                                           "\]"
+                                           "g"
+                                           "z"
                                            "C-h"     ; Help commands
                                            "C-x r"   ; Register commands
                                            "C-x 4"   ; Other window commands
                                            "C-x 5"   ; Other frame commands
                                            "C-x c"   ; Helm prefix
-                                           "C-c p"   ; Projectile prefix
-                                           "C-c P")) ; Project-persist prefix
+                                           "C-c"))   ; Mode commands
 
       ;; Sequences of interest for specific modes
       (defun guide-key/my-hook-function-for-org-mode ()
-        (guide-key/add-local-guide-key-sequence "C-c")
         (guide-key/add-local-highlight-command-regexp "org-"))
-      (add-hook 'org-mode-hook 'guide-key/my-hook-function-for-org-mode)
+      (add-hook 'org-mode-hook #'guide-key/my-hook-function-for-org-mode)
 
       (defun guide-key/my-hook-function-for-markdown-mode ()
-        (guide-key/add-local-guide-key-sequence "C-c")
         (guide-key/add-local-highlight-command-regexp "markdown-\\|outline-"))
-      (add-hook 'markdown-mode-hook 'guide-key/my-hook-function-for-markdown-mode)
+      (add-hook 'markdown-mode-hook #'guide-key/my-hook-function-for-markdown-mode)
+
+      (defun guide-key/my-hook-function-for-mail-modes ()
+        (guide-key/add-local-highlight-command-regexp "message-\\|mail-\\|mml-"))
+      (add-hook 'mu4e-compose-mode-hook #'guide-key/my-hook-function-for-mail-modes)
+      (add-hook 'mu4e-headers-mode-hook #'guide-key/my-hook-function-for-mail-modes)
+      (add-hook 'mu4e-view-mode-hook #'guide-key/my-hook-function-for-mail-modes)
 
       (guide-key-mode 1)))
 #+END_SRC

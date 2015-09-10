@@ -2,6 +2,7 @@
 (source melpa)
 (source org)
 
+(depends-on "ac-helm")
 (depends-on "auto-complete")
 (depends-on "bind-key")
 (depends-on "calfw")
