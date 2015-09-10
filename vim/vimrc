@@ -199,8 +199,8 @@ else
 endif
 
 "" Status line
-let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus("\u25cf", "\u25cb"):""}'
-let &statusline .= "%#StatusLineNC# %{StatuslineProject()}"
+let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
+let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
 let &statusline .= "%* %f"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
 let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
