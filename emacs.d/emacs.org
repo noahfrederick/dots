@@ -2344,33 +2344,165 @@ Org agenda (as well as other calendar formats).
 
 [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu4e]] ("mu for Emacs") is an Elisp mail client and front end to [[http://www.djcbsoftware.nl/code/mu/][mu]],
 a tool for indexing and searching e-mail messages stored in the
-Maildir format. It's more minimalistic than the popular Gnus, but
-includes the features I need:
-
-- Email threads
-- Flexible search
-- Integration with Org mode
-
-Since I haven't quite figured out a suitable setup, this package is
-left disabled for now.
+Maildir format. It's more minimalistic than the popular Gnus and has a
+saner interface.
 
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package mu4e
-    :disabled t
+    :commands (mu4e mu4e~start)
     :init
-    (add-to-list 'load-path "~/src/mu/mu4e")
+    (progn
+      (add-to-list 'load-path "~/src/mu/mu4e")
+      (evil-leader/set-key "M" #'nox/mu4e-view-today)
+
+      (defun nox/mu4e-view-today ()
+        "Invoke mu4e and jump directly to the today bookmark."
+        (interactive)
+        (mu4e~start)
+        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t))))
     :config
     (progn
       (setq mu4e-sent-folder "/Sent"
             mu4e-drafts-folder "/Drafts"
             mu4e-trash-folder "/Trash"
             mu4e-refile-folder "/Archive"
-            mu4e-get-mail-command "offlineimap -o"
             mu4e-attachment-dir "~/Downloads"
-            mu4e-update-interval 300 ; 5 minutes
-            mu4e-headers-include-related t ; Thread messages
-            mail-user-agent 'mu4e-user-agent))) ; Make mu4e default mail client
+            mu4e-maildir-shortcuts '(("/INBOX"    . ?i)
+                                     ("/Drafts"   . ?D)
+                                     ("/Domestic" . ?d)
+                                     ("/GitHub"   . ?g)
+                                     ("/Hello"    . ?h)
+                                     ("/Domains"  . ?m)
+                                     ("/Receipts" . ?r)
+                                     ("/Sent"     . ?s)
+                                     ("/Trash"    . ?T)
+                                     ("/Big Tech/Logs"       . ?l)
+                                     ("/Big Tech/TeamworkPM" . ?t))
+            mu4e-update-interval 60 ; seconds
+            mu4e-hide-index-messages t
+            mu4e-use-fancy-chars t
+            mu4e-headers-seen-mark      '("S" . "✔")
+            mu4e-headers-unread-mark    '("u" . "●")
+            mu4e-headers-new-mark       '("N" . "○")
+            mu4e-headers-replied-mark   '("R" . "←")
+            mu4e-headers-passed-mark    '("P" . "→")
+            mu4e-headers-flagged-mark   '("F" . "⚑")
+            mu4e-headers-draft-mark     '("D" . "⚒")
+            mu4e-headers-encrypted-mark '("x" . "e")
+            mu4e-headers-signed-mark    '("s" . "s")
+            mu4e-headers-trashed-mark   '("T" . "×")
+            mu4e-headers-attach-mark    '("a" . "⚓︎")
+            mu4e-headers-visible-flags  '(draft flagged passed replied unread)
+            mu4e-headers-default-prefix     '("|" . "│")
+            mu4e-headers-has-child-prefix   '("+" . "└")
+            mu4e-headers-first-child-prefix '("\\" . "└")
+            mu4e-headers-include-related nil
+            mu4e-bookmarks '(("date:today..now" "Today's messages" ?t)
+                             ("date:7d..now" "Last 7 days" ?w)
+                             ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+                             ("flag:flagged" "Flagged messages" ?f)
+                             ("to:*bigtech.com AND NOT flag:trashed" "Work-related messages" ?W))
+            mu4e-compose-signature-auto-include nil
+            mu4e-view-prefer-html t
+            mu4e-html2text-command "elinks -dump"
+            mail-user-agent 'mu4e-user-agent)
+
+      (defun nox/mu4e-action-view-in-browser (msg)
+        "View the body of the message in a web browser."
+        (interactive)
+        (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+              (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+          (unless html (error "No html part for this message"))
+          (with-temp-file tmpfile
+            (insert html))
+          (browse-url (concat "file://" tmpfile))))
+
+      (add-to-list 'mu4e-view-actions
+                   '("browser" . nox/mu4e-action-view-in-browser) t)
+
+      (add-hook 'mu4e-view-mode-hook 'epa-mail-mode)
+      (add-hook 'mu4e-compose-mode-hook 'epa-mail-mode)
+
+      (defvar nox/mu4e-new-mail nil "Whether there is any new mail.")
+
+      (setq global-mode-string
+            (if (string-match-p "nox/mu4e-new-mail"
+                                (prin1-to-string global-mode-string))
+                global-mode-string
+              (cons
+               '(nox/mu4e-new-mail "✉️" "")
+               global-mode-string)))
+
+      (defun nox/mu4e-new-mail-count ()
+        "Get number of new messages from mu4e."
+        (string-to-number
+         (replace-regexp-in-string
+          "[ \t\n\r]" "" (shell-command-to-string
+                          "mu find flag:new | wc -l"))))
+
+      (defun nox/mu4e-index-updated ()
+        (when (fboundp 'sauron-add-event)
+          (let ((msgs (nox/mu4e-new-mail-count)))
+            (if (> msgs 0)
+                (progn
+                  (sauron-add-event 'mail 5 (format "%s new message(s)" msgs))
+                  (setq nox/mu4e-new-mail t))
+              (sauron-add-event 'mail 1 "Mail index updated")
+              (setq nox/mu4e-new-mail nil)))))
+
+      (add-hook 'mu4e-index-updated-hook #'nox/mu4e-index-updated)
+
+      (defun nox/insert-contact (&optional start)
+        (interactive)
+        (let ((mail-abbrev-mode-regexp mu4e~compose-address-fields-regexp)
+              (eoh ;; end-of-headers
+               (save-excursion
+                 (goto-char (point-min))
+                 (search-forward-regexp mail-header-separator nil t))))
+          (when (and eoh (> eoh (point)) (mail-abbrev-in-expansion-header-p))
+            (let* ((end (point))
+                   (start
+                    (or start
+                        (save-excursion
+                          (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
+                          (goto-char (match-end 0))
+                          (point))))
+                   (contact
+                    (ido-completing-read "Contact: "
+                                         mu4e~contacts-for-completion
+                                         nil
+                                         nil
+                                         (buffer-substring-no-properties start end))))
+              (unless (equal contact "")
+                (kill-region start end)
+                (insert contact))))))
+
+      (defun nox/make-mu4e-mode-evil ()
+        "Turn mu4e buffers evil."
+        (evil-make-overriding-map mu4e-main-mode-map 'motion)
+        (evil-define-key 'motion mu4e-main-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
+
+        (evil-make-overriding-map mu4e-headers-mode-map 'motion)
+        (evil-define-key 'motion mu4e-headers-mode-map "h" #'mu4e~headers-jump-to-maildir) ; Was j
+        (evil-define-key 'motion mu4e-headers-mode-map "j" #'mu4e-headers-next)
+
+        (evil-make-overriding-map mu4e-view-mode-map 'motion)
+        (evil-define-key 'motion mu4e-view-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
+        (evil-define-key 'motion mu4e-view-mode-map "j" #'mu4e-view-headers-next)
+        (evil-define-key 'motion mu4e-view-mode-map "k" #'mu4e-view-headers-prev)
+
+        (evil-define-key 'insert mu4e-compose-mode-map (kbd "C-l") #'nox/insert-contact)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m m" #'message-send-and-exit)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "k" #'message-kill-buffer)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m e" #'mml-secure-message-sign-encrypt)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m c" #'mml-secure-message-encrypt)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m s" #'mml-secure-message-sign)
+        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m f" #'mml-attach-file)
+        (evil-leader/set-key-for-mode 'epa-mail-mode "m d" #'epa-mail-decrypt)
+        (evil-leader/set-key-for-mode 'epa-mail-mode "m v" #'epa-mail-verify))
+
+      (nox/make-mu4e-mode-evil)))
 #+END_SRC
 
 Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
