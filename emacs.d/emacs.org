@@ -522,11 +522,11 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
     :config
     (progn
       (setq evil-default-cursor '("DodgerBlue1" box)
-            evil-normal-state-cursor '("white" box)
+            evil-normal-state-cursor '("orange" box)
             evil-emacs-state-cursor '("pink" box)
             evil-motion-state-cursor '("SeaGreen1" box)
-            evil-insert-state-cursor '("white" bar)
-            evil-visual-state-cursor '("white" hbar)
+            evil-insert-state-cursor '("orange" bar)
+            evil-visual-state-cursor '("orange" hbar)
             evil-replace-state-cursor '("orange" hbar))
 
       (evil-mode 1)
