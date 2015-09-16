@@ -80,8 +80,20 @@ snippet bgc "background-color"
 background-color: #${1};
 endsnippet
 
+snippet bgi "background-image"
+background-image: ${1:url()};
+endsnippet
+
+snippet bgr "background-repeat"
+background-repeat: ${1:no-repeat};
+endsnippet
+
 snippet bgp "background-position"
 background-position: ${1};
+endsnippet
+
+snippet bgs "background-size"
+background-size: ${1:cover};
 endsnippet
 
 snippet bs "box-sizing"
@@ -92,12 +104,22 @@ snippet br "border-radius"
 border-radius: ${1}${2:px};
 endsnippet
 
+snippet brt "border-top-radius"
+border-top-left-radius: ${1}${2:px};
+border-top-right-radius: $1$2;
+endsnippet
+
 snippet brtl "border-top-left-radius"
 border-top-left-radius: ${1}${2:px};
 endsnippet
 
 snippet brtr "border-top-right-radius"
 border-top-right-radius: ${1}${2:px};
+endsnippet
+
+snippet brb "border-bottom-radius"
+border-bottom-left-radius: ${1}${2:px};
+border-bottom-right-radius: $1$2;
 endsnippet
 
 snippet brbr "border-bottom-right-radius"
@@ -108,12 +130,34 @@ snippet brbl "border-bottom-left-radius"
 border-bottom-left-radius: ${1}${2:px};
 endsnippet
 
-snippet c "color"
+snippet brl "border-left-radius"
+border-top-left-radius: ${1}${2:px};
+border-bottom-left-radius: $1$2;
+endsnippet
+
+snippet brr "border-right-radius"
+border-top-right-radius: ${1}${2:px};
+border-bottom-right-radius: $1$2;
+endsnippet
+
+snippet co "color"
 color: #${1};
 endsnippet
 
-snippet cl "clear"
+snippet c "clear"
 clear: ${1:both};
+endsnippet
+
+snippet cl "clear: left"
+clear: left;
+endsnippet
+
+snippet cr "clear: right"
+clear: right;
+endsnippet
+
+snippet cb "clear: both"
+clear: both;
 endsnippet
 
 snippet d "display"
@@ -130,6 +174,10 @@ endsnippet
 
 snippet fw "font-weight"
 font-weight: ${1:bold};
+endsnippet
+
+snippet /fw([1-9])/ "font-weight" r
+font-weight: `!p snip.rv = match.group(1)`00;
 endsnippet
 
 snippet fl "float"
@@ -172,12 +220,28 @@ snippet mr "margin-right"
 margin-right: ${1}${2:px};
 endsnippet
 
+snippet m0 "margin: 0"
+margin: 0;
+endsnippet
+
+snippet m0a "margin: 0 auto"
+margin: 0 auto;
+endsnippet
+
 snippet mh "max-height"
 max-height: ${1}${2:px};
 endsnippet
 
 snippet mw "max-width"
 max-width: ${1}${2:px};
+endsnippet
+
+snippet op "opaciy"
+opacity: ${1:0};
+endsnippet
+
+snippet /op([0-9]+)/ "opaciy" r
+opacity: 0.`!p snip.rv = match.group(1)`;
 endsnippet
 
 snippet of "overflow"
@@ -208,12 +272,100 @@ snippet pos "position"
 position: ${1:relative};
 endsnippet
 
+snippet posa "position: absolute"
+position: absolute;
+endsnippet
+
+snippet posf "position: fixed"
+position: fixed;
+endsnippet
+
+snippet posr "position: relative"
+position: relative;
+endsnippet
+
+snippet poss "position: static"
+position: static;
+endsnippet
+
 snippet ta "text-align"
 text-align: ${1:center};
 endsnippet
 
+snippet tac "text-align: center"
+text-align: center;
+endsnippet
+
+snippet taj "text-align: justify"
+text-align: justify;
+endsnippet
+
+snippet tal "text-align: left"
+text-align: left;
+endsnippet
+
+snippet tar "text-align: right"
+text-align: right;
+endsnippet
+
 snippet td "text-decoration"
 text-decoration: ${1:none};
+endsnippet
+
+snippet tdn "text-decoration: none"
+text-decoration: none;
+endsnippet
+
+snippet tdo "text-decoration: overline"
+text-decoration: overline;
+endsnippet
+
+snippet tdu "text-decoration: underline"
+text-decoration: underline;
+endsnippet
+
+snippet tdl "text-decoration: line-through"
+text-decoration: line-through;
+endsnippet
+
+snippet ti "text-indent"
+text-indent: ${1:0};
+endsnippet
+
+snippet tt "text-transform"
+text-transform: ${1:none};
+endsnippet
+
+snippet ttn "text-transform: none"
+text-transform: none;
+endsnippet
+
+snippet ttc "text-transform: capitalize"
+text-transform: capitalize;
+endsnippet
+
+snippet ttl "text-transform: lowercase"
+text-transform: lowercase;
+endsnippet
+
+snippet ttu "text-transform: uppercase"
+text-transform: uppercase;
+endsnippet
+
+snippet v "visibility"
+visibility: ${1:hidden};
+endsnippet
+
+snippet vc "visibility: collapse"
+visibility: collapse;
+endsnippet
+
+snippet vh "visibility: hidden"
+visibility: hidden;
+endsnippet
+
+snippet vv "visibility: visible"
+visibility: visible;
 endsnippet
 
 snippet w "width"
@@ -236,9 +388,29 @@ snippet bot "bottom"
 bottom: ${1}${2:px};
 endsnippet
 
+snippet zi "z-index"
+z-index: ${1:1};
+endsnippet
+
+snippet /z([0-9]+)/ "z-index" r
+z-index: `!p snip.rv = match.group(1)`;
+endsnippet
+
 #
-# Misc.
+# Keywords and Expressions
 #
 snippet rgba "rgba(...)"
 rgba(${1:255}, $1, $1, 0.${2:5})
+endsnippet
+
+snippet nr "no-repeat"
+no-repeat
+endsnippet
+
+snippet rx "repeat-x"
+repeat-x
+endsnippet
+
+snippet ry "repeat-y"
+repeat-y
 endsnippet

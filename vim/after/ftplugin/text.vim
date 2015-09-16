@@ -19,7 +19,7 @@ if &modifiable
     Abolish -buffer eg e.g.,
     Abolish -buffer ie i.e.,
     Abolish -buffer plugin{,s} plug-in{}
-    Abolish -buffer thats that's
+    Abolish -buffer {he,here,she,that,there,where}s {}'s
     Abolish -buffer {I,we,you,they}ve {}'ve
     Abolish -buffer {is,was,do,does,did,would,could,should,wo,ca}nt {}n't
     Abolish -buffer {you,they}re {}'re
