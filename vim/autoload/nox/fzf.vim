@@ -67,17 +67,29 @@ function! s:bufopen(lines)
   if len(a:lines) < 2
     return
   endif
-  let cmd = get(s:default_action, a:lines[0], '')
-  if !empty(cmd)
-    execute 'silent' cmd
+
+  let actions = copy(s:default_action)
+  let actions['ctrl-d'] = 'bwipeout'
+  let cmd = get(actions, remove(a:lines, 0), '')
+  let bufs = map(copy(a:lines), 'matchstr(v:val, "\\[*\\zs[0-9]*\\ze\\]")')
+
+  if cmd ==# 'bwipeout'
+    execute cmd join(bufs)
+    return
   endif
-  execute 'buffer' matchstr(a:lines[1], '\[*\zs[0-9]*\ze\]')
+
+  for buf in bufs
+    if !empty(cmd)
+      execute 'silent' cmd
+    endif
+    execute 'buffer' buf
+  endfor
 endfunction
 
 function! s:format_buffer(b)
   let name = bufname(a:b)
   let name = empty(name) ? '[No Name]' : name
-  let flag = a:b == bufnr('')  ? s:blue('%') :
+  let flag = a:b == bufnr('') ? s:blue('%') :
         \ (a:b == bufnr('#') ? s:magenta('#') : ' ')
   let modified = getbufvar(a:b, '&modified') ? s:red(" \u25cf") : ''
   let readonly = getbufvar(a:b, '&modifiable') ? '' : s:blue(" \u25cb")
@@ -100,10 +112,10 @@ function! nox#fzf#Buffers(bang)
   call map(bufs, 's:format_buffer(v:val)')
 
   call fzf#run(extend({
-        \ 'source':  reverse(bufs),
-        \ 'sink*':   function('s:bufopen'),
-        \ 'options': '--prompt "Buffers > " +m -x --reverse --ansi -d "\t" -n 2,1..2'.s:expect(),
-        \}, a:bang ? {} : {'down': height}))
+        \   'source':  reverse(bufs),
+        \   'sink*':   function('s:bufopen'),
+        \   'options': '--prompt "Buffers > " -m -x --reverse --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
+        \ }, a:bang ? {} : {'down': height}))
 endfunction
 
 " ------------------------------------------------------------------
@@ -118,10 +130,10 @@ endfunction
 
 function! nox#fzf#History(bang)
   call s:fzf({
-        \ 'source':  reverse(s:all_files()),
-        \ 'sink*':   function('<SID>common_sink'),
-        \ 'options': '--prompt "History > " -m' . s:expect(),
-        \}, a:bang)
+        \   'source':  reverse(s:all_files()),
+        \   'sink*':   function('<SID>common_sink'),
+        \   'options': '--prompt "History > " -m' . s:expect(),
+        \ }, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
