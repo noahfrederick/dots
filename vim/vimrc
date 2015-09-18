@@ -285,7 +285,13 @@ if has("autocmd")
 
     " Only highlight cursor line in window with focus
     autocmd WinLeave * set nocursorline
-    autocmd WinEnter * if &filetype != 'qf' | set cursorline | endif
+    autocmd WinEnter *
+          \ if &filetype !=# 'qf' && &buftype !=# 'terminal' |
+          \   set cursorline |
+          \ endif
+    if exists('##TermOpen')
+      autocmd TermOpen * set nocursorline
+    endif
 
     autocmd QuickFixCmdPost *grep* cwindow
 
@@ -302,7 +308,7 @@ if has("autocmd")
     autocmd CmdwinEnter * set nonumber
 
     if exists('##TermOpen')
-      autocmd TermOpen *FZF execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
+      autocmd TermOpen * execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
     endif
   augroup END
 endif
