@@ -30,7 +30,7 @@ function! s:buflisted()
 endfunction
 
 function! s:fzf(opts, bang)
-  return fzf#run(extend(a:opts, a:bang ? {} : {'down': 20}))
+  return fzf#run(extend(a:opts, a:bang ? {} : {'down': '~30%'}))
 endfunction
 
 let s:default_action = {
@@ -103,19 +103,17 @@ function! nox#fzf#Buffers(bang)
   " Remove current and alternate buffers from list
   call filter(bufs, "v:val != bufnr('#') && v:val != bufnr('%')")
 
-  if bufnr('#') > 0
+  if buflisted(0)
     call add(bufs, bufnr('#'))
   endif
 
-  let height = min([len(bufs), &lines * 4 / 10]) + 1
-
   call map(bufs, 's:format_buffer(v:val)')
 
-  call fzf#run(extend({
+  call s:fzf({
         \   'source':  reverse(bufs),
         \   'sink*':   function('s:bufopen'),
-        \   'options': '--prompt "Buffers > " -m -x --reverse --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
-        \ }, a:bang ? {} : {'down': height}))
+        \   'options': '--prompt "Buffers > " -m -x --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
+        \ }, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
