@@ -62,11 +62,11 @@ function! ledger#split_prompt(...) abort
   call ledger#split(account2, amount)
 endfunction
 
-nnoremap <silent> <Plug>(LedgerSplit) :call ledger#split()<CR>:silent! call repeat#set("\<Plug>(LedgerSplit)")<CR>
-nnoremap <silent> <Plug>(LedgerSplitPrompt) :call ledger#split_prompt()<CR>
+nnoremap <silent> <Plug>(ledger-split) :call ledger#split()<CR>:silent! call repeat#set("\<Plug>(ledger-split)")<CR>
+nnoremap <silent> <Plug>(ledger-split-prompt) :call ledger#split_prompt()<CR>
 
-nmap <buffer> <LocalLeader>s <Plug>(LedgerSplit)
-nmap <buffer> <LocalLeader>S <Plug>(LedgerSplitPrompt)
+nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
+nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 

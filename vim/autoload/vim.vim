@@ -14,7 +14,7 @@ function! s:is_type(type, path)
   return (stridx(a:path . "/", a:type) != -1)
 endfunction
 
-function! vim#GuessFunctionPrefix(path)
+function! vim#guess_function_prefix(path)
   if s:is_type("autoload", a:path)
     let l:path = strpart(a:path, stridx(a:path, "autoload/") + strlen("autoload/"))
     return substitute(fnamemodify(l:path, ":r"), '/', '#', 'g') . "#"
@@ -22,7 +22,7 @@ function! vim#GuessFunctionPrefix(path)
   return "s:"
 endfunction
 
-function! vim#Modeline()
+function! vim#modeline()
   return 'vim: fdm=marker:sw=2:sts=2:et'
 endfunction
 

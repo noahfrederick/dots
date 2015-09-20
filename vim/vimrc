@@ -86,12 +86,12 @@ if has("vim_starting")
   " (see https://github.com/junegunn/vim-plug/issues/48#issuecomment-67436470)
   augroup insert_mode_plugins
     autocmd!
-    autocmd InsertEnter * call nox#plug#LoadInsert()
+    autocmd InsertEnter * call nox#plug#load_insert_mode()
   augroup END
 
   augroup idle_plugins
     autocmd!
-    autocmd CursorHold * call nox#plug#LoadIdle()
+    autocmd CursorHold * call nox#plug#load_idle()
   augroup END
 
   if &t_Co >= 16
@@ -109,7 +109,7 @@ set modeline modelines=2        " Look for modeline in first/last n lines of fil
 set hidden                      " Do not unload buffers when no longer displayed
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
-set foldtext=nox#folding#Text()
+set foldtext=nox#folding#text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set formatoptions+=r            " Insert comment leader after <Enter>
@@ -317,10 +317,10 @@ endif
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
 
-command! -bang -bar Bdelete call nox#buffer#Bdelete(<q-bang>)
+command! -bang -bar Bdelete call nox#buffer#delete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
-      \ call nox#buffer#Bufonly(<q-args>, <q-bang>)
-command! -nargs=0 -bar FollowSymlink call nox#path#FollowSymlink()
+      \ call nox#buffer#only(<q-args>, <q-bang>)
+command! -nargs=0 -bar FollowSymlink call nox#path#follow_symlink()
 command! -bang -nargs=? -bar -complete=filetype Scratch
       \ tabedit | if <q-bang> ==# '' | put | 1 | delete _ | endif
       \ | setlocal filetype=<args> buftype=nofile bufhidden=hide noswapfile
@@ -330,7 +330,7 @@ command! -bang -nargs=0 -bar Cd cd<bang> .
 if exists("$NOTES")
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
   command! -nargs=0 -bang Note FZF<bang> $NOTES
-  command! -nargs=0 -bar ShoppingList call nox#org#ShoppingList()
+  command! -nargs=0 -bar ShoppingList call nox#org#shopping_list()
 endif
 
 " See the difference between the current buffer and the file it was loaded
@@ -347,12 +347,12 @@ command! -nargs=0 -bar -bang Marks   call nox#fzf#Marks(<bang>0)
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
-  command! -nargs=1 Cdo  call nox#quickfix#Cdo(0, <q-args>)
-  command! -nargs=1 Cfdo call nox#quickfix#Cdo(1, <q-args>)
+  command! -nargs=1 Cdo  call nox#quickfix#do(0, <q-args>)
+  command! -nargs=1 Cfdo call nox#quickfix#do(1, <q-args>)
 endif
 
 if executable('osascript')
-  command! -nargs=? -bang -bar -complete=file Transmit call nox#transmit#Send(<q-bang>, <q-args>)
+  command! -nargs=? -bang -bar -complete=file Transmit call nox#transmit#send(<q-bang>, <q-args>)
 endif
 
 if exists(":terminal")
@@ -447,7 +447,7 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader><C-k> nox#editing#NormalModeDigraph(nr2char(getchar()))
+nnoremap <expr> <Leader><C-k> nox#editing#normal_mode_digraph(nr2char(getchar()))
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
@@ -516,13 +516,13 @@ xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>w :call nox#editing#NormalizeWhitespace()<CR>
+nnoremap <silent> <Leader>w :call nox#editing#normalize_whitespace()<CR>
 
 " Re-indent entire buffer content
-nnoremap <silent> <Leader>= :call nox#editing#ReindentBuffer()<CR>
+nnoremap <silent> <Leader>= :call nox#editing#reindent_buffer()<CR>
 
 " Yank entire buffer content
-nnoremap <silent> <Leader>y :call nox#editing#YankBuffer()<CR>
+nnoremap <silent> <Leader>y :call nox#editing#yank_buffer()<CR>
 
 nnoremap <Leader>g<Space> :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>

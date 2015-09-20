@@ -48,13 +48,13 @@ def write_init_body(args, parents, snip):
 endglobal
 
 snippet _skel "PHP skeleton" b
-`!v php#Open()`
+`!v php#open()`
 
 $0
 endsnippet
 
 snippet _config "PHP config file" b
-`!v php#Open()`
+`!v php#open()`
 
 return array(
 	$0
@@ -112,27 +112,27 @@ snippet class "Class definition" b
  * ${4:$1 class}.
  *
  * @package    `!v nox#project#get("title")`
- * @category   `!v php#PathToClassCategory(expand("%"))`
+ * @category   `!v php#path_to_class_category(expand("%"))`
  * @author     `!v nox#project#get("author")`
  * @copyright  `!v nox#project#get("copyright")`
  */
-class ${1:`!v php#PathToClassName(expand("%"))`}${2: extends ${3:`!v php#PathToParentClassName(expand("%"))`}} {
+class ${1:`!v php#path_to_class_name(expand("%"))`}${2: extends ${3:`!v php#path_to_parent_class_name(expand("%"))`}} {
 	${0:${VISUAL:\/\/ TODO}}
 }
 endsnippet
 
 snippet _class "Class definition" b
-`!v php#Open()`
+`!v php#open()`
 
 /**
- * `!v php#PathToClassName(expand("%"))` class.
+ * `!v php#path_to_class_name(expand("%"))` class.
  *
  * @package    `!v nox#project#get("title")`
- * @category   `!v php#PathToClassCategory(expand("%"))`
+ * @category   `!v php#path_to_class_category(expand("%"))`
  * @author     `!v nox#project#get("author")`
  * @copyright  `!v nox#project#get("copyright")`
  */
-class `!v php#PathToClassName(expand("%"))` extends `!v php#PathToParentClassName(expand("%"))` {
+class `!v php#path_to_class_name(expand("%"))` extends `!v php#path_to_parent_class_name(expand("%"))` {
 	${0:${VISUAL}}
 }
 endsnippet

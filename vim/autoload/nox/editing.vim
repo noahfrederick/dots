@@ -6,7 +6,7 @@
 " - First parameter is a function name to call as a string
 " - Second (optional) parameter is an array of arguments to pass to the
 "   function
-function! nox#editing#Preserve(func, ...)
+function! nox#editing#preserve(func, ...)
   let l:FuncRef = function(a:func)
   if a:0 > 0
     let l:args = a:1
@@ -25,7 +25,7 @@ function! nox#editing#Preserve(func, ...)
   return l:return_value
 endfunction
 
-function! s:NormalizeWhitespace()
+function! s:normalize_whitespace()
   " 1. Strip trailing whitespace
   %substitute/\s\+$//e
   " 2. Merge consecutive blank lines
@@ -34,27 +34,27 @@ function! s:NormalizeWhitespace()
   %substitute/\n\+\%$//e
 endfunction
 
-function! nox#editing#NormalizeWhitespace()
-  return nox#editing#Preserve('<SID>NormalizeWhitespace')
+function! nox#editing#normalize_whitespace()
+  return nox#editing#preserve('<SID>normalize_whitespace')
 endfunction
 
-function! s:ReindentBuffer()
+function! s:reindent_buffer()
   normal! gg=G
 endfunction
 
-function! nox#editing#ReindentBuffer()
-  return nox#editing#Preserve('<SID>ReindentBuffer')
+function! nox#editing#reindent_buffer()
+  return nox#editing#preserve('<SID>reindent_buffer')
 endfunction
 
-function! s:YankBuffer()
+function! s:yank_buffer()
   normal! ggyG
 endfunction
 
-function! nox#editing#YankBuffer()
-  return nox#editing#Preserve('<SID>YankBuffer')
+function! nox#editing#yank_buffer()
+  return nox#editing#preserve('<SID>yank_buffer')
 endfunction
 
-function! nox#editing#NormalModeDigraph(char2)
+function! nox#editing#normal_mode_digraph(char2)
   let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
   echo 'digraph: ' . l:char1 . a:char2
   return "r\<C-k>" . l:char1 . a:char2

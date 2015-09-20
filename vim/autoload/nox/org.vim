@@ -1,7 +1,7 @@
 " autoload/nox/org.vim - Global organizational helpers
 " Maintainer:   Noah Frederick
 
-function! nox#org#ShoppingList() abort
+function! nox#org#shopping_list() abort
   let today = join([$NOTES, "shopping", strftime("%Y-%m-%d") . ".md"], "/")
 
   " If today's list already exists, just edit it

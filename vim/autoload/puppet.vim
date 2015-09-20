@@ -5,14 +5,14 @@
 "
 " Example:
 "   modules/manifests/foo/bar.pp -> foo::bar
-function! puppet#PathToClassName(...)
+function! puppet#path_to_class_name(...)
   if a:0
     let path = a:1
   else
     let path = expand('%:p')
   endif
 
-  let suffix = nox#path#RemovePrefix('/modules/', path)
+  let suffix = nox#path#remove_prefix('/modules/', path)
 
   if suffix ==# path
     let suffix = fnamemodify(suffix, ':t')

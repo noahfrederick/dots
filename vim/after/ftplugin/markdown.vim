@@ -35,22 +35,22 @@ inoremap <buffer> <C-g>. [<C-r>=strftime("%Y-%m-%d %a")<CR>]
 inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
 
 " Promote/demote headings
-nnoremap <buffer> <Left> :call markdown#PromoteHeading()<CR>
-nnoremap <buffer> <Right> :call markdown#DemoteHeading()<CR>
+nnoremap <buffer> <Left> :call markdown#promote_heading()<CR>
+nnoremap <buffer> <Right> :call markdown#demote_heading()<CR>
 
 " Follow link under cursor
-nnoremap <buffer> gx :call markdown#FollowLinkUnderCursor()<CR>
+nnoremap <buffer> gx :call markdown#follow_link_under_cursor()<CR>
 
 " Smart dashes
-iabbrev <buffer><expr> --- markdown#InsertDashes()
+iabbrev <buffer><expr> --- markdown#insert_dashes()
 
 " Use pandoc to run off a PDF with :make
 silent! compiler pandoc
 
 " Recompile file on save if compiled version already exists
-augroup AfterMarkdown
+augroup markdown_after
   autocmd!
-  autocmd BufWritePost *.md call nox#make#Recompile(expand('<afile>'))
+  autocmd BufWritePost *.md call nox#make#recompile(expand('<afile>'))
 augroup END
 
 " vim: fdm=marker:sw=2:sts=2:et

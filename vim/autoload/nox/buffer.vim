@@ -1,7 +1,7 @@
 " autoload/nox/buffer.vim - Global helpers for managing buffers
 " Maintainer:   Noah Frederick
 
-function! nox#buffer#Bdelete(bang) abort
+function! nox#buffer#delete(bang) abort
   let l:current_buffer = bufnr("%")
   let l:alternate_buffer = bufnr("#")
 
@@ -26,7 +26,7 @@ function! nox#buffer#Bdelete(bang) abort
 endfunction
 
 " Adapted from http://www.vim.org/scripts/script.php?script_id=1071
-function! nox#buffer#Bufonly(buffer, bang)
+function! nox#buffer#only(buffer, bang)
   if a:buffer == ''
     " No buffer provided, use the current buffer.
     let buffer = bufnr('%')

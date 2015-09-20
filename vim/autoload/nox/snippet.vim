@@ -1,7 +1,7 @@
 " autoload/nox/snippets.vim - Global helpers for snippets
 " Maintainer:   Noah Frederick
 
-function! nox#snippet#Title(basename)
+function! nox#snippet#title(basename)
   if exists("g:template_title")
     " Setting g:template_title lets us override the title (once)
     let title = g:template_title
@@ -19,7 +19,7 @@ function! nox#snippet#Title(basename)
   return title
 endfunction
 
-function! nox#snippet#ExpandSnippetOrCompleteMaybe()
+function! nox#snippet#expand_snippet_or_complete_maybe()
   call UltiSnips#ExpandSnippetOrJump()
 
   if !exists("g:ulti_expand_or_jump_res") || g:ulti_expand_or_jump_res == 0
@@ -43,7 +43,7 @@ function! s:try_insert(skel)
   return g:ulti_expand_res
 endfunction
 
-function! nox#snippet#InsertSkeleton() abort
+function! nox#snippet#insert_skeleton() abort
   " Load UltiSnips in case it was deferred via vim-plug
   if !exists('g:did_plugin_ultisnips') && exists(':PlugStatus')
     call plug#load('ultisnips')

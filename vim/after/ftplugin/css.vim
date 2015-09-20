@@ -1,7 +1,7 @@
 setlocal foldmethod=marker
 setlocal foldmarker={,}
 
-call nox#filetype#MakeSemicolonMaps()
+call nox#filetype#make_semicolon_maps()
 
 iabbrev <buffer> bq  blockquote
 iabbrev <buffer> inb inline-block
@@ -12,4 +12,4 @@ iabbrev <buffer> nr  no-repeat
 iabbrev <buffer> rx  repeat-x
 iabbrev <buffer> ry  repeat-y
 
-command! -nargs=0 -range=% -buffer Format <line1>,<line2>call nox#format#JsBeautify()
+command! -nargs=0 -range=% -buffer Format <line1>,<line2>call nox#format#js_beautify()

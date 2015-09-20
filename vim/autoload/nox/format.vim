@@ -1,6 +1,6 @@
 " autoload/nox/format.vim - Formatting helpers
 
-function! nox#format#JsBeautify() range abort
+function! nox#format#js_beautify() range abort
   if !executable('js-beautify')
     throw "js-beautify is not available"
   endif
@@ -37,7 +37,7 @@ function! nox#format#JsBeautify() range abort
   execute a:firstline . ',' . a:lastline . join(cmd)
 endfunction
 
-function! nox#format#PhpFmt() abort
+function! nox#format#php_fmt() abort
   if !executable('php')
     throw "php is not available"
   elseif empty(glob('~/.composer/vendor/bin/fmt.php'))

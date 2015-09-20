@@ -48,12 +48,12 @@ endif
 
 " Function text objects via
 " https://github.com/kana/vim-textobj-function
-let b:textobj_function_select = function('php#FunctionSelect')
+let b:textobj_function_select = function('php#function_select')
 
-call nox#filetype#MakeSemicolonMaps()
-call nox#filetype#MakeRocketMaps()
+call nox#filetype#make_semicolon_maps()
+call nox#filetype#make_rocket_maps()
 
-command! -buffer -bar -nargs=0 Format call nox#format#PhpFmt()
+command! -buffer -bar -nargs=0 Format call nox#format#php_fmt()
 
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''

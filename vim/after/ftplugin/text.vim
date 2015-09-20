@@ -4,11 +4,11 @@ if &modifiable
   setlocal spell
 
   " Smart <Enter> in insert mode
-  inoremap <buffer><expr> <CR> markdown#OpenLine("\<CR>")
+  inoremap <buffer><expr> <CR> markdown#open_line("\<CR>")
 
   " Also for normal mode o/O
-  nnoremap <buffer><expr> o markdown#OpenLine("o")
-  nnoremap <buffer><expr> O markdown#OpenLine("O")
+  nnoremap <buffer><expr> o markdown#open_line("o")
+  nnoremap <buffer><expr> O markdown#open_line("O")
 
   if exists(":Abolish")
     Abolish -buffer Bb Bitbucket

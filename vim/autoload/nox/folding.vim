@@ -13,7 +13,7 @@
 "   - The original indentation of the preview text is preserved.
 "   - Matching brackets are collapsed to "{ ... }".
 "
-function! nox#folding#Text()
+function! nox#folding#text()
   let line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
 
   if line =~ '\s*{\s*' && getline(v:foldend) =~ '^\s*}\s*'

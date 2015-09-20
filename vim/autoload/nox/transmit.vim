@@ -13,7 +13,7 @@
 "
 " The process is aborted if the current buffer is modified unless the bang
 " parameter is non-empty.
-function! nox#transmit#Send(bang, path) abort
+function! nox#transmit#send(bang, path) abort
   if a:path ==# ''
     if a:bang == '' && &modified
       echoerr "There are unwritten changes. Save your file or add ! to upload it anyway."
@@ -30,9 +30,9 @@ function! nox#transmit#Send(bang, path) abort
     return
   endif
 
-  let l:alternate = nox#path#CompiledVersion(l:path)
+  let l:alternate = nox#path#find_compiled_version(l:path)
 
-  if filereadable(l:alternate)
+  if !empty(l:alternate)
     let l:path = l:alternate
   endif
 

@@ -1,7 +1,7 @@
 " autoload/nox/plug.vim - Plug helpers
 " Maintainer: Noah Frederick
 
-function! nox#plug#LoadInsert()
+function! nox#plug#load_insert_mode()
   call plug#load('ultisnips')
   call plug#load('YouCompleteMe')
   call plug#load('lexima.vim')
@@ -9,11 +9,9 @@ function! nox#plug#LoadInsert()
 
   doautocmd FileType
   autocmd! insert_mode_plugins
-
-  echomsg "Loaded insert-mode plug-ins"
 endfunction
 
-function! nox#plug#LoadIdle()
+function! nox#plug#load_idle()
   call plug#load('syntastic')
 
   if &modifiable
@@ -21,8 +19,6 @@ function! nox#plug#LoadIdle()
   endif
 
   autocmd! idle_plugins
-
-  echomsg "Loaded deferred plug-ins"
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et
