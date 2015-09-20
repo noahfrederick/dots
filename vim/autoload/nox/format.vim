@@ -14,24 +14,24 @@ function! nox#format#JsBeautify() range abort
   endif
 
   let cmd = [
-        \ '!js-beautify',
-        \ '--file -',
-        \ '--type',
-        \ ft,
+        \   '!js-beautify',
+        \   '--file -',
+        \   '--type',
+        \   ft,
         \ ]
 
   if (ft ==# 'js' || ft ==# 'html') && &textwidth > 0
-    let cmd = add(cmd, '--wrap-line-length ' . &textwidth)
+    call add(cmd, '--wrap-line-length ' . &textwidth)
   endif
 
   if ft ==# 'html'
-    let cmd = add(cmd, '--indent-inner-html')
+    call add(cmd, '--indent-inner-html')
   endif
 
   if &expandtab
-    let cmd = add(cmd, '--indent-size ' . &shiftwidth)
+    call add(cmd, '--indent-size ' . (exists('*shiftwidth') ? shiftwidth() : &shiftwidth))
   else
-    let cmd = add(cmd, '--indent-with-tabs')
+    call add(cmd, '--indent-with-tabs')
   endif
 
   execute a:firstline . ',' . a:lastline . join(cmd)
@@ -40,7 +40,7 @@ endfunction
 function! nox#format#PhpFmt() abort
   if !executable('php')
     throw "php is not available"
-  elseif glob('~/.composer/vendor/bin/fmt.php') ==# ''
+  elseif empty(glob('~/.composer/vendor/bin/fmt.php'))
     throw "fmt.php is not available"
   endif
 
