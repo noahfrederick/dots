@@ -326,6 +326,7 @@ command! -bang -nargs=? -bar -complete=filetype Scratch
       \ | setlocal filetype=<args> buftype=nofile bufhidden=hide noswapfile
 command! -nargs=0 -bar Unix set fileformat=unix
 command! -bang -nargs=0 -bar Cd cd<bang> .
+command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<count>, <bang>0)
 
 if exists("$NOTES")
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
@@ -549,8 +550,10 @@ nnoremap <Leader>t :Transmit<CR>
 nnoremap <C-k> zMzkzv[zzt
 nnoremap <C-j> zMzjzvzt
 
-" sleuth.vim likes to change 'shiftwidth' to 8
-nnoremap <Leader>4 :setlocal tabstop=4 softtabstop=4 shiftwidth=4<CR>
+" Force indentation style
+nnoremap <Leader>1 :4Indent<CR>
+nnoremap <Leader>2 :2Indent!<CR>
+nnoremap <Leader>4 :4Indent!<CR>
 
 " Switch to alternate window or buffer
 nnoremap <silent> <Leader>6 :if winnr("$") > 1

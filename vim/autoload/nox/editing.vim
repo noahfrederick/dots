@@ -59,3 +59,12 @@ function! nox#editing#normal_mode_digraph(char2)
   echo 'digraph: ' . l:char1 . a:char2
   return "r\<C-k>" . l:char1 . a:char2
 endfunction
+
+function! nox#editing#set_indent_style(width, expandtab) abort
+  let &l:shiftwidth  = a:width
+  let &l:softtabstop = a:width
+  let &l:tabstop     = a:width
+  let &l:expandtab   = a:expandtab ? 1 : 0
+endfunction
+
+" vim: fdm=marker:sw=2:sts=2:et
