@@ -684,8 +684,26 @@ let g:projectionist_heuristics = {
       \     "style.css": {
       \       "type": "style",
       \       "skeleton": "wordpress_theme_style",
-      \     }
-      \   }
+      \     },
+      \   },
+      \   "gulpfile.js": {
+      \     "*": {
+      \       "dispatch": "gulp",
+      \     },
+      \   },
+      \   "addon-info.json": {
+      \     "*":              {"dispatch": ":Runtime ./{open}autoload,plugin{close}/**/*.vim"},
+      \     "plugin/*.vim":   {"type": "plugin", "alternate": "autoload/{}.vim"},
+      \     "autoload/*.vim": {"type": "autoload", "alternate": "plugin/{}.vim"},
+      \     "compiler/*.vim": {"type": "compiler"},
+      \     "ftdetect/*.vim": {"type": "ftdetect"},
+      \     "syntax/*.vim":   {"type": "syntax", "alternate": ["ftplugin/{}.vim", "indent/{}.vim"]},
+      \     "ftplugin/*.vim": {"type": "ftplugin", "alternate": ["indent/{}.vim", "syntax/{}.vim"]},
+      \     "indent/*.vim":   {"type": "indent", "alternate": ["syntax/{}.vim", "ftplugin/{}.vim"]},
+      \     "after/*.vim":    {"type": "after"},
+      \     "doc/*.txt":      {"type": "doc"},
+      \     "README.md":      {"type": "doc"},
+      \   },
       \ }
 
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
