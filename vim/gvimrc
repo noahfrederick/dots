@@ -54,7 +54,6 @@ command! -nargs=0 -bar Present
       \ highlight User3        guifg=#b1d631 guibg=#dddddd |
       \ silent! GitGutterDisable
 
-nnoremap <Leader><Leader> :buffer <C-z><S-Tab>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader>f :find<Space>
 
