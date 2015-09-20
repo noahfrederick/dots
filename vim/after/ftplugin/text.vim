@@ -26,4 +26,6 @@ if &modifiable
   endif
 endif
 
+command! -nargs=+ -range=% Count <line1>,<line2>substitute/<args>//ng
+
 " vim: fdm=marker:sw=2:sts=2:et
