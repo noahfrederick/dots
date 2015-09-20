@@ -105,7 +105,7 @@ endif
 
 "" Behavior
 set spelllang=en_us             " Language and region to use for spellchecking
-set modeline modelines=5        " Look for modeline in first/last n lines of file
+set modeline modelines=2        " Look for modeline in first/last n lines of file
 set hidden                      " Do not unload buffers when no longer displayed
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
