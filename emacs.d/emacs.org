@@ -1546,7 +1546,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+headline (expand-file-name "contacts.org" org-directory) "People")
                "* %(org-contacts-template-name)\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:END:"
                :clock-keep t :kill-buffer t)
-              ("p" "📘 TeamworkPM task" entry
+              ("p" "📘 Teamwork task" entry
                (file+headline (expand-file-name "bigtech.org" org-directory) "Tasks")
                "* TODO %^{TWPMLink}p%^{Task}"
                :clock-keep t :clock-in t :immediate-finish t)
