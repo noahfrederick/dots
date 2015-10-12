@@ -662,8 +662,6 @@ let g:switch_mapping = ''
 " Default of 'a' conflicts with Sideways argument text objects mapped above
 let g:targets_argTrigger = 'A'
 
-let g:lexima_enable_space_rules = 0
-
 " :help syntastic-global-options
 let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'less'] }
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
