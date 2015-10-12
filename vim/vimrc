@@ -103,6 +103,9 @@ endif
 " General settings                                                             {{{
 " --------------------------------------------------------------------------------
 
+" Establish baseline settings, which may be overridden below
+if !has("nvim") | runtime! plugin/neovim_defaults.vim | endif
+
 "" Behavior
 set spelllang=en_us             " Language and region to use for spellchecking
 set modeline modelines=2        " Look for modeline in first/last n lines of file
