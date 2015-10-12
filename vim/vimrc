@@ -504,11 +504,15 @@ inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\
 
 " :help dispatch-commands
 nnoremap <F2>  :Make<CR>
-nnoremap m<CR> :Make<CR>
 nnoremap <F3>  :Dispatch<CR>
-nnoremap d<CR> :Dispatch<CR>
 nnoremap <F4>  :Start<CR>
+nnoremap <F5>  :Console<CR>
+
+nnoremap dm    :Make<CR>
+nnoremap d<CR> :Dispatch<CR>
+nnoremap du    :FocusDispatch<Space>
 nnoremap dr    :Start<CR>
+nnoremap dc    :Console<CR>
 
 nnoremap <silent> - :Dirvish %:p:h<CR>
 
