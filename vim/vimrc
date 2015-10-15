@@ -82,21 +82,18 @@ if has("vim_starting")
 
   call plug#end()
 
-  " Load certain plug-ins on InsertEnter
-  " (see https://github.com/junegunn/vim-plug/issues/48#issuecomment-67436470)
-  augroup insert_mode_plugins
+  " Load slow plug-ins when idle or when needed, whichever comes first.
+  augroup vimrc_slow_plugins
     autocmd!
-    autocmd InsertEnter * call nox#plug#load_insert_mode()
+    autocmd CursorHold * call nox#plug#load_idle() |
+          \ autocmd! vimrc_slow_plugins
   augroup END
 
-  augroup idle_plugins
+  augroup vimrc_slow_insert_mode_plugins
     autocmd!
-    autocmd CursorHold * call nox#plug#load_idle()
+    autocmd InsertEnter * call nox#plug#load_insert_mode() |
+          \ autocmd! vimrc_slow_insert_mode_plugins
   augroup END
-
-  if &t_Co >= 16
-    silent! colorscheme noctu   " Set color scheme for 16-color+ terminals
-  endif
 endif
 
 " }}}
@@ -123,6 +120,9 @@ if &shell =~# "fish$"
 endif
 
 "" Display
+if has("vim_starting") && &t_Co >= 16
+  silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
+endif
 set shortmess+=I                " Suppress intro message when starting Vim
 set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
@@ -284,6 +284,21 @@ if has("autocmd")
           \   endfor |
           \ endif
 
+    autocmd QuickFixCmdPost *grep* cwindow
+
+    " Never show line numbers in command-line window as they are not useful
+    " and take up space (normally it inherits this setting like any other
+    " window)
+    autocmd CmdwinEnter * set nonumber
+
+    if exists('##TermOpen')
+      autocmd TermOpen * execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
+    endif
+  augroup END
+
+  augroup vimrc_cursorline
+    autocmd!
+
     set cursorline
 
     " Only highlight cursor line in window with focus
@@ -295,8 +310,10 @@ if has("autocmd")
     if exists('##TermOpen')
       autocmd TermOpen * set nocursorline
     endif
+  augroup END
 
-    autocmd QuickFixCmdPost *grep* cwindow
+  augroup vimrc_whitespace
+    autocmd!
 
     highlight default link TrailingWhitespace ErrorMsg
 
@@ -304,15 +321,6 @@ if has("autocmd")
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
-
-    " Never show line numbers in command-line window as they are not useful
-    " and take up space (normally it inherits this setting like any other
-    " window)
-    autocmd CmdwinEnter * set nonumber
-
-    if exists('##TermOpen')
-      autocmd TermOpen * execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
-    endif
   augroup END
 endif
 

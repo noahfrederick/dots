@@ -2,13 +2,12 @@
 " Maintainer: Noah Frederick
 
 function! nox#plug#load_insert_mode()
-  call plug#load('ultisnips')
-  call plug#load('YouCompleteMe')
-  call plug#load('lexima.vim')
+  call plug#load('ultisnips', 'YouCompleteMe', 'lexima.vim')
   call youcompleteme#Enable()
 
-  doautocmd FileType
-  autocmd! insert_mode_plugins
+  if &modifiable
+    doautocmd FileType
+  endif
 endfunction
 
 function! nox#plug#load_idle()
@@ -17,8 +16,6 @@ function! nox#plug#load_idle()
   if &modifiable
     doautocmd FileType
   endif
-
-  autocmd! idle_plugins
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et
