@@ -265,6 +265,7 @@ hi! link cssMarqueeProp               cssProperty
 hi! link cssMultiColumnProp           cssProperty
 hi! link cssPaddingProp               cssProperty
 hi! link cssPagedMediaProp            cssProperty
+hi! link cssPageProp                  cssProperty
 hi! link cssPositioningProp           cssProperty
 hi! link cssPrintProp                 cssProperty
 hi! link cssRubyProp                  cssProperty
