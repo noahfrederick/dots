@@ -2427,7 +2427,10 @@ saner interface.
         "Invoke mu4e and jump directly to the today bookmark."
         (interactive)
         (mu4e~start)
-        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t))))
+        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t)))
+
+      (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+      (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
     :config
     (progn
       (setq mu4e-sent-folder "/Sent"
@@ -2473,6 +2476,7 @@ saner interface.
             mu4e-compose-signature-auto-include nil
             mu4e-view-prefer-html t
             mu4e-html2text-command "elinks -dump"
+            mu4e-alert-title "Mail"
             mail-user-agent 'mu4e-user-agent)
 
       (defun nox/mu4e-action-view-in-browser (msg)
@@ -2490,35 +2494,6 @@ saner interface.
 
       (add-hook 'mu4e-view-mode-hook 'epa-mail-mode)
       (add-hook 'mu4e-compose-mode-hook 'epa-mail-mode)
-
-      (defvar nox/mu4e-new-mail nil "Whether there is any new mail.")
-
-      (setq global-mode-string
-            (if (string-match-p "nox/mu4e-new-mail"
-                                (prin1-to-string global-mode-string))
-                global-mode-string
-              (cons
-               '(nox/mu4e-new-mail "✉️" "")
-               global-mode-string)))
-
-      (defun nox/mu4e-new-mail-count ()
-        "Get number of new messages from mu4e."
-        (string-to-number
-         (replace-regexp-in-string
-          "[ \t\n\r]" "" (shell-command-to-string
-                          "mu find flag:new | wc -l"))))
-
-      (defun nox/mu4e-index-updated ()
-        (when (fboundp 'sauron-add-event)
-          (let ((msgs (nox/mu4e-new-mail-count)))
-            (if (> msgs 0)
-                (progn
-                  (sauron-add-event 'mail 5 (format "%s new message(s)" msgs))
-                  (setq nox/mu4e-new-mail t))
-              (sauron-add-event 'mail 1 "Mail index updated")
-              (setq nox/mu4e-new-mail nil)))))
-
-      (add-hook 'mu4e-index-updated-hook #'nox/mu4e-index-updated)
 
       (defun nox/insert-contact (&optional start)
         (interactive)
