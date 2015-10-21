@@ -1757,8 +1757,7 @@ for exported files lives in the =~/.emacs.d= directory.
         org-html-postamble-format '(("en" "<div class=\"date\">%T</div>"))
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
-        org-html-head (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />\n"
-                              "<meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\" />")
+        org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
         org-html-text-markup-alist '((bold . "<strong>%s</strong>")
                                      (code . "<code>%s</code>")
                                      (italic . "<em>%s</em>")
