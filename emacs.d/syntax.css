@@ -1,4 +1,5 @@
-.org-bookmark-menu-heading {
+.org-bookmark-menu-heading,
+.org-type {
     color: #b1d631;
 }
 .org-builtin {
