@@ -1691,7 +1691,7 @@ headings by cycling through the characters in ~org-bullets-bullet-list~.
     :commands org-bullets-mode
     :init
     (progn
-      (setq org-bullets-bullet-list '("✸"))
+      (setq org-bullets-bullet-list '("§"))
       (add-hook 'org-mode-hook #'org-bullets-mode)))
 #+END_SRC
 
