@@ -1,4 +1,4 @@
-emacs.d/recentf
+emacs/recentf
 fish/completions/*.fish
 fish/fish_read_history
 vim/.netrwhist
