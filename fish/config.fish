@@ -84,6 +84,7 @@ abbr --add gd  git diff
 abbr --add gdc git diff --cached
 abbr --add gf  git fetch
 abbr --add gg  git graph
+abbr --add gi  git init
 abbr --add gl  git log
 abbr --add gp  git push
 abbr --add gpu git pull
