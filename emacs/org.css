@@ -45,16 +45,16 @@ td {
     border-bottom: 1px solid #ddd;
     padding: 4px;
 }
-th.left,
-td.left {
+th.org-left,
+td.org-left {
     text-align: left;
 }
-th.center,
-td.center {
+th.org-center,
+td.org-center {
     text-align: center;
 }
-th.right,
-td.right {
+th.org-right,
+td.org-right {
     text-align: right;
 }
 tbody > tr:nth-child(odd) {
