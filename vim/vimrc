@@ -168,23 +168,6 @@ set tabstop=4                   " Display width of tabs--indentation style is ha
 set shiftround                  " Round indent to multiple of 'shiftwidth'
 set nojoinspaces                " Do not insert two spaces after '.' when using J
 
-"" Swaps, backups, and sessions
-if !strlen($SUDO_USER) && has("unix")
-  " Don't store swaps in . -- store in ~/.vim/tmp/swap/%path%to%orig.swp
-  set directory=~/.vim/tmp/swap//,.,/var/tmp
-  " Don't store backups in . -- store in ~/.vim/tmp/backup/%path%to%orig~
-  set backupdir=~/.vim/tmp/backup//,.,/var/tmp
-  " Create tmp/ dir if it doesn't exist
-  if !isdirectory($HOME."/.vim/tmp") && exists("*mkdir")
-    call mkdir($HOME."/.vim/tmp/swap", "p", 0700)
-    call mkdir($HOME."/.vim/tmp/backup", "p", 0700)
-  endif
-else
-  set nobackup
-  set nowritebackup
-  set noswapfile
-endif
-
 "" Searching
 set smartcase                   " Case-sensitivity triggered by capital letter if 'ignorecase' set
 
