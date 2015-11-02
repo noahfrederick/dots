@@ -688,6 +688,15 @@ let g:projectionist_heuristics = {
       \   "gulpfile.js": {
       \     "*": {
       \       "dispatch": "gulp",
+      \       "start": "gulp watch",
+      \     },
+      \     "*.css": {
+      \       "dispatch": "gulp",
+      \       "start": "gulp watch",
+      \     },
+      \     "*.less": {
+      \       "dispatch": "gulp",
+      \       "start": "gulp watch",
       \     },
       \   },
       \   "addon-info.json": {
