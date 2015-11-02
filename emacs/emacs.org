@@ -1542,6 +1542,35 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* %?\n%U\n"
                :clock-keep t :kill-buffer t)
+              ("J" "😁 Mood")
+              ("Je" "😃 Excited" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😃 Excited      :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("Jc" "😊 Content" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😊 Content      :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("Jt" "😑 Tired" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😑 Tired        :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("Js" "😓 Stressed" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😓 Stressed     :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("Ja" "😎 Ambitious" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😎 Ambitious    :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("Jd" "😔 Depressed" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😔 Depressed    :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("JD" "😕 Disappointed" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😕 Disappointed :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
               ("c" "👤 Contact" entry
                (file+headline (expand-file-name "contacts.org" org-directory) "People")
                "* %(org-contacts-template-name)\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:END:"
@@ -1571,6 +1600,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/dining.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("lu" "🍕 Lunch" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/lunch.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
               ("lt" "Ⓜ️ Transit" plain
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/mta.txt")
@@ -1607,18 +1640,40 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/laundry.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("lI" "💸 Transfer to IRA" plain
+              ("lI" "⏳️ Roth IRA")
+              ("lIt" "💸 Transfer to IRA" plain
                (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/ira.txt")
+               (file "~/ledger/xacts/ira_roth_deposit.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lD" "🕐 Monthly Dividends" plain
+              ("lId" "🕐 Monthly Dividends" plain
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/dividends_monthly.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lE" "🕒 Quarterly Dividends" plain
+              ("lID" "🕒 Quarterly Dividends" plain
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/dividends_quarterly.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lIi" "🕐 IRA Interest Earned" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/ira_roth_interest.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
+              ("lS" "⏳️ SEP IRA")
+              ("lSt" "💸 Transfer to IRA" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/ira_sep_deposit.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lSd" "🕐 Monthly Dividends" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/dividends_monthly.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lSD" "🕒 Quarterly Dividends" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/dividends_quarterly.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
+              ("lSi" "🕐 IRA Interest Earned" plain
+               (file "~/ledger/default.ledger")
+               (file "~/ledger/xacts/ira_sep_interest.txt")
+               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
               ("l?" "❔ Other" plain
                (file "~/ledger/default.ledger")
                (file "~/ledger/xacts/generic.txt")
