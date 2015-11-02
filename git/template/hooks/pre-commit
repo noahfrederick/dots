@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+[ ! -f Gemfile ] || git diff --exit-code --cached -- Gemfile >/dev/null || bundle check
+[ ! -f gems.rb ] || git diff --exit-code --cached -- gems.rb >/dev/null || bundle check
+[ ! -f composer.json ] || git diff --exit-code --cached -- composer.json >/dev/null || composer validate
