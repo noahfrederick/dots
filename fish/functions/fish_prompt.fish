@@ -22,13 +22,6 @@ set -g __fish_git_prompt_color_cleanstate green --bold
 set -g __fish_git_prompt_color_upstream magenta
 
 function fish_prompt --description 'Write out the prompt'
-	set -l last_status $status
-
-	if not test $last_status -eq 0
-		set_color $fish_color_error
-	else
-		set_color green --bold
-	end
-
-	printf '>%s ' (__fish_git_prompt ' %s')
+	set_color green --bold
+	printf '> %s' (__fish_git_prompt '%s ')
 end
