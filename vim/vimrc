@@ -83,10 +83,10 @@ if has("vim_starting")
   call plug#end()
 
   " Load slow plug-ins when when needed.
-  augroup vimrc_slow_insert_mode_plugins
+  augroup init_slow_insert_mode_plugins
     autocmd!
     autocmd InsertEnter * call nox#plug#load_insert_mode() |
-          \ autocmd! vimrc_slow_insert_mode_plugins
+          \ autocmd! init_slow_insert_mode_plugins
   augroup END
 endif
 
@@ -237,7 +237,7 @@ function! StatuslineTrailingWhitespace()
   return b:statusline_trailing_whitespace
 endfunction
 
-augroup vimrc_statusline
+augroup init_statusline
   autocmd!
   autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_whitespace
 augroup END
@@ -247,7 +247,7 @@ augroup END
 " --------------------------------------------------------------------------------
 
 if has("autocmd")
-  augroup vimrc
+  augroup init
     autocmd!
 
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
@@ -274,7 +274,7 @@ if has("autocmd")
     endif
   augroup END
 
-  augroup vimrc_cursorline
+  augroup init_cursorline
     autocmd!
 
     set cursorline
@@ -290,7 +290,7 @@ if has("autocmd")
     endif
   augroup END
 
-  augroup vimrc_whitespace
+  augroup init_whitespace
     autocmd!
 
     highlight default link TrailingWhitespace ErrorMsg
