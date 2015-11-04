@@ -10,12 +10,4 @@ function! nox#plug#load_insert_mode()
   endif
 endfunction
 
-function! nox#plug#load_idle()
-  call plug#load('syntastic')
-
-  if &modifiable
-    doautocmd FileType
-  endif
-endfunction
-
 " vim: fdm=marker:sw=2:sts=2:et

@@ -1,8 +1,8 @@
 " ftplugin/prestashop.vim - Settings for PrestaShop buffers
 
 if &filetype =~# '^php'
-  let b:syntastic_checkers = ["php", "phpcs"]
-  let b:syntastic_php_phpcs_post_args = "--standard=Prestashop --tab-width=0"
+  let b:compiler_phpcs_standard = "Prestashop"
+  let b:compiler_phpcs_tab_width = "0"
 endif
 
 if !exists('b:undo_ftplugin')
@@ -10,7 +10,7 @@ if !exists('b:undo_ftplugin')
 endif
 
 let b:undo_ftplugin .= '
-      \ | unlet! b:syntastic_checkers b:syntastic_php_phpcs_post_args
+      \ | unlet! b:compiler_phpcs_standard b:compiler_phpcs_tab_width
       \ '
 
 " vim: fdm=marker:sw=2:sts=2:et

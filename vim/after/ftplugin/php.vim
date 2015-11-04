@@ -2,9 +2,6 @@
 
 set suffixesadd+=.php
 
-" Use :make to check PHP syntax
-setlocal makeprg=php\ -l\ % errorformat=%m\ in\ %f\ on\ line\ %l
-
 " Settings for bundled PHP plug-in
 let g:php_noShortTags = 1         " Always use <?php
 
@@ -55,6 +52,8 @@ call nox#filetype#make_rocket_maps()
 
 command! -buffer -bar -nargs=0 Format call nox#format#php_fmt()
 
+autocmd BufWritePost <buffer> Accio ['php', 'phpcs', 'phpmd']
+
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''
 endif
@@ -62,6 +61,7 @@ endif
 let b:undo_ftplugin .= '
       \ | setlocal foldmethod< foldmarker< foldlevel< foldnestmax<
       \ | unlet! b:textobj_function_select b:switch_custom_definitions
+      \ | autocmd! BufWritePost <buffer>
       \ '
 
 " vim: fdm=marker:sw=2:sts=2:et
