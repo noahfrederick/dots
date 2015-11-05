@@ -74,9 +74,9 @@ if has("vim_starting")
 
   " File-type runtime files
   Plug 'blueyed/smarty.vim'
-  Plug 'dag/vim-fish'
   Plug 'joedicastro/vim-pentadactyl'
   Plug 'kana/vim-vspec'
+  Plug 'kballard/vim-fish'
   Plug 'ledger/vim-ledger'
   Plug 'sheerun/vim-polyglot'
 
