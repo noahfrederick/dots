@@ -1,7 +1,7 @@
 " ftplugin/wordpress.vim - Settings for WordPress buffers
 
 if &filetype =~# '^php'
-  let b:compiler_phpcs_standard = "Prestashop"
+  let b:compiler_phpcs_standard = "WordPress"
   let b:compiler_phpcs_tab_width = "0"
 endif
 

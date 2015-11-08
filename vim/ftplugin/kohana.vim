@@ -1,8 +1,8 @@
-" after/ftplugin/less.vim - Settings for Less
+" ftplugin/kohana.vim - Settings for Kohana PHP buffers
 
-runtime after/ftplugin/css.vim
-
-let b:accio = 'lessc'
+if &filetype =~# '^php'
+  let b:accio = ['php']
+endif
 
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''

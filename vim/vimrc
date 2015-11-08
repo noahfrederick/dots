@@ -251,7 +251,7 @@ if has("autocmd")
     autocmd!
 
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
-    autocmd BufNewFile,BufRead .env,.env.example setfiletype conf
+    autocmd BufNewFile,BufRead .env,.env.example set filetype=conf
 
     autocmd User ProjectionistActivate
           \ if &filetype !=# '' && &filetype !=# 'dirvish' |
@@ -299,6 +299,11 @@ if has("autocmd")
     autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
+  augroup END
+
+  augroup init_accio
+    autocmd!
+    autocmd BufWritePost * if exists("b:accio") | Accio | endif
   augroup END
 endif
 
