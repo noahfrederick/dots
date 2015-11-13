@@ -277,12 +277,10 @@ if has("autocmd")
   augroup init_cursorline
     autocmd!
 
-    set cursorline
-
     " Only highlight cursor line in window with focus
     autocmd WinLeave * set nocursorline
     autocmd WinEnter *
-          \ if &filetype !=# 'qf' && &buftype !=# 'terminal' |
+          \ if &filetype !=# 'qf' && &buftype !=# 'terminal' && !&diff |
           \   set cursorline |
           \ endif
     if exists('##TermOpen')
