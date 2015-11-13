@@ -6,7 +6,7 @@ snippet _vim "Vim plug-in addon-info.json" b
 	"version": "0.1.0",
 	"author": "`!v nox#project#get("author")`",
 	"description": "$2",
-	"homepage": "https://github.com/`!v nox#project#get("github")`/vim-$1",
-	"script_id": "$3"
+	"homepage": "https://github.com/`!v nox#project#get("github")`/`!v expand("%:p:h:t")`",
+	"script_id": ""
 }
 endsnippet

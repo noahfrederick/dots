@@ -37,6 +37,12 @@ snippet font-face "@font-face { }" b
 }
 endsnippet
 
+snippet keyframes "@keyframes ... { }" b
+@keyframes ${1:name} {
+	${0:${VISUAL}}
+}
+endsnippet
+
 snippet media "@media ... { }" b
 @media ${1:all and (max-width: ${2:500}px) and (min-width: ${3:300}px)} {
 	${0:${VISUAL}}
@@ -54,6 +60,42 @@ endsnippet
 #
 # Properties
 #
+snippet a "animation"
+animation: ${1};
+endsnippet
+
+snippet an "animation-name"
+animation-name: ${1:name};
+endsnippet
+
+snippet ad "animation-duration"
+animation-duration: ${1:1}s;
+endsnippet
+
+snippet at "animation-timing-function"
+animation-timing-function: ${1:ease-out};
+endsnippet
+
+snippet ad "animation-delay"
+animation-delay: ${1:1}s;
+endsnippet
+
+snippet ai "animation-iteration-count"
+animation-iteration-count: ${1:1};
+endsnippet
+
+snippet ad "animation-direction"
+animation-direction: ${1:alternate};
+endsnippet
+
+snippet af "animation-fill-mode"
+animation-fill-mode: ${1:backwards};
+endsnippet
+
+snippet ap "animation-play-state"
+animation-play-state: ${1:running};
+endsnippet
+
 snippet b "border"
 border: ${1:solid} ${2}px #${3};
 endsnippet
@@ -76,6 +118,10 @@ endsnippet
 
 snippet bg "background"
 background: ${1};
+endsnippet
+
+snippet bga "background-attachment"
+background-attachment: ${1:fixed};
 endsnippet
 
 snippet bgc "background-color"
