@@ -262,16 +262,12 @@ if has("autocmd")
           \   endfor |
           \ endif
 
-    autocmd QuickFixCmdPost *grep* cwindow
-
     " Never show line numbers in command-line window as they are not useful
     " and take up space (normally it inherits this setting like any other
     " window)
     autocmd CmdwinEnter * set nonumber
-
-    if exists('##TermOpen')
-      autocmd TermOpen * execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
-    endif
+    autocmd QuickFixCmdPost *grep* cwindow
+    autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
   augroup END
 
   augroup init_cursorline
@@ -322,7 +318,6 @@ command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<
 
 if exists("$NOTES")
   command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
-  command! -nargs=0 -bang Note FZF<bang> $NOTES
   command! -nargs=0 -bar ShoppingList call nox#org#shopping_list()
 endif
 
@@ -331,12 +326,14 @@ endif
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
-command! -nargs=0 -bar -bang Buffers call nox#fzf#Buffers(<bang>0)
-command! -nargs=0 -bar -bang Tags    call nox#fzf#Tags(<bang>0)
-command! -nargs=0 -bar -bang History call nox#fzf#History(<bang>0)
-command! -nargs=0 -bar -bang Lines   call nox#fzf#Lines(<bang>0)
-command! -nargs=0 -bar -bang BLines  call nox#fzf#BLines(<bang>0)
-command! -nargs=0 -bar -bang Marks   call nox#fzf#Marks(<bang>0)
+command! -nargs=0 -bar -bang               Zbuffers call nox#fzf#buffers(<bang>0)
+command! -nargs=? -bar -bang -complete=dir Zfiles   call nox#fzf#files(<q-args>, <bang>0)
+command! -nargs=0 -bar -bang               Ztags    call nox#fzf#tags(<bang>0)
+command! -nargs=0 -bar -bang               Zhistory call nox#fzf#history(<bang>0)
+command! -nargs=0 -bar -bang               Zlines   call nox#fzf#lines(<bang>0)
+command! -nargs=0 -bar -bang               Zblines  call nox#fzf#blines(<bang>0)
+command! -nargs=0 -bar -bang               Zmarks   call nox#fzf#marks(<bang>0)
+command! -nargs=* -bar -bang               Zgrep    call nox#fzf#grep(<q-args>, <bang>0)
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
@@ -556,7 +553,7 @@ nnoremap <silent> <Leader>6 :if winnr("$") > 1
       \ <Bar>wincmd p<Bar>else<Bar>buffer #<Bar>endif<CR>
 
 nnoremap <Leader>8 :set hlsearch<CR>*<C-o>
-nnoremap <Leader>/ :Lines<CR>
+nnoremap <Leader>/ :Zlines<CR>
 map <BS> %
 
 nnoremap <expr><silent> ZB ":<C-u>Bdelete" . (v:count ? "!" : "") . "<CR>"
@@ -597,8 +594,8 @@ nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
 nnoremap <Leader><Leader> :
-nnoremap <Leader>? :History<CR>
-nnoremap <Leader>` :Marks<CR>
+nnoremap <Leader>? :Zhistory<CR>
+nnoremap <Leader>` :Zmarks<CR>
 nnoremap <Leader>] :tjump /
 nnoremap <Leader>D :edit README*<CR>
 nnoremap <Leader>E :edit Gemfile<CR>
@@ -613,11 +610,11 @@ if has('nvim')
 else
   nnoremap <Leader>X :edit .vimrc<CR>
 endif
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>d :FZF ~/src/dots<CR>
+nnoremap <Leader>b :Zbuffers<CR>
+nnoremap <Leader>d :Zfiles ~/src/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
-nnoremap <Leader>f :FZF<CR>
-nnoremap <Leader>n :Note<CR>
+nnoremap <Leader>f :Zfiles<CR>
+nnoremap <Leader>n :Zfiles $NOTES<CR>
 
 " }}}
 " Plug-in Settings                                                             {{{

@@ -39,6 +39,12 @@ let s:default_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 
+function! s:wrap(opts)
+  return extend(copy(a:opts), {
+        \ 'options': get(a:opts, 'options', '').' --expect='.join(keys(s:default_action), ','),
+        \ 'sink*':   get(a:opts, 'sink*', function('s:common_sink'))})
+endfunction
+
 function! s:expect()
   return ' --expect='.join(keys(s:default_action), ',')
 endfunction
@@ -48,16 +54,52 @@ function! s:common_sink(lines) abort
     return
   endif
   let key = remove(a:lines, 0)
-  let cmd = get(s:default_action, key, 'edit')
+  let cmd = get(get(g:, 'fzf_action', s:default_action), key, 'e')
+  if len(a:lines) > 1
+    augroup fzf_swap
+      autocmd SwapExists * let v:swapchoice='o'
+            \| call s:warn('fzf: E325: swap file exists: '.expand('<afile>'))
+    augroup END
+  endif
   try
     let autochdir = &autochdir
     set noautochdir
     for item in a:lines
       execute cmd s:escape(item)
+      if exists('#BufEnter') && isdirectory(item)
+        doautocmd BufEnter
+      endif
     endfor
   finally
     let &autochdir = autochdir
+    silent! autocmd! fzf_swap
   endtry
+endfunction
+
+function! s:warn(message)
+  echohl WarningMsg
+  echom a:message
+  echohl None
+endfunction
+
+" ------------------------------------------------------------------
+" Files
+" ------------------------------------------------------------------
+function! nox#fzf#files(dir, bang)
+  let args = {'options': '-m'}
+  if !empty(a:dir)
+    if !isdirectory(expand(a:dir))
+      call s:warn('Invalid directory')
+      return
+    endif
+    let dir = substitute(a:dir, '/*$', '/', '')
+    let args.dir = dir
+    let args.options .= ' --prompt '.shellescape(dir)
+  else
+    let args.options .= ' --prompt '.shellescape(pathshorten(getcwd())).'/'
+  endif
+
+  call s:fzf(s:wrap(args), a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -97,7 +139,7 @@ function! s:format_buffer(b)
   return s:strip(printf("[%s] %s\t%s\t%s", s:blue(a:b), flag, name, extra))
 endfunction
 
-function! nox#fzf#Buffers(bang)
+function! nox#fzf#buffers(bang)
   let bufs = s:buflisted()
 
   " Remove current and alternate buffers from list
@@ -126,7 +168,7 @@ function! s:all_files()
         \ filter(map(s:buflisted(), 'bufname(v:val)'), '!empty(v:val)'))
 endfunction
 
-function! nox#fzf#History(bang)
+function! nox#fzf#history(bang)
   call s:fzf({
         \   'source':  reverse(s:all_files()),
         \   'sink*':   function('<SID>common_sink'),
@@ -151,7 +193,7 @@ function! s:tags_sink(lines)
   let &magic = magic
 endfunction
 
-function! nox#fzf#Tags(bang)
+function! nox#fzf#tags(bang)
   if empty(tagfiles())
     echohl WarningMsg
     echom 'Preparing tags'
@@ -196,7 +238,7 @@ function! s:lines()
   return extend(cur, rest)
 endfunction
 
-function! nox#fzf#Lines(bang)
+function! nox#fzf#lines(bang)
   call s:fzf({
         \ 'source':  <SID>lines(),
         \ 'sink*':   function('<SID>line_handler'),
@@ -225,7 +267,7 @@ function! s:buffer_lines()
         \ 'printf("%s:\t%s", s:yellow(v:key + 1), v:val)')
 endfunction
 
-function! nox#fzf#BLines(bang)
+function! nox#fzf#blines(bang)
   call s:fzf({
         \ 'source':  <SID>buffer_lines(),
         \ 'sink*':   function('<SID>buffer_line_handler'),
@@ -251,7 +293,7 @@ function! s:mark_sink(lines)
   execute 'normal! `'.matchstr(a:lines[1], '\S').'zz'
 endfunction
 
-function! nox#fzf#Marks(bang)
+function! nox#fzf#marks(bang)
   redir => cout
   silent marks
   redir END
@@ -260,6 +302,45 @@ function! nox#fzf#Marks(bang)
         \ 'source':  extend(list[0:0], map(list[1:], 's:format_mark(v:val)')),
         \ 'sink*':   function('s:mark_sink'),
         \ 'options': '+m --ansi --tiebreak=index --header-lines 1 --tiebreak=begin --prompt "Marks > "'.s:expect()}, a:bang)
+endfunction
+
+" ------------------------------------------------------------------
+" Grep
+" ------------------------------------------------------------------
+function! s:ag_to_qf(line)
+  let parts = split(a:line, ':')
+  return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
+        \ 'text': join(parts[3:], ':')}
+endfunction
+
+function! s:ag_handler(lines)
+  if len(a:lines) < 2
+    return
+  endif
+
+  let cmd = get(get(g:, 'fzf_action', s:default_action), a:lines[0], 'e')
+  let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
+
+  let first = list[0]
+  execute cmd s:escape(first.filename)
+  execute first.lnum
+  execute 'normal!' first.col.'|zz'
+
+  if len(list) > 1
+    call setqflist(list)
+    copen
+    wincmd p
+  endif
+endfunction
+
+function! nox#fzf#grep(query, bang)
+  call s:fzf(s:wrap({
+        \ 'source':  printf('ag --nogroup --column --color "%s"',
+        \                   escape(empty(a:query) ? '^(?=.)' : a:query, '"\-')),
+        \ 'sink*':   function('s:ag_handler'),
+        \ 'options': '--ansi --delimiter : --nth 4..,.. --prompt "Grep > " '.
+        \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
+        \            '--color hl:68,hl+:110'}), a:bang)
 endfunction
 
 " vim:set et sw=2:
