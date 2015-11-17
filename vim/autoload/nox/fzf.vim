@@ -112,7 +112,7 @@ function! nox#fzf#Buffers(bang)
   call s:fzf({
         \   'source':  reverse(bufs),
         \   'sink*':   function('s:bufopen'),
-        \   'options': '--prompt "Buffers > " -m -x --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
+        \   'options': '--prompt "Buffers > " -m --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
         \ }, a:bang)
 endfunction
 
@@ -259,7 +259,7 @@ function! nox#fzf#Marks(bang)
   call s:fzf({
         \ 'source':  extend(list[0:0], map(list[1:], 's:format_mark(v:val)')),
         \ 'sink*':   function('s:mark_sink'),
-        \ 'options': '+m -x --ansi --tiebreak=index --header-lines 1 --tiebreak=begin --prompt "Marks > "'.s:expect()}, a:bang)
+        \ 'options': '+m --ansi --tiebreak=index --header-lines 1 --tiebreak=begin --prompt "Marks > "'.s:expect()}, a:bang)
 endfunction
 
 " vim:set et sw=2:
