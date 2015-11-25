@@ -294,11 +294,6 @@ if has("autocmd")
     autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
     autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
   augroup END
-
-  augroup init_accio
-    autocmd!
-    autocmd BufWritePost * if exists("b:accio") | Accio | endif
-  augroup END
 endif
 
 " }}}
