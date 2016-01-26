@@ -44,7 +44,7 @@ snippet keyframes "@keyframes ... { }" b
 endsnippet
 
 snippet media "@media ... { }" b
-@media ${1:all and (max-width: ${2:500}px) and (min-width: ${3:300}px)} {
+@media ${1:(max-width: ${2:500}px) and (min-width: ${3:300}px)} {
 	${0:${VISUAL}}
 }
 endsnippet
@@ -148,6 +148,14 @@ snippet bs "box-sizing"
 box-sizing: ${1:border-box};
 endsnippet
 
+snippet box "box-sizing"
+box-sizing: ${1:border-box};
+endsnippet
+
+snippet bsh "box-shadow"
+box-shadow: ${1:inset }${2:5px} $2 ${3:10px} rgba(${4:0}, $4, $4, ${5:0.5});
+endsnippet
+
 snippet br "border-radius"
 border-radius: ${1}${2:px};
 endsnippet
@@ -212,6 +220,18 @@ snippet d "display"
 display: ${1:block};
 endsnippet
 
+snippet db "display: block"
+display: block;
+endsnippet
+
+snippet di "display: inline"
+display: inline;
+endsnippet
+
+snippet dib "display: inline-block"
+display: inline-block;
+endsnippet
+
 snippet fs "font-size"
 font-size: ${1}px;
 endsnippet
@@ -226,6 +246,18 @@ endsnippet
 
 snippet /fw([1-9])/ "font-weight" r
 font-weight: `!p snip.rv = match.group(1)`00;
+endsnippet
+
+snippet fwi "font-weight: inherit"
+font-weight: inherit;
+endsnippet
+
+snippet fwb "font-weight: bold"
+font-weight: bold;
+endsnippet
+
+snippet fwn "font-weight: normal"
+font-weight: normal;
 endsnippet
 
 snippet fl "float"
@@ -314,6 +346,10 @@ endsnippet
 
 snippet pr "padding-right"
 padding-right: ${1}${2:px};
+endsnippet
+
+snippet p0 "padding: 0"
+padding: 0;
 endsnippet
 
 snippet pos "position"
@@ -434,6 +470,10 @@ endsnippet
 
 snippet bot "bottom"
 bottom: ${1}${2:px};
+endsnippet
+
+snippet ws "white-space"
+white-space: ${1:nowrap};
 endsnippet
 
 snippet zi "z-index"
