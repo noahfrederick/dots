@@ -1,5 +1,7 @@
 " autoload/nox/format.vim - Formatting helpers
 
+" Note: This fails in js-beautify > 1.5.5 because of some bug I haven't
+" investigated much.
 function! nox#format#js_beautify() range abort
   if !executable('js-beautify')
     throw "js-beautify is not available"
