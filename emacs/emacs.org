@@ -1517,7 +1517,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
         (ido-completing-read "Account: "
                              (split-string
                               (with-output-to-string
-                                (shell-command "ledger accounts" standard-output))
+                                (shell-command "ledger --permissive accounts" standard-output))
                               "\n" t)))
 
       (defun nox/ledger-org-read-payee ()
@@ -1525,7 +1525,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
         (ido-completing-read "Payee: "
                              (split-string
                               (with-output-to-string
-                                (shell-command "ledger payees" standard-output))
+                                (shell-command "ledger --permissive payees" standard-output))
                               "\n" t)))
 
       (setq org-capture-templates
