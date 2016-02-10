@@ -251,7 +251,7 @@ if has("autocmd")
     autocmd!
 
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
-    autocmd BufNewFile,BufRead .env,.env.* set filetype=conf
+    autocmd BufNewFile,BufRead .env.* setfiletype sh
 
     autocmd User ProjectionistActivate
           \ if &filetype !=# '' && &filetype !=# 'dirvish' |
