@@ -1559,6 +1559,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* 😓 Stressed     :mood:"
                :clock-keep t :kill-buffer t :immediate-finish t)
+              ("JS" "😷 Sick" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* 😷 Sick         :mood:"
+               :clock-keep t :kill-buffer t :immediate-finish t)
               ("Ja" "😎 Ambitious" entry
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* 😎 Ambitious    :mood:"
