@@ -17,10 +17,10 @@ if has("vim_starting")
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
-  Plug 'airblade/vim-gitgutter'
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
   Plug 'justinmk/vim-dirvish'
+  Plug 'mhinz/vim-signify'
   Plug 'pgdouyon/vim-accio'
   Plug 'pgdouyon/vim-evanesco'
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
@@ -640,6 +640,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " Remove <Tab> from maps lest YCM hijack our mapping from above
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
+
+let g:signify_vcs_list = ['git']
 
 " Disable splitjoin.vim maps (we define our own above)
 let g:splitjoin_split_mapping = ''
