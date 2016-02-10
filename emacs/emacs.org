@@ -1808,7 +1808,8 @@ for exported files lives in the =~/.emacs.d= directory.
         org-export-with-section-numbers nil
         org-export-backends '(html
                               latex
-                              md)
+                              md
+                              icalendar)
         org-html-htmlize-output-type 'css
         org-html-doctype "html5"
         org-html-preamble nil
