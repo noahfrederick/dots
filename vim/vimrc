@@ -312,7 +312,12 @@ command! -bang -nargs=0 -bar Cd cd<bang> .
 command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<count>, <bang>0)
 
 if exists("$NOTES")
-  command! -nargs=1 -bang Notes lvimgrep<bang> /\<<args>\>/ $NOTES/**/*.md <Bar> lopen
+  command! -nargs=? -bang Notes
+        \ if empty(<q-args>) |
+        \   lcd $NOTES | edit . |
+        \ else |
+        \   lvimgrep<bang> /<args>/ $NOTES/**/*.md | lopen |
+        \ endif
   command! -nargs=0 -bar ShoppingList call nox#org#shopping_list()
 endif
 
