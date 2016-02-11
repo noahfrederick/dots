@@ -1,5 +1,6 @@
 API
 AWS
+AdWords
 Brussel
 CISC
 CLI
@@ -19,6 +20,7 @@ JSON
 JavaScript
 Joomla
 Kalypso
+MANA
 Markdown
 NYU
 Neovim
@@ -33,12 +35,14 @@ SSL
 Sempronia
 UI
 URL
+URL's
 URLs
 UTF
 Ubuntu
 VCS
 Vergil
 VirtualBox
+Wikipedia
 WordPress
 YAML
 admin
@@ -53,8 +57,12 @@ fallbacks
 filesystem
 fundraiser
 hyperlink
+incentivize
 jQuery
+keymap
 kyriarchy
+libre
+microcontroller
 misconfigure
 online
 ortholinear
@@ -67,6 +75,7 @@ precompiler
 precompilers
 prerelease
 refactor
+spacebar
 spellchecking
 symlink
 templating
