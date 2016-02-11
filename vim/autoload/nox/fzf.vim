@@ -263,7 +263,11 @@ function! s:buffer_line_handler(lines)
 endfunction
 
 function! s:buffer_lines()
-  return map(getline(1, "$"),
+  let lines = getline(1, "$")
+  if exists('b:interesting_lines_filter')
+    call filter(lines, 'match(v:val, b:interesting_lines_filter) > -1')
+  endif
+  return map(lines,
         \ 'printf("%s:\t%s", s:yellow(v:key + 1), v:val)')
 endfunction
 

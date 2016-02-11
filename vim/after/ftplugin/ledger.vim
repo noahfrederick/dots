@@ -69,9 +69,11 @@ nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
+inoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 
-command! -buffer -nargs=* Entry read !ledger entry <args> 2>/dev/null
+command! -buffer -nargs=* Entry put ='' | execute 'read !ledger entry' escape(<q-args>, '$~*%') '2>/dev/null'
 
 let b:interesting_lines_filter = '\v^\d{4}'
+let b:accio = ['ledger']
 
 " vim: fdm=marker:sw=2:sts=2:et
