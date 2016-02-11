@@ -35,8 +35,8 @@ inoremap <buffer> <C-g>. [<C-r>=strftime("%Y-%m-%d %a")<CR>]
 inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
 
 " Promote/demote headings
-nnoremap <buffer> <Left> :call markdown#promote_heading()<CR>
-nnoremap <buffer> <Right> :call markdown#demote_heading()<CR>
+nnoremap <buffer> g<Left> :call markdown#promote_heading()<CR>
+nnoremap <buffer> g<Right> :call markdown#demote_heading()<CR>
 
 " Follow link under cursor
 nnoremap <buffer> gx :call markdown#follow_link_under_cursor()<CR>
