@@ -18,7 +18,7 @@ if has("vim_starting")
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'godlygeek/tabular'
-  Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': 'yes n \| ./install' }
+  Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'justinmk/vim-dirvish'
   Plug 'mhinz/vim-signify'
   Plug 'pgdouyon/vim-accio'
