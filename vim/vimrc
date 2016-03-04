@@ -529,11 +529,7 @@ nnoremap <Leader>gb :Gblame<CR>
 xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
-if exists(":terminal")
-  nnoremap <silent> <Leader>gg <C-w>v:lcd <C-r>=expand('%:p:h')<CR><Bar>terminal git graph -<C-r>=&lines-6<CR><CR>
-else
-  nnoremap <Leader>gg :Git graph<CR>
-endif
+nnoremap <Leader>gg :Git graph -<C-r>=&lines-6<CR><CR>
 
 nnoremap gs :Shell<CR>
 
