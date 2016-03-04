@@ -624,20 +624,15 @@ let g:UltiSnipsSnippetsDir = split(&runtimepath, ',')[0] . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
 
 let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
       \ 'qf' : 1,
-      \ 'notes' : 1,
       \ 'markdown' : 1,
-      \ 'unite' : 1,
       \ 'text' : 1,
-      \ 'vimwiki' : 1,
-      \ 'pandoc' : 1,
-      \ 'infolog' : 1,
       \ 'mail' : 1,
       \ 'html': 1,
       \ }
 let g:ycm_complete_in_strings = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 " Remove <Tab> from maps lest YCM hijack our mapping from above
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
