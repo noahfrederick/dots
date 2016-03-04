@@ -1739,21 +1739,6 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
             org-confirm-babel-evaluate nil)))
 #+END_SRC
 
-** Appearance
-
-[[https://github.com/sabof/org-bullets][org-bullets]] changes the appearance of the character preceding
-headings by cycling through the characters in ~org-bullets-bullet-list~.
-
-#+NAME: org
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package org-bullets
-    :commands org-bullets-mode
-    :init
-    (progn
-      (setq org-bullets-bullet-list '("§"))
-      (add-hook 'org-mode-hook #'org-bullets-mode)))
-#+END_SRC
-
 ** Lists
 
 [[https://github.com/calvinwyoung/org-autolist][org-autolist]] provides automatic list continuation on =RET=. This does
