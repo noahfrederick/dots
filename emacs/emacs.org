@@ -1861,7 +1861,7 @@ you can publish all projects by issuing =M-x org-publish-all RET=.
            :publishing-directory "~/ledger/reports/"
            :publishing-function org-publish-attachment)
           ("ledger-reports"
-           :base-directory "~/ledger/"
+           :base-directory "~/ledger/reports/"
            :recursive nil
            :base-extension "org"
            :publishing-directory "~/ledger/reports/"
