@@ -1,0 +1,20 @@
+# mustache.snippets - Snippets for Mustache templates
+
+# This covers the entirety of Mustache's syntax besides {{...}} and {{{...}}},
+# which don't deserve their own snippets.
+
+snippet # "{{#section}}{{/section}}"
+{{#${1:section}}}${0:${VISUAL}}{{/$1}}
+endsnippet
+
+snippet ^ "{{^inverted}}{{/inverted}}"
+{{^${1:inverted}}}${0:${VISUAL}}{{/$1}}
+endsnippet
+
+snippet > "{{> partial}}"
+{{> ${1:partial}}}
+endsnippet
+
+snippet ! "{{! comment }}"
+{{! ${0:${VISUAL}} }}
+endsnippet
