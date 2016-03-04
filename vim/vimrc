@@ -128,7 +128,6 @@ if has("linebreak")
     set breakindent             " Indent soft-wrapped lines
   endif
 endif
-set nowrap                      " Do not soft-wrap long lines by default
 set listchars=tab:>\ ,extends:>,precedes:<,nbsp:+
 if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
   let &fillchars = "vert:\u2502,diff: "
