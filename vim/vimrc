@@ -455,17 +455,17 @@ nmap <expr> gK <SID>doc("\<Plug>DashGlobalSearch")
 " '$' quickly. This has the added bonus of working on a range of lines and
 " being repeatable.
 noremap <silent> <Plug>RemoveLastCharacter :normal! $x<CR>
-      \ :silent! call repeat#set("\<Plug>RemoveLastCharacter")<CR>
+      \:silent! call repeat#set("\<Plug>RemoveLastCharacter")<CR>
 nmap <Leader>x <Plug>RemoveLastCharacter
 xmap <Leader>x <Plug>RemoveLastCharacter
 
 " Swap single and double quotes
 noremap <silent> <Plug>SwapQuotesN :<C-u>keeppatterns
       \ s/['"]/\="'\""[submatch(0)!='"']/ge<CR>
-      \ :silent! call repeat#set("\<Plug>SwapQuotesN")<CR>
+      \:silent! call repeat#set("\<Plug>SwapQuotesN")<CR>
 noremap <silent> <Plug>SwapQuotesX :<C-u>keeppatterns
       \ '<,'>s/['"]/\="'\""[submatch(0)!='"']/ge<CR>
-      \ :silent! call repeat#set("\<Plug>SwapQuotesX")<CR>
+      \:silent! call repeat#set("\<Plug>SwapQuotesX")<CR>
 nmap <Leader>' <Plug>SwapQuotesN
 xmap <Leader>' <Plug>SwapQuotesX
 
