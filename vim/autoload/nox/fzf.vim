@@ -29,8 +29,8 @@ function! s:buflisted()
   return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
 
-function! s:fzf(opts, bang)
-  return fzf#run(extend(a:opts, a:bang ? {} : {'down': '~30%'}))
+function! s:fzf(opts, fullscreen)
+  return fzf#run(extend(a:opts, a:fullscreen ? {} : {'down': '~30%'}))
 endfunction
 
 let s:default_action = {
@@ -41,7 +41,7 @@ let s:default_action = {
 
 function! s:wrap(opts)
   return extend(copy(a:opts), {
-        \ 'options': get(a:opts, 'options', '').' --expect='.join(keys(s:default_action), ','),
+        \ 'options': get(a:opts, 'options', '').s:expect(),
         \ 'sink*':   get(a:opts, 'sink*', function('s:common_sink'))})
 endfunction
 
@@ -87,17 +87,16 @@ endfunction
 " ------------------------------------------------------------------
 function! nox#fzf#files(dir, bang)
   let args = {'options': '-m'}
-  if !empty(a:dir)
-    if !isdirectory(expand(a:dir))
-      call s:warn('Invalid directory')
-      return
-    endif
-    let dir = substitute(a:dir, '/*$', '/', '')
-    let args.dir = dir
-    let args.options .= ' --prompt '.shellescape(dir)
-  else
-    let args.options .= ' --prompt '.shellescape(pathshorten(getcwd())).'/'
+  let dir = empty(a:dir) ? getcwd() : a:dir
+  let dir = substitute(dir, '/*$', '/', '')
+
+  if !isdirectory(expand(dir))
+    call s:warn('Invalid directory')
+    return
   endif
+
+  let args.options .= ' --ansi --prompt '.shellescape(pathshorten(dir))
+  let args.dir = dir
 
   call s:fzf(s:wrap(args), a:bang)
 endfunction
