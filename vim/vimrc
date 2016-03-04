@@ -206,7 +206,7 @@ function! StatuslineGit()
 endfunction
 
 function! StatuslineIndent()
-  if !&modifiable
+  if !&modifiable || &buftype ==# 'terminal'
     return ''
   endif
 
@@ -266,7 +266,8 @@ if has("autocmd")
     " window)
     autocmd CmdwinEnter * set nonumber
     autocmd QuickFixCmdPost *grep* cwindow
-    autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", &columns)
+    autocmd WinEnter * if &previewwindow | execute "setlocal statusline=" . repeat("\u2500", winwidth(0)) | endif
+    autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", winwidth(0))
   augroup END
 
   augroup init_cursorline
