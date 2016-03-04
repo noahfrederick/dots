@@ -607,7 +607,7 @@ else
   nnoremap <Leader>X :edit .vimrc<CR>
 endif
 nnoremap <Leader>b :Zbuffers<CR>
-nnoremap <Leader>d :Zfiles ~/src/dots<CR>
+nnoremap <Leader>d :Zfiles $CODE/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :Zfiles<CR>
 nnoremap <Leader>n :Zfiles $NOTES<CR>
