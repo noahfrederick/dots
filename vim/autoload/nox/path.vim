@@ -2,7 +2,7 @@
 " Maintainer:   Noah Frederick
 
 let g:compiled_file_locations = {
-      \ 'less':   [['.', '.css'],    ['../css', '.css'],  ['.', 'bootstrap.css']],
+      \ 'less':   [['.', '.css'],    ['../css', '.css'],  ['.', 'bootstrap.css'], ['..', 'style.css']],
       \ 'sass':   [['.', '.css'],    ['../css', '.css']],
       \ 'scss':   [['.', '.css'],    ['../css', '.css']],
       \ 'jade':   [['.', '.html'],   ['..', '.html']],
