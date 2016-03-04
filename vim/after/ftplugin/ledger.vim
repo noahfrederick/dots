@@ -2,6 +2,7 @@
 " Maintainer: Noah Frederick
 
 let s:account_width = 36
+let g:ledger_align_at = 50
 
 function! s:format_posting(account, value)
   let account = a:account . repeat(' ', s:account_width - strlen(a:account))
@@ -64,12 +65,25 @@ endfunction
 
 nnoremap <silent> <Plug>(ledger-split) :call ledger#split()<CR>:silent! call repeat#set("\<Plug>(ledger-split)")<CR>
 nnoremap <silent> <Plug>(ledger-split-prompt) :call ledger#split_prompt()<CR>
+nnoremap <silent> <Plug>(ledger-toggle-state) :call ledger#transaction_state_toggle(line('.'), ' *?!')<CR>
+nnoremap <silent> <Plug>(ledger-align) :LedgerAlign<CR>
+inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_cursor()<CR>
+nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
 
 nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
+nmap <buffer> <LocalLeader><LocalLeader> <Plug>(ledger-toggle-state)
+nnoremap <buffer> <LocalLeader>a :'{,'}LedgerAlign<CR>
+xmap <buffer> <LocalLeader>a <Plug>(ledger-align)
+imap <buffer> <C-l>          <Plug>(ledger-align-amount)
+nmap <buffer> <LocalLeader>e <Plug>(ledger-entry)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 inoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
+
+" Traversing folds
+nnoremap <C-k> zMzkzv[zzz
+nnoremap <C-j> zMzjzvzz
 
 command! -buffer -nargs=* Entry put ='' | execute 'read !ledger entry' escape(<q-args>, '$~*%') '2>/dev/null'
 
