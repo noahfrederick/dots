@@ -19,6 +19,7 @@ if has("vim_starting")
   Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/gv.vim',                { 'on': 'GV' }
   Plug 'justinmk/vim-dirvish'
   Plug 'mhinz/vim-signify'
   Plug 'pgdouyon/vim-accio'
@@ -529,7 +530,9 @@ nnoremap <Leader>gb :Gblame<CR>
 xnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
-nnoremap <Leader>gg :Git graph -<C-r>=&lines-6<CR><CR>
+nnoremap <Leader>gv :GV<CR>
+xnoremap <Leader>gv :GV<CR>
+nnoremap <Leader>gV :GV!<CR>
 
 nnoremap gs :Shell<CR>
 
