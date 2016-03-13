@@ -2,9 +2,9 @@
 " Maintainer:   Noah Frederick
 
 let g:compiled_file_locations = {
-      \ 'less':   [['.', '.css'],    ['../css', '.css'],  ['.', 'bootstrap.css'], ['..', 'style.css']],
-      \ 'sass':   [['.', '.css'],    ['../css', '.css']],
-      \ 'scss':   [['.', '.css'],    ['../css', '.css']],
+      \ 'less':   [['.', '.css'],    ['../css', '.css'],  ['.', 'bootstrap.css'],   ['..', 'style.css']],
+      \ 'sass':   [['.', '.css'],    ['../css', '.css'],  ['.', 'application.css'], ['..', 'application.css']],
+      \ 'scss':   [['.', '.css'],    ['../css', '.css'],  ['.', 'application.css'], ['..', 'application.css']],
       \ 'jade':   [['.', '.html'],   ['..', '.html']],
       \ 'haml':   [['.', '.html'],   ['..', '.html']],
       \ 'js':     [['.', '.min.js']],
