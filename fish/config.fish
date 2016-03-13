@@ -77,6 +77,7 @@ if status --is-interactive
 	abbr --add et  emacsclient --tty
 	abbr --add g   git
 	abbr --add ga  git add
+	abbr --add gaa git add --all
 	abbr --add gb  git branch
 	abbr --add gc  git commit
 	abbr --add gca git commit --all
