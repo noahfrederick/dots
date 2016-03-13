@@ -489,12 +489,11 @@ inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
 inoremap <expr> <C-y> matchstr(getline(line('.') - 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
-" :help dispatch-commands
-nnoremap <F2>  :Make<CR>
-nnoremap <F3>  :Dispatch<CR>
-nnoremap <F4>  :Start<CR>
-nnoremap <F5>  :Console<CR>
+nnoremap <silent> <F2> :if &previewwindow<Bar>pclose<Bar>elseif exists(':Gstatus')<Bar>Gstatus<Bar>endif<CR>
+nnoremap <silent> <F3> :call nox#quickfix#toggle('c')<CR>
+nnoremap <silent> <F4> :call nox#quickfix#toggle('l')<CR>
 
+" :help dispatch-commands
 nnoremap dm    :Make<CR>
 nnoremap d<CR> :Dispatch<CR>
 nnoremap du    :FocusDispatch<Space>

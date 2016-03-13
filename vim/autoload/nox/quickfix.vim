@@ -1,8 +1,7 @@
 " autoload/nox/org.vim - Quick fix helpers
 " Maintainer:   Noah Frederick
 
-" 'Quickfix do' analogous to :argdo, :bufdo, etc.
-" Adapted from https://github.com/romainl/dotvim/blob/97e23dceda3afe6f9112172afab5741456893254/autoload/functions.vim
+" Provide :cdo/:cfdo for older Vims
 function! nox#quickfix#do(filewise, cmd)
   try
     silent cfirst
@@ -18,6 +17,19 @@ function! nox#quickfix#do(filewise, cmd)
     endwhile
   catch /^Vim\%((\a\+)\)\=:E\%(553\|42\):/
   endtry
+endfunction
+
+function! nox#quickfix#toggle(type) abort
+  if a:type !~# '[cl]'
+    echoerr 'Invalid window type'
+  endif
+
+  let window_count = winnr('$')
+  execute a:type . 'close'
+
+  if window_count == winnr('$')
+    execute a:type . 'open'
+  endif
 endfunction
 
 " vim:set et sw=2:
