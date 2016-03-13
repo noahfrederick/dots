@@ -30,7 +30,6 @@
 (depends-on "markdown-mode")
 (depends-on "mu4e-alert")
 (depends-on "org-autolist")
-(depends-on "org-bullets")
 (depends-on "org-plus-contrib")
 (depends-on "pallet")
 (depends-on "paradox")
