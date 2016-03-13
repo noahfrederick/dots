@@ -477,7 +477,6 @@ leader key:
 | Key | Description                 |
 |-----+-----------------------------|
 | =g=   | Git functions (via Magit)   |
-| =h=   | Helm commands               |
 | =o=   | Option (minor-mode) toggles |
 | =r=   | Global Org mode functions   |
 
@@ -507,7 +506,6 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 
           ;; Define prefix commands for the sake of guide-key
           (setq nox/key-binding-prefixes '(("g" . "git")
-                                           ("h" . "helm")
                                            ("m" . "mode")
                                            ("o" . "toggle")
                                            ("r" . "org")))
@@ -516,6 +514,7 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
                 nox/key-binding-prefixes)
 
           (evil-leader/set-key
+            "SPC" 'smex
             "m SPC" 'smex-major-mode-commands
             "=" 'nox/indent-buffer
             "b" 'ido-switch-buffer
@@ -1320,48 +1319,6 @@ Clean up buffers periodically:
   (use-package midnight)
 #+END_SRC
 
-** Helm
-
-Helm provides an interface for finding and acting on items in a
-list, such as files, buffers, and so on.
-
-#+NAME: navigation-completion
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package helm
-    :commands (helm-buffers-list
-               helm-colors
-               helm-find-files
-               helm-for-files
-               helm-google-suggest
-               helm-mini
-               helm-help
-               helm-show-kill-ring
-               helm-org-keywords
-               helm-org-headlines
-               helm-projectile
-               helm-M-x
-               helm-occur)
-    :init
-    (evil-leader/set-key
-      "h b" 'helm-buffers-list
-      "h e" 'helm-find-files
-      "h f" 'helm-for-files
-      "h g" 'helm-google-suggest
-      "h k" 'helm-show-kill-ring
-      "h o" 'helm-org-headlines
-      "h p" 'helm-projectile
-      "h x" 'helm-M-x
-      "SPC" 'helm-M-x
-      "h /" 'helm-occur
-      "/"   'helm-occur)
-    :config
-    (progn
-      (setq helm-M-x-fuzzy-match t)
-      (use-package helm-config)
-      (define-key helm-map (kbd "C-j") 'helm-next-line)
-      (define-key helm-map (kbd "C-k") 'helm-previous-line)))
-#+END_SRC
-
 ** Find in Project
 
 [[https://github.com/bbatsov/projectile][Projectile]] allows easy switching between projects as well as
@@ -1411,9 +1368,6 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
 
       (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
       ;; User-defined dictionary goes in "~/.dict" by default.
-
-      (define-key evil-insert-state-map (kbd "C-l") 'ac-complete-with-helm)
-      (define-key ac-complete-mode-map (kbd "C-l") 'ac-complete-with-helm)
 
       (ac-flyspell-workaround)
       (ac-linum-workaround)))

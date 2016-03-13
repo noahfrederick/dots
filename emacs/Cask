@@ -2,7 +2,6 @@
 (source melpa)
 (source org)
 
-(depends-on "ac-helm")
 (depends-on "auto-complete")
 (depends-on "bind-key")
 (depends-on "calfw")
@@ -23,8 +22,6 @@
 (depends-on "flycheck")
 (depends-on "git-gutter")
 (depends-on "guide-key")
-(depends-on "helm")
-(depends-on "helm-projectile")
 (depends-on "htmlize")
 (depends-on "ibuffer-vc")
 (depends-on "ido-ubiquitous")
