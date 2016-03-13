@@ -1001,7 +1001,6 @@ use the fringe (and don't work in a terminal).
         "m x" 'eval-last-sexp
         "m X" 'eval-print-last-sexp)
 
-      (use-package evil-lisp-state)
       (use-package eldoc
         :commands turn-on-eldoc-mode
         :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)))
