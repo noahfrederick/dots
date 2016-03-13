@@ -3,21 +3,21 @@
 
 let current_compiler = 'phpcs'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
-CompilerSet makeprg=phpcs\ \"%\"\ --report=csv
+CompilerSet makeprg=phpcs\ --report=csv\ %:S
 
-if exists("b:compiler_phpcs_standard")
-  let &l:makeprg = &l:makeprg . " --standard=" . b:compiler_phpcs_standard
+if exists('b:compiler_phpcs_standard')
+  let &l:makeprg = &l:makeprg . ' --standard=' . b:compiler_phpcs_standard
 endif
 
-if exists("b:compiler_phpcs_tab_width")
-  let &l:makeprg = &l:makeprg . " --tab-width=" . b:compiler_phpcs_tab_width
+if exists('b:compiler_phpcs_tab_width')
+  let &l:makeprg = &l:makeprg . ' --tab-width=' . b:compiler_phpcs_tab_width
 endif
 
 CompilerSet errorformat=

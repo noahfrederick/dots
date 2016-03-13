@@ -3,7 +3,7 @@
 
 let current_compiler = 'php'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
@@ -15,7 +15,7 @@ CompilerSet makeprg=php
       \\ -d\ display_errors=1
       \\ -d\ log_errors=0
       \\ -d\ xdebug.cli_color=0
-      \\ -l\ \"%\"
+      \\ -l\ %:S
 CompilerSet errorformat=
       \%-GNo\ syntax\ errors\ detected\ in%.%#,
       \Parse\ error:\ %#syntax\ %trror\,\ %m\ in\ %f\ on\ line\ %l,

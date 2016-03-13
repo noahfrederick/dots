@@ -10,4 +10,6 @@ let b:surround_{char2nr('W')} = "%W{\r}" " Array of words as if double-quoted
 let b:surround_{char2nr('w')} = "%w{\r}" " Array of words as if single-quoted
 let b:surround_{char2nr('x')} = "%x{\r}" " System command (backticks)
 
+let b:accio = ['ruby', 'rubocop']
+
 call nox#filetype#make_rocket_maps()

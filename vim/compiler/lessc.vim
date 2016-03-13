@@ -3,14 +3,14 @@
 
 let current_compiler = 'lessc'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
-CompilerSet makeprg=lessc\ \"%\"\ --no-color
+CompilerSet makeprg=lessc\ --no-color\ %:S
 CompilerSet errorformat=
       \%m\ in\ %f\ on\ line\ %l\\,\ column\ %c:,
       \%m\ in\ %f:%l:%c,
