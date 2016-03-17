@@ -19,6 +19,10 @@
 #define LALT_BRACE 4
 #define RALT_BRACE 5
 
+// Key aliases
+#define _______ KC_TRNS
+#define ___x___ KC_NO
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Base layer (Qwerty)
    *                ,-----------------------------------------------------------------------.
@@ -40,6 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {M(LSFT_PAREN), KC_Z,          KC_X,          KC_C,    KC_V, KC_B,   KC_N,   KC_M, KC_COMM, KC_DOT,        KC_SLSH,       M(RSFT_PAREN)},
     {F(4),          M(LHYP_ANGLE), M(LALT_BRACE), KC_LGUI, F(0), KC_SPC, KC_SPC, F(1), KC_RGUI, M(RALT_BRACE), M(RHYP_ANGLE), F(5)}
   },
+
   /* Base layer (Colemak)
    *                ,-----------------------------------------------------------------------.
    *                |     | Q   | W   | F   | P   | G   | J   | L   | U   | Y   | ;   |     |
@@ -52,11 +57,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [BASE_COLEMAK_LAYER] = {
-    {KC_TRNS, KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_TRNS},
-    {KC_TRNS, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    F(3),    KC_TRNS},
-    {KC_TRNS, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS},
-    {KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS}
+    {_______, KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, _______},
+    {_______, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    F(3),    _______},
+    {_______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    _______, _______, _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
   },
+
   /* Numeric layer
    *                ,-----------------------------------------------------------------------.
    * Application -- |D-Grv| F1  | F2  | F3  | F4  | F5  | F6  | F7  | F8  | F9  | F10 |     |
@@ -69,11 +75,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [LOWER_LAYER] = {
-    {LGUI(KC_GRV), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_TRNS},
-    {KC_TRNS,      KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_TRNS},
-    {KC_TRNS,      KC_MINS, KC_EQL,  KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_TRNS},
-    {KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS}
+    {LGUI(KC_GRV), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______},
+    {_______,      KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______},
+    {_______,      KC_MINS, KC_EQL,  KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    _______},
+    {_______,      _______, _______, _______, _______, KC_BSPC, KC_BSPC, _______, _______, _______, _______, _______}
   },
+
   /* Symbol layer
    *                ,-----------------------------------------------------------------------.
    *                |     | F11 | F12 | F13 | F14 | F15 | F16 | F17 | F18 | F19 | F20 |     |
@@ -86,11 +93,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [RAISE_LAYER] = {
-    {KC_TRNS, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,        KC_F17,           KC_F18,  KC_F19,  KC_F20,     KC_TRNS},
-    {KC_TRNS, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6),       S(KC_7),          S(KC_8), KC_QUOT, S(KC_QUOT), KC_TRNS},
-    {KC_TRNS, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, KC_NO,   LALT(KC_MINS), S(LALT(KC_MINS)), KC_NO,   KC_NO,   KC_NO,      KC_TRNS},
-    {KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL,  KC_DEL,        KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS}
+    {_______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,        KC_F17,           KC_F18,  KC_F19,  KC_F20,     _______},
+    {_______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6),       S(KC_7),          S(KC_8), KC_QUOT, S(KC_QUOT), _______},
+    {_______, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, ___x___, LALT(KC_MINS), S(LALT(KC_MINS)), ___x___, ___x___, ___x___,    _______},
+    {_______, _______, _______, _______, _______, KC_DEL,  KC_DEL,        _______,          _______, _______, _______,    _______}
   },
+
   /* Directional navigation layer
    *
    *         Large movements -----/```````````````````\   /```````````````````\----- Vim-style arrow keys
@@ -105,11 +113,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [NAVIGATION_LAYER] = {
-    {KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO},
-    {KC_TRNS, KC_NO,   KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, F(2),    KC_TRNS},
-    {KC_TRNS, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_TRNS},
-    {KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS}
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {_______, ___x___, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, F(2),    _______},
+    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, _______},
+    {_______, _______, _______, _______, ___x___, ___x___, ___x___, ___x___, _______, _______, _______, _______}
   },
+
   /* GUI (window management/mouse/media controls) layer
    *
    *        Mouse keys -----/```````````````````\               /```````````````````\----- Window manager
@@ -125,11 +134,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                        \___ Media ___/   \___ Screen/sleep __/   \___ Volume __/
    */
   [GUI_LAYER] = {
-    {KC_TRNS, KC_BTN2, KC_MS_U, KC_BTN1, KC_WH_D, KC_NO,   KC_NO,   LCTL(LALT(LGUI(KC_LEFT))), LCTL(LGUI(KC_LEFT)),    LALT(LGUI(KC_UP)),   LCTL(LGUI(KC_RGHT)),    KC_TRNS},
-    {KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_NO,   KC_NO,   LALT(LGUI(KC_F)),          LALT(LGUI(KC_LEFT)),    LALT(LGUI(KC_C)),    LALT(LGUI(KC_RGHT)),    KC_TRNS},
-    {KC_TRNS, KC_WH_L, KC_BTN3, KC_WH_R, KC_NO,   KC_NO,   KC_NO,   LCTL(LALT(LGUI(KC_RGHT))), S(LCTL(LGUI(KC_LEFT))), LALT(LGUI(KC_DOWN)), S(LCTL(LGUI(KC_RGHT))), KC_TRNS},
-    {KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_SLCK, KC_SLEP, KC_SLEP, KC_PAUS,                   KC_MUTE,                KC_VOLD,             KC_VOLU,                KC_TRNS}
+    {_______, KC_BTN2, KC_MS_U, KC_BTN1, KC_WH_D, ___x___, ___x___, LCTL(LALT(LGUI(KC_LEFT))), LCTL(LGUI(KC_LEFT)),    LALT(LGUI(KC_UP)),   LCTL(LGUI(KC_RGHT)),    _______},
+    {_______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, ___x___, ___x___, LALT(LGUI(KC_F)),          LALT(LGUI(KC_LEFT)),    LALT(LGUI(KC_C)),    LALT(LGUI(KC_RGHT)),    _______},
+    {_______, KC_WH_L, KC_BTN3, KC_WH_R, ___x___, ___x___, ___x___, LCTL(LALT(LGUI(KC_RGHT))), S(LCTL(LGUI(KC_LEFT))), LALT(LGUI(KC_DOWN)), S(LCTL(LGUI(KC_RGHT))), _______},
+    {_______, KC_MPRV, KC_MPLY, KC_MNXT, KC_SLCK, KC_SLEP, KC_SLEP, KC_PAUS,                   KC_MUTE,                KC_VOLD,             KC_VOLU,                _______}
   },
+
   /* Keyboard layer
    *                ,-----------------------------------------------------------------------.
    *    Firmware -- |     |Reset|Debug|     |     |     |     |     |     |     |     |     |
@@ -143,10 +153,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                          \___ LED controls __/
    */
   [KEYBOARD_LAYER] = {
-    {KC_NO, RESET, DEBUG, KC_NO, KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO, KC_NO, KC_NO, KC_TRNS},
-    {KC_NO, F(7),  F(8),  KC_NO, KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO},
-    {KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO},
-    {KC_NO, KC_NO, KC_NO, KC_NO, BL_DEC, BL_TOGG, BL_TOGG, BL_INC, KC_NO, KC_NO, KC_NO, KC_NO}
+    {___x___, RESET,   DEBUG,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, _______},
+    {___x___, F(7),    F(8),    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, ___x___, BL_DEC,  BL_TOGG, BL_TOGG, BL_INC,  ___x___, ___x___, ___x___, ___x___}
   }
 };
 
