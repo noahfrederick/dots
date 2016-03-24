@@ -5,11 +5,12 @@
 // Keymap layers
 #define BASE_QWERTY_LAYER 0
 #define BASE_COLEMAK_LAYER 1
-#define LOWER_LAYER 2
-#define RAISE_LAYER 3
-#define NAVIGATION_LAYER 4
-#define GUI_LAYER 5
-#define KEYBOARD_LAYER 6
+#define BASE_STENO_LAYER 2
+#define LOWER_LAYER 3
+#define RAISE_LAYER 4
+#define NAVIGATION_LAYER 5
+#define GUI_LAYER 6
+#define KEYBOARD_LAYER 7
 
 // Modifier-delimiter hold-tap macros
 #define LSFT_PAREN 0
@@ -63,6 +64,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
   },
 
+  /* Base layer (Qwerty-Steno)
+   *                ,-----------------------------------------------------------------------.
+   *                |     |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |     |
+   *                |-----------------------------------------------------------------------|
+   *                |     |     |  T  |  P  |  H  |           |  F  |  P  |  L  |  T  |  D  |
+   *                |-----|  S  |-----+-----+-----|     *     |-----+-----+-----+-----+-----|
+   *                |     |     |  K  |  W  |  R  |           |  R  |  B  |  G  |  S  |  Z  |
+   *                |-----------------------------------------------------------------------|
+   *                |     |     |     |  A  |  O  |           |  E  |  U  |     |     |     |
+   *                `-----------------------------------------------------------------------'
+   */
+  [BASE_STENO_LAYER] = {
+    {___x___, KC_1,    KC_1,    KC_1, KC_1, KC_1,    KC_1,    KC_1, KC_1, KC_1,    KC_1,    _______},
+    {___x___, KC_Q,    KC_W,    KC_E, KC_R, KC_T,    KC_T,    KC_U, KC_I, KC_O,    KC_P,    KC_LBRC},
+    {___x___, KC_A,    KC_S,    KC_D, KC_F, KC_T,    KC_T,    KC_J, KC_K, KC_L,    KC_SCLN, KC_QUOT},
+    {___x___, ___x___, ___x___, KC_C, KC_V, _______, _______, KC_N, KC_M, ___x___, ___x___, ___x___}
+  },
+
   /* Numeric layer
    *                ,-----------------------------------------------------------------------.
    * Application -- |D-Grv| F1  | F2  | F3  | F4  | F5  | F6  | F7  | F8  | F9  | F10 |     |
@@ -75,10 +94,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [LOWER_LAYER] = {
-    {LGUI(KC_GRV), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______},
-    {_______,      KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______},
-    {_______,      KC_MINS, KC_EQL,  KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    _______},
-    {_______,      _______, _______, _______, _______, KC_BSPC, KC_BSPC, _______, _______, _______, _______, _______}
+    {LGUI(KC_GRV),  KC_F1,         KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7, KC_F8,   KC_F9,         KC_F10,        _______},
+    {F(10),         KC_1,          KC_2,          KC_3,    KC_4,    KC_5,    KC_6,    KC_7,  KC_8,    KC_9,          KC_0,          F(11)},
+    {M(LSFT_PAREN), KC_MINS,       KC_EQL,        KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,  KC_D,    KC_E,          KC_F,          M(RSFT_PAREN)},
+    {F(4),          M(LHYP_ANGLE), M(LALT_BRACE), KC_LGUI, F(0),    KC_BSPC, KC_BSPC, F(1),  KC_RGUI, M(RALT_BRACE), M(RHYP_ANGLE), F(5)}
   },
 
   /* Symbol layer
@@ -144,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                ,-----------------------------------------------------------------------.
    *    Firmware -- |     |Reset|Debug|     |     |     |     |     |     |     |     |     |
    *                |-----------------------------------------------------------------------|
-   * Set default -- |     |Qwert|Colem| ... |     |     |     |     |     |     |     |     |
+   * Set default -- |     |Qwert|Colem|Steno| ... |     |     |     |     |     |     |     |
    *       layer    |-----------------------------------------------------------------------|
    *                |     |     |     |     |     |     |     |     |     |     |     |     |
    *                |-----------------------------------------------------------------------|
@@ -154,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [KEYBOARD_LAYER] = {
     {___x___, RESET,   DEBUG,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, _______},
-    {___x___, F(7),    F(8),    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, F(7),    F(8),    F(9),    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
     {___x___, ___x___, ___x___, ___x___, BL_DEC,  BL_TOGG, BL_TOGG, BL_INC,  ___x___, ___x___, ___x___, ___x___}
   }
@@ -171,7 +190,7 @@ const uint16_t PROGMEM fn_actions[] = {
   [6] = ACTION_LAYER_TAP_KEY(KEYBOARD_LAYER, KC_QUOT),
   [7] = ACTION_DEFAULT_LAYER_SET(BASE_QWERTY_LAYER),
   [8] = ACTION_DEFAULT_LAYER_SET(BASE_COLEMAK_LAYER),
-  [9] = 0, // Reserved
+  [9] = ACTION_DEFAULT_LAYER_SET(BASE_STENO_LAYER),
 
   // Modifiers
   [10] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_ESC),
