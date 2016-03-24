@@ -443,7 +443,7 @@ nnoremap <expr> <Leader><C-k> nox#editing#normal_mode_digraph(nr2char(getchar())
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)
-  if &keywordprg =~# "^man"
+  if &keywordprg =~? '^:\?man'
     return a:cmd
   endif
   return "K"
