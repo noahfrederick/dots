@@ -24,12 +24,16 @@ function! nox#quickfix#toggle(type) abort
     echoerr 'Invalid window type'
   endif
 
-  let window_count = winnr('$')
-  execute a:type . 'close'
+  try
+    let window_count = winnr('$')
+    execute a:type . 'close'
 
-  if window_count == winnr('$')
-    execute a:type . 'open'
-  endif
+    if window_count == winnr('$')
+      execute a:type . 'open'
+    endif
+  catch /^Vim\%((\a\+)\)\=:E776:/
+    " No location list
+  endtry
 endfunction
 
 " vim:set et sw=2:
