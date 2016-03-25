@@ -1484,11 +1484,11 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (setq org-capture-templates
             '(("t" "☑️ To-do")
               ("tt" "To-do" entry
-               (file+headline "")
+               (file+headline "" "Tasks")
                "* TODO %?"
                :clock-keep t :kill-buffer t)
               ("tu" "️Quick to-do" entry
-               (file+headline "")
+               (file+headline "" "Tasks")
                "* TODO %^{Task}\nSCHEDULED: %t"
                :clock-keep t :kill-buffer t :immediate-finish t)
               ("j" "📆 Journal entry" entry
@@ -1668,6 +1668,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 
       (setq org-todo-keywords '((sequence
                                  "TODO(t)"
+                                 "FOCUS(f)"
                                  "STARTED(s!)"
                                  "WAITING(w@/!)"
                                  "|"
@@ -1900,6 +1901,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
     "m a" 'org-archive-subtree-default-with-confirmation
     "m d" 'org-deadline
     "m e" 'org-export-dispatch
+    "m g" 'org-goto
     "m m" 'org-ctrl-c-ctrl-c
     "m P" 'org-set-property-and-value
     "m p" 'org-set-property
@@ -2004,7 +2006,8 @@ Below are our custom agenda commands:
              todo "WAITING"
              ((org-agenda-sorting-strategy '(priority-down))))
             ("f" "🎯 Focused tasks"
-             tags-todo "focus")
+             todo "FOCUS"
+             ((org-agenda-sorting-strategy '(priority-down))))
             ("p" "❗ By priority"
              ((tags-todo "+PRIORITY=\"A\"")
               (tags-todo "+PRIORITY=\"B\"")
