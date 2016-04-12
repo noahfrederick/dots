@@ -1,6 +1,5 @@
 #include "keymap_common.h"
 #include "action_tapping.h"
-#include "timer.h"
 
 // Keymap layers
 #define BASE_QWERTY_LAYER 0
@@ -15,10 +14,8 @@
 // Modifier-delimiter hold-tap macros
 #define LSFT_PAREN 0
 #define RSFT_PAREN 1
-#define LHYP_ANGLE 2
-#define RHYP_ANGLE 3
-#define LALT_BRACE 4
-#define RALT_BRACE 5
+#define LALT_BRACE 2
+#define RALT_BRACE 3
 
 // Key aliases
 #define _______ KC_TRNS
@@ -40,10 +37,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *     Tap for { } -----------'-----------------------------------------'
    */
   [BASE_QWERTY_LAYER] = {
-    {KC_TAB,        KC_Q,          KC_W,          KC_E,    KC_R, KC_T,   KC_Y,   KC_U, KC_I,    KC_O,          KC_P,          F(6)},
-    {F(10),         KC_A,          KC_S,          KC_D,    KC_F, KC_G,   KC_H,   KC_J, KC_K,    KC_L,          F(2),          F(11)},
-    {M(LSFT_PAREN), KC_Z,          KC_X,          KC_C,    KC_V, KC_B,   KC_N,   KC_M, KC_COMM, KC_DOT,        KC_SLSH,       M(RSFT_PAREN)},
-    {F(4),          M(LHYP_ANGLE), M(LALT_BRACE), KC_LGUI, F(0), KC_SPC, KC_SPC, F(1), KC_RGUI, M(RALT_BRACE), M(RHYP_ANGLE), F(5)}
+    {KC_TAB, KC_Q,           KC_W,  KC_E,    KC_R, KC_T,   KC_Y,   KC_U, KC_I,    KC_O,   KC_P,           F(6)},
+    {F(10),  KC_A,           KC_S,  KC_D,    KC_F, KC_G,   KC_H,   KC_J, KC_K,    KC_L,   F(2),           F(11)},
+    {F(12),  KC_Z,           KC_X,  KC_C,    KC_V, KC_B,   KC_N,   KC_M, KC_COMM, KC_DOT, KC_SLSH,        F(13)},
+    {F(4),   ALL_T(KC_LBRC), F(14), KC_LGUI, F(0), KC_SPC, KC_SPC, F(1), KC_RGUI, F(15),  ALL_T(KC_RBRC), F(5)}
   },
 
   /* Base layer (Colemak)
@@ -94,10 +91,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [LOWER_LAYER] = {
-    {LGUI(KC_GRV),  KC_F1,         KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7, KC_F8,   KC_F9,         KC_F10,        _______},
-    {F(10),         KC_1,          KC_2,          KC_3,    KC_4,    KC_5,    KC_6,    KC_7,  KC_8,    KC_9,          KC_0,          F(11)},
-    {M(LSFT_PAREN), KC_MINS,       KC_EQL,        KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,  KC_D,    KC_E,          KC_F,          M(RSFT_PAREN)},
-    {F(4),          M(LHYP_ANGLE), M(LALT_BRACE), KC_LGUI, F(0),    KC_BSPC, KC_BSPC, F(1),  KC_RGUI, M(RALT_BRACE), M(RHYP_ANGLE), F(5)}
+    {LGUI(KC_GRV), KC_F1,          KC_F2,  KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7, KC_F8,   KC_F9, KC_F10,         _______},
+    {F(10),        KC_1,           KC_2,   KC_3,    KC_4,    KC_5,    KC_6,    KC_7,  KC_8,    KC_9,  KC_0,           F(11)},
+    {F(12),        KC_MINS,        KC_EQL, KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,  KC_D,    KC_E,  KC_F,           F(13)},
+    {F(4),         ALL_T(KC_LBRC), F(14),  KC_LGUI, F(0),    KC_BSPC, KC_BSPC, F(1),  KC_RGUI, F(15), ALL_T(KC_RBRC), F(5)}
   },
 
   /* Symbol layer
@@ -194,10 +191,14 @@ const uint16_t PROGMEM fn_actions[] = {
 
   // Modifiers
   [10] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_ESC),
-  [11] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
-};
+  [11] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
 
-static uint16_t start[6];
+  [12] = ACTION_MACRO_TAP(LSFT_PAREN),
+  [13] = ACTION_MACRO_TAP(RSFT_PAREN),
+
+  [14] = ACTION_MACRO_TAP(LALT_BRACE),
+  [15] = ACTION_MACRO_TAP(RALT_BRACE),
+};
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -206,75 +207,66 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     // with shift tap keys, which is LSFT + RSFT by default.
     case LSFT_PAREN:
       if (record->event.pressed) {
-        start[LSFT_PAREN] = timer_read();
-        return MACRO(D(LSFT), END);
+        register_mods(MOD_LSFT);
+        record->tap.interrupted = 0;
       } else {
-        if (timer_elapsed(start[LSFT_PAREN]) > TAPPING_TERM) {
-          return MACRO(U(LSFT), END);
-        } else {
-          return MACRO(D(LSFT), T(9), U(LSFT), END);
+        if (record->tap.count && !record->tap.interrupted) {
+          register_code(KC_9);
+          unregister_code(KC_9);
         }
+
+        unregister_mods(MOD_LSFT);
+        record->tap.count = 0;
       }
       break;
     case RSFT_PAREN:
       if (record->event.pressed) {
-        start[RSFT_PAREN] = timer_read();
-        return MACRO(D(RSFT), END);
+        register_mods(MOD_LSFT);
+        record->tap.interrupted = 0;
       } else {
-        if (timer_elapsed(start[RSFT_PAREN]) > TAPPING_TERM) {
-          return MACRO(U(RSFT), END);
-        } else {
-          return MACRO(D(RSFT), T(0), U(RSFT), END);
+        if (record->tap.count && !record->tap.interrupted) {
+          register_code(KC_0);
+          unregister_code(KC_0);
         }
-      }
-      break;
-    case LHYP_ANGLE:
-      if (record->event.pressed) {
-        start[LHYP_ANGLE] = timer_read();
-        return MACRO(D(LSFT), D(LCTL), D(LALT), D(LGUI), END);
-      } else {
-        if (timer_elapsed(start[LHYP_ANGLE]) > TAPPING_TERM) {
-          return MACRO(U(LSFT), U(LCTL), U(LALT), U(LGUI), END);
-        } else {
-          return MACRO(U(LCTL), U(LALT), U(LGUI), D(LSFT), T(COMM), U(LSFT), END);
-        }
-      }
-      break;
-    case RHYP_ANGLE:
-      if (record->event.pressed) {
-        start[RHYP_ANGLE] = timer_read();
-        return MACRO(D(RSFT), D(RCTL), D(RALT), D(RGUI), END);
-      } else {
-        if (timer_elapsed(start[RHYP_ANGLE]) > TAPPING_TERM) {
-          return MACRO(U(RSFT), U(RCTL), U(RALT), U(RGUI), END);
-        } else {
-          return MACRO(U(RCTL), U(RALT), U(RGUI), D(RSFT), T(DOT), U(RSFT), END);
-        }
+
+        unregister_mods(MOD_LSFT);
+        record->tap.count = 0;
       }
       break;
     case LALT_BRACE:
       if (record->event.pressed) {
-        start[LALT_BRACE] = timer_read();
-        return MACRO(D(LALT), END);
+        register_mods(MOD_LALT);
+        record->tap.interrupted = 0;
       } else {
-        if (timer_elapsed(start[LALT_BRACE]) > TAPPING_TERM) {
-          return MACRO(U(LALT), END);
-        } else {
-          return MACRO(U(LALT), D(LSFT), T(LBRACKET), U(LSFT), END);
+        unregister_mods(MOD_LALT);
+
+        if (record->tap.count && !record->tap.interrupted) {
+          add_weak_mods(MOD_LSFT);
+          register_code(KC_LBRACKET);
+          unregister_code(KC_LBRACKET);
+          del_weak_mods(MOD_LSFT);
         }
+
+        record->tap.count = 0;
       }
       break;
     case RALT_BRACE:
       if (record->event.pressed) {
-        start[RALT_BRACE] = timer_read();
-        return MACRO(D(RALT), END);
+        register_mods(MOD_RALT);
+        record->tap.interrupted = 0;
       } else {
-        if (timer_elapsed(start[RALT_BRACE]) > TAPPING_TERM) {
-          return MACRO(U(RALT), END);
-        } else {
-          return MACRO(U(RALT), D(LSFT), T(RBRACKET), U(LSFT), END);
+        unregister_mods(MOD_RALT);
+
+        if (record->tap.count && !record->tap.interrupted) {
+          add_weak_mods(MOD_LSFT);
+          register_code(KC_RBRACKET);
+          unregister_code(KC_RBRACKET);
+          del_weak_mods(MOD_LSFT);
         }
+
+        record->tap.count = 0;
       }
       break;
   }
+  return MACRO_NONE;
 }
