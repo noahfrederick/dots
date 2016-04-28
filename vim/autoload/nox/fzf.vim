@@ -179,32 +179,72 @@ endfunction
 " Tags
 " ------------------------------------------------------------------
 function! s:tags_sink(lines)
+  PP a:lines
   if len(a:lines) < 2
     return
   endif
 
+  normal! m'
+
+  let qfl = []
   let cmd = get(s:default_action, a:lines[0], 'edit')
-  let parts = split(a:lines[1], '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent' cmd s:escape(parts[1][:-2])
   let [magic, &magic] = [&magic, 0]
-  execute excmd
+
+  for line in a:lines[1:]
+    let parts = split(line, '\t\zs')
+    let excmd = matchstr(join(parts[2:], ''), '^.*\ze;"\t')
+    execute cmd s:escape(parts[1][:-2])
+    execute excmd
+    call add(qfl, {'filename': expand('%'), 'lnum': line('.'), 'text': getline('.')})
+  endfor
+
   let &magic = magic
+
+  if len(qfl) > 1
+    call setqflist(qfl)
+    copen
+    wincmd p
+    clast
+  endif
+
+  normal! zz
 endfunction
 
 function! nox#fzf#tags(bang)
   if empty(tagfiles())
+    call inputsave()
     echohl WarningMsg
-    echom 'Preparing tags'
+    let gen = input('tags not found. Generate? (y/N) ')
     echohl None
-    call system('ctags -R --languages=-javascript,sql')
+    call inputrestore()
+    redraw
+    if gen =~ '^y'
+      call s:warn('Preparing tags')
+      call system('ctags -R')
+      if empty(tagfiles())
+        return s:warn('Failed to create tags')
+      endif
+    else
+      return s:warn('No tags found')
+    endif
   endif
 
-  call s:fzf({
-        \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-        \            '| grep -v "^!"',
-        \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --prompt "Tags > "'.s:expect(),
-        \ 'sink*':   function('s:tags_sink')}, a:bang)
+  let tagfile = tagfiles()[0]
+  " We don't want to apply --ansi option when tags file is large as it makes
+  " processing much slower.
+  if getfsize(tagfile) > 1024 * 1024 * 20
+    let proc = 'grep -v ''^\!'' '
+    let copt = ''
+  else
+    let proc = 'perl -ne ''unless (/^\!/) { s/^(.*?)\t(.*?)\t/'.s:yellow('\1', 'Function').'\t'.s:blue('\2', 'String').'\t/; print }'' '
+    let copt = '--ansi '
+  endif
+
+  call s:fzf(s:wrap({
+        \ 'source':  proc.shellescape(fnamemodify(tagfile, ':t')),
+        \ 'sink*':   function('s:tags_sink'),
+        \ 'dir':     fnamemodify(tagfile, ':h'),
+        \ 'options': copt.'-m --tiebreak=begin --prompt "Tags > "'}), a:bang)
 endfunction
 
 " ------------------------------------------------------------------
