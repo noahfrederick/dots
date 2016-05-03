@@ -1482,15 +1482,14 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                               "\n" t)))
 
       (setq org-capture-templates
-            '(("t" "☑️ To-do")
-              ("tt" "To-do" entry
+            '(("t" "☑️ To-do" entry
                (file+headline "" "Tasks")
-               "* TODO %?"
+               "* TODO %?\nSCHEDULED: %t"
                :clock-keep t :kill-buffer t)
-              ("tu" "️Quick to-do" entry
-               (file+headline "" "Tasks")
-               "* TODO %^{Task}\nSCHEDULED: %t"
-               :clock-keep t :kill-buffer t :immediate-finish t)
+              ("n" "📔 Note" entry
+               (file+headline "" "Notes")
+               "* Note taken on %U\n%?"
+               :clock-keep t :kill-buffer t :jump-to-captured t)
               ("j" "📆 Journal entry" entry
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* %?\n%U\n"
