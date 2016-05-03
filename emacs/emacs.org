@@ -1690,6 +1690,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
        'org-babel-load-languages
        '((emacs-lisp . t)
          (ledger . t)
+         (ruby . t)
          (sh . t)))
       (setq org-src-fontify-natively t
             org-src-tab-acts-natively t
