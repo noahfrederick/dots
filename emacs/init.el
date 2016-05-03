@@ -7,13 +7,6 @@
 
 ;;; Code:
 
-;; Cask manages our package dependencies
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
-
-;; Pallet allows us to use Cask in tandem with package.el
-(require 'pallet)
-
 ;; Load up Org-babel
 (require 'ob-tangle)
 

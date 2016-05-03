@@ -11,14 +11,9 @@ repository]]. The meat of it (and the source of this document) is the
 
 ** Installation
 
-This configuration is intended to be installable from scratch. It
-uses [[https://github.com/cask/cask][Cask]] to specify the package dependencies. [[https://github.com/rdallasgray/pallet][Pallet]] allows us to
-use Cask in conjunction with =package.el= such that our =Cask= file is
-kept up to date when we add and remove packages.
-
 - Install GNU Emacs 24 or later
-- Install Cask from https://github.com/cask/cask
-- Run =cask install= in =$HOME/.emacs.d=
+- Place =init.el= and =emacs.org= in =~/.emacs.d/=
+- Launch Emacs
 
 ** Commentary
 
@@ -36,8 +31,21 @@ of packages that might otherwise slow down Emacs's startup.
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
+  (package-initialize)
+
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
   (eval-when-compile
     (require 'use-package))
+
+  (setq use-package-always-pin 'melpa-stable)
 #+END_SRC
 
 * Emacs Initialization
@@ -89,8 +97,9 @@ and ~load~ calls:
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no :tangle no
-  (require 'benchmark-init)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate)
+  (use-package benchmark-init
+    :init
+    (add-hook 'after-init-hook 'benchmark-init/deactivate))
 #+END_SRC
 
 ** Platform-specific
@@ -106,7 +115,10 @@ There are a few settings that are only relevant to OS X (Darwin):
          (when (executable-find "gls")
            (setq insert-directory-program "gls"))
          ;; Derive PATH by running a shell so that GUI Emacs sessions have access to it
-         (exec-path-from-shell-initialize)
+         (use-package exec-path-from-shell
+           :ensure t
+           :config
+           (exec-path-from-shell-initialize))
          ;; Point Org to LibreOffice executable
          (when (file-exists-p "/Applications/LibreOffice.app/Contents/MacOS/soffice")
            (setq org-export-odt-convert-processes '(("LibreOffice" "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to %f%x --outdir %d %i"))))))
@@ -397,6 +409,7 @@ height that spans the entire width of the frame.
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package popwin
+    :ensure t
     :commands popwin-mode
     :defer 2
     :config
@@ -419,6 +432,7 @@ visually parsing Lisp's parenthesis-heavy syntax.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package parenface)
   (use-package rainbow-delimiters
+    :ensure t
     :commands rainbow-delimiters-mode
     :init
     (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode))
@@ -439,6 +453,7 @@ corresponding colored background.
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package rainbow-mode
+    :ensure t
     :commands rainbow-turn-on
     :init
     (add-hook 'prog-mode-hook 'rainbow-turn-on)
@@ -486,10 +501,12 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil
+    :ensure t
     :init
     (progn
       (setq evil-want-C-w-in-emacs-state t)
       (use-package evil-leader
+        :ensure t
         :config
         (progn
           (evil-leader/set-leader "<SPC>")
@@ -540,6 +557,7 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
             "o w" 'visual-line-mode)))
 
       (use-package evil-numbers
+        :ensure t
         :config
         (progn
           (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
@@ -648,6 +666,7 @@ bindings. In this regard, it fills the role of Vim's =<LocalLeader>=.
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil-god-state
+    :ensure t
     :commands evil-execute-in-god-state
     :init (evil-define-key 'normal global-map "\\" 'evil-execute-in-god-state))
 #+END_SRC
@@ -682,11 +701,13 @@ These packages provide various conveniences for editing.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil-surround
+    :ensure t
     :commands global-evil-surround-mode
     :config (global-evil-surround-mode 1)
     :defer 2)
 
   (use-package smartparens-config
+    :ensure smartparens
     :commands smartparens-global-mode
     :defer 2
     :config
@@ -851,6 +872,7 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
   (add-hook 'web-mode-hook 'nox/indent-use-tabs)
 
   (use-package dtrt-indent
+    :ensure t
     :config (dtrt-indent-mode 1))
 #+END_SRC
 
@@ -859,6 +881,7 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
   (setq require-final-newline t) ; auto-insert final newlines in all files
 
   (use-package whitespace
+    :ensure t
     :commands (whitespace-cleanup
                whitespace-mode)
     :config
@@ -908,6 +931,7 @@ Use aspell for spell checking: =brew install aspell --lang=en=
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package flyspell
+    :ensure t
     :defer 2
     :init
     (defun nox/flyspell-setup ()
@@ -927,6 +951,7 @@ Use [[https://github.com/flycheck/flycheck][Flycheck]] to validate syntax on the
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package flycheck
+    :ensure t
     :commands global-flycheck-mode
     :defer 2
     :config
@@ -943,6 +968,7 @@ visualized and traversed in another window.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package undo-tree
+    :ensure t
     :config
     (setq undo-tree-visualizer-diff t
           undo-tree-visualizer-timestamps t))
@@ -953,6 +979,7 @@ Magit provides featureful Git integration.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package magit
+    :ensure t
     :commands (magit-status magit-diff magit-log magit-blame-mode)
     :init
     (evil-leader/set-key
@@ -978,6 +1005,7 @@ use the fringe (and don't work in a terminal).
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package git-gutter-fringe
+    :ensure t
     :config
     (progn
       (global-git-gutter-mode t)
@@ -1033,6 +1061,7 @@ command-line accounting program.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ledger-mode
+    :ensure t
     :mode (("\\.ledger\\'" . ledger-mode))
     :config
     (progn
@@ -1100,6 +1129,7 @@ These are helper functions I use to manage my ledger file.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package puppet-mode
+    :ensure t
     :mode (("\\.pp\\'" . puppet-mode)))
 #+END_SRC
 
@@ -1111,6 +1141,7 @@ requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package restclient
+    :ensure t
     :mode ("\\.http\\'" . restclient-mode)
     :config
     (progn
@@ -1125,6 +1156,7 @@ requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package enh-ruby-mode
+    :ensure t
     :mode (("\\.rake\\'" . enh-ruby-mode)
            ("\\.gemspec\\'" . enh-ruby-mode)
            ("\\.ru\\'" . enh-ruby-mode)
@@ -1148,6 +1180,7 @@ various templating languages.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package web-mode
+    :ensure t
     :mode (("\\.html?\\'" . web-mode)
            ("\\.php\\'" . web-mode)
            ("\\.css\\'" . web-mode)
@@ -1165,6 +1198,7 @@ Use [[https://github.com/capitaomorte/yasnippet][YASnippet]] for snippets:
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package yasnippet
+    :ensure t
     :defer 2
     :config
     (progn
@@ -1211,7 +1245,10 @@ Place the point where we left it when last visiting the same file.
     (progn
       (ido-mode t)
       (ido-everywhere t)
-      (ido-ubiquitous-mode t))
+
+      (use-package ido-ubiquitous
+        :ensure t
+        :config (ido-ubiquitous-mode t)))
 
       (setq ido-enable-flex-matching t
             ido-use-virtual-buffers t
@@ -1229,6 +1266,7 @@ Place the point where we left it when last visiting the same file.
         (define-key ido-file-completion-map (kbd "C--") 'ido-enter-dired)) ; Originally C-d
 
       (use-package ido-vertical-mode
+        :ensure t
         :config
         (ido-vertical-mode))))
 #+END_SRC
@@ -1240,6 +1278,7 @@ Smex provides Ido completion for =M-x=.
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package smex
+    :ensure t
     :bind (("M-x" . smex)
            ("M-X" . smex-major-mode-commands))
     :config
@@ -1330,6 +1369,7 @@ Projectile's bindings start with =C-c p=.
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package projectile
+    :ensure t
     :config
     (progn
       (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
@@ -1344,6 +1384,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package auto-complete-config
+    :ensure auto-complete
     :commands ac-config-default
     :defer 2
     :init
@@ -1363,7 +1404,8 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
     :config
     (progn
       (ac-config-default)
-      (use-package pos-tip)
+      (use-package pos-tip
+        :ensure t)
 
       (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
       ;; User-defined dictionary goes in "~/.dict" by default.
@@ -1379,6 +1421,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package guide-key
+    :ensure t
     :commands guide-key-mode
     :defer 2
     :config
@@ -1437,6 +1480,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org
+    :ensure t
     :config
     (progn
       (use-package evil-org)
@@ -1705,6 +1749,7 @@ not presently work with Evil's =o= and =O=.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org-autolist
+    :ensure t
     :commands org-autolist-mode
     :init
     (progn
@@ -2236,6 +2281,7 @@ Org agenda (as well as other calendar formats).
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package calfw-org
+    :ensure calfw
     :config
     (setq cfw:fchar-junction ?╋
           cfw:fchar-vertical-line ?┃
@@ -2421,20 +2467,17 @@ saner interface.
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package mu4e
+    :load-path "~/src/mu/mu4e"
     :commands (mu4e mu4e~start)
     :init
     (progn
-      (add-to-list 'load-path "~/src/mu/mu4e")
       (evil-leader/set-key "M" #'nox/mu4e-view-today)
 
       (defun nox/mu4e-view-today ()
         "Invoke mu4e and jump directly to the today bookmark."
         (interactive)
         (mu4e~start)
-        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t)))
-
-      (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-      (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
+        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t))))
     :config
     (progn
       (setq mu4e-sent-folder "/Sent"
@@ -2553,6 +2596,18 @@ saner interface.
 
 Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
 
+The mu4e-alert package adds alerts and a mode-line indicator for new mail:
+
+#+NAME: communications
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package mu4e-alert
+    :ensure t
+    :init
+    (progn
+      (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+      (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)))
+#+END_SRC
+
 ** RSS
 
 [[https://github.com/skeeto/elfeed][Elfeed]] is an RSS/Atom reader. A list of feeds to fetch should be
@@ -2649,6 +2704,7 @@ and restore previous window configuration again.
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package alert
+    :ensure t
     :config
     (progn
       (setq alert-default-style 'terminal-notifier)
@@ -2670,6 +2726,7 @@ and restore previous window configuration again.
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package sauron
+    :ensure t
     :config
     (progn
       ;; Pass notifications through to alert.el
