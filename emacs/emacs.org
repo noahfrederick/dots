@@ -1635,20 +1635,24 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file "~/ledger/xacts/generic.txt")
                :clock-keep t :empty-lines-before 1 :jump-to-captured t)))
 
-      (defun nox/make-org-capture-mode-evil ()
-        "Turn the Org capture buffer evil."
-        (evil-define-key 'normal org-capture-mode-map "ZZ" 'org-capture-finalize)
-        (evil-define-key 'normal org-capture-mode-map "ZQ" 'org-capture-kill)
-        (evil-leader/set-key-for-mode 'org-capture-mode "m m" 'org-capture-finalize)
-        (evil-leader/set-key-for-mode 'org-capture-mode "m r" 'org-capture-refile)
+      ;; There is something wrong with this. The capture buffer is not
+      ;; cleaned up using these maps, but it is using the built-in
+      ;; ones. No idea what the difference is.
+      ;;
+      ;; (defun nox/make-org-capture-mode-evil ()
+      ;;   "Turn the Org capture buffer evil."
+      ;;   (evil-define-key 'normal org-capture-mode-map "ZZ" 'org-capture-finalize)
+      ;;   (evil-define-key 'normal org-capture-mode-map "ZQ" 'org-capture-kill)
+      ;;   (evil-leader/set-key-for-mode 'org-capture-mode "m m" 'org-capture-finalize)
+      ;;   (evil-leader/set-key-for-mode 'org-capture-mode "m r" 'org-capture-refile)
 
-        (add-hook 'org-capture-mode-hook
-                  '(lambda ()
-                     (org-set-local
-                      'header-line-format
-                      "Capture buffer.  Finish `Z Z', refile `<Leader> m r', abort `Z Q'."))))
+      ;;   (add-hook 'org-capture-mode-hook
+      ;;             '(lambda ()
+      ;;                (org-set-local
+      ;;                 'header-line-format
+      ;;                 "Capture buffer.  Finish `Z Z', refile `<Leader> m r', abort `Z Q'."))))
 
-      (nox/make-org-capture-mode-evil)
+      ;; (nox/make-org-capture-mode-evil)
 
       (setq org-goto-interface 'outline-path-completion
             org-log-done 'time
