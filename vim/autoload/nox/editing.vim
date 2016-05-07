@@ -30,7 +30,8 @@ function! s:normalize_whitespace()
   %substitute/\s\+$//e
   " 2. Merge consecutive blank lines
   %substitute/\n\{3,}/\r\r/e
-  " 3. Strip empty line from end of file
+  " 3. Strip empty lines from beginning and end of file
+  %substitute/\%^\n\+//e
   %substitute/\n\+\%$//e
 endfunction
 
