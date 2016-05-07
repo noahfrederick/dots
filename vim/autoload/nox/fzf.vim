@@ -153,7 +153,7 @@ function! nox#fzf#buffers(bang)
   call s:fzf({
         \   'source':  reverse(bufs),
         \   'sink*':   function('s:bufopen'),
-        \   'options': '--prompt "Buffers > " -m --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
+        \   'options': '-m --ansi -d "\t" -n 2,1..2'.s:expect().',ctrl-d',
         \ }, a:bang)
 endfunction
 
@@ -171,7 +171,7 @@ function! nox#fzf#history(bang)
   call s:fzf({
         \   'source':  reverse(s:all_files()),
         \   'sink*':   function('<SID>common_sink'),
-        \   'options': '--prompt "History > " -m' . s:expect(),
+        \   'options': '--prompt -m' . s:expect(),
         \ }, a:bang)
 endfunction
 
@@ -244,7 +244,29 @@ function! nox#fzf#tags(bang)
         \ 'source':  proc.shellescape(fnamemodify(tagfile, ':t')),
         \ 'sink*':   function('s:tags_sink'),
         \ 'dir':     fnamemodify(tagfile, ':h'),
-        \ 'options': copt.'-m --tiebreak=begin --prompt "Tags > "'}), a:bang)
+        \ 'options': copt.'-m --tiebreak=begin'}), a:bang)
+endfunction
+
+" ------------------------------------------------------------------
+" Help tags
+" ------------------------------------------------------------------
+function! s:helptag_sink(line)
+  let [tag, file, path] = split(a:line, "\t")[0:2]
+  let rtp = fnamemodify(path, ':p:h:h')
+  if stridx(&rtp, rtp) < 0
+    execute 'set rtp+='.s:escape(rtp)
+  endif
+  execute 'help' tag
+endfunction
+
+function! nox#fzf#helptags(bang)
+  let tags = uniq(sort(split(globpath(&runtimepath, '**/doc/tags'), '\n')))
+
+  return s:fzf({
+        \ 'source':  "grep -H '.*' ".join(map(tags, 'shellescape(v:val)')).
+        \            "| perl -ne '/(.*?):(.*?)\t(.*?)\t/; printf(qq(".s:green('%-40s', 'Label')."\t%s\t%s\n), $2, $3, $1)' | sort",
+        \ 'sink':    function('s:helptag_sink'),
+        \ 'options': '--ansi +m --tiebreak=begin --with-nth ..-2'}, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -281,7 +303,7 @@ function! nox#fzf#lines(bang)
   call s:fzf({
         \ 'source':  <SID>lines(),
         \ 'sink*':   function('<SID>line_handler'),
-        \ 'options': '+m --tiebreak=index --prompt "Lines > " --ansi --extended --nth=3..'.s:expect()
+        \ 'options': '+m --tiebreak=index --ansi --reverse --nth=3..'.s:expect()
         \}, a:bang)
 endfunction
 
@@ -314,7 +336,7 @@ function! nox#fzf#blines(bang)
   call s:fzf({
         \ 'source':  <SID>buffer_lines(),
         \ 'sink*':   function('<SID>buffer_line_handler'),
-        \ 'options': '+m --tiebreak=index --prompt "BLines > " --ansi --extended --nth=2..'.s:expect()
+        \ 'options': '+m --tiebreak=index --ansi --reverse --nth=2..'.s:expect()
         \}, a:bang)
 endfunction
 
@@ -344,7 +366,7 @@ function! nox#fzf#marks(bang)
   call s:fzf({
         \ 'source':  extend(list[0:0], map(list[1:], 's:format_mark(v:val)')),
         \ 'sink*':   function('s:mark_sink'),
-        \ 'options': '+m --ansi --tiebreak=index --header-lines 1 --tiebreak=begin --prompt "Marks > "'.s:expect()}, a:bang)
+        \ 'options': '+m --ansi --tiebreak=index --header-lines 1 --tiebreak=begin'.s:expect()}, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -381,7 +403,7 @@ function! nox#fzf#grep(query, bang)
         \ 'source':  printf('ag --nogroup --column --color "%s"',
         \                   escape(empty(a:query) ? '^(?=.)' : a:query, '"\-')),
         \ 'sink*':   function('s:ag_handler'),
-        \ 'options': '--ansi --delimiter : --nth 4..,.. --prompt "Grep > " '.
+        \ 'options': '--ansi --delimiter : --nth 4..,.. '.
         \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
         \            '--color hl:68,hl+:110'}), a:bang)
 endfunction

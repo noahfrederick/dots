@@ -329,6 +329,7 @@ command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
 command! -nargs=0 -bar -bang               Zbuffers call nox#fzf#buffers(<bang>0)
 command! -nargs=? -bar -bang -complete=dir Zfiles   call nox#fzf#files(<q-args>, <bang>0)
 command! -nargs=0 -bar -bang               Ztags    call nox#fzf#tags(<bang>0)
+command! -nargs=0 -bar -bang               Zhelp    call nox#fzf#helptags(<bang>0)
 command! -nargs=0 -bar -bang               Zhistory call nox#fzf#history(<bang>0)
 command! -nargs=0 -bar -bang               Zlines   call nox#fzf#lines(<bang>0)
 command! -nargs=0 -bar -bang               Zblines  call nox#fzf#blines(<bang>0)
@@ -591,7 +592,7 @@ nnoremap _xm :set filetype=xml<CR>
 nnoremap <Leader><Leader> :
 nnoremap <Leader>? :Zhistory<CR>
 nnoremap <Leader>` :Zmarks<CR>
-nnoremap <Leader>] :tjump /
+nnoremap <Leader>] :Ztags<CR>
 nnoremap <Leader>D :edit README*<CR>
 nnoremap <Leader>E :edit Gemfile<CR>
 nnoremap <Leader>H :edit .htaccess<CR>
@@ -609,6 +610,7 @@ nnoremap <Leader>b :Zbuffers<CR>
 nnoremap <Leader>d :Zfiles $CODE/dots<CR>
 nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :Zfiles<CR>
+nnoremap <Leader>h :Zhelp<CR>
 nnoremap <Leader>n :Zfiles $NOTES<CR>
 
 " }}}
