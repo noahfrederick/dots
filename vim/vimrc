@@ -719,7 +719,8 @@ let g:loaded_netrwPlugin = 1
 
 " Include a local configuration file if available. It is sourced at the end so
 " that any local settings override those in this file.
-runtime vimrc.local
+let s:local = split(&runtimepath, ',')[0] . '/local.vim'
+if filereadable(s:local) | execute 'source' s:local | endif
 
 " }}}
 " vim: fdm=marker:sw=2:sts=2:et

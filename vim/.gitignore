@@ -2,4 +2,4 @@
 flavors/
 plugged/
 spell/*.spl
-vimrc.local
+local.vim
