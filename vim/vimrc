@@ -16,7 +16,7 @@ if has("vim_starting")
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'SirVer/ultisnips',               { 'on': [] }
-  Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.sh' }
+  Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.py' }
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/gv.vim',                { 'on': 'GV' }
