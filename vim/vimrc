@@ -177,9 +177,9 @@ else
 endif
 
 "" Status line
-let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
+let &statusline  = ' %6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
 let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
-let &statusline .= "%* %f"
+let &statusline .= "%*%f"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
 let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
 let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
@@ -220,7 +220,8 @@ function! StatuslineIndent()
 endfunction
 
 function! StatuslineProject()
-  return getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
+  let dir = getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
+  return dir . (stridx(expand('%:p'), getcwd()) == 0 ? '/' : ' ')
 endfunction
 
 function! StatuslineTrailingWhitespace()
