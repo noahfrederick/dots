@@ -499,8 +499,6 @@ nnoremap du    :FocusDispatch<Space>
 nnoremap dr    :Start<CR>
 nnoremap dc    :Console<CR>
 
-nnoremap <silent> - :edit %:p:h<CR>
-
 " Write a one-off timestamped version of the current buffer
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
 
