@@ -49,7 +49,7 @@ set -gx GPG_TTY (tty)
 #
 # FZF
 #
-set -gx FZF_DEFAULT_OPTS "--inline-info --color=hl:11,hl+:2,info:8,prompt:4,pointer:2,marker:1"
+set -gx FZF_DEFAULT_OPTS "--inline-info --color=16,info:8"
 
 #
 # ABBREVIATIONS

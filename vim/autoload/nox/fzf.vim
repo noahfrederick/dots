@@ -256,7 +256,8 @@ function! s:helptag_sink(line)
   if stridx(&rtp, rtp) < 0
     execute 'set rtp+='.s:escape(rtp)
   endif
-  execute 'help' tag
+  let cmd = exists(':Help') == 2 ? 'Help' : 'help'
+  execute cmd tag
 endfunction
 
 function! nox#fzf#helptags(bang)
@@ -264,7 +265,7 @@ function! nox#fzf#helptags(bang)
 
   return s:fzf({
         \ 'source':  "grep -H '.*' ".join(map(tags, 'shellescape(v:val)')).
-        \            "| perl -ne '/(.*?):(.*?)\t(.*?)\t/; printf(qq(".s:green('%-40s', 'Label')."\t%s\t%s\n), $2, $3, $1)' | sort",
+        \            "| perl -ne '/(.*?):(.*?)\t(.*?)\t/; printf(qq(".s:magenta('%-40s', 'Label')."\t%s\t%s\n), $2, $3, $1)' | sort",
         \ 'sink':    function('s:helptag_sink'),
         \ 'options': '--ansi +m --tiebreak=begin --with-nth ..-2'}, a:bang)
 endfunction

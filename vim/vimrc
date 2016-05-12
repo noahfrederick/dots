@@ -311,6 +311,8 @@ command! -bang -nargs=? -bar -complete=filetype Scratch
 command! -nargs=0 -bar Unix set fileformat=unix
 command! -bang -nargs=0 -bar Cd cd<bang> .
 command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<count>, <bang>0)
+command! -bang -nargs=1 -bar -complete=help Help help<bang> <args> |
+      \ let @* = printf('[`:help %s`](https://vimhelp.appspot.com/%s.html#%s)', escape(<q-args>, '`[]'), expand('%:t'), escape(<q-args>, '()'))
 
 if exists("$NOTES")
   command! -nargs=? -bang Notes
