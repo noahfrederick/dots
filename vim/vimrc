@@ -220,8 +220,8 @@ function! StatuslineIndent()
 endfunction
 
 function! StatuslineProject()
-  let dir = getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
-  return dir . (stridx(expand('%:p'), getcwd()) == 0 ? '/' : ' ')
+  let dir = getcwd() == $HOME ? '~' : fnamemodify(getcwd(), ':t')
+  return dir . (expand('%')[0] !=# '/' && stridx(expand('%:p'), getcwd()) == 0 ? '/' : ' ')
 endfunction
 
 function! StatuslineTrailingWhitespace()
