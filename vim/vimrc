@@ -506,10 +506,6 @@ nnoremap dc    :Console<CR>
 " Write a one-off timestamped version of the current buffer
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
 
-" Source selection or current line
-xnoremap <Leader>S y:execute @@<CR>:echomsg "Sourced selection"<CR>
-nnoremap <Leader>S ^vg_y:execute @@<CR>:echomsg "Sourced current line"<CR>
-
 " Remove trailing whitespace, merge consecutive empty lines
 nnoremap <silent> <Leader>w :call nox#editing#normalize_whitespace()<CR>
 
