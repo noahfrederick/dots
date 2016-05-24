@@ -38,6 +38,9 @@ set -g fish_color_escape      purple
 set -g fish_color_param       green
 set -g fish_color_quote       yellow
 set -g fish_color_valid_path  blue    --underline
+set -g fish_pager_color_prefix      yellow
+set -g fish_pager_color_completion  white
+set -g fish_pager_color_description purple
 
 #
 # PINENTRY
