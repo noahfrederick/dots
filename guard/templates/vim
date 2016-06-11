@@ -1,0 +1,10 @@
+# Watch Vim script files and run tests
+guard 'rake', :task => 'test' do
+  watch(%r{^(autoload|plugin|t)/.*\.vim$})
+end
+
+# Watch Vim scripts and manifest and build documentation
+guard 'rake', :task => 'doc' do
+  watch(%r{^(autoload|plugin)/.*\.vim$})
+  watch(%r{^addon-info\.json$})
+end
