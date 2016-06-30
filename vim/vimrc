@@ -372,7 +372,7 @@ if executable('osascript')
 endif
 
 if exists(":terminal")
-  command! -nargs=0 -bang -bar Shell terminal<bang> $SHELL
+  command! -nargs=0 -bang -bar Shell -tabedit | terminal<bang> $SHELL
 else
   command! -nargs=0 -bar Shell shell
 endif
