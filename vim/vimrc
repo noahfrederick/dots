@@ -350,6 +350,14 @@ command! -nargs=0 -bar -bang               Zblines  call nox#fzf#blines(<bang>0)
 command! -nargs=0 -bar -bang               Zmarks   call nox#fzf#marks(<bang>0)
 command! -nargs=* -bar -bang               Zgrep    call nox#fzf#grep(<q-args>, <bang>0)
 
+if has("autocmd")
+  augroup init_fzf
+    autocmd!
+    autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call nox#fzf#use(<bang>0)
+    autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
+  augroup END
+endif
+
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
   command! -nargs=1 Cdo  call nox#quickfix#do(0, <q-args>)

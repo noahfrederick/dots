@@ -179,7 +179,6 @@ endfunction
 " Tags
 " ------------------------------------------------------------------
 function! s:tags_sink(lines)
-  PP a:lines
   if len(a:lines) < 2
     return
   endif
@@ -407,6 +406,23 @@ function! nox#fzf#grep(query, bang)
         \ 'options': '--ansi --delimiter : --nth 4..,.. '.
         \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
         \            '--color hl:68,hl+:110'}), a:bang)
+endfunction
+
+" ------------------------------------------------------------------
+" PHP Use
+" ------------------------------------------------------------------
+function! s:use_sink(fqn) abort
+  call composer#namespace#use(a:fqn)
+endfunction
+
+function! nox#fzf#use(bang)
+  " For now, it just offers Laravel facade classes
+  let classes = sort(values(laravel#app().facades()))
+
+  return s:fzf({
+        \ 'source': classes,
+        \ 'sink':   function('s:use_sink'),
+        \ 'options': '--multi'}, a:bang)
 endfunction
 
 " vim:set et sw=2:
