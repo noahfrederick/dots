@@ -264,7 +264,7 @@ if has("autocmd")
     autocmd BufNewFile,BufRead .env.* setfiletype sh
 
     autocmd User ProjectionistActivate
-          \ if &filetype !=# '' && &filetype !=# 'dirvish' |
+          \ if &filetype !=# '' && &filetype !~# 'dirvish|git' |
           \   for [s:root, s:value] in projectionist#query("framework") |
           \     if index(split(&filetype, '\.'), s:value) < 0 |
           \       let &filetype = join([&filetype, s:value], ".") |
