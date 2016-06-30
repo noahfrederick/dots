@@ -271,6 +271,9 @@ if has("autocmd")
           \     endif |
           \   endfor |
           \ endif
+    autocmd User Composer
+          \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
+          \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
 
     " Never show line numbers in command-line window as they are not useful
     " and take up space (normally it inherits this setting like any other
