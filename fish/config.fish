@@ -31,7 +31,7 @@ set -gx EDITOR vim
 set -gx CLICOLOR 1
 
 set -g fish_color_command     green   --bold
-set -g fish_color_cwd         yellow
+set -g fish_color_cwd         brgrey  --bold
 set -g fish_color_end         green
 set -g fish_color_error       red     --bold
 set -g fish_color_escape      purple
