@@ -711,6 +711,7 @@ These packages provide various conveniences for editing.
 
   (use-package smartparens-config
     :ensure smartparens
+    :diminish smartparens-mode
     :commands smartparens-global-mode
     :defer 2
     :config
@@ -972,6 +973,7 @@ visualized and traversed in another window.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package undo-tree
     :ensure t
+    :diminish undo-tree-mode
     :config
     (setq undo-tree-visualizer-diff t
           undo-tree-visualizer-timestamps t))
@@ -1009,6 +1011,7 @@ use the fringe (and don't work in a terminal).
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package git-gutter-fringe
     :ensure t
+    :diminish git-gutter-mode
     :config
     (progn
       (global-git-gutter-mode t)
@@ -1202,6 +1205,7 @@ Use [[https://github.com/capitaomorte/yasnippet][YASnippet]] for snippets:
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package yasnippet
     :ensure t
+    :diminish yas-minor-mode
     :defer 2
     :config
     (progn
@@ -1388,6 +1392,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package auto-complete-config
     :ensure auto-complete
+    :diminish auto-complete-mode
     :commands ac-config-default
     :defer 2
     :init
@@ -1425,6 +1430,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package guide-key
     :ensure t
+    :diminish guide-key-mode
     :commands guide-key-mode
     :defer 2
     :config
@@ -1486,7 +1492,8 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
     :ensure org-plus-contrib
     :config
     (progn
-      (use-package evil-org)
+      (use-package evil-org
+        :diminish evil-org-mode)
       (use-package org-mac-link
         :commands org-mac-grab-link)
 
@@ -1753,6 +1760,7 @@ not presently work with Evil's =o= and =O=.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org-autolist
     :ensure t
+    :diminish org-autolist-mode
     :commands org-autolist-mode
     :init
     (progn
