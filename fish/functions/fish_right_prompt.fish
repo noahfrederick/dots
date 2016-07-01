@@ -9,16 +9,16 @@ set -g __fish_git_prompt_char_upstream_prefix " "
 
 set -g __fish_git_prompt_char_stagedstate " +"
 set -g __fish_git_prompt_char_dirtystate " -"
-set -g __fish_git_prompt_char_untrackedfiles " "
+set -g __fish_git_prompt_char_untrackedfiles "/"
 set -g __fish_git_prompt_char_conflictedstate " x"
 set -g __fish_git_prompt_char_cleanstate ""
 set -g __fish_git_prompt_char_stateseparator ""
 
-set -g __fish_git_prompt_color_dirtystate blue
+set -g __fish_git_prompt_color_dirtystate red
 set -g __fish_git_prompt_color_stagedstate green
 set -g __fish_git_prompt_color_invalidstate red
-set -g __fish_git_prompt_color_untrackedfiles red
-set -g __fish_git_prompt_color_cleanstate green --bold
+set -g __fish_git_prompt_color_untrackedfiles brgrey
+set -g __fish_git_prompt_color_cleanstate green
 set -g __fish_git_prompt_color_upstream magenta
 
 function fish_right_prompt --description 'Write out the right-hand prompt'
