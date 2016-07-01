@@ -21,7 +21,7 @@ Any variables, functions, or macros defined in this configuration
 are "namespaced" with a prefix of ~nox/~. This is only a convention
 for easily distinguishing between built-in functions and those
 defined in this configuration or another package, and has no other
-special significance.
+special significance. (It would be more responsible to use a prefix of ~my-~.)
 
 ** Configuring Packages
 
@@ -185,12 +185,9 @@ this file.
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defvar nox/private-file (expand-file-name "private.el.gpg" user-emacs-directory))
+  (defvar nox/private-file (expand-file-name "private.el" user-emacs-directory))
   (load nox/private-file 'noerror)
 #+END_SRC
-
-The =private.el.gpg= file is PGP-encrypted and is automatically
-decrypted by [[http://www.emacswiki.org/emacs/EasyPG][epa-file]] upon being loaded.
 
 ** Custom
 
