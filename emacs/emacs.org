@@ -100,9 +100,12 @@ and ~load~ calls:
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no :tangle no
-  (use-package benchmark-init
+  (use-package benchmark-init-loaddefs
+    :ensure benchmark-init
     :init
-    (add-hook 'after-init-hook 'benchmark-init/deactivate))
+    (progn
+      (benchmark-init/activate)
+      (add-hook 'after-init-hook 'benchmark-init/deactivate)))
 #+END_SRC
 
 ** Platform-specific
