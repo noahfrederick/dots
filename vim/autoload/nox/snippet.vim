@@ -43,6 +43,18 @@ function! s:try_insert(skel)
   return g:ulti_expand_res
 endfunction
 
+""
+" Make u undo twice (temporarily) to work around UltiSnip's undo-breaking
+" anti-feature.
+function! s:install_undo_workaround() abort
+  nnoremap <silent><buffer> u :call <SID>undo_workaround()<CR>
+endfunction
+
+function! s:undo_workaround() abort
+  normal! 2u
+  nunmap <buffer> u
+endfunction
+
 function! nox#snippet#insert_skeleton() abort
   " Load UltiSnips in case it was deferred via vim-plug
   if !exists('g:did_plugin_ultisnips') && exists(':PlugStatus')
@@ -60,13 +72,16 @@ function! nox#snippet#insert_skeleton() abort
     " snippet expands
     for [root, value] in projectionist#query('skeleton')
       if s:try_insert(value)
+        call s:install_undo_workaround()
         return
       endif
     endfor
   endif
 
   " Try generic _skel template as last resort
-  call s:try_insert("skel")
+  if s:try_insert("skel")
+    call s:install_undo_workaround()
+  endif
 endfunction
 
 " vim:set et sw=2:
