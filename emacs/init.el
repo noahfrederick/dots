@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(package-initialize)
+
 ;; Load up Org-babel
 (require 'ob-tangle)
 
