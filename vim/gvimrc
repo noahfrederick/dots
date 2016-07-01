@@ -52,7 +52,8 @@ command! -nargs=0 -bar Present
       \ highlight User1        guifg=#ff0055 guibg=#dddddd |
       \ highlight User2        guifg=#539dbd guibg=#dddddd |
       \ highlight User3        guifg=#b1d631 guibg=#dddddd |
-      \ silent! GitGutterDisable
+      \ silent! GitGutterDisable |
+      \ silent! SignifyDisable
 
 nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader>d :edit $CODE/dots/
