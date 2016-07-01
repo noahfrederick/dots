@@ -1,4 +1,5 @@
 #include "keymap_common.h"
+#include "keymap_plover.h"
 #include "action_tapping.h"
 
 // Keymap layers
@@ -71,10 +72,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [BASE_STENO_LAYER] = {
-    {___x___, KC_1,    KC_1,    KC_1, KC_1, KC_1,    KC_1,    KC_1, KC_1, KC_1,    KC_1,    _______},
-    {___x___, KC_Q,    KC_W,    KC_E, KC_R, KC_T,    KC_T,    KC_U, KC_I, KC_O,    KC_P,    KC_LBRC},
-    {___x___, KC_A,    KC_S,    KC_D, KC_F, KC_T,    KC_T,    KC_J, KC_K, KC_L,    KC_SCLN, KC_QUOT},
-    {___x___, ___x___, ___x___, KC_C, KC_V, _______, _______, KC_N, KC_M, ___x___, ___x___, ___x___}
+    {___x___, PV_NUM,  PV_NUM,  PV_NUM, PV_NUM, PV_NUM,  PV_NUM,  PV_NUM, PV_NUM, PV_NUM,  PV_NUM,  _______},
+    {___x___, PV_LS,   PV_LT,   PV_LP,  PV_LH,  PV_STAR, PV_STAR, PV_RF,  PV_RP,  PV_RL,   PV_RT,   PV_RD},
+    {___x___, PV_LS,   PV_LK,   PV_LW,  PV_LR,  PV_STAR, PV_STAR, PV_RR,  PV_RB,  PV_RG,   PV_RS,   PV_RZ},
+    {___x___, ___x___, ___x___, PV_A,   PV_O,   _______, _______, PV_E,   PV_U,   ___x___, ___x___, ___x___}
   },
 
   /* Numeric layer
