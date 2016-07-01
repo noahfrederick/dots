@@ -1486,7 +1486,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org
-    :ensure t
+    :ensure org-plus-contrib
     :config
     (progn
       (use-package evil-org)
