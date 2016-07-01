@@ -419,6 +419,8 @@ nnoremap <silent>  <Down> :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<
 nnoremap <silent>  <Left> :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
 nnoremap <silent> <Right> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
 
+nnoremap <Leader><Leader> <C-w>p
+
 nnoremap <silent> <CR> :<C-u>call <SID>try('Switch', "\015")<CR>
 
 nnoremap <A-h> <C-w>h
@@ -609,7 +611,6 @@ nnoremap _vi :set filetype=vim<CR>
 nnoremap _xm :set filetype=xml<CR>
 
 " <Leader> mappings for navigating files and buffers
-nnoremap <Leader><Leader> :
 nnoremap <Leader>? :Zhistory<CR>
 nnoremap <Leader>` :Zmarks<CR>
 nnoremap <Leader>] :Ztags<CR>
@@ -628,10 +629,11 @@ else
 endif
 nnoremap <Leader>b :Zbuffers<CR>
 nnoremap <Leader>d :Zfiles $CODE/dots<CR>
-nmap     <Leader>e :edit %%<C-z><S-Tab>
+nnoremap <Leader>e :Zfiles <C-r>=expand('%:h')<CR><CR>
 nnoremap <Leader>f :Zfiles<CR>
 nnoremap <Leader>h :Zhelp<CR>
 nnoremap <Leader>n :Zfiles $NOTES<CR>
+nnoremap <Leader>s :Scratch<CR>
 
 " }}}
 " Plug-in Settings                                                             {{{

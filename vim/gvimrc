@@ -55,6 +55,10 @@ command! -nargs=0 -bar Present
       \ silent! GitGutterDisable
 
 nnoremap <Leader>b :buffer <C-z><S-Tab>
+nnoremap <Leader>d :edit $CODE/dots/
+nmap     <Leader>e :edit %%<C-z><S-Tab>
 nnoremap <Leader>f :find<Space>
+nnoremap <Leader>h :help<Space>
+nnoremap <Leader>n :edit $NOTES/
 
 " vim: fdm=marker:sw=2:sts=2:et
