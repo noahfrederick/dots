@@ -23,7 +23,7 @@ append_to_cdpath "$CODE"
 #
 # EDITOR
 #
-set -gx EDITOR vim
+set -gx EDITOR nvim
 
 #
 # COLORS
