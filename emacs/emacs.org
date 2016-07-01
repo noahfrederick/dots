@@ -1303,9 +1303,6 @@ ibuffer, which displays a listing in its own
 buffer. ~ibuffer-saved-filter-groups~ defines rules for grouping
 buffers under categories ("filter groups").
 
-The [[https://github.com/purcell/ibuffer-vc][ibuffer-vc]] package generates filter groups for consumption by
-ibuffer that categorize buffers by version control repository root.
-
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ibuffer
@@ -1314,7 +1311,7 @@ ibuffer that categorize buffers by version control repository root.
     (progn
       (setq ibuffer-saved-filter-groups
             '(("Config" (or
-                         (filename . ".dots/")
+                         (filename . "dots/")
                          (filename . ".emacs.d/")))
               ("Shell"  (or
                          (mode . eshell-mode)
@@ -1334,27 +1331,7 @@ ibuffer that categorize buffers by version control repository root.
                          (mode . gnus-article-mode)))
               ("Emacs"  (name . "^\\*.*\\*$")))
             ibuffer-show-empty-filter-groups nil
-            ibuffer-expert t)
-
-      (use-package ibuffer-vc
-        :commands ibuffer-vc-generate-filter-groups-by-vc-root
-        :init
-        (progn
-          (defun nox/ibuffer-apply-filter-groups ()
-            "Combine my saved ibuffer filter groups with those generated
-       by `ibuffer-vc-generate-filter-groups-by-vc-root'"
-            (interactive)
-            (setq ibuffer-filter-groups
-                  (append (ibuffer-vc-generate-filter-groups-by-vc-root)
-                          ibuffer-saved-filter-groups))
-            (message "ibuffer-vc: groups set")
-            (let ((ibuf (get-buffer "*Ibuffer*")))
-              (when ibuf
-                (with-current-buffer ibuf
-                  (pop-to-buffer ibuf)
-                  (ibuffer-update nil t)))))
-
-          (add-hook 'ibuffer-hook 'nox/ibuffer-apply-filter-groups)))))
+            ibuffer-expert t)))
 #+END_SRC
 
 Clean up buffers periodically:
