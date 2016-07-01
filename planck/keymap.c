@@ -12,10 +12,8 @@
 #define KEYBOARD_LAYER 7
 
 // Modifier-delimiter hold-tap macros
-#define LSFT_PAREN 0
-#define RSFT_PAREN 1
-#define LALT_BRACE 2
-#define RALT_BRACE 3
+#define LALT_BRACE 0
+#define RALT_BRACE 1
 
 // Key aliases
 #define _______ KC_TRNS
@@ -37,10 +35,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *     Tap for { } -----------'-----------------------------------------'
    */
   [BASE_QWERTY_LAYER] = {
-    {KC_TAB, KC_Q,           KC_W,  KC_E,    KC_R, KC_T,   KC_Y,   KC_U, KC_I,    KC_O,   KC_P,           F(6)},
-    {F(10),  KC_A,           KC_S,  KC_D,    KC_F, KC_G,   KC_H,   KC_J, KC_K,    KC_L,   F(2),           F(11)},
-    {F(12),  KC_Z,           KC_X,  KC_C,    KC_V, KC_B,   KC_N,   KC_M, KC_COMM, KC_DOT, KC_SLSH,        F(13)},
-    {F(4),   ALL_T(KC_LBRC), F(14), KC_LGUI, F(0), KC_SPC, KC_SPC, F(1), KC_RGUI, F(15),  ALL_T(KC_RBRC), F(5)}
+    {KC_TAB,  KC_Q,           KC_W,  KC_E,    KC_R, KC_T,   KC_Y,   KC_U, KC_I,    KC_O,   KC_P,           F(6)},
+    {F(10),   KC_A,           KC_S,  KC_D,    KC_F, KC_G,   KC_H,   KC_J, KC_K,    KC_L,   F(2),           F(11)},
+    {KC_LSPO, KC_Z,           KC_X,  KC_C,    KC_V, KC_B,   KC_N,   KC_M, KC_COMM, KC_DOT, KC_SLSH,        KC_RSPC},
+    {F(4),    ALL_T(KC_LBRC), F(12), KC_LGUI, F(0), KC_SPC, KC_SPC, F(1), KC_RGUI, F(13),  ALL_T(KC_RBRC), F(5)}
   },
 
   /* Base layer (Colemak)
@@ -93,8 +91,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LOWER_LAYER] = {
     {LGUI(KC_GRV), KC_F1,          KC_F2,  KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7, KC_F8,   KC_F9, KC_F10,         _______},
     {F(10),        KC_1,           KC_2,   KC_3,    KC_4,    KC_5,    KC_6,    KC_7,  KC_8,    KC_9,  KC_0,           F(11)},
-    {F(12),        KC_MINS,        KC_EQL, KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,  KC_D,    KC_E,  KC_F,           F(13)},
-    {F(4),         ALL_T(KC_LBRC), F(14),  KC_LGUI, F(0),    KC_BSPC, KC_BSPC, F(1),  KC_RGUI, F(15), ALL_T(KC_RBRC), F(5)}
+    {KC_LSPO,      KC_MINS,        KC_EQL, KC_GRV,  KC_BSLS, KC_A,    KC_B,    KC_C,  KC_D,    KC_E,  KC_F,           KC_RSPC},
+    {F(4),         ALL_T(KC_LBRC), F(12),  KC_LGUI, F(0),    KC_BSPC, KC_BSPC, F(1),  KC_RGUI, F(13), ALL_T(KC_RBRC), F(5)}
   },
 
   /* Symbol layer
@@ -193,46 +191,13 @@ const uint16_t PROGMEM fn_actions[] = {
   [10] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_ESC),
   [11] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
 
-  [12] = ACTION_MACRO_TAP(LSFT_PAREN),
-  [13] = ACTION_MACRO_TAP(RSFT_PAREN),
-
-  [14] = ACTION_MACRO_TAP(LALT_BRACE),
-  [15] = ACTION_MACRO_TAP(RALT_BRACE),
+  [12] = ACTION_MACRO_TAP(LALT_BRACE),
+  [13] = ACTION_MACRO_TAP(RALT_BRACE),
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
   switch(id) {
-    // Note: You must change the "magic" key combo in config.h to avoid issues
-    // with shift tap keys, which is LSFT + RSFT by default.
-    case LSFT_PAREN:
-      if (record->event.pressed) {
-        register_mods(MOD_LSFT);
-        record->tap.interrupted = 0;
-      } else {
-        if (record->tap.count && !record->tap.interrupted) {
-          register_code(KC_9);
-          unregister_code(KC_9);
-        }
-
-        unregister_mods(MOD_LSFT);
-        record->tap.count = 0;
-      }
-      break;
-    case RSFT_PAREN:
-      if (record->event.pressed) {
-        register_mods(MOD_LSFT);
-        record->tap.interrupted = 0;
-      } else {
-        if (record->tap.count && !record->tap.interrupted) {
-          register_code(KC_0);
-          unregister_code(KC_0);
-        }
-
-        unregister_mods(MOD_LSFT);
-        record->tap.count = 0;
-      }
-      break;
     case LALT_BRACE:
       if (record->event.pressed) {
         register_mods(MOD_LALT);
