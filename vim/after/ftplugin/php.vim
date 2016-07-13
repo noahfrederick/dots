@@ -49,7 +49,7 @@ let b:textobj_function_select = function('php#function_select')
 let b:accio = ['php', 'phpcs', 'phpmd']
 
 call nox#filetype#make_semicolon_maps()
-call nox#filetype#make_rocket_maps()
+call nox#filetype#make_sparkup_maps()
 
 command! -buffer -bar -nargs=0 Format call nox#format#php_fmt()
 

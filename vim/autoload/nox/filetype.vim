@@ -10,7 +10,7 @@ endfunction
 " Insert "=>" or "->" depending on context
 function! s:rocket() abort
   let prev_char = matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
-  if prev_char =~# '\k'
+  if prev_char =~# '\k\|)'
     return '->'
   elseif prev_char =~# '\s'
     return '=> '
@@ -19,8 +19,31 @@ function! s:rocket() abort
   endif
 endfunction
 
+function! s:in_syntax(names) abort
+  let groups = map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  for name in a:names
+    if index(groups, name) >= 0
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
+function! s:sparkup_or_rocket() abort
+  if s:in_syntax(['phpRegion', 'bladeEcho', 'bladePhpParenBlock'])
+    return s:rocket()
+  endif
+  return "\<C-g>u\<C-o>:call sparkup#transform()\<CR>"
+endfunction
+
 function! nox#filetype#make_rocket_maps()
   call nox#filetype#map("inoremap", "<expr> <C-l>", "<SID>rocket()")
+endfunction
+
+function! nox#filetype#make_sparkup_maps()
+  call nox#filetype#map("inoremap", "<expr> <C-l>", "<SID>sparkup_or_rocket()")
+  call nox#filetype#map("inoremap", "<C-S-n>", "<C-g>u<C-o>:call sparkup#next()<CR>")
+  call nox#filetype#map("inoremap", "<C-S-p>", "<C-g>u<C-o>:call sparkup#prev()<CR>")
 endfunction
 
 function! nox#filetype#make_xml_maps()
