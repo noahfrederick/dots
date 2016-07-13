@@ -63,7 +63,6 @@ if has("vim_starting")
   Plug '$PLUG_SRC/vim-kohana'
   Plug '$PLUG_SRC/vim-laravel'
   Plug 'ap/vim-css-color'
-  Plug 'dbakker/vim-lint',               { 'for': 'vim' }
   Plug 'dbakker/vim-sparkup'
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
   Plug 'shawncplus/phpcomplete.vim',     { 'for': 'php' }
