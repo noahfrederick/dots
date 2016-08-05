@@ -313,6 +313,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keymap_config.raw = eeconfig_read_keymap();
         keymap_config.nkro = 1;
         eeconfig_update_keymap(keymap_config.raw);
+        plover_resume();
       }
       return false;
     case EXT_PLV:
@@ -320,6 +321,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
 #endif
+        plover_suspend();
         layer_off(BASE_STENO_LAYER);
       }
       return false;
@@ -331,6 +333,36 @@ void matrix_init_user(void) {
 #ifdef AUDIO_ENABLE
   startup_user();
 #endif
+}
+
+// Send PHROPB ("Plover on").
+void plover_resume() {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RP);
+  register_code(PV_RB);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RP);
+  unregister_code(PV_RB);
+}
+
+// Send PHROF ("Plover off").
+void plover_suspend() {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RF);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RF);
 }
 
 #ifdef AUDIO_ENABLE
