@@ -34,7 +34,8 @@ enum planck_keycodes {
   STENO,
   LOWER,
   RAISE,
-  EXT_PLV
+  PV_EXIT,
+  PV_LOOK
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -89,9 +90,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [BASE_STENO_LAYER] = {
     {PV_NUM,  PV_NUM,  PV_NUM,  PV_NUM, PV_NUM, PV_NUM,  PV_NUM,  PV_NUM, PV_NUM, PV_NUM,  PV_NUM,  PV_NUM},
-    {___x___, PV_LS,   PV_LT,   PV_LP,  PV_LH,  PV_STAR, PV_STAR, PV_RF,  PV_RP,  PV_RL,   PV_RT,   PV_RD},
-    {___x___, PV_LS,   PV_LK,   PV_LW,  PV_LR,  PV_STAR, PV_STAR, PV_RR,  PV_RB,  PV_RG,   PV_RS,   PV_RZ},
-    {EXT_PLV, ___x___, ___x___, PV_A,   PV_O,   _______, _______, PV_E,   PV_U,   ___x___, ___x___, ___x___}
+    {PV_LOOK, PV_LS,   PV_LT,   PV_LP,  PV_LH,  PV_STAR, PV_STAR, PV_RF,  PV_RP,  PV_RL,   PV_RT,   PV_RD},
+    {PV_LOOK, PV_LS,   PV_LK,   PV_LW,  PV_LR,  PV_STAR, PV_STAR, PV_RR,  PV_RB,  PV_RG,   PV_RS,   PV_RZ},
+    {PV_EXIT, ___x___, ___x___, PV_A,   PV_O,   _______, _______, PV_E,   PV_U,   ___x___, ___x___, ___x___}
   },
 
   /* Numeric layer
@@ -316,13 +317,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         plover_resume();
       }
       return false;
-    case EXT_PLV:
+    case PV_EXIT:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
 #endif
         plover_suspend();
         layer_off(BASE_STENO_LAYER);
+      }
+      return false;
+    case PV_LOOK:
+      if (record->event.pressed) {
+        plover_lookup();
       }
       return false;
   }
@@ -335,7 +341,7 @@ void matrix_init_user(void) {
 #endif
 }
 
-// Send PHROPB ("Plover on").
+// Send PHROPB ({PLOVER:RESUME}).
 void plover_resume() {
   register_code(PV_LP);
   register_code(PV_LH);
@@ -351,7 +357,7 @@ void plover_resume() {
   unregister_code(PV_RB);
 }
 
-// Send PHROF ("Plover off").
+// Send PHROF ({PLOVER:SUSPEND}).
 void plover_suspend() {
   register_code(PV_LP);
   register_code(PV_LH);
@@ -363,6 +369,22 @@ void plover_suspend() {
   unregister_code(PV_LR);
   unregister_code(PV_O);
   unregister_code(PV_RF);
+}
+
+// Send PHROBG ({PLOVER:LOOKUP}).
+void plover_lookup() {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RB);
+  register_code(PV_RG);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RB);
+  unregister_code(PV_RG);
 }
 
 #ifdef AUDIO_ENABLE
