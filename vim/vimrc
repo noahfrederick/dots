@@ -189,12 +189,12 @@ endif
 "" Status line
 let &statusline  = ' %6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
 let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
-let &statusline .= "%*%f"
+let &statusline .= "%*%{empty(expand('%'))?'':expand('%')}"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
-let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
-let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
-let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
-let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
+let &statusline .= '%1*%{&modified && !&readonly?"\u25cf ":""}%*'
+let &statusline .= '%1*%{&modified && &readonly?"\u25cb ":""}%*'
+let &statusline .= '%2*%{&modifiable?"":"\u25cb "}%*'
+let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb ":""}%*'
 let &statusline .= "%="
 let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
 let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
@@ -209,7 +209,7 @@ function! StatuslineGit()
   endif
   let l:out = fugitive#head(8)
   if l:out !=# ''
-    let l:out = ' @ ' . l:out
+    let l:out = '  @ ' . l:out
   endif
   return l:out
 endfunction
@@ -230,6 +230,9 @@ function! StatuslineIndent()
 endfunction
 
 function! StatuslineProject()
+  if empty(expand('%'))
+    return ''
+  endif
   let dir = getcwd() == $HOME ? '~' : fnamemodify(getcwd(), ':t')
   return dir . (expand('%')[0] !=# '/' && stridx(expand('%:p'), getcwd()) == 0 ? '/' : ' ')
 endfunction
