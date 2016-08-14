@@ -41,6 +41,9 @@ if has('gui_macvim')
 
   " Toggle window transparency - useful for referencing something behind Vim
   nnoremap <silent> <Leader>0 :let &transparency = (&transparency == "0" ? "30" : "0")<CR>
+
+  " Use an iTerm adapter to launch FZF
+  let g:fzf_launcher = 'fzf_term %s'
 endif
 
 command! -nargs=0 -bar Present
@@ -54,12 +57,5 @@ command! -nargs=0 -bar Present
       \ highlight User3        guifg=#b1d631 guibg=#dddddd |
       \ silent! GitGutterDisable |
       \ silent! SignifyDisable
-
-nnoremap <Leader>b :buffer <C-z><S-Tab>
-nnoremap <Leader>d :edit $CODE/dots/
-nmap     <Leader>e :edit %%<C-z><S-Tab>
-nnoremap <Leader>f :find<Space>
-nnoremap <Leader>h :help<Space>
-nnoremap <Leader>n :edit $NOTES/
 
 " vim: fdm=marker:sw=2:sts=2:et
