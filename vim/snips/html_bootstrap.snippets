@@ -13,11 +13,11 @@ snippet alert "HTML <div class='alert'>" b
 endsnippet
 
 snippet btn "HTML <a class='btn'>"
-<a class="btn${1: btn-primary}" href="${2:#}">${3:$2}</a>
+<a class="btn btn-${1:default}" href="${2:#}">${3:$2}</a>
 endsnippet
 
 snippet submit "HTML <input type='submit'>"
-<input class="btn${1: btn-primary}" type="submit" value="${2:Submit}" />
+<input class="btn btn-${1:primary}" type="submit" value="${2:Submit}" />
 endsnippet
 
 snippet table "HTML <table>" b
@@ -94,8 +94,8 @@ snippet select "Select with Label" b
 endsnippet
 
 snippet form "HTML <form>" b
-<form class="form-horizontal" action="${1:#}" method="${2:post}" accept-charset="utf-8">
-	$0
+<form class="form-horizontal" action="${1:#}" method="${2:POST}" accept-charset="utf-8">
+	${0:${VISUAL}}
 </form>
 endsnippet
 

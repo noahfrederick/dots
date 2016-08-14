@@ -1,0 +1,123 @@
+# blade.snippets - Snippets for blade file type
+
+extends html
+
+#
+# Blade Directives
+#
+snippet @ext "Blade @extends" b
+@extends('$1')
+endsnippet
+
+snippet @sec "Blade @section" b
+@section('$1')
+	@parent
+	${0:${VISUAL}}
+@endsection
+endsnippet
+
+snippet @yi "Blade @yield" b
+@yield('$1')
+endsnippet
+
+snippet @st "Blade @stack" b
+@stack('$1')
+endsnippet
+
+snippet @push "Blade @push" b
+@push('$1')
+	${0:${VISUAL}}
+@endpush
+endsnippet
+
+snippet @inc "Blade @include" b
+@include('$1')
+endsnippet
+
+snippet @inject "Blade @inject" b
+@inject('${1:varname}', '${2:App\Services\MetricsService}')
+endsnippet
+
+#
+# Conditional Statements
+#
+snippet @can "Blade @can" b
+@can ('$1')
+	${0:${VISUAL}}
+@endcan
+endsnippet
+
+snippet @if "Blade @if" b
+@if ($1)
+	${0:${VISUAL}}
+@endif
+endsnippet
+
+snippet @unless "Blade @unless" b
+@unless ($1)
+	${0:${VISUAL}}
+@endunless
+endsnippet
+
+snippet @has "Blade @hasSection" b
+@hasSection('$1')
+	${0:${VISUAL}}
+@else
+@endif
+endsnippet
+
+#
+# Loops
+#
+snippet @foreach "Blade @foreach" b
+@foreach ($1 as $2)
+	${0:${VISUAL}}
+@endforeach
+endsnippet
+
+snippet @forelse "Blade @forelse" b
+@forelse ($1 as $2)
+	${0:${VISUAL}}
+@empty
+@endforelse
+endsnippet
+
+snippet @for "Blade @for" b
+@for ($1; $2; $3)
+	${0:${VISUAL}}
+@endfor
+endsnippet
+
+snippet @while "Blade @while" b
+@while ($1)
+	${0:${VISUAL}}
+@endwhile
+endsnippet
+
+#
+# Recipies
+#
+snippet fg "Blade + Bootstrap form group" b
+<div class="form-group {{ $errors->has('$3') ? ' has-error' : '' }}">
+	<label class="col-sm-4 control-label" for="$2">${1:Label}</label>
+	<div class="col-sm-8">
+		<input type="text" class="form-control" id="${2:${1/[[:alpha:]]+|( )/(?1:-:\L$0)/g}}" name="${3:${2/-/_/g}}" value="{{ old('$3', $entity->$3) }}">
+	</div>
+</div>
+endsnippet
+
+snippet panel "Bootstrap panel" b
+<div class="panel panel-default">
+	<div class="panel-heading">${1:Panel Heading}</div>
+
+	<div class="panel-body">
+		<div class="form-horizontal">
+			${0:${VISUAL}}
+		</div>
+	</div>
+</div>
+endsnippet
+
+snippet old "Blade old input value" w
+{{ old('${1:property}', $${2:entity}->$1) }}
+endsnippet
