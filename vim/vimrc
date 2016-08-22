@@ -187,7 +187,7 @@ else
 endif
 
 "" Status line
-let &statusline  = ' %6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
+let &statusline  = ' %6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused) "):""}'
 let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
 let &statusline .= "%*%{empty(expand('%'))?'':expand('%')}"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
@@ -208,8 +208,10 @@ function! StatuslineGit()
     return ''
   endif
   let l:out = fugitive#head(8)
-  if l:out !=# ''
+  if !empty(l:out) && !empty(expand('%'))
     let l:out = '  @ ' . l:out
+  elseif !empty(l:out)
+    let l:out = ' ' . l:out
   endif
   return l:out
 endfunction
