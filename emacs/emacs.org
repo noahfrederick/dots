@@ -606,31 +606,6 @@ Vim. Use =ESC= to cancel out of the minibuffer:
   (define-key minibuffer-local-isearch-map [escape] 'nox/minibuffer-keyboard-quit)
 #+END_SRC
 
-** God Mode
-
-[[https://github.com/chrisdone/god-mode][God mode]] allows for entering chorded key sequences without the
-chording.
-
-#+BEGIN_EXAMPLE
-  Before: C-p C-k C-n M-^ ) C-j C-y M-r C-x z z M-2 C-g C-g C-x C-s
-  After:    p   k   n g ^ )   j   y g r     . .   2   g   g   x   s
-#+END_EXAMPLE
-
-[[https://github.com/gridaphobe/evil-god-state][Evil god state]] provides an ~evil-execute-in-god-state~ command, which
-creates an automatic =<Leader>= key of sorts for chorded Emacs
-commands. For example, the =C-x C-f= binding for ~find-file~ becomes
-=\xf=. This becomes particularly useful when dealing with major modes
-such as Org mode that define many mode-specific chorded key
-bindings. In this regard, it fills the role of Vim's =<LocalLeader>=.
-
-#+NAME: evil
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package evil-god-state
-    :ensure t
-    :commands evil-execute-in-god-state
-    :init (evil-define-key 'normal global-map "\\" 'evil-execute-in-god-state))
-#+END_SRC
-
 * Editing
 
 ** Text Encodings
