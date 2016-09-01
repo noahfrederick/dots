@@ -67,3 +67,8 @@ prepend_to_path bin
 set -x BOXEN_MYSQL_PORT 13306
 set -x BOXEN_MYSQL_SOCKET /opt/boxen/data/mysql/socket
 set -x BOXEN_MYSQL_URL "mysql://$USER@localhost:13306/"
+
+# Point Composer PHP to Homebrew-installed OpenSSL cert bundle. It doesn't
+# look in the location that Boxen imposes.
+
+set -x SSL_CERT_FILE /opt/boxen/homebrew/etc/openssl/cert.pem
