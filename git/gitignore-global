@@ -1,4 +1,5 @@
 .DS_Store
+.padawan
 .vimrc
 Session.vim
 config.codekit
