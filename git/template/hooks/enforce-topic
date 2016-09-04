@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+# Enforce commit messages in the form "[Topic] Message comes after".
+# To use, copy this script to `.git/hooks/commit-msg`.
+
+message_file = ARGV[0]
+message = File.read(message_file)
+
+format = /^\[[[:upper:]]\w+\]/
+
+unless format.match(message)
+  puts '[POLICY] Your message is missing a topic'
+  exit 1
+end
