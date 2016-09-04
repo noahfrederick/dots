@@ -6,9 +6,11 @@ CISC
 CLI
 CMS
 CRM
+CSP
 CSS
 CSV
 CUNY
+Centro
 Colemak
 DHCP
 DNS
@@ -18,6 +20,7 @@ DVDs
 EC2
 GitHub
 HJKL
+HSTS
 IP
 IRC
 JSON
@@ -30,9 +33,12 @@ Markdown
 NYU
 Neovim
 Neovim's
+OpenSSL
 PDF
 PGP
 PHP
+PHPUnit
+PNG
 POSIX
 Posix
 PrestaShop
@@ -47,6 +53,7 @@ URL
 URL's
 URLs
 UTF
+UX
 Ubuntu
 VCS
 Vergil
@@ -54,6 +61,7 @@ VirtualBox
 WASD
 Wikipedia
 WordPress
+XSS
 YAML
 admin
 analyses
@@ -64,6 +72,7 @@ characterwise
 checkbox
 configurability
 discoverability
+dismissible
 edamame
 fallback
 fallbacks
@@ -71,6 +80,7 @@ filesystem
 flatbread
 fundraiser
 hyperlink
+immersive
 incentivize
 jQuery
 keymap
@@ -84,6 +94,7 @@ online
 ortholinear
 osCommerce
 overfitting
+palimpsestic
 perceptron
 perceptrons
 phpBB
@@ -94,9 +105,11 @@ programmatically
 quesadilla
 quesadillas
 refactor
+sororophobia
 spacebar
 spellchecking
 symlink
+tahini
 templating
 teriyaki
 timestamp
@@ -104,9 +117,11 @@ toolbar
 tradeoff
 uncheck
 uninstall
+uninstalling
 unshifted
 updatable
 versioned
+viewport
 virtualization
 wiki
 wildcard
