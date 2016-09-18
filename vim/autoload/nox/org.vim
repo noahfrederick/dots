@@ -1,23 +1,28 @@
 " autoload/nox/org.vim - Global organizational helpers
 " Maintainer:   Noah Frederick
 
-function! nox#org#shopping_list() abort
-  let today = join([$NOTES, "shopping", strftime("%Y-%m-%d") . ".md"], "/")
+function! nox#org#shopping_list(...) abort
+  let new = get(a:000, 0, 0)
+  let today = join([$NOTES, 'shopping', strftime('%Y-%m-%d') . '.md'], '/')
 
   " If today's list already exists, just edit it
   if filereadable(today)
-    execute "edit" today
+    execute 'edit' today
     return
   endif
 
   " Get file name of most recent list
-  let glob = join([$NOTES, "shopping", "*.md"], "/")
-  let fn = system(join(["ls", glob, "|", "tail -1"]))
-  let fn = substitute(fn, "\n", "", "")
+  let fn = remove(glob('$NOTES/shopping/*.md', 1 , 1), -1)
+
+  if !new
+    " Edit the most recent list
+    execute 'edit' fn
+    return
+  endif
 
   " Copy to today list
-  execute "silent edit" fn
-  execute "keepalt file" today
+  execute 'silent edit' fn
+  execute 'keepalt file' today
 
   normal! zi
   " Uncheck all checkboxes
