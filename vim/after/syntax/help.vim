@@ -3,6 +3,6 @@
 
 " Hide the modeline at the end of help files
 if has("conceal")
-  syntax match helpModeline "^ vim:.*" conceal
+  syntax match helpModeline "^\s*vim:.*" conceal
   highlight default link helpModeline helpIgnore
 endif
