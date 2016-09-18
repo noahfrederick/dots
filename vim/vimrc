@@ -470,7 +470,7 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 
 " Use character under cursor as first character in digraph and replace it
 " Ex.:
-"   Pressing <Leader>k- on the 'e' in
+"   Pressing <Leader><C-k>- on the 'e' in
 "     habere
 "   Makes
 "     habēre
@@ -520,8 +520,8 @@ inoremap <silent> <C-g><C-t> <C-r>=repeat(complete(col('.'), map([
 
 " <C-y> and <C-e> insert to end of word instead of single characters
 " (Note that this clobbers <C-y>'s function when the completion popup is
-" visible--this is by design, as it is cumbersome in combination with YCM's
-" autocompletion)
+" visible--this is by design, as it is cumbersome in combination with
+" autocompletion where the completion menu may show as you insert text.)
 inoremap <expr> <C-y> matchstr(getline(line('.') - 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
