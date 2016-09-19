@@ -1,5 +1,3 @@
-setlocal textwidth=120
-
 " Delete attributes in current tag
 nnoremap <buffer> <LocalLeader>da lF<f dt>
 
