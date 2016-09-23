@@ -361,6 +361,7 @@ command! -nargs=0 -bar -bang               Zlines   call nox#fzf#lines(<bang>0)
 command! -nargs=0 -bar -bang               Zblines  call nox#fzf#blines(<bang>0)
 command! -nargs=0 -bar -bang               Zmarks   call nox#fzf#marks(<bang>0)
 command! -nargs=* -bar -bang               Zgrep    call nox#fzf#grep(<q-args>, <bang>0)
+command! -nargs=0 -bar -bang               Zfixme   Zgrep<bang> (FIXME\|TODO\|XXX)
 
 if has("autocmd")
   augroup init_fzf
