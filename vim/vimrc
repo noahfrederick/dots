@@ -344,7 +344,7 @@ if exists("$NOTES")
         \ else |
         \   lvimgrep<bang> /<args>/ $NOTES/**/*.md | lopen |
         \ endif
-  command! -nargs=0 -bang -bar ShoppingList call nox#org#shopping_list(<q-bang> == '!')
+  command! -nargs=0 -bang -bar ShoppingList call nox#org#shopping_list(<bang>0)
 endif
 
 " See the difference between the current buffer and the file it was loaded
