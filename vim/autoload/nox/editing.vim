@@ -27,12 +27,12 @@ endfunction
 
 function! s:normalize_whitespace()
   " 1. Strip trailing whitespace
-  %substitute/\s\+$//e
+  silent %substitute/\s\+$//e
   " 2. Merge consecutive blank lines
-  %substitute/\n\{3,}/\r\r/e
+  silent %substitute/\n\{3,}/\r\r/e
   " 3. Strip empty lines from beginning and end of file
-  %substitute/\%^\n\+//e
-  %substitute/\n\+\%$//e
+  silent %substitute/\%^\n\+//e
+  silent %substitute/\n\+\%$//e
 endfunction
 
 function! nox#editing#normalize_whitespace()
