@@ -26,6 +26,11 @@ append_to_cdpath "$CODE"
 set -gx EDITOR nvim
 
 #
+# MAN
+#
+set -gx MANPAGER 'nvim -c "set filetype=man" -'
+
+#
 # COLORS
 #
 set -gx CLICOLOR 1
