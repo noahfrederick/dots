@@ -165,6 +165,10 @@ set cmdheight=1                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set pumheight=8                 " Limit height of popup menu
 
+if exists("+inccommand")        " Introduced in Nvim 0.1.7
+  set inccommand=split          " Show live substitution in temporary split window
+endif
+
 "" Whitespace
 set tabstop=4                   " Display width of tabs--indentation style is handled by sleuth.vim
 set shiftround                  " Round indent to multiple of 'shiftwidth'
