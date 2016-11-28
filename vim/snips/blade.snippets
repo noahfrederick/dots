@@ -98,10 +98,19 @@ endsnippet
 # Recipies
 #
 snippet fg "Blade + Bootstrap form group" b
-<div class="form-group {{ $errors->has('$3') ? ' has-error' : '' }}">
+<div class="form-group{{ $errors->has('$3') ? ' has-error' : '' }}">
 	<label class="col-sm-4 control-label" for="$2">${1:Label}</label>
 	<div class="col-sm-8">
 		<input type="text" class="form-control" id="${2:${1/[[:alpha:]]+|( )/(?1:-:\L$0)/g}}" name="${3:${2/-/_/g}}" value="{{ old('$3', $entity->$3) }}">
+	</div>
+</div>
+endsnippet
+
+snippet fgr "Blade + Bootstrap required form group" b
+<div class="form-group required{{ $errors->has('$3') ? ' has-error' : '' }}">
+	<label class="col-sm-4 control-label" for="$2">${1:Label}</label>
+	<div class="col-sm-8">
+		<input type="text" class="form-control" id="${2:${1/[[:alpha:]]+|( )/(?1:-:\L$0)/g}}" name="${3:${2/-/_/g}}" value="{{ old('$3', $entity->$3) }}" required>
 	</div>
 </div>
 endsnippet
@@ -111,9 +120,7 @@ snippet panel "Bootstrap panel" b
 	<div class="panel-heading">${1:Panel Heading}</div>
 
 	<div class="panel-body">
-		<div class="form-horizontal">
-			${0:${VISUAL}}
-		</div>
+		${0:${VISUAL}}
 	</div>
 </div>
 endsnippet
