@@ -252,7 +252,7 @@ so that it doesn't leave stray customizations behind.
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (defadvice load-theme (before theme-dont-propagate activate)
-   (mapcar #'disable-theme custom-enabled-themes))
+   (mapc #'disable-theme custom-enabled-themes))
 #+END_SRC
 
 We also set the font while specifying a couple fallbacks. The last
