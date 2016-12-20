@@ -7,10 +7,24 @@ function! nox#filetype#make_semicolon_maps()
   call nox#filetype#map("inoremap", ",,", "<Esc>A,")
 endfunction
 
-" Insert "=>" or "->" depending on context
+" Insert "=>", "->", or "=" in Ruby/PHP buffers depending on context:
+"
+"   $foo |
+"   $foo = |
+"
+"   $foo|
+"   $foo->|
+"
+"   'bar'|
+"   'bar' => |
+"
 function! s:rocket() abort
-  let prev_char = matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
-  if prev_char =~# '\k\|)'
+  let line = getline('.')
+  let prev_char = matchstr(line, '\%' . (col('.') - 1) . 'c.')
+
+  if line =~# '^\s*\$\?\k\+\s\+$'
+    return '= '
+  elseif prev_char =~# '\k\|)'
     return '->'
   elseif prev_char =~# '\s'
     return '=> '
@@ -30,7 +44,7 @@ function! s:in_syntax(names) abort
 endfunction
 
 function! s:sparkup_or_rocket() abort
-  if s:in_syntax(['phpRegion', 'bladeEcho', 'bladePhpParenBlock'])
+  if s:in_syntax(['phpFunction', 'phpRegion', 'bladeEcho', 'bladePhpParenBlock'])
     return s:rocket()
   endif
   return "\<C-g>u\<C-o>:call sparkup#transform()\<CR>"
