@@ -50,6 +50,7 @@ if has("vim_starting")
   endif
 
   " Text objects
+  Plug 'adriaanzon/vim-textobj-blade-directive', { 'for': 'blade' }
   Plug 'akiyan/vim-textobj-php',         { 'for': 'php' }
   Plug 'kana/vim-textobj-function'
   Plug 'kana/vim-textobj-user'
