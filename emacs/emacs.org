@@ -1457,6 +1457,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* %?\n%U\n"
                :clock-keep t :kill-buffer t)
+              ("e" "🗓️ Calendar event" entry
+               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               "* %^{Event name}%^{Location}p\n%T\n%?"
+               :clock-keep t :kill-buffer t)
               ("J" "😁 Mood")
               ("Je" "😃 Excited" entry
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
