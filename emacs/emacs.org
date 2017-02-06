@@ -1654,7 +1654,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
        '((emacs-lisp . t)
          (ledger . t)
          (ruby . t)
-         (sh . t)))
+         (shell . t)))
       (setq org-src-fontify-natively t
             org-src-tab-acts-natively t
             org-confirm-babel-evaluate nil)))
