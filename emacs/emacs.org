@@ -2336,6 +2336,11 @@ saner interface.
             mu4e-headers-has-child-prefix   '("+" . "└")
             mu4e-headers-first-child-prefix '("\\" . "└")
             mu4e-headers-include-related nil
+            mu4e-headers-date-format    "%F %R"
+            mu4e-headers-fields         '((:human-date .  16)
+                                          (:flags      .   6)
+                                          (:from       .  24)
+                                          (:subject    . nil))
             mu4e-bookmarks '(("date:today..now" "Today's messages" ?t)
                              ("date:7d..now" "Last 7 days" ?w)
                              ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
