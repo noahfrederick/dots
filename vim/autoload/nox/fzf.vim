@@ -412,12 +412,12 @@ endfunction
 " PHP Use
 " ------------------------------------------------------------------
 function! s:use_sink(fqn) abort
-  call composer#namespace#use(a:fqn)
+  call composer#namespace#use(0, '\'.a:fqn)
 endfunction
 
 function! nox#fzf#use(bang)
   " For now, it just offers Laravel facade classes
-  let classes = sort(values(laravel#app().facades()))
+  let classes = sort(keys(laravel#app().facades()))
 
   return s:fzf({
         \ 'source': classes,
