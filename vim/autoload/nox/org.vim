@@ -27,7 +27,7 @@ function! nox#org#shopping_list(...) abort
   normal! zi
   " Uncheck all checkboxes
   silent keeppatterns %s/^\s*\zs++ /-- /e
-  silent keeppatterns %s/^\s*\zs- [x] /- [ ] /e
+  silent keeppatterns %s/^\s*\zs- \[x] /- [ ] /e
   set modified
   1
 endfunction
