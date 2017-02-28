@@ -112,7 +112,7 @@ function! markdown#follow_link_under_cursor()
 
   normal! Bf("tyib
   let l:url = @t
-  call netrw#NetrwBrowseX(url, 0)
+  call netrw#BrowseX(url, 0)
 
   let @t = l:saved_reg
   call setpos('.', l:saved_pos)
