@@ -443,11 +443,21 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
+nnoremap <A-S-h> <C-w>H
+nnoremap <A-S-j> <C-w>J
+nnoremap <A-S-k> <C-w>K
+nnoremap <A-S-l> <C-w>L
+
 if exists(":tnoremap")
   tnoremap <A-h> <C-\><C-n><C-w>h
   tnoremap <A-j> <C-\><C-n><C-w>j
   tnoremap <A-k> <C-\><C-n><C-w>k
   tnoremap <A-l> <C-\><C-n><C-w>l
+
+  tnoremap <A-S-h> <C-\><C-n><C-w>H
+  tnoremap <A-S-j> <C-\><C-n><C-w>J
+  tnoremap <A-S-k> <C-\><C-n><C-w>K
+  tnoremap <A-S-l> <C-\><C-n><C-w>L
 endif
 
 " Make Y consistent with C and D
