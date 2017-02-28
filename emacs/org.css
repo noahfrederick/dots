@@ -13,7 +13,7 @@ a {
 h1,
 h2,
 h4 {
-    font-weight: 100;
+    font-weight: 200;
     color: #7B51CA;
 }
 h1 {
@@ -28,6 +28,11 @@ h2 {
 h3 {
     margin-top: 2em;
     color: #503d15;
+}
+blockquote {
+    margin-left: 1px;
+    padding-left: 1.6em;
+    border-left: 6px solid #eee;
 }
 ul {
     padding-left: 1em;
