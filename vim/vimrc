@@ -15,8 +15,8 @@ if has("vim_starting")
   Plug 'AndrewRadev/sideways.vim'
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
+  Plug 'Shougo/deoplete.nvim'
   Plug 'SirVer/ultisnips',               { 'on': [] }
-  Plug 'Valloric/YouCompleteMe',         { 'on': [], 'do': './install.py' }
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/gv.vim',                { 'on': 'GV' }
@@ -39,7 +39,7 @@ if has("vim_starting")
   Plug 'tpope/vim-speeddating'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
-  Plug 'cohama/lexima.vim',              { 'on': [] }
+  Plug 'cohama/lexima.vim'
   Plug 'wellle/targets.vim'
   if has("mac")
     Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
@@ -66,7 +66,7 @@ if has("vim_starting")
   Plug 'ap/vim-css-color'
   Plug 'dbakker/vim-sparkup'
   Plug 'nelstrom/vim-markdown-folding',  { 'for': 'markdown' }
-  Plug 'shawncplus/phpcomplete.vim',     { 'for': 'php' }
+  Plug 'padawan-php/deoplete-padawan',   { 'for': 'php' }
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-jdaddy',               { 'for': 'json' }
   Plug 'tpope/vim-rake'
@@ -164,6 +164,7 @@ set wildignore+=*.jpg,*.png,*.gif
 set suffixes+=.css,.html        " Extensions that get a lower priority when matching wildcards
 set cmdheight=1                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
+set completeopt-=preview        " Don't show the preview window when completing
 set pumheight=8                 " Limit height of popup menu
 
 if exists("+inccommand")        " Introduced in Nvim 0.1.7
@@ -661,20 +662,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<Left>"
 let g:UltiSnipsSnippetsDir = split(&runtimepath, ',')[0] . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
 
-let g:ycm_filetype_blacklist = {
-      \ 'qf': 1,
-      \ 'markdown': 1,
-      \ 'text': 1,
-      \ 'mail': 1,
-      \ 'html': 1,
-      \ }
-let g:ycm_complete_in_strings = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-" Remove <Tab> from maps lest YCM hijack our mapping from above
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-
 let g:signify_vcs_list = ['git']
 
 " Disable splitjoin.vim maps (we define our own above)
@@ -741,6 +728,13 @@ let g:jekyll_start = 'rake serve'
 " Neomake
 let g:neomake_error_sign = {'text': "\u276f"}
 let g:neomake_warning_sign = {'text': "\u276f"}
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.ledger = ':\w*'
+let g:deoplete#omni#input_patterns.ruby = ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
+let g:deoplete#omni#input_patterns.php = '\w+|[^. \t]->\w*|\w+::\w*'
 
 " Prevent csv.vim from setting its own 'foldtext'
 let g:csv_disable_fdt = 1

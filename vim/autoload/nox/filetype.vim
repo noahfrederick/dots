@@ -62,7 +62,7 @@ endfunction
 
 function! nox#filetype#make_xml_maps()
   " Automatically close tags when typing "</"
-  call nox#filetype#map("inoremap", "</", "</<C-x><C-o>")
+  call nox#filetype#map("inoremap", "</", "</<C-x><C-o><C-n>")
 endfunction
 
 function! nox#filetype#map(type, lhs, rhs)

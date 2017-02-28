@@ -2,8 +2,7 @@
 " Maintainer: Noah Frederick
 
 function! nox#plug#load_insert_mode()
-  call plug#load('ultisnips', 'YouCompleteMe', 'lexima.vim')
-  call youcompleteme#Enable()
+  call plug#load('ultisnips', 'lexima.vim')
 
   if &modifiable
     doautocmd FileType
