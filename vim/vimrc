@@ -656,8 +656,8 @@ nnoremap <Leader>s :Scratch<CR>
 
 let g:UltiSnipsListSnippets = "<C-g><Tab>"
 let g:UltiSnipsExpandTrigger = "<Tab>"
-let g:UltiSnipsJumpForwardTrigger = "<C-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+let g:UltiSnipsJumpForwardTrigger = "<Right>"
+let g:UltiSnipsJumpBackwardTrigger = "<Left>"
 let g:UltiSnipsSnippetsDir = split(&runtimepath, ',')[0] . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
 
