@@ -1,1 +1,0 @@
-/Users/nox/.fzf/shell/key-bindings.fish

@@ -1,3 +1,6 @@
 fish_history
 fish_read_history
 fishd.*
+
+# Symlink installed by fzf
+functions/fzf_key_bindings.fish
