@@ -44,7 +44,7 @@ function! s:in_syntax(names) abort
 endfunction
 
 function! s:sparkup_or_rocket() abort
-  if s:in_syntax(['phpFunction', 'phpRegion', 'bladeEcho', 'bladePhpParenBlock'])
+  if s:in_syntax(['phpFunction', 'phpIdentifier', 'phpRegion', 'bladeDelimiter', 'bladeEcho', 'bladePhpParenBlock'])
     return s:rocket()
   endif
   return "\<C-g>u\<C-o>:call sparkup#transform()\<CR>"
