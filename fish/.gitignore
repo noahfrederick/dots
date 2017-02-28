@@ -1,4 +1,3 @@
-completions/*.fish
 fish_history
 fish_read_history
 fishd.*

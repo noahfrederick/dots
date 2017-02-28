@@ -12,10 +12,11 @@ set -g fish_greeting
 #
 # DIRECTORIES
 #
-set -gx DOCS     "$HOME/Documents"
-set -gx DROPBOX  "$HOME/Dropbox"
-set -gx NOTES    "$DROPBOX/Notes"
-set -gx CODE     "$HOME/src"
+set -gx DOCS      "$HOME/Documents"
+set -gx DROPBOX   "$HOME/Dropbox"
+set -gx NOTES     "$DROPBOX/Notes"
+set -gx CODE      "$HOME/src"
+set -gx HOMESTEAD "$CODE/homestead"
 
 append_to_cdpath "."
 append_to_cdpath "$CODE"
