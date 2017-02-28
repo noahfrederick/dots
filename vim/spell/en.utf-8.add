@@ -18,9 +18,11 @@ DSA
 DVD
 DVDs
 EC2
+Firefox
 GitHub
 HJKL
 HSTS
+HTTPS
 IP
 IRC
 JSON
@@ -29,6 +31,7 @@ Joomla
 Kalypso
 Laravel
 MANA
+MANPAGER
 Markdown
 NYU
 Neovim
@@ -43,8 +46,10 @@ POSIX
 Posix
 PrestaShop
 README
+REPL
 RESTful
 RubyGems
+SEO
 SQLite
 SSL
 Sempronia
@@ -73,6 +78,7 @@ checkbox
 configurability
 discoverability
 dismissible
+doxxing
 edamame
 fallback
 fallbacks
@@ -87,9 +93,12 @@ keymap
 kyriarchy
 libre
 linewise
+linting
 microcontroller
+middleware
 misconfigure
 namespace
+nvim
 online
 ortholinear
 osCommerce
@@ -108,11 +117,13 @@ refactor
 sororophobia
 spacebar
 spellchecking
+steganography
 symlink
 tahini
 templating
 teriyaki
 timestamp
+tmux
 toolbar
 tradeoff
 uncheck
