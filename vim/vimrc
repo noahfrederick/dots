@@ -21,6 +21,7 @@ if has("vim_starting")
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/gv.vim',                { 'on': 'GV' }
   Plug 'justinmk/vim-dirvish'
+  Plug 'machakann/vim-highlightedyank'
   Plug 'mhinz/vim-signify'
   Plug 'neomake/neomake'
   Plug 'pgdouyon/vim-evanesco'
