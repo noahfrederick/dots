@@ -124,7 +124,7 @@ if exists("+breakindent")
 endif
 
 let &fillchars = "vert:\u2502,diff: "
-let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,nbsp:\u2334"
+let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,space:\u00b7,nbsp:\u2334,eol:\u00ac"
 let &showbreak = "\u21aa "
 
 augroup init_colorscheme
