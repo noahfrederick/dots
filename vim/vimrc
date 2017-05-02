@@ -117,32 +117,19 @@ set shortmess+=I                " Suppress intro message when starting Vim
 set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
 set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
-if has("linebreak")
-  set linebreak                 " Wrap lines at word boundaries
-  if exists("+breakindent")
-    set breakindent             " Indent soft-wrapped lines
-  endif
+set linebreak                   " Wrap lines at word boundaries
+if exists("+breakindent")
+  set breakindent               " Indent soft-wrapped lines
 endif
 
-if &termencoding ==# "utf-8" || &encoding ==# "utf-8"
-  let &fillchars = "vert:\u2502,diff: "
-  let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,nbsp:\u2334"
-  if has("linebreak")
-    let &showbreak = "\u21aa "
-  endif
+let &fillchars = "vert:\u2502,diff: "
+let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,nbsp:\u2334"
+let &showbreak = "\u21aa "
 
-  if has("autocmd")
-    augroup init_colorscheme
-      autocmd!
-      autocmd! ColorScheme * highlight VertSplit ctermbg=NONE guibg=NONE
-    augroup END
-  endif
-else
-  if has("linebreak")
-    set showbreak=...
-  endif
-  set listchars=tab:>\ ,extends:>,precedes:<,nbsp:+
-endif
+augroup init_colorscheme
+  autocmd!
+  autocmd! ColorScheme * highlight VertSplit ctermbg=NONE guibg=NONE
+augroup END
 
 if has("vim_starting") && &t_Co >= 16
   silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
@@ -266,64 +253,62 @@ augroup END
 " Autocommands                                                                 {{{
 " --------------------------------------------------------------------------------
 
-if has("autocmd")
-  augroup init
-    autocmd!
+augroup init
+  autocmd!
 
-    autocmd BufNewFile,BufRead *.snippets set filetype=snippets
-    autocmd BufNewFile,BufRead .env.* setfiletype sh
+  autocmd BufNewFile,BufRead *.snippets set filetype=snippets
+  autocmd BufNewFile,BufRead .env.* setfiletype sh
 
-    autocmd User ProjectionistActivate
-          \ if &filetype !=# '' && &filetype !~# 'dirvish|git' |
-          \   for [s:root, s:value] in projectionist#query("framework") |
-          \     if index(split(&filetype, '\.'), s:value) < 0 |
-          \       let &filetype = join([&filetype, s:value], ".") |
-          \     endif |
-          \   endfor |
-          \ endif
-    autocmd User Composer
-          \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
-          \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
+  autocmd User ProjectionistActivate
+        \ if &filetype !=# '' && &filetype !~# 'dirvish|git' |
+        \   for [s:root, s:value] in projectionist#query("framework") |
+        \     if index(split(&filetype, '\.'), s:value) < 0 |
+        \       let &filetype = join([&filetype, s:value], ".") |
+        \     endif |
+        \   endfor |
+        \ endif
+  autocmd User Composer
+        \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
+        \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
 
-    " Never show line numbers in command-line window as they are not useful
-    " and take up space (normally it inherits this setting like any other
-    " window)
-    autocmd CmdwinEnter * set nonumber
-    autocmd QuickFixCmdPost *grep* cwindow
-    autocmd WinEnter * if &previewwindow | execute "setlocal statusline=" . repeat("\u2500", winwidth(0)) | endif
-    autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", winwidth(0))
-  augroup END
+  " Never show line numbers in command-line window as they are not useful
+  " and take up space (normally it inherits this setting like any other
+  " window)
+  autocmd CmdwinEnter * set nonumber
+  autocmd QuickFixCmdPost *grep* cwindow
+  autocmd WinEnter * if &previewwindow | execute "setlocal statusline=" . repeat("\u2500", winwidth(0)) | endif
+  autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", winwidth(0))
+augroup END
 
-  augroup init_linter
-    autocmd!
-    autocmd! BufWritePost * Neomake
-  augroup END
+augroup init_linter
+  autocmd!
+  autocmd! BufWritePost * Neomake
+augroup END
 
-  augroup init_cursorline
-    autocmd!
+augroup init_cursorline
+  autocmd!
 
-    " Only highlight cursor line in window with focus
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter *
-          \ if &filetype !=# 'qf' && &buftype !=# 'terminal' && !&diff |
-          \   set cursorline |
-          \ endif
-    if exists('##TermOpen')
-      autocmd TermOpen * set nocursorline
-    endif
-  augroup END
+  " Only highlight cursor line in window with focus
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter *
+        \ if &filetype !=# 'qf' && &buftype !=# 'terminal' && !&diff |
+        \   set cursorline |
+        \ endif
+  if exists('##TermOpen')
+    autocmd TermOpen * set nocursorline
+  endif
+augroup END
 
-  augroup init_whitespace
-    autocmd!
+augroup init_whitespace
+  autocmd!
 
-    highlight default link TrailingWhitespace ErrorMsg
+  highlight default link TrailingWhitespace ErrorMsg
 
-    autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
-    autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
-    autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
-    autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
-  augroup END
-endif
+  autocmd BufWinEnter * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
+  autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
+  autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
+  autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
+augroup END
 
 " }}}
 " User-Defined Commands                                                        {{{
@@ -369,13 +354,11 @@ command! -nargs=0 -bar -bang               Zmarks   call nox#fzf#marks(<bang>0)
 command! -nargs=* -bar -bang               Zgrep    call nox#fzf#grep(<q-args>, <bang>0)
 command! -nargs=0 -bar -bang               Zfixme   Zgrep<bang> (FIXME\|TODO\|XXX)
 
-if has("autocmd")
-  augroup init_fzf
-    autocmd!
-    autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call nox#fzf#use(<bang>0)
-    autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
-  augroup END
-endif
+augroup init_fzf
+  autocmd!
+  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call nox#fzf#use(<bang>0)
+  autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
+augroup END
 
 if !exists(":cdo")
   " 'Quickfix do' analogous to :argdo, :bufdo, etc.
