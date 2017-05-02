@@ -758,8 +758,6 @@ let g:did_install_syntax_menu = 1
 
 let g:loaded_netrwPlugin = 1
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
-
 " }}}
 " Local vimrc                                                                  {{{
 " --------------------------------------------------------------------------------
