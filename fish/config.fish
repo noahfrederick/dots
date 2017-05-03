@@ -49,6 +49,13 @@ set -g fish_pager_color_completion  white
 set -g fish_pager_color_description purple
 
 #
+# HOMEBREW
+#
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx HOMEBREW_NO_INSECURE_REDIRECT 1
+set -gx HOMEBREW_CASK_OPTS --require-sha
+
+#
 # PINENTRY
 #
 # Suppress GUI prompt--use terminal
