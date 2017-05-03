@@ -63,20 +63,31 @@ function! ledger#split_prompt(...) abort
   call ledger#split(account2, amount)
 endfunction
 
+function! ledger#sort() abort
+  let view = winsaveview()
+  0/\d\{4}/,$!ledger print --sort d
+  call winrestview(view)
+endfunction
+
 nnoremap <silent> <Plug>(ledger-split) :call ledger#split()<CR>:silent! call repeat#set("\<Plug>(ledger-split)")<CR>
 nnoremap <silent> <Plug>(ledger-split-prompt) :call ledger#split_prompt()<CR>
-nnoremap <silent> <Plug>(ledger-toggle-state) :call ledger#transaction_state_toggle(line('.'), ' *?!')<CR>
+nnoremap <silent> <Plug>(ledger-cycle-state) :call ledger#transaction_state_toggle(line('.'), ' *?!')<CR>
+nnoremap <silent> <Plug>(ledger-toggle-state) :call ledger#transaction_state_toggle(line('.'), ' *')<CR>:silent! call repeat#set("\<Plug>(ledger-toggle-state)")<CR>
 nnoremap <silent> <Plug>(ledger-align) :LedgerAlign<CR>
 inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_cursor()<CR>
 nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
+nnoremap <silent> <Plug>(ledger-sort) :call ledger#sort()<CR>
 
 nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
-nmap <buffer> <LocalLeader><LocalLeader> <Plug>(ledger-toggle-state)
+nmap <buffer> <LocalLeader><LocalLeader> <Plug>(ledger-cycle-state)
+nmap <buffer> <CR>           <Plug>(ledger-toggle-state)
 nnoremap <buffer> <LocalLeader>a :'{,'}LedgerAlign<CR>
 xmap <buffer> <LocalLeader>a <Plug>(ledger-align)
 imap <buffer> <C-l>          <Plug>(ledger-align-amount)
 nmap <buffer> <LocalLeader>e <Plug>(ledger-entry)
+nmap <buffer> <LocalLeader>= <Plug>(ledger-sort)
+nmap <buffer> <Leader>=      <Plug>(ledger-sort)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 inoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
