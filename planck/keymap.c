@@ -10,14 +10,16 @@
 extern keymap_config_t keymap_config;
 
 // Keymap layers
-#define BASE_QWERTY_LAYER 0
-#define BASE_COLEMAK_LAYER 1
-#define BASE_STENO_LAYER 2
-#define LOWER_LAYER 3
-#define RAISE_LAYER 4
-#define NAVIGATION_LAYER 5
-#define GUI_LAYER 6
-#define KEYBOARD_LAYER 7
+enum planck_layers {
+  BASE_QWERTY_LAYER,
+  BASE_COLEMAK_LAYER,
+  BASE_STENO_LAYER,
+  LOWER_LAYER,
+  RAISE_LAYER,
+  NAVIGATION_LAYER,
+  GUI_LAYER,
+  KEYBOARD_LAYER
+};
 
 // Key aliases for legibility
 #define _______ KC_TRNS
