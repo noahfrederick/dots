@@ -26,8 +26,28 @@ enum planck_layers {
 #define ___x___ KC_NO
 
 // Macros
-#define LALT_BRACE 0
-#define RALT_BRACE 1
+enum planck_macros {
+  LALT_BRACE,
+  RALT_BRACE
+};
+
+// Dashes (macOS)
+#define KC_NDSH LALT(KC_MINS)
+#define KC_MDSH S(LALT(KC_MINS))
+
+// Window manager keys
+#define WM_FULL LALT(LGUI(KC_F))
+#define WM_NEXT LCTL(LALT(LGUI(KC_RGHT)))
+#define WM_PREV LCTL(LALT(LGUI(KC_LEFT)))
+#define WM_NW   LCTL(LGUI(KC_LEFT))
+#define WM_N    LALT(LGUI(KC_UP))
+#define WM_NE   LCTL(LGUI(KC_RGHT))
+#define WM_E    LALT(LGUI(KC_RGHT))
+#define WM_SE   S(LCTL(LGUI(KC_RGHT)))
+#define WM_S    LALT(LGUI(KC_DOWN))
+#define WM_SW   S(LCTL(LGUI(KC_LEFT)))
+#define WM_W    LALT(LGUI(KC_LEFT))
+#define WM_CNTR LALT(LGUI(KC_C))
 
 // Special key codes
 enum planck_keycodes {
@@ -83,8 +103,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                ,-----------------------------------------------------------------------.
    *                |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |  #  |
    *                |-----------------------------------------------------------------------|
-   *                |     |     |  T  |  P  |  H  |           |  F  |  P  |  L  |  T  |  D  |
-   *                |-----|  S  |-----+-----+-----|     *     |-----+-----+-----+-----+-----|
+   *                |Look |     |  T  |  P  |  H  |           |  F  |  P  |  L  |  T  |  D  |
+   *                | -up |  S  |-----+-----+-----|     *     |-----+-----+-----+-----+-----|
    *                |     |     |  K  |  W  |  R  |           |  R  |  B  |  G  |  S  |  Z  |
    *                |-----------------------------------------------------------------------|
    *                |Exit |     |     |  A  |  O  |           |  E  |  U  |     |     |     |
@@ -109,10 +129,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [LOWER_LAYER] = {
-    {LGUI(KC_GRV), KC_F1,          KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,         KC_F7,            KC_F8,   KC_F9,         KC_F10,         S(KC_3)},
-    {F(5),         KC_1,           KC_2,          KC_3,    KC_4,    KC_5,    KC_6,          KC_7,             KC_8,    KC_9,          KC_0,           F(6)},
-    {KC_LSPO,      KC_MINS,        KC_EQL,        KC_GRV,  KC_BSLS, ___x___, LALT(KC_MINS), S(LALT(KC_MINS)), KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
-    {F(3),         ALL_T(KC_LBRC), M(LALT_BRACE), KC_LGUI, LOWER,   KC_BSPC, KC_BSPC,       RAISE,            KC_RGUI, M(RALT_BRACE), ALL_T(KC_RBRC), F(4)}
+    {LGUI(KC_GRV), KC_F1,          KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,         KC_F10,         S(KC_3)},
+    {F(5),         KC_1,           KC_2,          KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,          KC_0,           F(6)},
+    {KC_LSPO,      KC_MINS,        KC_EQL,        KC_GRV,  KC_BSLS, ___x___, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
+    {F(3),         ALL_T(KC_LBRC), M(LALT_BRACE), KC_LGUI, LOWER,   KC_BSPC, KC_BSPC, RAISE,   KC_RGUI, M(RALT_BRACE), ALL_T(KC_RBRC), F(4)}
   },
 
   /* Symbol layer
@@ -127,10 +147,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                `-----------------------------------------------------------------------'
    */
   [RAISE_LAYER] = {
-    {_______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,        KC_F17,           KC_F18,  KC_F19,  KC_F20,     S(KC_3)},
-    {_______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6),       S(KC_7),          S(KC_8), KC_QUOT, S(KC_QUOT), _______},
-    {_______, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, ___x___, LALT(KC_MINS), S(LALT(KC_MINS)), KC_COMM, KC_DOT,  KC_SLSH,    _______},
-    {_______, _______, _______, _______, _______, KC_DEL,  KC_DEL,        _______,          _______, _______, _______,    _______}
+    {_______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,     S(KC_3)},
+    {_______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6), S(KC_7), S(KC_8), KC_QUOT, S(KC_QUOT), _______},
+    {_______, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, ___x___, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,  KC_SLSH,    _______},
+    {_______, _______, _______, _______, _______, KC_DEL,  KC_DEL,  _______, _______, _______, _______,    _______}
   },
 
   /* Directional navigation layer
@@ -157,21 +177,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *
    *        Mouse keys -----/```````````````````\               /```````````````````\----- Window manager
    *                ,-----------------------------------------------------------------------.
-   *                |     |Ms B2|Ms Up|Ms B1|Ms WD|     |     |Prev | TL  | Top | TR  |     |
+   *                |     |Ms B2|Ms Up|Ms B1|Ms WD|     |     |Prev | NW  |  N  | NE  |     |
    *                |-----------------------------------------------------------------------|
-   *                |     |Ms L |Ms Dn|Ms R |Ms WU|     |     |Full |Left |Centr|Right|     |
+   *                |     |Ms L |Ms Dn|Ms R |Ms WU|     |     |Full |  W  |Centr|  E  |     |
    *                |-----------------------------------------------------------------------|
-   *                |     |Ms WL|Ms B3|Ms WR|     |     |     |Next | BL  | Bot | BR  |     |
+   *                |     |Ms WL|Ms B3|Ms WR|     |     |     |Next | SW  |  S  | SE  |     |
    *                |-----------------------------------------------------------------------|
    *                |     |Prev |Play |Next |Brig-|   Sleep   |Brig+|Mute |Vol- |Vol+ |     |
    *                `-----------------------------------------------------------------------'
    *                        \___ Media ___/   \___ Screen/sleep __/   \___ Volume __/
    */
   [GUI_LAYER] = {
-    {_______, KC_BTN2, KC_MS_U, KC_BTN1, KC_WH_D, ___x___, ___x___, LCTL(LALT(LGUI(KC_LEFT))), LCTL(LGUI(KC_LEFT)),    LALT(LGUI(KC_UP)),   LCTL(LGUI(KC_RGHT)),    _______},
-    {_______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, ___x___, ___x___, LALT(LGUI(KC_F)),          LALT(LGUI(KC_LEFT)),    LALT(LGUI(KC_C)),    LALT(LGUI(KC_RGHT)),    _______},
-    {_______, KC_WH_L, KC_BTN3, KC_WH_R, ___x___, ___x___, ___x___, LCTL(LALT(LGUI(KC_RGHT))), S(LCTL(LGUI(KC_LEFT))), LALT(LGUI(KC_DOWN)), S(LCTL(LGUI(KC_RGHT))), _______},
-    {_______, KC_MPRV, KC_MPLY, KC_MNXT, KC_SLCK, KC_SLEP, KC_SLEP, KC_PAUS,                   KC_MUTE,                KC_VOLD,             KC_VOLU,                _______}
+    {_______, KC_BTN2, KC_MS_U, KC_BTN1, KC_WH_D, ___x___, ___x___, WM_PREV, WM_NW,   WM_N,    WM_NE,   _______},
+    {_______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, ___x___, ___x___, WM_FULL, WM_W,    WM_CNTR, WM_E,    _______},
+    {_______, KC_WH_L, KC_BTN3, KC_WH_R, ___x___, ___x___, ___x___, WM_NEXT, WM_SW,   WM_S,    WM_SE,   _______},
+    {_______, KC_MPRV, KC_MPLY, KC_MNXT, KC_SLCK, KC_SLEP, KC_SLEP, KC_PAUS, KC_MUTE, KC_VOLD, KC_VOLU, _______}
   },
 
   /* Keyboard settings layer
