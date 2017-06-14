@@ -72,13 +72,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *   Tap for [ -- | Fn3 |Hyper| Alt |Super| Fn1 |   Space   | Fn2 |Super| Alt |Hyper| Fn3 | -- Tap for ]
    *                `-----------------------------------------------------------------------'
    *                        /                                                     /
-   *   Tap for { } --------'-----------------------------------------------------'
+   *   Tap for ] [ --------'-----------------------------------------------------'
    */
   [BASE_QWERTY_LAYER] = {
     {KC_TAB,  KC_Q,           KC_W,          KC_E,    KC_R,  KC_T,   KC_Y,    KC_U,  KC_I,    KC_O,          KC_P,           KC_QUOT},
     {F(5),    KC_A,           KC_S,          KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,          F(1),           F(6)},
     {KC_LSPO, KC_Z,           KC_X,          KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
-    {F(3),    ALL_T(KC_LBRC), M(LALT_BRACE), KC_LGUI, LOWER, KC_SPC, KC_BSPC, RAISE, KC_RGUI, M(RALT_BRACE), ALL_T(KC_RBRC), F(4)}
+    {F(3),    ALL_T(KC_RBRC), M(LALT_BRACE), KC_LGUI, LOWER, KC_SPC, KC_BSPC, RAISE, KC_RGUI, M(RALT_BRACE), ALL_T(KC_LBRC), F(4)}
   },
 
   /* Base layer (Colemak)
