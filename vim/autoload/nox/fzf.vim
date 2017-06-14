@@ -171,7 +171,7 @@ function! nox#fzf#history(bang)
   call s:fzf({
         \   'source':  reverse(s:all_files()),
         \   'sink*':   function('<SID>common_sink'),
-        \   'options': '--prompt -m' . s:expect(),
+        \   'options': '-m' . s:expect(),
         \ }, a:bang)
 endfunction
 
