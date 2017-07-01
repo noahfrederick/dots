@@ -284,6 +284,52 @@ void persistant_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
+// Send PHROPB ({PLOVER:RESUME}).
+void plover_resume(void) {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RP);
+  register_code(PV_RB);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RP);
+  unregister_code(PV_RB);
+}
+
+// Send PHROF ({PLOVER:SUSPEND}).
+void plover_suspend(void) {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RF);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RF);
+}
+
+// Send PHROBG ({PLOVER:LOOKUP}).
+void plover_lookup(void) {
+  register_code(PV_LP);
+  register_code(PV_LH);
+  register_code(PV_LR);
+  register_code(PV_O);
+  register_code(PV_RB);
+  register_code(PV_RG);
+  unregister_code(PV_LP);
+  unregister_code(PV_LH);
+  unregister_code(PV_LR);
+  unregister_code(PV_O);
+  unregister_code(PV_RB);
+  unregister_code(PV_RG);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
@@ -361,52 +407,6 @@ void matrix_init_user(void) {
 #ifdef AUDIO_ENABLE
   startup_user();
 #endif
-}
-
-// Send PHROPB ({PLOVER:RESUME}).
-void plover_resume() {
-  register_code(PV_LP);
-  register_code(PV_LH);
-  register_code(PV_LR);
-  register_code(PV_O);
-  register_code(PV_RP);
-  register_code(PV_RB);
-  unregister_code(PV_LP);
-  unregister_code(PV_LH);
-  unregister_code(PV_LR);
-  unregister_code(PV_O);
-  unregister_code(PV_RP);
-  unregister_code(PV_RB);
-}
-
-// Send PHROF ({PLOVER:SUSPEND}).
-void plover_suspend() {
-  register_code(PV_LP);
-  register_code(PV_LH);
-  register_code(PV_LR);
-  register_code(PV_O);
-  register_code(PV_RF);
-  unregister_code(PV_LP);
-  unregister_code(PV_LH);
-  unregister_code(PV_LR);
-  unregister_code(PV_O);
-  unregister_code(PV_RF);
-}
-
-// Send PHROBG ({PLOVER:LOOKUP}).
-void plover_lookup() {
-  register_code(PV_LP);
-  register_code(PV_LH);
-  register_code(PV_LR);
-  register_code(PV_O);
-  register_code(PV_RB);
-  register_code(PV_RG);
-  unregister_code(PV_LP);
-  unregister_code(PV_LH);
-  unregister_code(PV_LR);
-  unregister_code(PV_O);
-  unregister_code(PV_RB);
-  unregister_code(PV_RG);
 }
 
 #ifdef AUDIO_ENABLE
