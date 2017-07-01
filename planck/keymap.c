@@ -6,6 +6,7 @@
 #include "eeconfig.h"
 #include "keymap_plover.h"
 #include "action_tapping.h"
+#include "version.h"
 
 extern keymap_config_t keymap_config;
 
@@ -27,6 +28,7 @@ enum planck_layers {
 
 // Macros
 enum planck_macros {
+  M_VERSION,
   LALT_BRACE,
   RALT_BRACE
 };
@@ -207,10 +209,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                                    \_____________\_ Backlight _/
    */
   [KEYBOARD_LAYER] = {
-    {___x___, RESET,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
-    {___x___, QWERTY,  COLEMAK, STENO,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
-    {___x___, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  ___x___, ___x___, AU_ON,   AU_OFF,  ___x___},
-    {___x___, ___x___, ___x___, ___x___, LOWER,   BL_TOGG, BL_TOGG, RAISE,   BL_TOGG, BL_DEC,  BL_INC,  ___x___}
+    {___x___, RESET,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, M(M_VERSION), ___x___},
+    {___x___, QWERTY,  COLEMAK, STENO,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___,      ___x___},
+    {___x___, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  ___x___, ___x___, AU_ON,   AU_OFF,       ___x___},
+    {___x___, ___x___, ___x___, ___x___, LOWER,   BL_TOGG, BL_TOGG, RAISE,   BL_TOGG, BL_DEC,  BL_INC,       ___x___}
   }
 };
 
@@ -229,6 +231,11 @@ const uint16_t PROGMEM fn_actions[] = {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
   switch(id) {
+    case M_VERSION:
+      if (record->event.pressed) {
+        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP "@" QMK_VERSION " (" QMK_BUILDDATE ")");
+      }
+      break;
     case LALT_BRACE:
       if (record->event.pressed) {
         register_mods(MOD_LALT);
