@@ -8,8 +8,8 @@ The board's microcontroller is programmed through the free/libre [Quantum MK fir
 deal of flexibility in implementing keyboard layouts. The keymap is organized into layers that can be switched between
 by hold or tapping function keys.
 
-[olkb]: http://ortholinearkeyboards.com/education
-[qmk]: https://github.com/jackhumbert/qmk_firmware
+[olkb]: https://olkb.com/reference/primer/
+[qmk]: https://github.com/qmk/qmk_firmware
 
 ## Base layer (Qwerty)
 
