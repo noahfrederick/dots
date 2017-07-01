@@ -279,7 +279,7 @@ float tone_goodbye[][2]   = SONG(GOODBYE_SOUND);
 
 #endif
 
-void persistant_default_layer_set(uint16_t default_layer) {
+void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
 }
@@ -337,7 +337,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
 #endif
-        persistant_default_layer_set(1UL<<BASE_QWERTY_LAYER);
+        persistent_default_layer_set(1UL<<BASE_QWERTY_LAYER);
       }
       return false;
     case COLEMAK:
@@ -345,7 +345,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY(tone_colemak, false, 0);
 #endif
-        persistant_default_layer_set(1UL<<BASE_COLEMAK_LAYER);
+        persistent_default_layer_set(1UL<<BASE_COLEMAK_LAYER);
       }
       return false;
     case LOWER:
