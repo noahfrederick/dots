@@ -469,7 +469,8 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Leader><C-k> nox#editing#normal_mode_digraph(nr2char(getchar()))
+nnoremap <expr> <Plug>NormalModeDigraph nox#editing#normal_mode_digraph(nr2char(getchar()))
+nmap <Leader><C-k> <Plug>NormalModeDigraph
 
 " Look up documentation with Dash.app
 function! s:doc(cmd)

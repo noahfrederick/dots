@@ -56,7 +56,8 @@ function! nox#editing#yank_buffer()
 endfunction
 
 function! nox#editing#normal_mode_digraph(char2)
-  let l:char1 = matchstr(getline('.'), '.', byteidx(getline('.'), col('.') - 1))
+  let l:char1 = matchstr(getline('.'), '.', col('.') - 1)
+  silent! call repeat#set("\<Plug>NormalModeDigraph".a:char2)
   echo 'digraph: ' . l:char1 . a:char2
   return "r\<C-k>" . l:char1 . a:char2
 endfunction
