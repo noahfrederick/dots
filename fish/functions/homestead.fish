@@ -21,7 +21,7 @@ function homestead --description 'Laravel Homestead utility'
 			echo 'the Homestead directory (e.g., up, halt, ssh, provision, destroy).'
 		case install
 			vagrant box add laravel/homestead
-			and git clone https://github.com/laravel/homestead.git "$__homestead_repo"
+			and git clone https://github.com/laravel/homestead.git "$HOMESTEAD"
 			and __homestead_do bash init.sh
 		case update
 			__homestead_do vagrant box update
@@ -40,11 +40,11 @@ function homestead --description 'Laravel Homestead utility'
 end
 
 function __homestead_edit
-	eval $EDITOR $HOMESTEAD/$argv[1]
+	eval $EDITOR "$HOMESTEAD/$argv[1]"
 end
 
 function __homestead_do
-	pushd $HOMESTEAD
+	pushd "$HOMESTEAD"
 	and begin
 		eval $argv
 		popd
