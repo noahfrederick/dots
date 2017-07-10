@@ -2,6 +2,7 @@
 # PATH
 #
 prepend_to_path $HOME/.composer/vendor/bin
+prepend_to_path $HOME/.rbenv/shims
 prepend_to_path $HOME/bin
 
 #
@@ -123,7 +124,3 @@ if status --is-interactive
 	abbr --add we  words --english
 	abbr --add wi  words --interactive
 end
-
-# Make fish work with boxen
-set -l FISH_BOXEN ~/.config/fish/boxen.fish
-test -r $FISH_BOXEN; and test -d /opt/boxen; and source $FISH_BOXEN

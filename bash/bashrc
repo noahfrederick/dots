@@ -10,7 +10,6 @@ function pathadd () {
 	fi
 }
 
-pathadd ~/.cask/bin
 pathadd ~/bin
 
 #
@@ -49,11 +48,6 @@ export GREP_OPTIONS='--color=auto'
 # OTHER
 #
 export FTP_PASSIVE=1
-
-#
-# BOXEN
-#
-[ -f /opt/boxen/env.sh ] && source /opt/boxen/env.sh
 
 #
 # RUBY
