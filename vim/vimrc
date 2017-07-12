@@ -15,7 +15,6 @@ if has("vim_starting")
   Plug 'AndrewRadev/sideways.vim'
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
-  Plug 'Shougo/deoplete.nvim'
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'godlygeek/tabular'
   Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
@@ -46,7 +45,9 @@ if has("vim_starting")
     Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
     Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
   endif
-  if !has("nvim")
+  if has("nvim")
+    Plug 'Shougo/deoplete.nvim'
+  else
     Plug '$PLUG_SRC/vim-neovim-defaults'
   endif
 
@@ -66,12 +67,14 @@ if has("vim_starting")
   Plug '$PLUG_SRC/vim-laravel'
   Plug 'ap/vim-css-color'
   Plug 'dbakker/vim-sparkup'
-  Plug 'padawan-php/deoplete-padawan',   { 'for': 'php' }
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-jdaddy',               { 'for': 'json' }
   Plug 'tpope/vim-rake'
   Plug 'tpope/vim-rbenv'
   Plug 'tpope/vim-scriptease'
+  if has("nvim")
+    Plug 'padawan-php/deoplete-padawan', { 'for': 'php' }
+  endif
 
   " File-type runtime files
   Plug 'blueyed/smarty.vim'
