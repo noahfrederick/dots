@@ -1,4 +1,4 @@
-" autoload/nox/org.vim - Quick fix helpers
+" autoload/nox/quickfix.vim - Quick fix helpers
 " Maintainer:   Noah Frederick
 
 function! nox#quickfix#toggle(type) abort
