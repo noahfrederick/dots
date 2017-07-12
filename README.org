@@ -13,21 +13,21 @@ do it manually:
 #+END_SRC
 
 * Software
-** Vim
+** Neovim
 
-[[http://vim.org][Vim]] is a free, cross-platform text editor based on vi. It has been
-around since the early '90s and is arguably the best editor currently
-in existence. Although Vim is admittedly better suited for writing
-code than prose (largely because of its poor handling of soft-wrapped
-lines), I use it for pretty much everything.
+[[https://neovim.io/][Neovim]] is a free, cross-platform text editor based on Vim, and is
+arguably the best editor currently in existence. Although Neovim is
+admittedly better suited for writing code than prose (largely because
+of its awkward handling of soft-wrapped lines), I use it for pretty
+much everything.
 
 ** Emacs
 
 [[http://www.gnu.org/software/emacs/][Emacs]] is a free, cross-platform text editor, mail client, news reader,
 organizer, and more. It is the second-best text editor currently in
 existence. It does not take the streamlined, minimalistic approach
-that Vim does, but it can be made to emulate Vim. I use Emacs for the
-excellent [[http://orgmode.org][Org mode]]. See my [[emacs.d/emacs.org][emacs.org]] file for more.
+that (Neo)Vim does, but it can be made to emulate Vim. I use Emacs for
+the excellent [[http://orgmode.org][Org mode]]. See my [[emacs.d/emacs.org][emacs.org]] file for more.
 
 ** Fish
 
