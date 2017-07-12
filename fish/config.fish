@@ -95,14 +95,13 @@ if status --is-interactive
 	abbr --add ga  git add
 	abbr --add gaa git add --all
 	abbr --add gb  git branch
-	abbr --add gc  git commit
-	abbr --add gca git commit --all
+	abbr --add gc  git commit --verbose
+	abbr --add gca git commit --all --verbose
 	abbr --add gcl git clone
 	abbr --add gco git checkout
 	abbr --add gd  git diff
 	abbr --add gdc git diff --cached
 	abbr --add gf  git fetch
-	abbr --add gg  git graph
 	abbr --add gi  git init
 	abbr --add gl  git log
 	abbr --add gp  git push
