@@ -16,8 +16,8 @@ pathadd ~/bin
 # DIRECTORIES
 #
 export DOCS="$HOME/Documents"
-export DROPBOX="$HOME/Dropbox"
-export NOTES="$DROPBOX/Notes"
+export DROPBOX="$HOME/Sync"
+export NOTES="$HOME/Notes"
 export CODE="$HOME/src"
 
 #

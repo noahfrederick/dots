@@ -34,8 +34,8 @@ prepend_to_path $HOME/bin
 # DIRECTORIES
 #
 set -x DOCS      "$HOME/Documents"
-set -x DROPBOX   "$HOME/Dropbox"
-set -x NOTES     "$DROPBOX/Notes"
+set -x DROPBOX   "$HOME/Sync"
+set -x NOTES     "$HOME/Notes"
 set -x CODE      "$HOME/src"
 set -x HOMESTEAD "$CODE/homestead"
 
