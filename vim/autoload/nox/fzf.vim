@@ -135,7 +135,7 @@ function! s:format_buffer(b)
   let modified = getbufvar(a:b, '&modified') ? s:red(" \u25cf") : ''
   let readonly = getbufvar(a:b, '&modifiable') ? '' : s:blue(" \u25cb")
   let extra = join(filter([modified, readonly], '!empty(v:val)'), '')
-  return s:strip(printf("[%s] %s\t%s\t%s", s:blue(a:b), flag, name, extra))
+  return s:strip(printf("[%s]\t%s %s\t%s", s:blue(a:b), flag, name, extra))
 endfunction
 
 function! nox#fzf#buffers(bang)
