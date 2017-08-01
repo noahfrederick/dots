@@ -1,3 +1,45 @@
+#
+# PATH
+#
+function pathadd () {
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		export PATH="$1${PATH:+":$PATH"}"
+	fi
+}
+
+pathadd ~/bin
+
+#
+# DIRECTORIES
+#
+export DOCS="$HOME/Documents"
+export DROPBOX="$HOME/Sync"
+export NOTES="$HOME/Notes"
+export CODE="$HOME/src"
+
+#
+# EDITOR
+#
+hash nvim &>/dev/null && export EDITOR=nvim
+
+#
+# HISTORY
+#
+# Don't put duplicate lines in the history.
+export HISTCONTROL=ignoredups
+
+#
+# COLORS
+#
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
+
+#
+# RUBY
+#
+# Manage Ruby via rbenv
+hash rbenv &>/dev/null && eval "$(rbenv init -)"
+
 if [ -r ~/.bashrc ] ; then
 	source ~/.bashrc
 fi
