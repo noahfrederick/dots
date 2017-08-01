@@ -35,6 +35,7 @@ hi EndOfBuffer         guifg=#1a1a1a
 hi Visual              guibg=#264049
 hi IncSearch           guifg=#000000  guibg=#d6b8f5  gui=NONE
 hi Search              guifg=#000000  guibg=#cde88a
+hi QuickFixLine        guibg=#222222  gui=bold
 hi Wildmenu            guifg=#ffffff  guibg=#1f333a  gui=bold
 hi StatusLine          guifg=#ffffff  guibg=#151515  gui=NONE
 hi StatusLineNC        guifg=#888888  guibg=#151515  gui=NONE
