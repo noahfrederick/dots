@@ -100,8 +100,11 @@ abbr --add g   git
 abbr --add ga  git add
 abbr --add gaa git add --all
 abbr --add gb  git branch
+abbr --add gbd git branch --delete
 abbr --add gc  git commit --verbose
 abbr --add gca git commit --all --verbose
+abbr --add gcb git checkout --branch
+abbr --add gcf git commit --verbose --fixup
 abbr --add gcl git clone
 abbr --add gco git checkout
 abbr --add gd  git diff
@@ -109,8 +112,10 @@ abbr --add gdc git diff --cached
 abbr --add gf  git fetch
 abbr --add gi  git init
 abbr --add gl  git log
+abbr --add gm  git merge
 abbr --add gp  git push
 abbr --add gpu git pull
+abbr --add gr  git rebase
 abbr --add gs  git status
 abbr --add gst git stash
 abbr --add gsp git stash pop
