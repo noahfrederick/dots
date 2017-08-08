@@ -315,6 +315,18 @@ augroup init_whitespace
   autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
 augroup END
 
+augroup init_org
+  autocmd!
+
+  let g:nox#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
+  let g:nox#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
+
+  autocmd BufReadCmd org://* nested call nox#org#protocol#handle(expand('<afile>'))
+  execute 'autocmd BufWritePost'
+        \ join([g:nox#org#repos.journal.'/*.md', g:nox#org#repos.default.'/agenda.html.erb'], ',')
+        \ 'Dispatch mkagenda --agent nvim'
+augroup END
+
 " }}}
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
@@ -333,15 +345,19 @@ command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<
 command! -bang -nargs=1 -bar -complete=help Help <mods> help<bang> <args> |
       \ let @* = printf('[`:help %s`](https://vimhelp.appspot.com/%s.html#%s)', escape(<q-args>, '`[]'), expand('%:t'), escape(<q-args>, '()'))
 
-if exists("$NOTES")
-  command! -nargs=? -bang Notes
-        \ if empty(<q-args>) |
-        \   lcd $NOTES | edit . |
-        \ else |
-        \   lvimgrep<bang> /<args>/ $NOTES/**/*.md | lopen |
-        \ endif
-  command! -nargs=0 -bang -bar ShoppingList call nox#org#shopping_list(<bang>0)
-endif
+command! -bar -bang -nargs=? -complete=customlist,nox#org#complete_repos
+      \ Notes call nox#org#fzf#notes(<q-args>, <bang>0)
+command! -bar -bang -nargs=? -complete=customlist,nox#org#complete_repos
+      \ NoteGrep call nox#org#fzf#grep(<q-args>, <bang>0)
+command! -bar -bang -nargs=? -complete=customlist,nox#org#capture#complete_templates -range
+      \ Capture if empty(<q-args>) |
+      \              call nox#org#fzf#capture(<q-bang>) |
+      \            elseif <bang>0 |
+      \              call nox#org#capture#it(<q-args>, {'edit_command': 'edit'}) |
+      \            else |
+      \              call nox#org#capture#it(<q-args>) |
+      \            endif
+command! -bang -bar -nargs=0 ShoppingList call nox#org#shopping#list(<bang>0)
 
 " See the difference between the current buffer and the file it was loaded
 " from, thus the changes you made.
@@ -641,8 +657,11 @@ nnoremap <Leader>d :Zfiles $CODE/dots<CR>
 nnoremap <Leader>e :Zfiles <C-r>=expand('%:h')<CR><CR>
 nnoremap <Leader>f :Zfiles<CR>
 nnoremap <Leader>h :Zhelp<CR>
-nnoremap <Leader>n :Zfiles $NOTES<CR>
 nnoremap <Leader>s :Scratch<CR>
+
+nnoremap <Leader>n  :Notes<CR>
+nnoremap <Leader>c  :Capture<CR>
+xnoremap <Leader>c  :Capture<Space>
 
 " }}}
 " Plug-in Settings                                                             {{{

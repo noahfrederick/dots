@@ -425,4 +425,75 @@ function! nox#fzf#use(bang)
         \ 'options': '--multi'}, a:bang)
 endfunction
 
+" ------------------------------------------------------------------
+" Ledger
+" ------------------------------------------------------------------
+function! s:ledger_accounts() abort
+  return systemlist('ledger accounts')
+endfunction
+
+function! nox#fzf#ledger_accounts(opts, bang) abort
+  call s:fzf(extend({
+        \   'source': s:ledger_accounts(),
+        \ }, a:opts), a:bang)
+endfunction
+
+function! s:ledger_payees() abort
+  return systemlist('ledger payees')
+endfunction
+
+function! nox#fzf#ledger_payees(opts, bang) abort
+  call s:fzf(extend({
+        \   'source': s:ledger_payees(),
+        \ }, a:opts), a:bang)
+endfunction
+
+function! nox#fzf#ledger_choose_account(...) abort
+  let prompt = get(a:000, 0, 'account')
+  call nox#fzf#ledger_accounts({
+        \ 'sink*': function('nox#fzf#ledger_choose_account_callback'),
+        \ 'options': '--expect=tab,ctrl-y --print-query --prompt='.shellescape(prompt.' > '),
+        \ }, 0)
+  " Hack to gaurantee entering of terminal mode when :startinsert fails.
+  call feedkeys("\<C-\>\<C-n>i")
+endfunction
+
+function! nox#fzf#ledger_choose_account_callback(lines) abort
+  if len(a:lines) < 2
+    return
+  endif
+
+  if empty(a:lines[1])
+    let account = get(a:lines, 2, a:lines[0])
+  else
+    let account = a:lines[0]
+  endif
+
+  return org#capture#resume(account)
+endfunction
+
+function! nox#fzf#ledger_choose_payee(...) abort
+  let prompt = get(a:000, 0, 'payee')
+  call nox#fzf#ledger_payees({
+        \ 'sink*': function('nox#fzf#ledger_choose_payee_callback'),
+        \ 'options': '--expect=tab,ctrl-y --print-query --prompt='.shellescape(prompt.' > '),
+        \ }, 0)
+  " Hack to gaurantee entering of terminal mode when :startinsert fails.
+  call feedkeys("\<C-\>\<C-n>i")
+endfunction
+
+function! nox#fzf#ledger_choose_payee_callback(lines) abort
+  if len(a:lines) < 2
+    return
+  endif
+
+  if empty(a:lines[1])
+    let payee = get(a:lines, 2, a:lines[0])
+  else
+    let payee = a:lines[0]
+  endif
+
+  return org#capture#resume(payee)
+endfunction
+
 " vim:set et sw=2:
