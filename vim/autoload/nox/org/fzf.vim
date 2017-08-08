@@ -95,7 +95,7 @@ function! s:capture_handler(lines) abort
   endif
 
   let template = split(a:lines[1], "\t")[0]
-  execute 'OrgCapture'.bang template
+  execute 'Capture'.bang template
 endfunction
 
 function! nox#org#fzf#capture(bang) abort

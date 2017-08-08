@@ -469,7 +469,7 @@ function! nox#fzf#ledger_choose_account_callback(lines) abort
     let account = a:lines[0]
   endif
 
-  return org#capture#resume(account)
+  return nox#org#capture#resume(account)
 endfunction
 
 function! nox#fzf#ledger_choose_payee(...) abort
@@ -493,7 +493,7 @@ function! nox#fzf#ledger_choose_payee_callback(lines) abort
     let payee = a:lines[0]
   endif
 
-  return org#capture#resume(payee)
+  return nox#org#capture#resume(payee)
 endfunction
 
 " vim:set et sw=2:
