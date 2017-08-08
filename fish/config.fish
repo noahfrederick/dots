@@ -67,7 +67,8 @@ set -x HOMEBREW_CASK_OPTS --require-sha
 #
 # FZF
 #
-set -x FZF_DEFAULT_OPTS "--inline-info --color=16,info:8"
+set -x FZF_DEFAULT_OPTS '--inline-info --color=16,info:8'
+set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --bind=change:top,ctrl-n:preview-down,ctrl-p:preview-up"
 
 #
 # INTERACTIVE LOGIN SHELL
@@ -80,17 +81,20 @@ status is-interactive; or exit
 abbr --add art php artisan
 abbr --add br  brew
 abbr --add bru brew upgrade
-abbr --add c   composer
-abbr --add ci  composer install
-abbr --add cu  composer update
-abbr --add cr  composer require
-abbr --add cgi composer global install
-abbr --add cgu composer global update
-abbr --add cgr composer global require
+abbr --add c   capture
+abbr --add ca  capture
+abbr --add cap capture
 abbr --add cda composer dump-autoload
+abbr --add cgi composer global install
+abbr --add cgr composer global require
+abbr --add cgu composer global update
 abbr --add ch  composer show
+abbr --add ci  composer install
 abbr --add cm  composer remove
+abbr --add co  composer install
+abbr --add cr  composer require
 abbr --add cs  composer search
+abbr --add cu  composer update
 abbr --add cv  composer validate
 abbr --add e   emacsclient
 abbr --add ee  emacsclient --eval
@@ -117,18 +121,19 @@ abbr --add gp  git push
 abbr --add gpu git pull
 abbr --add gr  git rebase
 abbr --add gs  git status
-abbr --add gst git stash
 abbr --add gsp git stash pop
+abbr --add gst git stash
 abbr --add lba ledger balance
 abbr --add leq ledger equity
-abbr --add lst ledger stats
 abbr --add lre ledger register
+abbr --add lst ledger stats
 abbr --add lxa ledger xact
+abbr --add n   note
 abbr --add v   nvim
-abbr --add vs  nvim -S
-abbr --add vn  nvim -u NONE
 abbr --add vd  nvim --noplugin -u minimal.vim
-abbr --add wk  webkit2png --fullsize --timestamp
-abbr --add ww  words
+abbr --add vn  nvim -u NONE
+abbr --add vs  nvim -S
 abbr --add we  words --english
 abbr --add wi  words --interactive
+abbr --add wk  webkit2png --fullsize --timestamp
+abbr --add ww  words
