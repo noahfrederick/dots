@@ -253,6 +253,36 @@ augroup init_statusline
   autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_whitespace
 augroup END
 
+"" Tab line
+set tabline=%!Tabline()
+
+function! Tabline() abort
+  let s = ''
+  for i in range(tabpagenr('$'))
+    if i + 1 == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+    " Set the tab page number (for mouse clicks)
+    let s .= '%' . (i + 1) . 'T'
+    let s .= ' %{TablineLabel(' . (i + 1) . ')} '
+  endfor
+
+  " after the last tab fill with TabLineFill and reset tab page nr
+  let s .= '%#TabLineFill#%T'
+
+  return s
+endfunction
+
+function! TablineLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let bufname = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+  return a:n . ' ' . bufname
+endfunction
+
 " }}}
 " Autocommands                                                                 {{{
 " --------------------------------------------------------------------------------
