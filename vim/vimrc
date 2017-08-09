@@ -318,13 +318,15 @@ augroup END
 augroup init_org
   autocmd!
 
-  let g:nox#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
-  let g:nox#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
+  if exists('$NOTES')
+    let g:nox#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
+    let g:nox#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
 
+    execute 'autocmd BufWritePost'
+          \ join([g:nox#org#repos.journal.'/*.md', g:nox#org#repos.default.'/agenda.html.erb'], ',')
+          \ 'Dispatch mkagenda --agent nvim'
+  endif
   autocmd BufReadCmd org://* nested call nox#org#protocol#handle(expand('<afile>'))
-  execute 'autocmd BufWritePost'
-        \ join([g:nox#org#repos.journal.'/*.md', g:nox#org#repos.default.'/agenda.html.erb'], ',')
-        \ 'Dispatch mkagenda --agent nvim'
 augroup END
 
 " }}}
