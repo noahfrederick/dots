@@ -230,7 +230,7 @@ function! nox#org#fzf#guess(query, items)
         \ shellescape(a:query),
         \ ]
   let result = system(join(args))
-  return split(result, "\n")[0]
+  return empty(result) ? '' : split(result, "\n")[0]
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et

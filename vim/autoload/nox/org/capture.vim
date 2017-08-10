@@ -46,16 +46,18 @@ function! nox#org#capture#template(name) abort
     let template = g:nox#org#capture#templates[name]
   elseif !empty(name)
     let name = nox#org#fzf#guess(name, sort(keys(g:nox#org#capture#templates)))
-    let template = get(g:nox#org#capture#templates, name, 0)
+    let template = get(g:nox#org#capture#templates, name, {})
   endif
 
   if empty(template)
-    return s:error('capture template does not exist: '.name)
+    call s:error('capture template does not exist: '.name)
+    return {}
   endif
 
   if has_key(template, 'extends')
     if !has_key(g:nox#org#capture#templates, template.extends)
-      return s:error('parent capture template does not exist: '.template.extends)
+      call s:error('parent capture template does not exist: '.template.extends)
+      return {}
     endif
 
     let parent = g:nox#org#capture#templates[template.extends]
