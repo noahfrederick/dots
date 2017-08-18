@@ -70,7 +70,11 @@ endfunction
 
 function! nox#org#capture#it(template, ...) abort
   if type(a:template) == type({})
-    let template = a:template
+    if has_key(a:template, 'status')
+      let template = a:template
+    else
+      let template = extend(deepcopy(s:template_prototype), deepcopy(a:template))
+    endif
   elseif !empty(a:template)
     let template = nox#org#capture#template(a:template)
   else
@@ -199,6 +203,11 @@ function! s:template__normalize_properties() dict abort
   if type(self.template) == type('')
     let self.template = [self.template]
   endif
+
+  " Avoid creating window when capturing to current buffer
+  if expand(self.path) ==# expand('%') || expand(self.path) ==# expand('%:p')
+    let self.edit_command = ''
+  endif
 endfunction
 
 function! s:template__expand_property(key) dict abort
@@ -252,7 +261,9 @@ endfunction
 call s:add_methods('template', ['init', 'render', '_normalize_properties', '_expand_property', '_expand_properties'])
 
 function! s:template__make_buffer() dict abort
-  execute self.edit_command self.path
+  if !empty(self.edit_command)
+    execute self.edit_command self.path
+  endif
 endfunction
 
 function! s:template__insert() dict abort
