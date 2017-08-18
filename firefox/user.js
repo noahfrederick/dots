@@ -22,6 +22,7 @@ user_pref("beacon.enabled", false);
 user_pref("browser.send_pings", false);
 user_pref("network.cookie.cookieBehavior", 1); // 0=allow all, 1=allow same host, 2=disallow all, 3=allow 3rd party if it already set a cookie
 user_pref("network.IDN_show_punycode", true);
+user_pref("network.http.referer.XOriginPolicy", 1); // 0=always (default), 1=only if base domains match, 2=only if hosts match
 user_pref("dom.enable_performance", false); // Mitigate JS performance fingerprinting
 user_pref("dom.event.clipboardevents.enabled", false);
 user_pref("dom.netinfo.enabled", false);
