@@ -69,6 +69,18 @@ function! ledger#sort() abort
   call winrestview(view)
 endfunction
 
+function! ledger#insert_entry() abort
+  call nox#org#capture#it({
+        \   'path': '%',
+        \   'append': '.',
+        \   'xact_account': '{ledger_account}',
+        \   'xact_amount': '{ledger_amount}',
+        \   'template': [
+        \     '    {xact_account|width:-36}  {xact_amount|width:10}',
+        \   ],
+        \ })
+endfunction
+
 nnoremap <silent> <Plug>(ledger-split) :call ledger#split()<CR>:silent! call repeat#set("\<Plug>(ledger-split)")<CR>
 nnoremap <silent> <Plug>(ledger-split-prompt) :call ledger#split_prompt()<CR>
 nnoremap <silent> <Plug>(ledger-cycle-state) :call ledger#transaction_state_toggle(line('.'), ' *?!')<CR>
@@ -77,6 +89,8 @@ nnoremap <silent> <Plug>(ledger-align) :LedgerAlign<CR>
 inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_cursor()<CR>
 nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
 nnoremap <silent> <Plug>(ledger-sort) :call ledger#sort()<CR>
+nnoremap <silent> <Plug>(ledger-insert-entry) :call ledger#insert_entry()<CR>
+inoremap <silent> <Plug>(ledger-insert-entry) <Esc>:call ledger#insert_entry()<CR>
 
 nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
@@ -88,6 +102,8 @@ imap <buffer> <C-l>          <Plug>(ledger-align-amount)
 nmap <buffer> <LocalLeader>e <Plug>(ledger-entry)
 nmap <buffer> <LocalLeader>= <Plug>(ledger-sort)
 nmap <buffer> <Leader>=      <Plug>(ledger-sort)
+nmap <buffer> <LocalLeader>_ <Plug>(ledger-insert-entry)
+nmap <buffer> <LocalLeader>. <Plug>(ledger-insert-entry)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 inoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
