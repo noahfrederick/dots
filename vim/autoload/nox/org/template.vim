@@ -115,9 +115,13 @@ function! g:nox#org#template#filters.tolower(input, args) abort
 endfunction
 
 function! g:nox#org#template#filters.slugify(input, args) abort
-  let input = substitute(a:input, "'", '', 'g')
+  let input = substitute(a:input, "['!?,]", '', 'g')
   let input = substitute(input, '\W\+', '-', 'g')
   return tolower(input)
+endfunction
+
+function! g:nox#org#template#filters.titleify(input, args) abort
+  return substitute(a:input, '\<[a-z]\ze[a-z0-9_-]*\>', '\u&', 'g')
 endfunction
 
 function! g:nox#org#template#filters.date(input, args) abort
