@@ -144,13 +144,12 @@ function! s:note_handler(lines) abort
 endfunction
 
 function! s:note_preview() abort
-  let bin = s:has_rougify ? 'rougify highlight --lexer markdown --theme monokai' : 'cat'
-  let path = 'echo '.shellescape(':{1}.md').' | sed'
+  if !executable('note')
+    return ''
+  endif
 
-  for name in reverse(sort(nox#org#repos()))
-    let repo = nox#org#repo(name)
-    let path .= ' -e '.shellescape('s!^:'.repo.prefix().'!'.repo.path().'/!')
-  endfor
+  let bin = s:has_rougify ? 'rougify highlight --lexer markdown --theme tulip' : 'cat'
+  let path = 'note {1}'
 
   if s:has_fish
     let format = ' --preview="if test -r (%s); %s (%s); end"'
