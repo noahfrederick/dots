@@ -71,6 +71,11 @@ set -x FZF_DEFAULT_OPTS '--inline-info --color=16,info:8'
 set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --bind=change:top,ctrl-n:preview-down,ctrl-p:preview-up"
 
 #
+# GPG
+#
+set -x GPG_TTY (tty)
+
+#
 # INTERACTIVE LOGIN SHELL
 #
 status is-interactive; or exit
