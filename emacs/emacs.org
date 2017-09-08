@@ -1465,47 +1465,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+headline (expand-file-name "vocabulary.org" org-directory) "Phrases")
                "* %?"
                :clock-keep t :kill-buffer t :jump-to-captured t)
-              ("J" "😁 Mood")
-              ("Je" "😃 Excited" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😃 Excited      :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("Jc" "😊 Content" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😊 Content      :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("Jt" "😑 Tired" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😑 Tired        :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("Js" "😓 Stressed" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😓 Stressed     :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("JS" "😷 Sick" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😷 Sick         :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("Ja" "😎 Ambitious" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😎 Ambitious    :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("Jd" "😔 Depressed" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😔 Depressed    :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
-              ("JD" "😕 Disappointed" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
-               "* 😕 Disappointed :mood:"
-               :clock-keep t :kill-buffer t :immediate-finish t)
               ("c" "👤 Contact" entry
                (file+headline (expand-file-name "contacts.org" org-directory) "People")
                "* %(org-contacts-template-name)\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:END:"
                :clock-keep t :kill-buffer t)
-              ("p" "📘 Teamwork task" entry
-               (file+headline (expand-file-name "bigtech.org" org-directory) "Tasks")
-               "* TODO %^{TWPMLink}p%^{Task}"
-               :clock-keep t :clock-in t :immediate-finish t)
               ("r" "🍲 Recipe" entry
                (file+headline (expand-file-name "food.org" org-directory) "Recipes")
                "* %^{Recipe Name}%^{source}p%^{serves}p%^{time}p\n\n** Ingredients\n\n** Preparation"
@@ -1517,94 +1480,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
               ("k" "🔠 Keyboards" entry
                (file+headline (expand-file-name "keyboards.org" org-directory) "Keyboard Gallery")
                "* %^{Title}%^{source}p\n#+CAPTION: %^{Caption text}\n%?"
-               :clock-keep t :jump-to-captured t)
-              ("l" "📒️ Ledger")
-              ("lg" "🍏 Groceries" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/groceries.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("ld" "🍴 Dining" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/dining.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("lu" "🍕 Lunch" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/lunch.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lt" "Ⓜ️ Transit" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/mta.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lc" "💵 Cash Withdrawal" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/cash.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("lp" "💰 Paycheck" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/salary.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("la" "💳 American Express Payment" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/amex.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("le" "💡️ Electric" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/coned.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("ls" "🔥️ Gas" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/nationalgrid.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("li" "☁️️ Internet Service" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/cablevision.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lr" "🏠 Rent" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/rent.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("ll" "👖 Laundry" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/laundry.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("lI" "⏳️ Roth IRA")
-              ("lIt" "💸 Transfer to IRA" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/ira_roth_deposit.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lId" "🕐 Monthly Dividends" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/dividends_monthly.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lID" "🕒 Quarterly Dividends" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/dividends_quarterly.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lIi" "🕐 IRA Interest Earned" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/ira_roth_interest.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("lS" "⏳️ SEP IRA")
-              ("lSt" "💸 Transfer to IRA" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/ira_sep_deposit.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lSd" "🕐 Monthly Dividends" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/dividends_monthly.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lSD" "🕒 Quarterly Dividends" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/dividends_quarterly.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t :immediate-finish t)
-              ("lSi" "🕐 IRA Interest Earned" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/ira_sep_interest.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)
-              ("l?" "❔ Other" plain
-               (file "~/ledger/default.ledger")
-               (file "~/ledger/xacts/generic.txt")
-               :clock-keep t :empty-lines-before 1 :jump-to-captured t)))
+               :clock-keep t :jump-to-captured t)))
 
       ;; There is something wrong with this. The capture buffer is not
       ;; cleaned up using these maps, but it is using the built-in
