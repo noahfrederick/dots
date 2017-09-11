@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *      window    |-----------------------------------------------------------------------|
    *    switcher    |     | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 0   |     |
    *                |-----------------------------------------------------------------------|
-   *                |     | -   | =   | `   | \   |     |ndash|mdash| ,   | .   | /   |     |
+   *                |     | -   | =   | `   | \   | :   |ndash|mdash| ,   | .   | /   |     |
    *                |-----------------------------------------------------------------------|
    *                |     |     |     |     |     | Backspace |     |     |     |     |     |
    *                `-----------------------------------------------------------------------'
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LOWER_LAYER] = {
     {LGUI(KC_GRV), KC_F1,          KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,         KC_F10,         S(KC_3)},
     {F(5),         KC_1,           KC_2,          KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,          KC_0,           F(6)},
-    {KC_LSPO,      KC_MINS,        KC_EQL,        KC_GRV,  KC_BSLS, ___x___, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
+    {KC_LSPO,      KC_MINS,        KC_EQL,        KC_GRV,  KC_BSLS, KC_COLN, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
     {F(3),         ALL_T(KC_LBRC), M(LALT_BRACE), KC_LGUI, LOWER,   KC_BSPC, KC_BSPC, RAISE,   KC_RGUI, M(RALT_BRACE), ALL_T(KC_RBRC), F(4)}
   },
 
@@ -143,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                |-----------------------------------------------------------------------|
    *                |     | !   | @   | #   | $   | %   | ^   | &   | *   | '   | "   |     | \
    *                |-----------------------------------------------------------------------|  |-- Mostly shifted version
-   *                |     | _   | +   | ~   | |   |     |ndash|mdash| ,   | .   | /   |     | /    of lower layer
+   *                |     | _   | +   | ~   | |   | :   |ndash|mdash| ,   | .   | /   |     | /    of lower layer
    *                |-----------------------------------------------------------------------|
    *                |     |     |     |     |     |  Delete   |     |     |     |     |     |
    *                `-----------------------------------------------------------------------'
@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [RAISE_LAYER] = {
     {_______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,     S(KC_3)},
     {_______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6), S(KC_7), S(KC_8), KC_QUOT, S(KC_QUOT), _______},
-    {_______, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, ___x___, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,  KC_SLSH,    _______},
+    {_______, KC_UNDS, KC_PLUS, KC_TILD, KC_PIPE, KC_COLN, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,  KC_SLSH,    _______},
     {_______, _______, _______, _______, _______, KC_DEL,  KC_DEL,  _______, _______, _______, _______,    _______}
   },
 
