@@ -77,10 +77,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *   Tap for ] [ --------'-----------------------------------------------------'
    */
   [BASE_QWERTY_LAYER] = {
-    {KC_TAB,  KC_Q,           KC_W,          KC_E,    KC_R,  KC_T,   KC_Y,    KC_U,  KC_I,    KC_O,          KC_P,           KC_QUOT},
-    {F(5),    KC_A,           KC_S,          KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,          F(1),           F(6)},
-    {KC_LSPO, KC_Z,           KC_X,          KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
-    {F(3),    ALL_T(KC_RBRC), M(LALT_BRACE), KC_LGUI, LOWER, KC_SPC, KC_BSPC, RAISE, KC_RGUI, M(RALT_BRACE), ALL_T(KC_LBRC), F(4)}
+    {KC_TAB,  KC_Q,           KC_W, KC_E,    KC_R,  KC_T,   KC_Y,    KC_U,  KC_I,    KC_O,   KC_P,           KC_QUOT},
+    {F(5),    KC_A,           KC_S, KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,   F(1),           F(6)},
+    {KC_LSPO, KC_Z,           KC_X, KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT, KC_SLSH,        KC_RSPC},
+    {F(3),    ALL_T(KC_RBRC), F(7), KC_LGUI, LOWER, KC_SPC, KC_BSPC, RAISE, KC_RGUI, F(8),   ALL_T(KC_LBRC), F(4)}
   },
 
   /* Base layer (Colemak)
@@ -131,10 +131,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                └─────┴─────┴─────┴─────┴─────┴───────────┴─────┴─────┴─────┴─────┴─────┘
    */
   [LOWER_LAYER] = {
-    {LGUI(KC_GRV), KC_F1,          KC_F2,         KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,         KC_F10,         S(KC_3)},
-    {F(5),         KC_1,           KC_2,          KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,          KC_0,           F(6)},
-    {KC_LSPO,      KC_MINS,        KC_EQL,        KC_GRV,  KC_BSLS, KC_COLN, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT,        KC_SLSH,        KC_RSPC},
-    {F(3),         ALL_T(KC_LBRC), M(LALT_BRACE), KC_LGUI, LOWER,   KC_BSPC, KC_BSPC, RAISE,   KC_RGUI, M(RALT_BRACE), ALL_T(KC_RBRC), F(4)}
+    {LGUI(KC_GRV), KC_F1,          KC_F2,  KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,         S(KC_3)},
+    {F(5),         KC_1,           KC_2,   KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,   KC_0,           F(6)},
+    {KC_LSPO,      KC_MINS,        KC_EQL, KC_GRV,  KC_BSLS, KC_COLN, KC_NDSH, KC_MDSH, KC_COMM, KC_DOT, KC_SLSH,        KC_RSPC},
+    {F(3),         ALL_T(KC_LBRC), F(7),   KC_LGUI, LOWER,   KC_BSPC, KC_BSPC, RAISE,   KC_RGUI, F(8),   ALL_T(KC_RBRC), F(4)}
   },
 
   /* Symbol layer
@@ -226,6 +226,8 @@ const uint16_t PROGMEM fn_actions[] = {
   // Modifiers
   [5] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_ESC),
   [6] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
+  [7] = ACTION_MACRO_TAP(LALT_BRACE),
+  [8] = ACTION_MACRO_TAP(RALT_BRACE),
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -275,15 +277,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 }
 
 #ifdef AUDIO_ENABLE
-
-float tone_startup[][2]   = SONG(STARTUP_SOUND);
-float tone_qwerty[][2]    = SONG(QWERTY_SOUND);
-float tone_colemak[][2]   = SONG(COLEMAK_SOUND);
-float tone_plover[][2]    = SONG(PLOVER_SOUND);
-float tone_plover_gb[][2] = SONG(PLOVER_GOODBYE_SOUND);
-float music_scale[][2]    = SONG(MUSIC_SCALE_SOUND);
-float tone_goodbye[][2]   = SONG(GOODBYE_SOUND);
-
+float plover_song[][2]    = SONG(PLOVER_SOUND);
+float plover_gb_song[][2] = SONG(PLOVER_GOODBYE_SOUND);
 #endif
 
 void persistent_default_layer_set(uint16_t default_layer) {
@@ -341,18 +336,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
-#endif
-        persistent_default_layer_set(1UL<<BASE_QWERTY_LAYER);
+        set_single_persistent_default_layer(BASE_QWERTY_LAYER);
       }
       return false;
     case COLEMAK:
       if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_colemak, false, 0);
-#endif
-        persistent_default_layer_set(1UL<<BASE_COLEMAK_LAYER);
+        set_single_persistent_default_layer(BASE_COLEMAK_LAYER);
       }
       return false;
     case LOWER:
@@ -377,7 +366,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
         stop_all_notes();
-        PLAY_NOTE_ARRAY(tone_plover, false, 0);
+        PLAY_SONG(plover_song);
 #endif
         layer_off(RAISE_LAYER);
         layer_off(LOWER_LAYER);
@@ -395,7 +384,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case PV_EXIT:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+        PLAY_SONG(plover_gb_song);
 #endif
         plover_suspend();
         layer_off(BASE_STENO_LAYER);
@@ -409,36 +398,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
-void matrix_init_user(void) {
-#ifdef AUDIO_ENABLE
-  startup_user();
-#endif
-}
-
-#ifdef AUDIO_ENABLE
-
-void startup_user()
-{
-  _delay_ms(20); // gets rid of tick
-  PLAY_NOTE_ARRAY(tone_startup, false, 0);
-}
-
-void shutdown_user()
-{
-  PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
-  _delay_ms(150);
-  stop_all_notes();
-}
-
-void music_on_user(void)
-{
-  music_scale_user();
-}
-
-void music_scale_user(void)
-{
-  PLAY_NOTE_ARRAY(music_scale, false, 0);
-}
-
-#endif
