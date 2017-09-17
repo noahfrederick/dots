@@ -2,4 +2,5 @@
 flavors/
 plugged/
 spell/*.spl
+spell/private.utf-8.add
 local.vim
