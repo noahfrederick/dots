@@ -100,8 +100,9 @@ user_pref("browser.safebrowsing.phishing.enabled", false); // (FF50+)
 user_pref("browser.safebrowsing.downloads.enabled", false);
 user_pref("browser.safebrowsing.blockedURIs.enabled", false);
 
-// Disable Pocket
+// Disable some built-in extensions
 user_pref("extensions.pocket.enabled", false);
+user_pref("extensions.screenshots.disabled", true);
 
 // VimFx Preferences
 user_pref("extensions.VimFx.commands.close_tab.keys", ["x"]);
