@@ -1,4 +1,4 @@
-" autoload/nox/project.vim - Query project metadata from multiple sources
+" autoload/my/project.vim - Query project metadata from multiple sources
 " Maintainer: Noah Frederick
 "
 " Common keys to query:
@@ -92,7 +92,7 @@ endfunction
 
 ""
 " Query current buffer's project metadata by key.
-function! nox#project#get(key, ...) abort
+function! my#project#get(key, ...) abort
   let default = get(a:000, 0, "[project-" . a:key . "]")
   let value = s:try_all_strategies(a:key)
 
@@ -105,7 +105,7 @@ endfunction
 
 ""
 " Get current buffer's project's root directory.
-function! nox#project#root() abort
+function! my#project#root() abort
   if exists("b:projectionist") && !empty(b:projectionist)
     return projectionist#path()
   endif

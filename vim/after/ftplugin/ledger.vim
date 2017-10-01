@@ -70,7 +70,7 @@ function! ledger#sort() abort
 endfunction
 
 function! ledger#insert_entry() abort
-  call nox#org#capture#it({
+  call my#org#capture#it({
         \   'path': '%',
         \   'append': '.',
         \   'xact_account': '{ledger_account}',

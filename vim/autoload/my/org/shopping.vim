@@ -1,9 +1,9 @@
-" autoload/nox/org/shopping.vim - Organizer and note-taking system
+" autoload/my/org/shopping.vim - Organizer and note-taking system
 " Maintainer:   Noah Frederick
 
-function! nox#org#shopping#list(...) abort
+function! my#org#shopping#list(...) abort
   let new = get(a:000, 0, 0)
-  let today = nox#org#repo('shopping').note(strftime('%Y-%m-%d'))
+  let today = my#org#repo('shopping').note(strftime('%Y-%m-%d'))
 
   " If today's list already exists, just edit it
   if filereadable(today)
@@ -12,7 +12,7 @@ function! nox#org#shopping#list(...) abort
   endif
 
   " Get file name of most recent list
-  let fn = remove(nox#org#repo('shopping').notes(), -1)
+  let fn = remove(my#org#repo('shopping').notes(), -1)
 
   if !new
     " Edit the most recent list

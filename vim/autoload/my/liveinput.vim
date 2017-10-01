@@ -1,7 +1,7 @@
-" autoload/nox/liveinput.vim - Show the result of your input as you type
+" autoload/my/liveinput.vim - Show the result of your input as you type
 " Maintainer: Noah Frederick
 
-function! nox#liveinput#input(opts) abort
+function! my#liveinput#input(opts) abort
   let defaults = {
         \ 'prompt': ' → ',
         \ 'text': '',
@@ -15,7 +15,7 @@ function! nox#liveinput#input(opts) abort
   return s:buffer_setup(opts)
 endfunction
 
-function! nox#liveinput#datepicker(...) abort
+function! my#liveinput#datepicker(...) abort
   let args = copy(a:000)
   if len(args) > 0 && type(get(args, -1, 0)) == type({})
     let opts = remove(args, -1)
@@ -30,7 +30,7 @@ function! nox#liveinput#datepicker(...) abort
   let opts.filter_post = [function('s:date_filter'), format, past_context]
   let opts.filter = [function('s:date_filter'), preview_format, past_context]
 
-  return nox#liveinput#input(opts)
+  return my#liveinput#input(opts)
 endfunction
 
 let s:prev_window = 0

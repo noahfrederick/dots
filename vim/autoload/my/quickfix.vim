@@ -1,7 +1,7 @@
-" autoload/nox/quickfix.vim - Quick fix helpers
+" autoload/my/quickfix.vim - Quick fix helpers
 " Maintainer:   Noah Frederick
 
-function! nox#quickfix#toggle(type) abort
+function! my#quickfix#toggle(type) abort
   if a:type !~# '[cl]'
     echoerr 'Invalid window type'
   endif

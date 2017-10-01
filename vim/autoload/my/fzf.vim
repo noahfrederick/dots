@@ -1,4 +1,4 @@
-" autoload/nox/fzf.vim - Sources and sinks for fzf
+" autoload/my/fzf.vim - Sources and sinks for fzf
 " Maintainer:   Noah Frederick
 "
 " Portions adapted from fzf.vim:
@@ -85,7 +85,7 @@ endfunction
 " ------------------------------------------------------------------
 " Files
 " ------------------------------------------------------------------
-function! nox#fzf#files(dir, bang)
+function! my#fzf#files(dir, bang)
   let args = {'options': '-m'}
   let dir = empty(a:dir) ? getcwd() : a:dir
   let dir = substitute(dir, '/*$', '/', '')
@@ -138,7 +138,7 @@ function! s:format_buffer(b)
   return s:strip(printf("[%s]\t%s %s\t%s", s:blue(a:b), flag, name, extra))
 endfunction
 
-function! nox#fzf#buffers(bang)
+function! my#fzf#buffers(bang)
   let bufs = s:buflisted()
 
   " Remove current and alternate buffers from list
@@ -167,7 +167,7 @@ function! s:all_files()
         \ filter(map(s:buflisted(), 'bufname(v:val)'), '!empty(v:val)'))
 endfunction
 
-function! nox#fzf#history(bang)
+function! my#fzf#history(bang)
   call s:fzf({
         \   'source':  reverse(s:all_files()),
         \   'sink*':   function('<SID>common_sink'),
@@ -209,7 +209,7 @@ function! s:tags_sink(lines)
   normal! zz
 endfunction
 
-function! nox#fzf#tags(bang)
+function! my#fzf#tags(bang)
   if empty(tagfiles())
     call inputsave()
     echohl WarningMsg
@@ -259,7 +259,7 @@ function! s:helptag_sink(line)
   execute cmd tag
 endfunction
 
-function! nox#fzf#helptags(bang)
+function! my#fzf#helptags(bang)
   let tags = uniq(sort(split(globpath(&runtimepath, '**/doc/tags'), '\n')))
 
   return s:fzf({
@@ -299,7 +299,7 @@ function! s:lines()
   return extend(cur, rest)
 endfunction
 
-function! nox#fzf#lines(bang)
+function! my#fzf#lines(bang)
   call s:fzf({
         \ 'source':  <SID>lines(),
         \ 'sink*':   function('<SID>line_handler'),
@@ -332,7 +332,7 @@ function! s:buffer_lines()
         \ 'printf("%s:\t%s", s:yellow(v:key + 1), v:val)')
 endfunction
 
-function! nox#fzf#blines(bang)
+function! my#fzf#blines(bang)
   call s:fzf({
         \ 'source':  <SID>buffer_lines(),
         \ 'sink*':   function('<SID>buffer_line_handler'),
@@ -358,7 +358,7 @@ function! s:mark_sink(lines)
   execute 'normal! `'.matchstr(a:lines[1], '\S').'zz'
 endfunction
 
-function! nox#fzf#marks(bang)
+function! my#fzf#marks(bang)
   redir => cout
   silent marks
   redir END
@@ -398,7 +398,7 @@ function! s:ag_handler(lines)
   endif
 endfunction
 
-function! nox#fzf#grep(query, bang)
+function! my#fzf#grep(query, bang)
   call s:fzf(s:wrap({
         \ 'source':  printf('ag --nogroup --column --color "%s"',
         \                   escape(empty(a:query) ? '^(?=.)' : a:query, '"\-')),
@@ -415,7 +415,7 @@ function! s:use_sink(fqn) abort
   call composer#namespace#use(0, '\'.a:fqn)
 endfunction
 
-function! nox#fzf#use(bang)
+function! my#fzf#use(bang)
   " For now, it just offers Laravel facade classes
   let classes = sort(keys(laravel#app().facades()))
 
@@ -432,7 +432,7 @@ function! s:ledger_accounts() abort
   return systemlist('ledger accounts')
 endfunction
 
-function! nox#fzf#ledger_accounts(opts, bang) abort
+function! my#fzf#ledger_accounts(opts, bang) abort
   call s:fzf(extend({
         \   'source': s:ledger_accounts(),
         \ }, a:opts), a:bang)
@@ -442,23 +442,23 @@ function! s:ledger_payees() abort
   return systemlist('ledger payees')
 endfunction
 
-function! nox#fzf#ledger_payees(opts, bang) abort
+function! my#fzf#ledger_payees(opts, bang) abort
   call s:fzf(extend({
         \   'source': s:ledger_payees(),
         \ }, a:opts), a:bang)
 endfunction
 
-function! nox#fzf#ledger_choose_account(...) abort
+function! my#fzf#ledger_choose_account(...) abort
   let prompt = get(a:000, 0, 'account')
-  call nox#fzf#ledger_accounts({
-        \ 'sink*': function('nox#fzf#ledger_choose_account_callback'),
+  call my#fzf#ledger_accounts({
+        \ 'sink*': function('my#fzf#ledger_choose_account_callback'),
         \ 'options': '--expect=tab,ctrl-y --print-query --prompt='.shellescape(prompt.' > '),
         \ }, 0)
   " Hack to gaurantee entering of terminal mode when :startinsert fails.
   call feedkeys("\<C-\>\<C-n>i")
 endfunction
 
-function! nox#fzf#ledger_choose_account_callback(lines) abort
+function! my#fzf#ledger_choose_account_callback(lines) abort
   if len(a:lines) < 2
     return
   endif
@@ -469,20 +469,20 @@ function! nox#fzf#ledger_choose_account_callback(lines) abort
     let account = a:lines[0]
   endif
 
-  return nox#org#capture#resume(account)
+  return my#org#capture#resume(account)
 endfunction
 
-function! nox#fzf#ledger_choose_payee(...) abort
+function! my#fzf#ledger_choose_payee(...) abort
   let prompt = get(a:000, 0, 'payee')
-  call nox#fzf#ledger_payees({
-        \ 'sink*': function('nox#fzf#ledger_choose_payee_callback'),
+  call my#fzf#ledger_payees({
+        \ 'sink*': function('my#fzf#ledger_choose_payee_callback'),
         \ 'options': '--expect=tab,ctrl-y --print-query --prompt='.shellescape(prompt.' > '),
         \ }, 0)
   " Hack to gaurantee entering of terminal mode when :startinsert fails.
   call feedkeys("\<C-\>\<C-n>i")
 endfunction
 
-function! nox#fzf#ledger_choose_payee_callback(lines) abort
+function! my#fzf#ledger_choose_payee_callback(lines) abort
   if len(a:lines) < 2
     return
   endif
@@ -493,7 +493,7 @@ function! nox#fzf#ledger_choose_payee_callback(lines) abort
     let payee = a:lines[0]
   endif
 
-  return nox#org#capture#resume(payee)
+  return my#org#capture#resume(payee)
 endfunction
 
 " vim:set et sw=2:

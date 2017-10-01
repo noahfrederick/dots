@@ -1,5 +1,5 @@
 " Promote/demote headings
-function! markdown#promote_heading()
+function! my#markdown#promote_heading()
   let l:line = getline('.')
 
   if l:line =~# '^##\+ '
@@ -10,7 +10,7 @@ function! markdown#promote_heading()
   endif
 endfunction
 
-function! markdown#demote_heading()
+function! my#markdown#demote_heading()
   let l:line = getline('.')
 
   if l:line =~# '^######'
@@ -37,7 +37,7 @@ endfunction
 " Open new lines intelligently:
 "   - List continuation (end list by hitting <Enter> twice)
 "   - Block quote continuation
-function! markdown#open_line(trigger)
+function! my#markdown#open_line(trigger)
   let l:line = getline('.')
 
   if a:trigger !=? 'o'
@@ -84,7 +84,7 @@ function! markdown#open_line(trigger)
   return a:trigger
 endfunction
 
-function! markdown#insert_dashes()
+function! my#markdown#insert_dashes()
   " Do nothing special if text other than the inserted dashes is present on
   " the current line
   if col('$') > 4
@@ -106,7 +106,7 @@ endfunction
 
 " The gx mapping provided by the Netrw plug-in only works on WORDS. This
 " provides support for opening links under the cursor:
-function! markdown#follow_link_under_cursor()
+function! my#markdown#follow_link_under_cursor()
   let l:saved_reg = @t
   let l:saved_pos = getpos('.')
 
@@ -119,7 +119,7 @@ function! markdown#follow_link_under_cursor()
 endfunction
 
 " Cycle bullet style of current list
-function! markdown#cycle_list()
+function! my#markdown#cycle_list()
   "let bullet = matchstr(...)
   "<line1>,<line2>s/^bullet/\=(1+line('.')-<line1>).". "/
 endfunction

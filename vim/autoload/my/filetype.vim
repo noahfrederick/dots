@@ -1,10 +1,10 @@
-" autoload/nox/filetype.vim - Global helpers for filetype plug-ins
+" autoload/my/filetype.vim - Global helpers for filetype plug-ins
 " Maintainer:   Noah Frederick
 
 " Append semicolon or comma to end of line in insert mode
-function! nox#filetype#make_semicolon_maps()
-  call nox#filetype#map("inoremap", ";;", "<Esc>A;")
-  call nox#filetype#map("inoremap", ",,", "<Esc>A,")
+function! my#filetype#make_semicolon_maps()
+  call my#filetype#map("inoremap", ";;", "<Esc>A;")
+  call my#filetype#map("inoremap", ",,", "<Esc>A,")
 endfunction
 
 " Insert "=>", "->", or "=" in Ruby/PHP buffers depending on context:
@@ -50,22 +50,22 @@ function! s:sparkup_or_rocket() abort
   return "\<C-g>u\<C-o>:call sparkup#transform()\<CR>"
 endfunction
 
-function! nox#filetype#make_rocket_maps()
-  call nox#filetype#map("inoremap", "<expr> <C-l>", "<SID>rocket()")
+function! my#filetype#make_rocket_maps()
+  call my#filetype#map("inoremap", "<expr> <C-l>", "<SID>rocket()")
 endfunction
 
-function! nox#filetype#make_sparkup_maps()
-  call nox#filetype#map("inoremap", "<expr> <C-l>", "<SID>sparkup_or_rocket()")
-  call nox#filetype#map("inoremap", "<C-S-n>", "<C-g>u<C-o>:call sparkup#next()<CR>")
-  call nox#filetype#map("inoremap", "<C-S-p>", "<C-g>u<C-o>:call sparkup#prev()<CR>")
+function! my#filetype#make_sparkup_maps()
+  call my#filetype#map("inoremap", "<expr> <C-l>", "<SID>sparkup_or_rocket()")
+  call my#filetype#map("inoremap", "<C-S-n>", "<C-g>u<C-o>:call sparkup#next()<CR>")
+  call my#filetype#map("inoremap", "<C-S-p>", "<C-g>u<C-o>:call sparkup#prev()<CR>")
 endfunction
 
-function! nox#filetype#make_xml_maps()
+function! my#filetype#make_xml_maps()
   " Automatically close tags when typing "</"
-  call nox#filetype#map("inoremap", "</", "</<C-x><C-o><C-n><CR>")
+  call my#filetype#map("inoremap", "</", "</<C-x><C-o><C-n><CR>")
 endfunction
 
-function! nox#filetype#map(type, lhs, rhs)
+function! my#filetype#map(type, lhs, rhs)
   execute join([a:type, "<buffer>", a:lhs, a:rhs])
 
   if a:type == "nnoremap" || a:type == "nmap"

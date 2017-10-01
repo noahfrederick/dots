@@ -45,13 +45,13 @@ endif
 
 " Function text objects via
 " https://github.com/kana/vim-textobj-function
-let b:textobj_function_select = function('php#function_select')
+let b:textobj_function_select = function('my#php#function_select')
 let b:accio = ['php', 'phpcs', 'phpmd']
 
-call nox#filetype#make_semicolon_maps()
-call nox#filetype#make_sparkup_maps()
+call my#filetype#make_semicolon_maps()
+call my#filetype#make_sparkup_maps()
 
-command! -buffer -bar -nargs=0 Format call nox#format#php_fmt()
+command! -buffer -bar -nargs=0 Format call my#format#php_fmt()
 
 if !exists('b:undo_ftplugin')
   let b:undo_ftplugin = ''

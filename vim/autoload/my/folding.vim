@@ -1,4 +1,4 @@
-" autoload/nox/foldtext.vim - Clean fold text for the minimalist
+" autoload/my/foldtext.vim - Clean fold text for the minimalist
 " Adapted from http://dhruvasagar.com/2013/03/28/vim-better-foldtext
 "
 " Assuming your fold fillchar is "-", it produces folds that look like this:
@@ -13,7 +13,7 @@
 "   - The original indentation of the preview text is preserved.
 "   - Matching brackets are collapsed to "{ ... }".
 "
-function! nox#folding#text()
+function! my#folding#text()
   let line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
 
   if line =~ '\s*{\s*' && getline(v:foldend) =~ '^\s*}\s*'

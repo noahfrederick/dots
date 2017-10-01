@@ -1,8 +1,8 @@
-" autoload/nox/org/capture.vim - Organizer and note-taking system
+" autoload/my/org/capture.vim - Organizer and note-taking system
 " Maintainer: Noah Frederick
 
-if !exists('g:nox#org#capture#templates')
-  let g:nox#org#capture#templates = {}
+if !exists('g:my#org#capture#templates')
+  let g:my#org#capture#templates = {}
 endif
 
 ""
@@ -38,15 +38,15 @@ endfunction
 let s:template_prototype = {}
 let s:status_prototype = {}
 
-function! nox#org#capture#template(name) abort
+function! my#org#capture#template(name) abort
   let name = a:name
   let template = {}
 
-  if has_key(g:nox#org#capture#templates, name)
-    let template = g:nox#org#capture#templates[name]
+  if has_key(g:my#org#capture#templates, name)
+    let template = g:my#org#capture#templates[name]
   elseif !empty(name)
-    let name = nox#org#fzf#guess(name, sort(keys(g:nox#org#capture#templates)))
-    let template = get(g:nox#org#capture#templates, name, {})
+    let name = my#org#fzf#guess(name, sort(keys(g:my#org#capture#templates)))
+    let template = get(g:my#org#capture#templates, name, {})
   endif
 
   if empty(template)
@@ -55,12 +55,12 @@ function! nox#org#capture#template(name) abort
   endif
 
   if has_key(template, 'extends')
-    if !has_key(g:nox#org#capture#templates, template.extends)
+    if !has_key(g:my#org#capture#templates, template.extends)
       call s:error('parent capture template does not exist: '.template.extends)
       return {}
     endif
 
-    let parent = g:nox#org#capture#templates[template.extends]
+    let parent = g:my#org#capture#templates[template.extends]
     let template = extend(deepcopy(parent), deepcopy(template))
   endif
 
@@ -68,7 +68,7 @@ function! nox#org#capture#template(name) abort
   return extend(deepcopy(s:template_prototype), deepcopy(template))
 endfunction
 
-function! nox#org#capture#it(template, ...) abort
+function! my#org#capture#it(template, ...) abort
   if type(a:template) == type({})
     if has_key(a:template, 'status')
       let template = a:template
@@ -76,9 +76,9 @@ function! nox#org#capture#it(template, ...) abort
       let template = extend(deepcopy(s:template_prototype), deepcopy(a:template))
     endif
   elseif !empty(a:template)
-    let template = nox#org#capture#template(a:template)
+    let template = my#org#capture#template(a:template)
   else
-    let template = nox#org#capture#template('default')
+    let template = my#org#capture#template('default')
   endif
 
   if empty(template)
@@ -111,7 +111,7 @@ function! s:cancel() abort
 endfunction
 
 function! s:interrupt() abort
-  let context = nox#org#capture#context()
+  let context = my#org#capture#context()
 
   call context.status.wait()
   let callback = context.status.callback
@@ -123,24 +123,24 @@ function! s:interrupt() abort
   let func = remove(callback, 0)
   let args = remove(callback, 0)
   " Func is presumed to start an asynchronous job and should register
-  " nox#org#capture#resume() as a callback passing the result as an argument.
+  " my#org#capture#resume() as a callback passing the result as an argument.
   return call(func, args)
 endfunction
 
-function! nox#org#capture#context(...) abort
+function! my#org#capture#context(...) abort
   if a:0 > 0
-    let g:nox#org#capture#context = a:1
+    let g:my#org#capture#context = a:1
   endif
 
-  return get(g:, 'nox#org#capture#context', {})
+  return get(g:, 'my#org#capture#context', {})
 endfunction
 
-function! nox#org#capture#cancel() abort
+function! my#org#capture#cancel() abort
   call s:throw('capture canceled')
 endfunction
 
-function! nox#org#capture#wait(...) abort
-  let context = nox#org#capture#context()
+function! my#org#capture#wait(...) abort
+  let context = my#org#capture#context()
 
   if context.status.is_waiting()
     call context.status.resume()
@@ -151,28 +151,28 @@ function! nox#org#capture#wait(...) abort
   call s:throw('capture interrupted')
 endfunction
 
-function! nox#org#capture#resume(result) abort
-  let context = nox#org#capture#context()
+function! my#org#capture#resume(result) abort
+  let context = my#org#capture#context()
   if empty(context)
     return s:error('nothing to resume')
   endif
 
   let context.status.callback_result = a:result
-  return nox#org#capture#it(context)
+  return my#org#capture#it(context)
 endfunction
 
-function! nox#org#capture#complete_slugs(A, L, P) abort
-  let context = nox#org#capture#context()
-  if empty(context) || context.status.did_terminate || nox#org#template#has_placeholders(context.repo)
-    let slugs = nox#org#notes('')
+function! my#org#capture#complete_slugs(A, L, P) abort
+  let context = my#org#capture#context()
+  if empty(context) || context.status.did_terminate || my#org#template#has_placeholders(context.repo)
+    let slugs = my#org#notes('')
   else
-    let slugs = nox#org#repo(context.repo).notes('')
+    let slugs = my#org#repo(context.repo).notes('')
   endif
-  return nox#org#filter_completions(slugs, a:A)
+  return my#org#filter_completions(slugs, a:A)
 endfunction
 
-function! nox#org#capture#complete_templates(A, L, P) abort
-  return nox#org#filter_completions(keys(g:nox#org#capture#templates), a:A)
+function! my#org#capture#complete_templates(A, L, P) abort
+  return my#org#filter_completions(keys(g:my#org#capture#templates), a:A)
 endfunction
 
 let s:template_prototype.repo = 'default'
@@ -185,7 +185,7 @@ let s:template_prototype._clipboard = ''
 let s:template_prototype._name = ''
 
 function! s:template_init() dict abort
-  call nox#org#capture#context(self)
+  call my#org#capture#context(self)
   call self._normalize_properties()
   call self.status.set_header(self._name, self.path)
   call self.status.init()
@@ -220,10 +220,10 @@ function! s:template__expand_property(key) dict abort
     " the capture process is interrupted.
     let i = 0
     for item in self[a:key]
-      while nox#org#template#has_placeholders(self[a:key][i])
+      while my#org#template#has_placeholders(self[a:key][i])
         silent call self.status.log('Doing expansion on: '.a:key)
         try
-          let self[a:key][i] = nox#org#template#expand(self[a:key][i], self)
+          let self[a:key][i] = my#org#template#expand(self[a:key][i], self)
         catch /^org: expand property/
           " Encountered reference to unexpanded property.
           call self._expand_property(self._expanding)
@@ -232,10 +232,10 @@ function! s:template__expand_property(key) dict abort
       let i += 1
     endfor
   elseif type(self[a:key]) == type('')
-    while nox#org#template#has_placeholders(self[a:key])
+    while my#org#template#has_placeholders(self[a:key])
       silent call self.status.log('Doing expansion on: '.a:key)
       try
-        let self[a:key] = nox#org#template#expand(self[a:key], self)
+        let self[a:key] = my#org#template#expand(self[a:key], self)
       catch /^org: expand property/
         " Encountered reference to unexpanded property.
         call self._expand_property(self._expanding)
@@ -295,7 +295,7 @@ endfunction
 call s:add_methods('template', ['_make_buffer', '_insert'])
 
 function! s:template_prop(key) dict abort
-  if nox#org#template#has_placeholders(self[a:key])
+  if my#org#template#has_placeholders(self[a:key])
     " Cannot expand in place because of Vim script bug(?)
     let self._expanding = a:key
     throw 'org: expand property'

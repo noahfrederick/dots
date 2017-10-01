@@ -9,14 +9,14 @@ endif
 
 " Abbreviated function name
 function! Select(line_number, object)
-  return nox#test#select_text_object(a:line_number, a:object)
+  return my#test#select_text_object(a:line_number, a:object)
 endfunction
 
 describe 'PHP function text object'
   before
     new
     set filetype=php
-    call nox#test#read_fixture('php')
+    call my#test#read_fixture('php')
   end
 
   after

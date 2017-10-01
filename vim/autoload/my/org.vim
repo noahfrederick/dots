@@ -1,8 +1,8 @@
-" autoload/nox/org.vim - Organizer and note-taking system
+" autoload/my/org.vim - Organizer and note-taking system
 " Maintainer: Noah Frederick
 
-if !exists('g:nox#org#repos')
-  let g:nox#org#repos = { 'default': '~/Notes' }
+if !exists('g:my#org#repos')
+  let g:my#org#repos = { 'default': '~/Notes' }
 endif
 
 let s:repos = {}
@@ -33,41 +33,41 @@ endfunction
 
 let s:repo_prototype = {}
 
-function! nox#org#repos() abort
-  return sort(keys(g:nox#org#repos))
+function! my#org#repos() abort
+  return sort(keys(g:my#org#repos))
 endfunction
 
-function! nox#org#complete_repos(A, L, P)
-  return nox#org#filter_completions(nox#org#repos(), a:A)
+function! my#org#complete_repos(A, L, P)
+  return my#org#filter_completions(my#org#repos(), a:A)
 endfunction
 
-function! nox#org#notes() abort
+function! my#org#notes() abort
   let notes = []
 
-  for repo in nox#org#repos()
-    let notes += nox#org#repo(repo).notes()
+  for repo in my#org#repos()
+    let notes += my#org#repo(repo).notes()
   endfor
 
   return notes
 endfunction
 
-function! nox#org#resolve(slug) abort
+function! my#org#resolve(slug) abort
   let parts = split(a:slug, ':')
-  let repo = len(parts) > 1 ? nox#org#repo(remove(parts, 0)) : nox#org#repo()
+  let repo = len(parts) > 1 ? my#org#repo(remove(parts, 0)) : my#org#repo()
   return repo.note(parts[0])
 endfunction
 
-function! nox#org#repo(...) abort
+function! my#org#repo(...) abort
   let name = get(a:000, 0, 'default')
 
-  if !has_key(g:nox#org#repos, name)
+  if !has_key(g:my#org#repos, name)
     return s:error('repo does not exist: '.name)
   endif
 
   if !has_key(s:repos, name)
     let s:repos[name] = deepcopy(s:repo_prototype)
     let s:repos[name]._name = name
-    let s:repos[name]._path = expand(get(g:nox#org#repos, name))
+    let s:repos[name]._path = expand(get(g:my#org#repos, name))
   endif
 
   return s:repos[name]
@@ -104,7 +104,7 @@ endfunction
 
 call s:add_methods('repo', ['path', 'prefix', 'note', 'glob', 'notes', 'slugify'])
 
-function! nox#org#filter_completions(candidates, A) abort
+function! my#org#filter_completions(candidates, A) abort
   let candidates = sort(copy(a:candidates))
 
   let filtered = filter(copy(candidates), {idx, val -> val[0:strlen(a:A)-1] ==# a:A})

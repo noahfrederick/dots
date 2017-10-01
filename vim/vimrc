@@ -86,7 +86,7 @@ if has("vim_starting")
   " Load slow plug-ins when when needed.
   augroup init_slow_insert_mode_plugins
     autocmd!
-    autocmd InsertEnter * call nox#plug#load_insert_mode() |
+    autocmd InsertEnter * call my#plug#load_insert_mode() |
           \ autocmd! init_slow_insert_mode_plugins
   augroup END
 endif
@@ -105,7 +105,7 @@ set modeline modelines=2        " Look for modeline in first/last n lines of fil
 set hidden                      " Do not unload buffers when no longer displayed
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
-set foldtext=nox#folding#text()
+set foldtext=my#folding#text()
 set switchbuf=useopen,usetab
 set lazyredraw                  " Do not redraw screen during macro execution
 set cpoptions-=_                " Make 'cw' behave like 'dw' etc.
@@ -341,72 +341,72 @@ augroup init_org
   autocmd!
 
   if exists('$NOTES')
-    let g:nox#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
-    let g:nox#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
+    let g:my#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
+    let g:my#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
 
     execute 'autocmd BufWritePost'
-          \ join([g:nox#org#repos.journal.'/*.md', g:nox#org#repos.default.'/agenda.html.erb'], ',')
+          \ join([g:my#org#repos.journal.'/*.md', g:my#org#repos.default.'/agenda.html.erb'], ',')
           \ 'Dispatch mkagenda --agent nvim'
   endif
-  autocmd BufReadCmd org://* nested call nox#org#protocol#handle(expand('<afile>'))
+  autocmd BufReadCmd org://* nested call my#org#protocol#handle(expand('<afile>'))
 augroup END
 
 " }}}
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
 
-command! -bang -bar Bdelete call nox#buffer#delete(<q-bang>)
+command! -bang -bar Bdelete call my#buffer#delete(<q-bang>)
 command! -bang -nargs=? -complete=buffer Bufonly
-      \ call nox#buffer#only(<q-args>, <q-bang>)
-command! -nargs=0 -bar FollowSymlink call nox#path#follow_symlink()
+      \ call my#buffer#only(<q-args>, <q-bang>)
+command! -nargs=0 -bar FollowSymlink call my#path#follow_symlink()
 command! -bang -nargs=? -bar -complete=filetype Scratch
       \ tabedit | if !empty(<q-bang>) | put | 1delete _ | endif |
       \ let &filetype = empty(<q-args>) ? 'markdown' : <q-args> |
       \ setlocal buftype=nofile bufhidden=hide noswapfile
 command! -nargs=0 -bar Unix set fileformat=unix
 command! -bang -nargs=0 -bar Cd cd<bang> .
-command! -bang -nargs=0 -bar -count=8 Indent call nox#editing#set_indent_style(<count>, <bang>0)
+command! -bang -nargs=0 -bar -count=8 Indent call my#editing#set_indent_style(<count>, <bang>0)
 command! -bang -nargs=1 -bar -complete=help Help <mods> help<bang> <args> |
       \ let @* = printf('[`:help %s`](https://vimhelp.appspot.com/%s.html#%s)', escape(<q-args>, '`[]'), expand('%:t'), escape(<q-args>, '()'))
 
-command! -bar -bang -nargs=? -complete=customlist,nox#org#complete_repos
-      \ Notes call nox#org#fzf#notes(<q-args>, <bang>0)
-command! -bar -bang -nargs=? -complete=customlist,nox#org#complete_repos
-      \ NoteGrep call nox#org#fzf#grep(<q-args>, <bang>0)
-command! -bar -bang -nargs=? -complete=customlist,nox#org#capture#complete_templates -range
+command! -bar -bang -nargs=? -complete=customlist,my#org#complete_repos
+      \ Notes call my#org#fzf#notes(<q-args>, <bang>0)
+command! -bar -bang -nargs=? -complete=customlist,my#org#complete_repos
+      \ NoteGrep call my#org#fzf#grep(<q-args>, <bang>0)
+command! -bar -bang -nargs=? -complete=customlist,my#org#capture#complete_templates -range
       \ Capture if empty(<q-args>) |
-      \              call nox#org#fzf#capture(<q-bang>) |
+      \              call my#org#fzf#capture(<q-bang>) |
       \            elseif <bang>0 |
-      \              call nox#org#capture#it(<q-args>, {'edit_command': 'edit'}) |
+      \              call my#org#capture#it(<q-args>, {'edit_command': 'edit'}) |
       \            else |
-      \              call nox#org#capture#it(<q-args>) |
+      \              call my#org#capture#it(<q-args>) |
       \            endif
-command! -bang -bar -nargs=0 ShoppingList call nox#org#shopping#list(<bang>0)
+command! -bang -bar -nargs=0 ShoppingList call my#org#shopping#list(<bang>0)
 
 " See the difference between the current buffer and the file it was loaded
 " from, thus the changes you made.
 command! DiffOrig vertical new | set buftype=nofile | read # | 0delete_
       \ | diffthis | wincmd p | diffthis
 
-command! -nargs=0 -bar -bang               Zbuffers call nox#fzf#buffers(<bang>0)
-command! -nargs=? -bar -bang -complete=dir Zfiles   call nox#fzf#files(<q-args>, <bang>0)
-command! -nargs=0 -bar -bang               Ztags    call nox#fzf#tags(<bang>0)
-command! -nargs=0 -bar -bang               Zhelp    call nox#fzf#helptags(<bang>0)
-command! -nargs=0 -bar -bang               Zhistory call nox#fzf#history(<bang>0)
-command! -nargs=0 -bar -bang               Zlines   call nox#fzf#lines(<bang>0)
-command! -nargs=0 -bar -bang               Zblines  call nox#fzf#blines(<bang>0)
-command! -nargs=0 -bar -bang               Zmarks   call nox#fzf#marks(<bang>0)
-command! -nargs=* -bar -bang               Zgrep    call nox#fzf#grep(<q-args>, <bang>0)
+command! -nargs=0 -bar -bang               Zbuffers call my#fzf#buffers(<bang>0)
+command! -nargs=? -bar -bang -complete=dir Zfiles   call my#fzf#files(<q-args>, <bang>0)
+command! -nargs=0 -bar -bang               Ztags    call my#fzf#tags(<bang>0)
+command! -nargs=0 -bar -bang               Zhelp    call my#fzf#helptags(<bang>0)
+command! -nargs=0 -bar -bang               Zhistory call my#fzf#history(<bang>0)
+command! -nargs=0 -bar -bang               Zlines   call my#fzf#lines(<bang>0)
+command! -nargs=0 -bar -bang               Zblines  call my#fzf#blines(<bang>0)
+command! -nargs=0 -bar -bang               Zmarks   call my#fzf#marks(<bang>0)
+command! -nargs=* -bar -bang               Zgrep    call my#fzf#grep(<q-args>, <bang>0)
 command! -nargs=0 -bar -bang               Zfixme   Zgrep<bang> (FIXME\|TODO\|XXX)
 
 augroup init_fzf
   autocmd!
-  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call nox#fzf#use(<bang>0)
+  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call my#fzf#use(<bang>0)
   autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
 augroup END
 
 if executable('osascript')
-  command! -nargs=? -bang -bar -complete=file Transmit call nox#transmit#send(<q-bang>, <q-args>)
+  command! -nargs=? -bang -bar -complete=file Transmit call my#transmit#send(<q-bang>, <q-args>)
 endif
 
 if exists(":terminal")
@@ -513,7 +513,7 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habere
 "   Makes
 "     habēre
-nnoremap <expr> <Plug>NormalModeDigraph nox#editing#normal_mode_digraph(nr2char(getchar()))
+nnoremap <expr> <Plug>NormalModeDigraph my#editing#normal_mode_digraph(nr2char(getchar()))
 nmap <Leader><C-k> <Plug>NormalModeDigraph
 
 " Look up documentation with Dash.app
@@ -566,8 +566,8 @@ inoremap <expr> <C-y> matchstr(getline(line('.') - 1), '\%' . virtcol('.') . 'v\
 inoremap <expr> <C-e> matchstr(getline(line('.') + 1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 nnoremap <silent> <F2> :if &previewwindow<Bar>pclose<Bar>elseif exists(':Gstatus')<Bar>Gstatus<Bar>endif<CR>
-nnoremap <silent> <F3> :call nox#quickfix#toggle('c')<CR>
-nnoremap <silent> <F4> :call nox#quickfix#toggle('l')<CR>
+nnoremap <silent> <F3> :call my#quickfix#toggle('c')<CR>
+nnoremap <silent> <F4> :call my#quickfix#toggle('l')<CR>
 
 " :help dispatch-commands
 nnoremap dm    :Make<CR>
@@ -580,13 +580,13 @@ nnoremap dc    :Console<CR>
 nnoremap <Leader>T :write %:p:r_<C-r>=strftime('%Y%m%d-%H%M%S')<CR>.%:e<CR>
 
 " Remove trailing whitespace, merge consecutive empty lines
-nnoremap <silent> <Leader>w :call nox#editing#normalize_whitespace()<CR>
+nnoremap <silent> <Leader>w :call my#editing#normalize_whitespace()<CR>
 
 " Re-indent entire buffer content
-nnoremap <silent> <Leader>= :call nox#editing#reindent_buffer()<CR>
+nnoremap <silent> <Leader>= :call my#editing#reindent_buffer()<CR>
 
 " Yank entire buffer content
-nnoremap <silent> <Leader>y :call nox#editing#yank_buffer()<CR>
+nnoremap <silent> <Leader>y :call my#editing#yank_buffer()<CR>
 
 nnoremap <Leader>g<Space> :Git<Space>
 nnoremap <Leader>gw :Gwrite<CR>

@@ -12,4 +12,4 @@ let b:surround_{char2nr('x')} = "%x{\r}" " System command (backticks)
 
 let b:accio = ['ruby', 'rubocop']
 
-call nox#filetype#make_rocket_maps()
+call my#filetype#make_rocket_maps()

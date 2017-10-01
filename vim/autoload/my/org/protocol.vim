@@ -1,4 +1,4 @@
-" autoload/nox/org/protocol.vim - Organizer and note-taking system
+" autoload/my/org/protocol.vim - Organizer and note-taking system
 " Maintainer: Noah Frederick
 
 ""
@@ -9,7 +9,7 @@ function! s:error(msg) abort
   echohl NONE
 endfunction
 
-function! nox#org#protocol#handle(url) abort
+function! my#org#protocol#handle(url) abort
   let bufnr = bufnr('%')
   buffer #
   execute 'bwipeout' bufnr
@@ -23,12 +23,12 @@ function! s:handler(url) abort
     " Work around stupid problem with cursor not being in the right window
     " when capture needs user input before VimEnter.
     if v:vim_did_enter
-      return nox#org#capture#it(url.path, url.querystring)
+      return my#org#capture#it(url.path, url.querystring)
     else
-      let g:nox#org#protocol#url = url
+      let g:my#org#protocol#url = url
       autocmd org VimEnter *
-            \ call nox#org#capture#it(g:nox#org#protocol#url.path, g:nox#org#protocol#url.querystring) |
-            \ unlet! g:nox#org#protocol#url
+            \ call my#org#capture#it(g:my#org#protocol#url.path, g:my#org#protocol#url.querystring) |
+            \ unlet! g:my#org#protocol#url
     endif
   elseif url.host =~# '^note'
     execute 'OrgNotes '.url.path

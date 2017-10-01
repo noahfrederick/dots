@@ -5,7 +5,7 @@ snippet _skel "HTML template page" b
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>`!v nox#snippet#title(expand('%:t:r'))`</title>
+		<title>`!v my#snippet#title(expand('%:t:r'))`</title>
 		<link rel="stylesheet" type="text/css" href="/css/main.css" media="all" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
@@ -51,7 +51,7 @@ snippet link "HTML <link>" b
 endsnippet
 
 snippet title "HTML <title>" b
-<title>${1:`!v nox#snippet#Title(expand('%:t:r'))`}</title>
+<title>${1:`!v my#snippet#Title(expand('%:t:r'))`}</title>
 endsnippet
 
 snippet meta "HTML <meta> (charset)" b

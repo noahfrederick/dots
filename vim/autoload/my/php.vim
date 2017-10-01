@@ -1,4 +1,4 @@
-" autoload/php.vim - PHP helpers
+" autoload/my/php.vim - PHP helpers
 
 let s:php_source_prefixes = [
   \ 'application/classes/',
@@ -26,7 +26,7 @@ function! s:projection_query(key)
 endfunction
 
 " Get the opening PHP tag with guard, if any
-function! php#open()
+function! my#php#open()
   let out = "<?php"
   let framework = s:projection_query("framework")
 
@@ -50,14 +50,14 @@ endfunction
 "
 " Example:
 "   classes/HTTP/Request.php -> HTTP_Request
-function! php#path_to_class_name(...)
+function! my#php#path_to_class_name(...)
   if a:0
     let path = a:1
   else
     let path = expand('%:p')
   endif
 
-  let suffix = nox#path#remove_prefix(s:php_source_prefixes, path)
+  let suffix = my#path#remove_prefix(s:php_source_prefixes, path)
 
   if suffix ==# path
     let suffix = fnamemodify(path, ':t')
@@ -67,7 +67,7 @@ function! php#path_to_class_name(...)
 endfunction
 
 " Make an intelligent guess about the parent class name based on file's path.
-function! php#path_to_parent_class_name(path)
+function! my#php#path_to_parent_class_name(path)
   let framework = s:projection_query("framework")
   let category = s:projection_query("category")
 
@@ -89,27 +89,27 @@ endfunction
 " Derive class name from test class name
 " Example:
 "   HTTP_RequestTest -> HTTP_Request
-function! php#test_class_name_to_class_name(class_name)
+function! my#php#test_class_name_to_class_name(class_name)
   return substitute(a:class_name, 'Test$', '', '')
 endfunction
 
 " Derive test class name from class name
 " Example:
 "   HTTP_Request -> HTTP_RequestTest
-function! php#class_name_to_test_class_name(class_name)
+function! my#php#class_name_to_test_class_name(class_name)
   return a:class_name.'Test'
 endfunction
 
 " Generate a generic description for test case
-function! php#get_test_case_description()
-  let className = php#path_to_class_name()
-  let className = php#test_class_name_to_class_name(class_name)
+function! my#php#get_test_case_description()
+  let className = my#php#path_to_class_name()
+  let className = my#php#test_class_name_to_class_name(class_name)
 
   return 'Test case for class '.className
 endfunction
 
 " Derive class category from file's path
-function! php#path_to_class_category(path)
+function! my#php#path_to_class_category(path)
   for [segment, category] in s:php_source_segments
     if stridx(a:path, l:segment) != -1
       return l:category
@@ -119,7 +119,7 @@ function! php#path_to_class_category(path)
 endfunction
 
 " Function text objects
-function! php#function_select(object_type)
+function! my#php#function_select(object_type)
   return s:function_select_{a:object_type}()
 endfunction
 

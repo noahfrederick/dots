@@ -1,8 +1,8 @@
-" autoload/nox/format.vim - Formatting helpers
+" autoload/my/format.vim - Formatting helpers
 
 " Note: This fails in js-beautify > 1.5.5 because of some bug I haven't
 " investigated much.
-function! nox#format#js_beautify() range abort
+function! my#format#js_beautify() range abort
   if !executable('js-beautify')
     throw "js-beautify is not available"
   endif
@@ -39,7 +39,7 @@ function! nox#format#js_beautify() range abort
   execute a:firstline . ',' . a:lastline . join(cmd)
 endfunction
 
-function! nox#format#php_fmt() abort
+function! my#format#php_fmt() abort
   if !executable('php')
     throw "php is not available"
   elseif empty(glob('~/.composer/vendor/bin/fmt.php'))

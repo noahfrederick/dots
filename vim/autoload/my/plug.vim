@@ -1,7 +1,7 @@
-" autoload/nox/plug.vim - Plug helpers
+" autoload/my/plug.vim - Plug helpers
 " Maintainer: Noah Frederick
 
-function! nox#plug#load_insert_mode()
+function! my#plug#load_insert_mode()
   call plug#load('ultisnips', 'lexima.vim')
 
   if &modifiable

@@ -1,4 +1,4 @@
-" autoload/nox/org/fzf.vim - Organizer and note-taking system
+" autoload/my/org/fzf.vim - Organizer and note-taking system
 " Maintainer:   Noah Frederick
 
 let s:has_rougify = executable('rougify')
@@ -80,15 +80,15 @@ endfunction
 " ------------------------------------------------------------------
 function! s:templates() abort
   let lines = []
-  for [name, body] in items(g:nox#org#capture#templates)
+  for [name, body] in items(g:my#org#capture#templates)
     call add(lines, printf("%s\t%s", s:magenta(name), body.description))
   endfor
   return sort(lines)
 endfunction
 
 function! s:capture_handler(lines) abort
-  let bang = g:nox#org#fzf#bang
-  unlet! g:nox#org#fzf#bang
+  let bang = g:my#org#fzf#bang
+  unlet! g:my#org#fzf#bang
 
   if len(a:lines) < 2
     return
@@ -98,14 +98,14 @@ function! s:capture_handler(lines) abort
   execute 'Capture'.bang template
 endfunction
 
-function! nox#org#fzf#capture(bang) abort
+function! my#org#fzf#capture(bang) abort
   let templates = s:templates()
 
   if empty(templates)
     return
   endif
 
-  let g:nox#org#fzf#bang = a:bang
+  let g:my#org#fzf#bang = a:bang
 
   let args = {'options': '--reverse --ansi --tabstop=18'}
   let args.options .= ' --prompt='.shellescape('capture > ')
@@ -120,10 +120,10 @@ endfunction
 " ------------------------------------------------------------------
 function! s:notes(repo) abort
   if empty(a:repo)
-    return nox#org#notes()
+    return my#org#notes()
   endif
 
-  let repo = nox#org#repo(a:repo)
+  let repo = my#org#repo(a:repo)
 
   if empty(repo)
     return
@@ -138,7 +138,7 @@ function! s:note_handler(lines) abort
   endif
 
   let lines = a:lines
-  let lines[1] = nox#org#resolve(lines[1])
+  let lines[1] = my#org#resolve(lines[1])
 
   return s:common_sink(lines)
 endfunction
@@ -160,7 +160,7 @@ function! s:note_preview() abort
   return printf(format, path, bin, path)
 endfunction
 
-function! nox#org#fzf#notes(repo, fullscreen) abort
+function! my#org#fzf#notes(repo, fullscreen) abort
   let notes = s:notes(a:repo)
 
   if empty(notes)
@@ -206,11 +206,11 @@ function! s:ag_handler(lines) abort
   endif
 endfunction
 
-function! nox#org#fzf#grep(query, fullscreen) abort
+function! my#org#fzf#grep(query, fullscreen) abort
   call s:fzf(s:wrap({
         \ 'source':  printf('ag --nogroup --column --color "%s" %s',
         \                   escape(empty(a:query) ? '^(?=.)' : a:query, '"\-'),
-        \                   shellescape(nox#org#repo().path())),
+        \                   shellescape(my#org#repo().path())),
         \ 'sink*':   function('s:ag_handler'),
         \ 'options': '--ansi --delimiter : --nth 4..,.. '.
         \            '--multi --reverse --tiebreak=index '.
@@ -220,7 +220,7 @@ endfunction
 " ------------------------------------------------------------------
 " Non-interactive filter
 " ------------------------------------------------------------------
-function! nox#org#fzf#guess(query, items)
+function! my#org#fzf#guess(query, items)
   let args = [
         \ 'echo',
         \ '"'.escape(join(a:items, "\n"), '"').'"',

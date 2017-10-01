@@ -2,11 +2,11 @@
 
 snippet _vim "Vim plug-in addon-info.json" b
 {
-	"name": "${1:`!v nox#project#get("title")`}",
+	"name": "${1:`!v my#project#get("title")`}",
 	"version": "0.1.0",
-	"author": "`!v nox#project#get("author")`",
+	"author": "`!v my#project#get("author")`",
 	"description": "$2",
-	"homepage": "https://github.com/`!v nox#project#get("github")`/`!v expand("%:p:h:t")`",
+	"homepage": "https://github.com/`!v my#project#get("github")`/`!v expand("%:p:h:t")`",
 	"script_id": ""
 }
 endsnippet
