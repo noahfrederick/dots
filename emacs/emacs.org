@@ -18,10 +18,10 @@ repository]]. The meat of it (and the source of this document) is the
 ** Commentary
 
 Any variables, functions, or macros defined in this configuration
-are "namespaced" with a prefix of ~nox/~. This is only a convention
+are "namespaced" with a prefix of ~my-~. This is only a convention
 for easily distinguishing between built-in functions and those
 defined in this configuration or another package, and has no other
-special significance. (It would be more responsible to use a prefix of ~my-~.)
+special significance.
 
 ** Configuring Packages
 
@@ -60,8 +60,8 @@ Keep any Elisp files not installed from a package repository in the
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defvar nox/vendor-directory (concat user-emacs-directory "vendor/"))
-  (add-to-list 'load-path nox/vendor-directory)
+  (defvar my-vendor-directory (concat user-emacs-directory "vendor/"))
+  (add-to-list 'load-path my-vendor-directory)
 #+END_SRC
 
 Keep theme files in the =themes/= directory:
@@ -75,9 +75,9 @@ Keep temporary files in a separate directory:
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defvar nox/ephemeral-directory "~/.emacs.ephemeral/")
-  (unless (file-exists-p nox/ephemeral-directory)
-    (mkdir nox/ephemeral-directory))
+  (defvar my-ephemeral-directory "~/.emacs.ephemeral/")
+  (unless (file-exists-p my-ephemeral-directory)
+    (mkdir my-ephemeral-directory))
 #+END_SRC
 
 ** Benchmarking
@@ -87,12 +87,12 @@ let's show the total time in a message:
 
 #+NAME: init-after
 #+BEGIN_SRC emacs-lisp :tangle no :tangle no
-  (defun nox/show-startup-time ()
+  (defun my-show-startup-time ()
     "Show Emacs's startup time in the minibuffer"
     (message "Startup time: %s seconds."
              (emacs-uptime "%s")))
 
-  (add-hook 'emacs-startup-hook 'nox/show-startup-time 'append)
+  (add-hook 'emacs-startup-hook 'my-show-startup-time 'append)
 #+END_SRC
 
 [[https://github.com/dholm/benchmark-init-el][Benchmark-init.el]] can give us a breakdown of time spent on ~require~
@@ -173,20 +173,20 @@ Keep Eshell's temporary files out of the way:
 
 #+NAME: init-after
 #+BEGIN_SRC emacs-lisp :tangle no
-  (setq eshell-directory-name (expand-file-name "eshell/" nox/ephemeral-directory))
+  (setq eshell-directory-name (expand-file-name "eshell/" my-ephemeral-directory))
 #+END_SRC
 
 ** Private
 
 Since this configuration is kept in version control in public view,
 we keep sensitive information such as passwords in a separate
-file. Anything with the special prefix ~nox/private/~ originates from
+file. Anything with the special prefix ~my-private-~ originates from
 this file.
 
 #+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defvar nox/private-file (expand-file-name "private.el" user-emacs-directory))
-  (load nox/private-file 'noerror)
+  (defvar my-private-file (expand-file-name "private.el" user-emacs-directory))
+  (load my-private-file 'noerror)
 #+END_SRC
 
 ** Custom
@@ -305,14 +305,14 @@ terminal frames:
 
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/after-make-frame (frame)
+  (defun my-after-make-frame (frame)
     "Function run in after-make-frame-functions hook, which handles
   cosmetic issues in terminal frames."
     (unless (display-graphic-p frame)
       (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
       (set-face-background 'default "dummy-color" frame)))
 
-  (add-hook 'after-make-frame-functions 'nox/after-make-frame)
+  (add-hook 'after-make-frame-functions 'my-after-make-frame)
 #+END_SRC
 
 Emacs typically beeps to indicate illegal commands. I don't find
@@ -472,7 +472,7 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
           (evil-leader/set-leader "<SPC>")
           (global-evil-leader-mode 1)
 
-          (defun nox/declare-prefix (prefix name)
+          (defun my-declare-prefix (prefix name)
             "Declare a prefix PREFIX. PREFIX is a string describing
   a key sequence. NAME is a symbol name used as the prefix command."
             (let ((command (intern (concat "group:" name))))
@@ -482,18 +482,18 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
                 (evil-leader/set-key prefix command))))
 
           ;; Define prefix commands for the sake of guide-key
-          (setq nox/key-binding-prefixes '(("g" . "git")
+          (setq my-key-binding-prefixes '(("g" . "git")
                                            ("m" . "mode")
                                            ("o" . "toggle")
                                            ("r" . "org")))
 
-          (mapc (lambda (x) (nox/declare-prefix (car x) (cdr x)))
-                nox/key-binding-prefixes)
+          (mapc (lambda (x) (my-declare-prefix (car x) (cdr x)))
+                my-key-binding-prefixes)
 
           (evil-leader/set-key
             "SPC" 'smex
             "m SPC" 'smex-major-mode-commands
-            "=" 'nox/indent-buffer
+            "=" 'my-indent-buffer
             "b" 'ido-switch-buffer
             "B" 'ibuffer
             "d" 'projectile-find-dir
@@ -505,11 +505,11 @@ around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
             "p" 'projectile-switch-project
             "P" 'paradox-list-packages
             "s" 'ansi-term
-            "T" 'nox/write-timestamped-current-file-copy
+            "T" 'my-write-timestamped-current-file-copy
             "u" 'undo-tree-visualize
             "w" 'whitespace-cleanup
-            "y" 'nox/yank-buffer
-            "z" 'nox/narrow-or-widen
+            "y" 'my-yank-buffer
+            "z" 'my-narrow-or-widen
             ;; Option toggle
             "o l" 'whitespace-mode
             "o n" 'linum-mode
@@ -588,7 +588,7 @@ Vim. Use =ESC= to cancel out of the minibuffer:
 
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/minibuffer-keyboard-quit ()
+  (defun my-minibuffer-keyboard-quit ()
     "Abort recursive edit.
 
   In Delete Selection mode, if the mark is active, just deactivate it;
@@ -599,11 +599,11 @@ Vim. Use =ESC= to cancel out of the minibuffer:
       (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
       (abort-recursive-edit)))
 
-  (define-key minibuffer-local-map [escape] 'nox/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-ns-map [escape] 'nox/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-completion-map [escape] 'nox/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-must-match-map [escape] 'nox/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-isearch-map [escape] 'nox/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'my-minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'my-minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'my-minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'my-minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'my-minibuffer-keyboard-quit)
 #+END_SRC
 
 * Editing
@@ -661,47 +661,47 @@ These packages provide various conveniences for editing.
         (kbd "C-M-h") 'sp-backward-barf-sexp)
 
       ;; Fix handling of {} and [] when hitting RET inside
-      (defun nox/sp/pair-on-newline (id action context)
+      (defun my-sp/pair-on-newline (id action context)
         "Put trailing pair on newline and return to point."
         (save-excursion
           (newline)
           (indent-according-to-mode)))
 
-      (defun nox/sp/pair-on-newline-and-indent (id action context)
+      (defun my-sp/pair-on-newline-and-indent (id action context)
         "Open a new brace or bracket expression, with relevant newlines and indent."
-        (nox/sp/pair-on-newline id action context)
+        (my-sp/pair-on-newline id action context)
         (indent-according-to-mode))
 
       (sp-pair "{" nil :post-handlers
                '(:add ((lambda (id action context)
-                         (nox/sp/pair-on-newline-and-indent id action context)) "RET")))
+                         (my-sp/pair-on-newline-and-indent id action context)) "RET")))
       (sp-pair "[" nil :post-handlers
                '(:add ((lambda (id action context)
-                         (nox/sp/pair-on-newline-and-indent id action context)) "RET")))))
+                         (my-sp/pair-on-newline-and-indent id action context)) "RET")))))
 #+END_SRC
 
 When proper source control isn't an option, it's useful to be able
 to create a copy of a file as you are working on it.
-~nox/write-timestamped-current-file-copy~ writes the contents of the
+~my-write-timestamped-current-file-copy~ writes the contents of the
 active buffer to a copy with a timestamp appended to the filename.
 
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/write-file-copy (filename)
+  (defun my-write-file-copy (filename)
     (interactive "F")
     (save-restriction (widen)
                       (write-region (point-min) (point-max) filename)))
 
-  (defun nox/write-timestamped-file-copy (filename)
+  (defun my-write-timestamped-file-copy (filename)
     (interactive "F")
     (let ((timestamp (format-time-string "%Y%m%d-%H%M%S"))
           (filename-head (file-name-sans-extension filename))
           (filename-ext (file-name-extension filename t)))
-      (nox/write-file-copy (expand-file-name (concat filename-head "_" timestamp filename-ext)))))
+      (my-write-file-copy (expand-file-name (concat filename-head "_" timestamp filename-ext)))))
 
-  (defun nox/write-timestamped-current-file-copy ()
+  (defun my-write-timestamped-current-file-copy ()
     (interactive)
-    (nox/write-timestamped-file-copy (buffer-file-name)))
+    (my-write-timestamped-file-copy (buffer-file-name)))
 #+END_SRC
 
 Copying the entire buffer contents to the clipboard is a fairly
@@ -709,7 +709,7 @@ common need when working with other graphical programs.
 
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/yank-buffer ()
+  (defun my-yank-buffer ()
     "Copy entire buffer to clipboard."
     (interactive)
     (clipboard-kill-ring-save (point-min) (point-max)))
@@ -721,7 +721,7 @@ works like that from [[https://github.com/tpope/vim-eunuch][eunuch.vim]].
 
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/delete-current-file ()
+  (defun my-delete-current-file ()
     "Delete the file associated with the current buffer and close the
   buffer. When no file is associated with the buffer, the buffer is
   closed only."
@@ -733,7 +733,7 @@ works like that from [[https://github.com/tpope/vim-eunuch][eunuch.vim]].
 
 
   (with-eval-after-load 'evil
-    (evil-ex-define-cmd "R[emove]" 'nox/delete-current-file))
+    (evil-ex-define-cmd "R[emove]" 'my-delete-current-file))
 #+END_SRC
 
 ** Scrolling
@@ -771,7 +771,7 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
 
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/narrow-or-widen (p)
+  (defun my-narrow-or-widen (p)
     "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
   Intelligently means: region, org-src-block, org-subtree, or defun,
   whichever applies first.
@@ -802,10 +802,10 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq-default indent-tabs-mode nil)
 
-  (defun nox/indent-use-tabs ()
+  (defun my-indent-use-tabs ()
     (setq indent-tabs-mode t))
-  (add-hook 'markdown-mode-hook 'nox/indent-use-tabs)
-  (add-hook 'web-mode-hook 'nox/indent-use-tabs)
+  (add-hook 'markdown-mode-hook 'my-indent-use-tabs)
+  (add-hook 'web-mode-hook 'my-indent-use-tabs)
 
   (use-package dtrt-indent
     :ensure t
@@ -837,17 +837,17 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
                                tab-mark
                                newline-mark))))
 
-  (defun nox/indent-buffer ()
+  (defun my-indent-buffer ()
           (interactive)
           (save-excursion
                   (indent-region (point-min) (point-max) nil)))
 
-  (defun nox/show-trailing-whitespace ()
+  (defun my-show-trailing-whitespace ()
           (interactive)
           (setq show-trailing-whitespace t))
 
   (add-hook 'prog-mode-hook
-            'nox/show-trailing-whitespace)
+            'my-show-trailing-whitespace)
 #+END_SRC
 
 Auto-filling refers to hard-wrapping text. The default fill-column
@@ -870,14 +870,14 @@ Use aspell for spell checking: =brew install aspell --lang=en=
     :ensure t
     :defer 2
     :init
-    (defun nox/flyspell-setup ()
+    (defun my-flyspell-setup ()
       "Setup of flyspell-mode."
       (add-hook 'text-mode-hook 'flyspell-mode)
       (add-hook 'prog-mode-hook 'flyspell-prog-mode))
     :config
     (progn
       (setq ispell-program-name "aspell")
-      (nox/flyspell-setup)))
+      (my-flyspell-setup)))
 #+END_SRC
 
 ** Syntax Checking
@@ -972,14 +972,14 @@ use the fringe (and don't work in a terminal).
         :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)))
     :mode ("Cask" . emacs-lisp-mode))
 
-  (defun nox/byte-recompile ()
+  (defun my-byte-recompile ()
     "`byte-compile' every .el file under `user-emacs-directory' recursively"
     (interactive)
     (byte-recompile-directory user-emacs-directory 0)
     (when (fboundp 'sauron-add-event)
       (sauron-add-event 'editor 2 "Byte compiled Emacs directory")))
 
-  (defun nox/byte-compile-current-buffer ()
+  (defun my-byte-compile-current-buffer ()
     "`byte-compile' current buffer in emacs-lisp-mode if compiled file exists."
     (interactive)
     (when (and (eq major-mode 'emacs-lisp-mode)
@@ -988,7 +988,7 @@ use the fringe (and don't work in a terminal).
       (when (fboundp 'sauron-add-event)
         (sauron-add-event 'editor 2 "Byte compiled buffer"))))
 
-  (add-hook 'after-save-hook 'nox/byte-compile-current-buffer)
+  (add-hook 'after-save-hook 'my-byte-compile-current-buffer)
 #+END_SRC
 
 *** Ledger
@@ -1014,8 +1014,8 @@ command-line accounting program.
         "m Q" 'ledger-mode-clean-buffer
         "m r" 'ledger-report
         "m R" 'ledger-reconcile
-        "m /" 'nox/ledger-post-split-evenly
-        "m ?" 'nox/ledger-post-split
+        "m /" 'my-ledger-post-split-evenly
+        "m ?" 'my-ledger-post-split
         "m s" 'ledger-display-ledger-stats
         "m t" 'ledger-insert-effective-date
         "m y" 'ledger-set-year
@@ -1027,19 +1027,19 @@ These are helper functions I use to manage my ledger file.
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (with-eval-after-load 'ledger-mode
-    (defun nox/ledger-post-split (account amount)
+    (defun my-ledger-post-split (account amount)
       "Split a ledger posting at point between original account and
   ACCOUNT, with AMOUNT allotted to the second account."
-      (interactive (list (nox/ledger-org-read-account)
+      (interactive (list (my-ledger-org-read-account)
                          (string-to-number (read-string "Amount ($): "))))
-      (nox/ledger-post-make-split account amount))
+      (my-ledger-post-make-split account amount))
 
-    (defun nox/ledger-post-split-evenly (account)
+    (defun my-ledger-post-split-evenly (account)
       "Split a ledger posting at point evenly between original account and ACCOUNT."
-      (interactive (list (nox/ledger-org-read-account)))
-      (nox/ledger-post-make-split account))
+      (interactive (list (my-ledger-org-read-account)))
+      (my-ledger-post-make-split account))
 
-    (defun nox/ledger-post-make-split (account &optional amount)
+    (defun my-ledger-post-make-split (account &optional amount)
       "Split a ledger posting at point between original account and ACCOUNT."
       (goto-char (line-beginning-position))
       (when (re-search-forward ledger-post-line-regexp (line-end-position) t)
@@ -1169,7 +1169,7 @@ Place the point where we left it when last visiting the same file.
     :init
     (progn
       (setq-default save-place t)
-      (setq save-place-file (expand-file-name "saved-places" nox/ephemeral-directory))))
+      (setq save-place-file (expand-file-name "saved-places" my-ephemeral-directory))))
 #+END_SRC
 
 ** Ido
@@ -1179,7 +1179,7 @@ Place the point where we left it when last visiting the same file.
   (use-package ido
     :init
     (progn
-      (setq ido-save-directory-list-file (expand-file-name "ido.last" nox/ephemeral-directory))
+      (setq ido-save-directory-list-file (expand-file-name "ido.last" my-ephemeral-directory))
     :config
     (progn
       (ido-mode t)
@@ -1194,9 +1194,9 @@ Place the point where we left it when last visiting the same file.
             ido-create-new-buffer 'always) ; Do not prompt when creating new file
       (add-to-list 'ido-ignore-files "\\.DS_Store")
 
-      (add-hook 'ido-setup-hook 'nox/ido-setup)
+      (add-hook 'ido-setup-hook 'my-ido-setup)
 
-      (defun nox/ido-setup ()
+      (defun my-ido-setup ()
         "Add Evil-mode-like key bindings for ido."
         (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
         (define-key ido-completion-map (kbd "C-k") 'ido-prev-match)
@@ -1222,7 +1222,7 @@ Smex provides Ido completion for =M-x=.
            ("M-X" . smex-major-mode-commands))
     :config
     (progn
-      (setq smex-save-file (expand-file-name "smex-items" nox/ephemeral-directory))
+      (setq smex-save-file (expand-file-name "smex-items" my-ephemeral-directory))
       (setq smex-history-length 10)
       (setq smex-flex-matching t)
       (smex-initialize)))
@@ -1316,7 +1316,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
         (setq ac-sources (append ac-sources '(ac-source-yasnippet
                                               ac-source-filename))))
 
-      (setq ac-comphist-file (expand-file-name "ac-comphist.dat" nox/ephemeral-directory)
+      (setq ac-comphist-file (expand-file-name "ac-comphist.dat" my-ephemeral-directory)
             ac-auto-start 1)) ; Number of characters typed before completion starts
     :config
     (progn
@@ -1421,14 +1421,14 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
         (setq org-contacts-files `(,(expand-file-name "contacts.org" org-directory))
               org-contacts-icon-use-gravatar nil))
 
-      (defun nox/ledger-org-read-date ()
+      (defun my-ledger-org-read-date ()
         "Read date in an Org mode capture template in the format that
   Ledger expects. Includes a custom prompt string."
         (let ((org-read-date-prefer-future nil))
           (replace-regexp-in-string "-" "/"
                                     (org-read-date nil nil nil "Transaction"))))
 
-      (defun nox/ledger-org-read-account ()
+      (defun my-ledger-org-read-account ()
         "Read account name using `ido-completing-read'"
         (ido-completing-read "Account: "
                              (split-string
@@ -1436,7 +1436,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                                 (shell-command "ledger --permissive accounts" standard-output))
                               "\n" t)))
 
-      (defun nox/ledger-org-read-payee ()
+      (defun my-ledger-org-read-payee ()
         "Read payee name using `ido-completing-read'"
         (ido-completing-read "Payee: "
                              (split-string
@@ -1486,7 +1486,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       ;; cleaned up using these maps, but it is using the built-in
       ;; ones. No idea what the difference is.
       ;;
-      ;; (defun nox/make-org-capture-mode-evil ()
+      ;; (defun my-make-org-capture-mode-evil ()
       ;;   "Turn the Org capture buffer evil."
       ;;   (evil-define-key 'normal org-capture-mode-map "ZZ" 'org-capture-finalize)
       ;;   (evil-define-key 'normal org-capture-mode-map "ZQ" 'org-capture-kill)
@@ -1499,7 +1499,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       ;;                 'header-line-format
       ;;                 "Capture buffer.  Finish `Z Z', refile `<Leader> m r', abort `Z Q'."))))
 
-      ;; (nox/make-org-capture-mode-evil)
+      ;; (my-make-org-capture-mode-evil)
 
       (setq org-goto-interface 'outline-path-completion
             org-log-done 'time
@@ -1507,7 +1507,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
             org-treat-S-cursor-todo-selection-as-state-change nil ; Cycle through TODO states with S-Left/Right skipping logging
             org-deadline-warning-days 1
             org-refile-targets '((org-agenda-files :maxlevel . 2))
-            org-refile-target-verify-function 'nox/verify-refile-target
+            org-refile-target-verify-function 'my-verify-refile-target
             org-refile-allow-creating-parent-nodes 'confirm
             org-refile-use-outline-path t
             org-outline-path-complete-in-steps nil
@@ -1526,7 +1526,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                                  "DONE(d!)"
                                  )))
 
-      (defun nox/verify-refile-target ()
+      (defun my-verify-refile-target ()
         "Exclude TODO keywords with a done state from refile targets"
         (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
@@ -1746,7 +1746,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
     "a"   'org-agenda
     "c"   'org-capture
     "r b" 'org-iswitchb
-    "r c" 'nox/open-org-calendar
+    "r c" 'my-open-org-calendar
     "r l" 'org-store-link)
 
   (evil-leader/set-key-for-mode 'org-mode
@@ -1779,7 +1779,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
   (use-package org-clock
     :config
     (progn
-      (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" nox/ephemeral-directory)
+      (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" my-ephemeral-directory)
             org-clock-persist t
             ;; Do not prompt to resume an active clock
             ;org-clock-persist-query-resume nil
@@ -1846,7 +1846,7 @@ Below are our custom agenda commands:
                      (org-tags-match-list-sublevels nil)))
               (tags "-REFILE/"
                     ((org-agenda-overriding-header "Entries to Archive")
-                     (org-agenda-skip-function 'nox/skip-non-archivable-tasks)
+                     (org-agenda-skip-function 'my-skip-non-archivable-tasks)
                      (org-tags-match-list-sublevels nil)))))
             ("d" "🕑 Timeline for today"
              agenda ""
@@ -1887,7 +1887,7 @@ Below are our custom agenda commands:
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; Thanks to http://doc.norang.ca/org-mode.html
-  (defun nox/skip-non-archivable-tasks ()
+  (defun my-skip-non-archivable-tasks ()
     "Skip trees that are not available for archiving"
     (save-restriction
       (widen)
@@ -1946,28 +1946,28 @@ list.
             ;; org-mobile-encryption-password is set in private.el
             org-mobile-use-encryption t)
 
-      (defvar nox/org-mobile-sync-timer nil)
-      (defvar nox/org-mobile-sync-secs (* 60 45))
+      (defvar my-org-mobile-sync-timer nil)
+      (defvar my-org-mobile-sync-secs (* 60 45))
 
-      (defun nox/org-mobile-sync-pull-and-push ()
+      (defun my-org-mobile-sync-pull-and-push ()
         (org-mobile-pull)
         (org-mobile-push)
         (when (fboundp 'sauron-add-event)
           (sauron-add-event 'org-mobile 2 "Finished MobileOrg sync")))
 
-      (defun nox/org-mobile-sync-start ()
+      (defun my-org-mobile-sync-start ()
         "Start automated `org-mobile-push'"
         (interactive)
-        (setq nox/org-mobile-sync-timer
-              (run-with-idle-timer nox/org-mobile-sync-secs t
-                                   'nox/org-mobile-sync-pull-and-push)))
+        (setq my-org-mobile-sync-timer
+              (run-with-idle-timer my-org-mobile-sync-secs t
+                                   'my-org-mobile-sync-pull-and-push)))
 
-      (defun nox/org-mobile-sync-stop ()
+      (defun my-org-mobile-sync-stop ()
         "Stop automated `org-mobile-push'"
         (interactive)
-        (cancel-timer nox/org-mobile-sync-timer))
+        (cancel-timer my-org-mobile-sync-timer))
 
-      (add-hook 'after-init-hook 'nox/org-mobile-sync-start)
+      (add-hook 'after-init-hook 'my-org-mobile-sync-start)
       (add-hook 'kill-emacs-hook 'org-mobile-push)))
 #+END_SRC
 
@@ -1975,22 +1975,22 @@ list.
 
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defun nox/org-capture-todo (note)
+  (defun my-org-capture-todo (note)
     (let* ((org-file org-default-notes-file)
            (type 'entry)
            (headline nil)
            (template (concat "** " note
                              "\n   SCHEDULED: %t\n")))
-      (nox/org-capture-entry org-file headline template)))
+      (my-org-capture-entry org-file headline template)))
 
-  (defun nox/org-capture-note (note)
+  (defun my-org-capture-note (note)
     (let* ((org-file org-default-notes-file)
            (type 'entry)
            (headline nil)
            (template (concat "** %U " note "\n")))
-      (nox/org-capture-entry org-file headline template)))
+      (my-org-capture-entry org-file headline template)))
 
-  (defun nox/org-capture-entry (org-file headline template)
+  (defun my-org-capture-entry (org-file headline template)
     (let* ((type 'entry)
            (org-capture-entry
             (if (headline)
@@ -2001,10 +2001,10 @@ list.
                   (file ,org-file)
                   ,template :clock-keep t :immediate-finish t))))
       (require 'org-capture)
-      (nox/org-capture-noninteractively)))
+      (my-org-capture-noninteractively)))
 
   ;; See http://stackoverflow.com/questions/22411626/generate-org-mode-objects-programmatically
-  (defun nox/org-capture-noninteractively ()
+  (defun my-org-capture-noninteractively ()
     (let* ((orig-buf (current-buffer))
            (annotation (if (and (boundp 'org-capture-link-is-already-stored)
                                 org-capture-link-is-already-stored)
@@ -2096,7 +2096,7 @@ Org agenda (as well as other calendar formats).
           cfw:fchar-top-left-corner ?┏
           cfw:fchar-top-right-corner ?┓))
 
-  (defun nox/open-org-calendar ()
+  (defun my-open-org-calendar ()
     "Open an org schedule calendar in a new buffer.
 
   This function is adapted from cfw:open-org-calendar."
@@ -2118,7 +2118,7 @@ Org agenda (as well as other calendar formats).
   (defvar invoice-dir "~/Documents/Invoices/")
   (defvar invoice-template-path (expand-file-name "_template.org" invoice-dir))
 
-  (defun nox/invoice-next-number ()
+  (defun my-invoice-next-number ()
     "Get next sequential invoice number. Invoice numbers are in the format YYYYXXX,
   where YYYY is the current year and XXX is a zero-padded sequential counter
   modulo 1000. Ex.: 2016001."
@@ -2129,18 +2129,18 @@ Org agenda (as well as other calendar formats).
                                         nil
                                         "^[0-9]+\.org$"))) 4 7))) 1000))))
 
-  (defun nox/invoice-get-path (number)
+  (defun my-invoice-get-path (number)
     "Derive invoice file path from invoice NUMBER."
     (format "%s/%s.org" invoice-dir number))
 
-  (defun nox/invoice-create (scope-file)
+  (defun my-invoice-create (scope-file)
     "Make a new invoice from given file and date range."
     (interactive "forg file: ")
-    (let ((invoice-number (nox/invoice-next-number))
+    (let ((invoice-number (my-invoice-next-number))
           (invoice-date (format-time-string "%m/%d/%Y" (current-time)))
           (invoice-start (org-read-date nil t nil "Choose invoice start" nil "-2Mon"))
           (invoice-end (org-read-date nil nil nil "Choose invoice end" nil "-Sun")))
-      (find-file (nox/invoice-get-path invoice-number))
+      (find-file (my-invoice-get-path invoice-number))
       (insert-file-contents invoice-template-path)
       (goto-char (point-min))
       (while (search-forward "@INVOICE_NUMBER@" nil t)
@@ -2150,10 +2150,10 @@ Org agenda (as well as other calendar formats).
         (replace-match scope-file))
       (org-update-all-dblocks)))
 
-  (defun nox/invoice-create-from-current-buffer-file ()
+  (defun my-invoice-create-from-current-buffer-file ()
     "Make a new invoice from current buffer's file and given date range."
     (interactive)
-    (nox/invoice-create (buffer-file-name)))
+    (my-invoice-create (buffer-file-name)))
 #+END_SRC
 
 * Communications
@@ -2172,9 +2172,9 @@ saner interface.
     :commands (mu4e mu4e~start)
     :init
     (progn
-      (evil-leader/set-key "M" #'nox/mu4e-view-today)
+      (evil-leader/set-key "M" #'my-mu4e-view-today)
 
-      (defun nox/mu4e-view-today ()
+      (defun my-mu4e-view-today ()
         "Invoke mu4e and jump directly to the today bookmark."
         (interactive)
         (mu4e~start)
@@ -2232,7 +2232,7 @@ saner interface.
             mu4e-alert-title "Mail"
             mail-user-agent 'mu4e-user-agent)
 
-      (defun nox/mu4e-action-view-in-browser (msg)
+      (defun my-mu4e-action-view-in-browser (msg)
         "View the body of the message in a web browser."
         (interactive)
         (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
@@ -2243,12 +2243,12 @@ saner interface.
           (browse-url (concat "file://" tmpfile))))
 
       (add-to-list 'mu4e-view-actions
-                   '("browser" . nox/mu4e-action-view-in-browser) t)
+                   '("browser" . my-mu4e-action-view-in-browser) t)
 
       (add-hook 'mu4e-view-mode-hook 'epa-mail-mode)
       (add-hook 'mu4e-compose-mode-hook 'epa-mail-mode)
 
-      (defun nox/insert-contact (&optional start)
+      (defun my-insert-contact (&optional start)
         (interactive)
         (let ((mail-abbrev-mode-regexp mu4e~compose-address-fields-regexp)
               (eoh ;; end-of-headers
@@ -2273,7 +2273,7 @@ saner interface.
                 (kill-region start end)
                 (insert contact))))))
 
-      (defun nox/make-mu4e-mode-evil ()
+      (defun my-make-mu4e-mode-evil ()
         "Turn mu4e buffers evil."
         (evil-make-overriding-map mu4e-main-mode-map 'motion)
         (evil-define-key 'motion mu4e-main-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
@@ -2287,7 +2287,7 @@ saner interface.
         (evil-define-key 'motion mu4e-view-mode-map "j" #'mu4e-view-headers-next)
         (evil-define-key 'motion mu4e-view-mode-map "k" #'mu4e-view-headers-prev)
 
-        (evil-define-key 'insert mu4e-compose-mode-map (kbd "C-l") #'nox/insert-contact)
+        (evil-define-key 'insert mu4e-compose-mode-map (kbd "C-l") #'my-insert-contact)
         (evil-leader/set-key-for-mode 'mu4e-compose-mode "m m" #'message-send-and-exit)
         (evil-leader/set-key-for-mode 'mu4e-compose-mode "k" #'message-kill-buffer)
         (evil-leader/set-key-for-mode 'mu4e-compose-mode "m e" #'mml-secure-message-sign-encrypt)
@@ -2297,7 +2297,7 @@ saner interface.
         (evil-leader/set-key-for-mode 'epa-mail-mode "m d" #'epa-mail-decrypt)
         (evil-leader/set-key-for-mode 'epa-mail-mode "m v" #'epa-mail-verify))
 
-      (nox/make-mu4e-mode-evil)))
+      (my-make-mu4e-mode-evil)))
 #+END_SRC
 
 Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
@@ -2333,15 +2333,15 @@ Open the Elfeed buffer by issuing =M-x elfeed RET=.
 
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
-  (defvar nox/notifier-program-name
+  (defvar my-notifier-program-name
     "terminal-notifier")
 
-  (defun nox/send-notification (title msg &optional group)
+  (defun my-send-notification (title msg &optional group)
     (let ((group (if group (format " -group %s" group)))
           (msg (format " -message %s" (shell-quote-argument msg)))
           (title (format " -title %s" (shell-quote-argument title)))
           (sender " -sender org.gnu.Emacs"))
-      (shell-command (concat nox/notifier-program-name
+      (shell-command (concat my-notifier-program-name
                              msg
                              title
                              sender
@@ -2362,7 +2362,7 @@ Open the Elfeed buffer by issuing =M-x elfeed RET=.
                           :title "Terminal Notifier"
                           :notifier
                           (lambda (info)
-                            (nox/send-notification
+                            (my-send-notification
                              (plist-get info :title)
                              (plist-get info :message)
                              (plist-get info :category))))))
