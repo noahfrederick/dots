@@ -71,15 +71,6 @@ Keep theme files in the =themes/= directory:
   (setq custom-theme-directory (concat user-emacs-directory "themes/"))
 #+END_SRC
 
-Keep temporary files in a separate directory:
-
-#+NAME: init-before
-#+BEGIN_SRC emacs-lisp :tangle no
-  (defvar my-ephemeral-directory "~/.emacs.ephemeral/")
-  (unless (file-exists-p my-ephemeral-directory)
-    (mkdir my-ephemeral-directory))
-#+END_SRC
-
 ** Benchmarking
 
 It's useful to measure how long it takes Emacs to start up, so
@@ -167,13 +158,6 @@ Autosave and backup files (currently disabled) go in =/tmp/=.
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
   (setq-default make-backup-files nil)
-#+END_SRC
-
-Keep Eshell's temporary files out of the way:
-
-#+NAME: init-after
-#+BEGIN_SRC emacs-lisp :tangle no
-  (setq eshell-directory-name (expand-file-name "eshell/" my-ephemeral-directory))
 #+END_SRC
 
 ** Private
@@ -383,14 +367,12 @@ height that spans the entire width of the frame.
 
 ** Delimiters
 
-The parenface package colors parentheses distinctly. The
-rainbow-delimiters package goes a step further and differentiates
-levels of nested parentheses by color. This is mostly useful for
-visually parsing Lisp's parenthesis-heavy syntax.
+The rainbow-delimiters package differentiates levels of nested
+parentheses by color. This is mostly useful for visually parsing
+Lisp's parenthesis-heavy syntax.
 
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
-  (use-package parenface)
   (use-package rainbow-delimiters
     :ensure t
     :commands rainbow-delimiters-mode
@@ -1167,9 +1149,7 @@ Place the point where we left it when last visiting the same file.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package saveplace
     :init
-    (progn
-      (setq-default save-place t)
-      (setq save-place-file (expand-file-name "saved-places" my-ephemeral-directory))))
+    (setq-default save-place t))
 #+END_SRC
 
 ** Ido
@@ -1177,9 +1157,6 @@ Place the point where we left it when last visiting the same file.
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ido
-    :init
-    (progn
-      (setq ido-save-directory-list-file (expand-file-name "ido.last" my-ephemeral-directory))
     :config
     (progn
       (ido-mode t)
@@ -1207,7 +1184,7 @@ Place the point where we left it when last visiting the same file.
       (use-package ido-vertical-mode
         :ensure t
         :config
-        (ido-vertical-mode))))
+        (ido-vertical-mode)))
 #+END_SRC
 
 ** Smex
@@ -1222,55 +1199,9 @@ Smex provides Ido completion for =M-x=.
            ("M-X" . smex-major-mode-commands))
     :config
     (progn
-      (setq smex-save-file (expand-file-name "smex-items" my-ephemeral-directory))
       (setq smex-history-length 10)
       (setq smex-flex-matching t)
       (smex-initialize)))
-#+END_SRC
-
-** Buffers
-
-For more intensive buffer switching and buffer management, we use
-ibuffer, which displays a listing in its own
-buffer. ~ibuffer-saved-filter-groups~ defines rules for grouping
-buffers under categories ("filter groups").
-
-#+NAME: navigation-completion
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package ibuffer
-    :commands ibuffer
-    :config
-    (progn
-      (setq ibuffer-saved-filter-groups
-            '(("Config" (or
-                         (filename . "dots/")
-                         (filename . ".emacs.d/")))
-              ("Shell"  (or
-                         (mode . eshell-mode)
-                         (mode . shell-mode)))
-              ("Dired"  (mode . dired-mode))
-              ("Prose"  (or
-                         (mode . tex-mode)
-                         (mode . plain-tex-mode)
-                         (mode . latex-mode)
-                         (mode . rst-mode)
-                         (mode . markdown-mode)))
-              ("Org"    (mode . org-mode))
-              ("Gnus"   (or
-                         (mode . message-mode)
-                         (mode . gnus-group-mode)
-                         (mode . gnus-summary-mode)
-                         (mode . gnus-article-mode)))
-              ("Emacs"  (name . "^\\*.*\\*$")))
-            ibuffer-show-empty-filter-groups nil
-            ibuffer-expert t)))
-#+END_SRC
-
-Clean up buffers periodically:
-
-#+NAME: navigation-completion
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package midnight)
 #+END_SRC
 
 ** Find in Project
@@ -1316,8 +1247,7 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
         (setq ac-sources (append ac-sources '(ac-source-yasnippet
                                               ac-source-filename))))
 
-      (setq ac-comphist-file (expand-file-name "ac-comphist.dat" my-ephemeral-directory)
-            ac-auto-start 1)) ; Number of characters typed before completion starts
+      (setq ac-auto-start 1)) ; Number of characters typed before completion starts
     :config
     (progn
       (ac-config-default)
@@ -1779,8 +1709,7 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
   (use-package org-clock
     :config
     (progn
-      (setq org-clock-persist-file (expand-file-name ".org-clock-save.el" my-ephemeral-directory)
-            org-clock-persist t
+      (setq org-clock-persist t
             ;; Do not prompt to resume an active clock
             ;org-clock-persist-query-resume nil
             ;; Resume clocking task on clock-in if the clock line is open
@@ -2439,10 +2368,6 @@ the ~NAME~ directives above the ~SRC~ blocks throughout this document.
 
 Functionality I want or things that need to be fixed:
 
-- Use Emacs for RSS. =newsticker.el= seemed promising, but it
-  caused Emacs to hang on startup while it fetched feeds and it
-  couldn't handle half the feeds for some reason. =elfeed.el= can't
-  retrieve or parse feeds reliably either. Gnus is ridiculous.
 - Use Emacs for email. My last attempt with mu4e was unsuccessful because:
   - Managing windows in a frame shared with other text editing
     activities was awkward.
