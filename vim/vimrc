@@ -780,6 +780,23 @@ let g:did_install_syntax_menu = 1
 
 let g:loaded_netrwPlugin = 1
 
+let g:terminal_color_0 = '#090e12'
+let g:terminal_color_1 = '#ff2b68'
+let g:terminal_color_2 = '#beda3f'
+let g:terminal_color_3 = '#bcaa85'
+let g:terminal_color_4 = '#78c9e9'
+let g:terminal_color_5 = '#b88eec'
+let g:terminal_color_6 = '#68a9af'
+let g:terminal_color_7 = '#f1f1f1'
+let g:terminal_color_8 = '#536B87'
+let g:terminal_color_9 = '#e07689'
+let g:terminal_color_10 = '#c5fcb8'
+let g:terminal_color_11 = '#ddd4c1'
+let g:terminal_color_12 = '#addbeb'
+let g:terminal_color_13 = '#ebd0ea'
+let g:terminal_color_14 = '#c2e6eb'
+let g:terminal_color_15 = '#ffffff'
+
 " }}}
 " Local vimrc                                                                  {{{
 " --------------------------------------------------------------------------------
