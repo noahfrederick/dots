@@ -242,6 +242,17 @@ key_bindings:
   - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                    }
   - { key: Insert,                  chars: "\x1b[2~"                     }
   - { key: Delete,                  chars: "\x1b[3~"                     }
+  - { key: B,        mods: Alt,     chars: "\x1bb"                       }
+  - { key: F,        mods: Alt,     chars: "\x1bf"                       }
+  - { key: G,        mods: Alt,     chars: "\x1bg"                       }
+  - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  - { key: J,        mods: Alt,     chars: "\x1bj"                       }
+  - { key: K,        mods: Alt,     chars: "\x1bk"                       }
+  - { key: L,        mods: Alt,     chars: "\x1bl"                       }
+  - { key: H,        mods: Alt|Shift, chars: "\x1bH"                     }
+  - { key: J,        mods: Alt|Shift, chars: "\x1bJ"                     }
+  - { key: K,        mods: Alt|Shift, chars: "\x1bK"                     }
+  - { key: L,        mods: Alt|Shift, chars: "\x1bL"                     }
 
 # Mouse bindings
 #
