@@ -279,8 +279,9 @@ endfunction
 function! TablineLabel(n)
   let buflist = tabpagebuflist(a:n)
   let winnr = tabpagewinnr(a:n)
-  let bufname = fnamemodify(bufname(buflist[winnr - 1]), ':t')
-  return a:n . ' ' . bufname
+  let bufname = bufname(buflist[winnr - 1])
+  let title = empty(bufname) ? '-' : fnamemodify(bufname, ':t')
+  return a:n . ' ' . title
 endfunction
 
 " }}}
