@@ -120,7 +120,6 @@ endif
 set shortmess+=I                " Suppress intro message when starting Vim
 set helpheight=1000             " Maximize help window vertically
 set previewheight=20            " Preview window used for, e.g., :Gstatus
-set fillchars=vert:\ ,diff:\    " Use space for vertical split, diff fill char
 set linebreak                   " Wrap lines at word boundaries
 if exists("+breakindent")
   set breakindent               " Indent soft-wrapped lines
