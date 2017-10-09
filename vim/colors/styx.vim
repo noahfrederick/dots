@@ -1,6 +1,6 @@
 " styx.vim - Vim color scheme for GUI
 " --------------------------------------------------------------
-" Author:   Noah Frederick (http://noahfrederick.com/)
+" Author:   Noah Frederick (https://noahfrederick.com/)
 " --------------------------------------------------------------
 
 " Scheme setup {{{
@@ -221,6 +221,10 @@ hi! link helpURL             Underlined
 " CtrlP {{{
 hi CtrlPMatch          guifg=#ffb6c0  guisp=#A5757B  gui=underline
 hi! link CtrlPLinePre  Comment
+
+"}}}
+" Ledger {{{
+hi ledgerAccount  guifg=#b8b8b8
 
 "}}}
 " Mustache {{{
