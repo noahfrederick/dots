@@ -28,6 +28,7 @@ status is-login; or exit
 which -s yarn;     and prepend_to_path (yarn global bin)
 which -s rbenv;    and prepend_to_path (rbenv root)/shims
 which -s composer; and prepend_to_path (composer config --global home)/(composer config --global bin-dir)
+prepend_to_path $HOME/.cargo/bin
 prepend_to_path $HOME/bin
 
 #
