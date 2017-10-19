@@ -107,7 +107,7 @@ function! my#org#fzf#capture(bang) abort
 
   let g:my#org#fzf#bang = a:bang
 
-  let args = {'options': '--reverse --ansi --tabstop=18'}
+  let args = {'options': '--reverse --ansi --tabstop=18 --tiebreak=index'}
   let args.options .= ' --prompt='.shellescape('capture > ')
   let args.source = templates
   let args['sink*'] = function('<SID>capture_handler')
