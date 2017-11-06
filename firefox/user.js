@@ -5,6 +5,7 @@
  * Preferences are persisted even when removed from this file.
  *
  * References:
+ * - https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference
  * - https://github.com/ghacksuserjs/ghacks-user.js/blob/master/user.js
  * - https://github.com/ghacksuserjs/ghacks-user.js/wiki
  * - https://github.com/schomery/privacy-settings
@@ -20,6 +21,7 @@ user_pref("browser.backspace_action", 2); // 0=previous page, 1=scroll up, 2=do 
 // Privacy and Security
 user_pref("beacon.enabled", false);
 user_pref("browser.send_pings", false);
+user_pref("browser.pagethumbnails.capturing_disabled", true); // (hidden pref)
 user_pref("network.cookie.cookieBehavior", 1); // 0=allow all, 1=allow same host, 2=disallow all, 3=allow 3rd party if it already set a cookie
 user_pref("network.IDN_show_punycode", true);
 user_pref("network.http.referer.XOriginPolicy", 1); // 0=always (default), 1=only if base domains match, 2=only if hosts match
