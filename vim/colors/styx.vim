@@ -189,6 +189,12 @@ hi GitGutterChange               guifg=#b7aa80
 hi GitGutterDelete               guifg=#ff0055
 hi! link GitGutterChangeDelete   GitGutterChange
 
+hi! link SignifySignAdd             GitGutterAdd
+hi! link SignifySignChange          GitGutterChange
+hi! link SignifySignDelete          GitGutterDelete
+hi! link SignifySignChangeDelete    GitGutterChangeDelete
+hi! link SignifySignDeleteFirstLine SignifySignDelete
+
 "}}}
 " Vim {{{
 hi! link vimSetSep    Delimiter
