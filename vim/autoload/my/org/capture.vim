@@ -54,15 +54,16 @@ function! my#org#capture#template(name) abort
     return {}
   endif
 
-  if has_key(template, 'extends')
+  while has_key(template, 'extends')
     if !has_key(g:my#org#capture#templates, template.extends)
       call s:error('parent capture template does not exist: '.template.extends)
       return {}
     endif
 
     let parent = g:my#org#capture#templates[template.extends]
+    unlet template.extends
     let template = extend(deepcopy(parent), deepcopy(template))
-  endif
+  endwhile
 
   let template._name = name
   return extend(deepcopy(s:template_prototype), deepcopy(template))
