@@ -38,15 +38,17 @@ endfunction
 let s:template_prototype = {}
 let s:status_prototype = {}
 
+function! s:template(name) abort
+  return deepcopy(get(g:my#org#capture#templates, a:name, {}))
+endfunction
+
 function! my#org#capture#template(name) abort
   let name = a:name
-  let template = {}
+  let template = s:template(name)
 
-  if has_key(g:my#org#capture#templates, name)
-    let template = g:my#org#capture#templates[name]
-  elseif !empty(name)
+  if empty(template) && !empty(name)
     let name = my#org#fzf#guess(name, sort(keys(g:my#org#capture#templates)))
-    let template = get(g:my#org#capture#templates, name, {})
+    let template = s:template(name)
   endif
 
   if empty(template)
@@ -60,13 +62,13 @@ function! my#org#capture#template(name) abort
       return {}
     endif
 
-    let parent = g:my#org#capture#templates[template.extends]
+    let parent = s:template(template.extends)
     unlet template.extends
-    let template = extend(deepcopy(parent), deepcopy(template))
+    let template = extend(parent, template)
   endwhile
 
   let template._name = name
-  return extend(deepcopy(s:template_prototype), deepcopy(template))
+  return extend(deepcopy(s:template_prototype), template)
 endfunction
 
 function! my#org#capture#it(template, ...) abort
