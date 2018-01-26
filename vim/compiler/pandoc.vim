@@ -22,7 +22,7 @@ if exists('b:tex_ignore_makefile') || exists('g:tex_ignore_makefile') ||
   else
     let s:tex_engine = "xelatex"
   endif
-  let &l:makeprg = 'pandoc "%" -o "%:r.pdf" --smart --latex-engine='.s:tex_engine
+  let &l:makeprg = 'pandoc "%" -o "%:r.pdf" --pdf-engine='.s:tex_engine
 
   let current_compiler = 'pandoc'
 else
