@@ -107,7 +107,6 @@ set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set foldtext=my#folding#text()
 set switchbuf=useopen,usetab
-set lazyredraw                  " Do not redraw screen during macro execution
 set cpoptions-=_                " Make 'cw' behave like 'dw' etc.
 set formatoptions+=r            " Insert comment leader after <Enter>
 set formatoptions+=o            " Insert comment leader after o and O
