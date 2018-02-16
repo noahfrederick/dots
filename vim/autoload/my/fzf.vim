@@ -426,6 +426,44 @@ function! my#fzf#use(bang)
 endfunction
 
 " ------------------------------------------------------------------
+" Artisan commands
+" ------------------------------------------------------------------
+function! s:artisan_sink(lines) abort
+  if len(a:lines) < 2
+    return
+  endif
+
+  let subcommand = matchstr(a:lines[1], '^\S*')
+  let command = 'Artisan '.subcommand
+
+  if empty(a:lines[0])
+    call feedkeys(':'.command.' ')
+  else
+    execute command
+  endif
+endfunction
+
+function! s:artisan_commands() abort
+  let lines = []
+  for [name, description] in items(laravel#app().artisan_commands())
+    call add(lines, s:format_artisan_line(name, description))
+  endfor
+  return sort(lines)
+endfunction
+
+function! s:format_artisan_line(name, description) abort
+  return printf("%s\t%s", s:green(a:name), a:description)
+endfunction
+
+function! my#fzf#artisan(bang) abort
+  return s:fzf({
+        \ 'source':  s:artisan_commands(),
+        \ 'sink':    function('s:artisan_sink'),
+        \ 'options': '--ansi --expect ctrl-x +m'.
+        \            ' --tabstop=20 --nth=1 --delimiter="\t"'}, a:bang)
+endfunction
+
+" ------------------------------------------------------------------
 " Ledger
 " ------------------------------------------------------------------
 function! s:ledger_accounts() abort

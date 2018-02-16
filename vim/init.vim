@@ -400,7 +400,10 @@ command! -nargs=0 -bar -bang               Zfixme   Zgrep<bang> (FIXME\|TODO\|XX
 
 augroup init_fzf
   autocmd!
-  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse call my#fzf#use(<bang>0)
+  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zartisan
+        \ call my#fzf#artisan(<bang>0)
+  autocmd User Laravel command! -buffer -nargs=0 -bar -bang Zuse
+        \ call my#fzf#use(<bang>0)
   autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
 augroup END
 
