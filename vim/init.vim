@@ -338,7 +338,7 @@ augroup init_org
     let g:my#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
 
     execute 'autocmd BufWritePost'
-          \ join([g:my#org#repos.journal.'/*.md', g:my#org#repos.default.'/agenda.html.erb'], ',')
+          \ join([g:my#org#repos.journal.'/*.md', g:my#org#repos.default.'/.agenda.html.erb'], ',')
           \ 'Dispatch mkagenda --agent nvim'
   endif
   autocmd BufReadCmd org://* nested call my#org#protocol#handle(expand('<afile>'))
