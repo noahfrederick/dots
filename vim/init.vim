@@ -150,7 +150,6 @@ set wildignore=*.swp,*.bak
 set wildignore+=*.min.*,*.css.map
 set wildignore+=*.jpg,*.png,*.gif
 set suffixes+=.css,.html        " Extensions that get a lower priority when matching wildcards
-set cmdheight=1                 " Reserve two lines for command area
 set completeopt+=longest        " Only insert longest common string
 set completeopt-=preview        " Don't show the preview window when completing
 set pumheight=8                 " Limit height of popup menu
