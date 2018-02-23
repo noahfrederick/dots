@@ -110,7 +110,6 @@ set switchbuf=useopen,usetab
 set cpoptions-=_                " Make 'cw' behave like 'dw' etc.
 set formatoptions+=r            " Insert comment leader after <Enter>
 set formatoptions+=o            " Insert comment leader after o and O
-set sidescrolloff=5             " Keep n columns left/right of cursor visible
 if &shell =~# "fish$"
   set shell=/bin/bash           " Use a POSIX-compatible shell
 endif
