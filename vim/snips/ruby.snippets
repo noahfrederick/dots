@@ -62,12 +62,3 @@ guard 'rake', :task => 'doc' do
 	watch(%r{^addon-info\.json$})
 end
 endsnippet
-
-snippet should "Shoulda context/should blocks" b
-context "$1" do
-	should "$2" do
-		$0
-		assert_equal
-	end
-end
-endsnippet

@@ -1,16 +1,11 @@
 # javascript.snippets - Snippets for javascript file type
 
-#
-# CodeKit Imports
-#
-snippet append "@codekit-append" b
-//@codekit-append "${1:script}.js";
+snippet fun "function () {...}" b
+function ($1) {
+	${0:${VISUAL}}
+}
 endsnippet
 
-snippet prepend "@codekit-prepend" b
-//@codekit-prepend "${1:script}.js";
-endsnippet
-
-snippet "@?(include|import)" "@codekit-prepend" rb
-//@codekit-prepend "${1:script}.js";
+snippet cl "console.log()" b
+console.log($1)
 endsnippet

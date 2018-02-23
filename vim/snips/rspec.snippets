@@ -1,0 +1,25 @@
+# rspec.snippets - Snippets for Ruby RSpec tests
+
+snippet spec "RSpec.describe ... do" b
+RSpec.describe ${1:subject} do
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet describe "describe '...' do" b
+describe '${1:subject}' do
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet context "context '...' do" b
+context '${1:context}' do
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet it "it '...' do" b
+it '${1:does something}' do
+	${0:${VISUAL}}
+end
+endsnippet

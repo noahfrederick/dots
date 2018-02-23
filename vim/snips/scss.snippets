@@ -1,0 +1,514 @@
+# scss.snippets - Snippets for SCSS
+
+extends css
+priority 2
+
+#
+# Imports
+#
+snippet import "Sass @import" b
+@import '${1:partial}';
+endsnippet
+
+#
+# Mixins/Inheritance
+#
+snippet mixin "Sass @mixin" b
+@mixin ${1:mixin-name} {
+	${0:${VISUAL}}
+}
+endsnippet
+
+snippet include "Sass @include" b
+@include ${1:mixin-name};
+endsnippet
+
+snippet extend "Sass @extend" b
+@extend ${1:selector};
+endsnippet
+
+#
+# Custom Functions
+#
+snippet function "Sass @function" b
+@function ${1:function-name}($2) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+#
+# RGB Functions
+#
+# Creates a Color from red, green, and blue values.
+snippet rgb "rgb($red, $green, $blue)"
+rgb(${1:$red}, ${2:$green}, ${3:$blue})
+endsnippet
+
+# Creates a Color from red, green, blue, and alpha values.
+snippet rgba "rgba($red, $green, $blue, $alpha)"
+rgba(${1:$red}, ${2:$green}, ${3:$blue}, ${4:$alpha})
+endsnippet
+
+# Gets the red component of a color.
+snippet red "red($color)"
+red(${1:$color})
+endsnippet
+
+# Gets the green component of a color.
+snippet green "green($color)"
+green(${1:$color})
+endsnippet
+
+# Gets the blue component of a color.
+snippet blue "blue($color)"
+blue(${1:$color})
+endsnippet
+
+# Mixes two colors together.
+snippet mix "mix($color1, $color2, [$weight])"
+mix(${1:$color1}, ${2:$color2}, ${3:[$weight]})
+endsnippet
+
+#
+# HSL Functions
+#
+# Creates a Color from hue, saturation, and lightness values.
+snippet hsl "hsl($hue, $saturation, $lightness)"
+hsl(${1:$hue}, ${2:$saturation}, ${3:$lightness})
+endsnippet
+
+# Creates a Color from hue, saturation, lightness, and alpha values.
+snippet hsla "hsla($hue, $saturation, $lightness, $alpha)"
+hsla(${1:$hue}, ${2:$saturation}, ${3:$lightness}, ${4:$alpha})
+endsnippet
+
+# Gets the hue component of a color.
+snippet hue "hue($color)"
+hue(${1:$color})
+endsnippet
+
+# Gets the saturation component of a color.
+snippet saturation "saturation($color)"
+saturation(${1:$color})
+endsnippet
+
+# Gets the lightness component of a color.
+snippet lightness "lightness($color)"
+lightness(${1:$color})
+endsnippet
+
+# Changes the hue of a color.
+snippet adjust-hue "adjust-hue($color, $degrees)"
+adjust-hue(${1:$color}, ${2:$degrees})
+endsnippet
+
+# Makes a color lighter.
+snippet lighten "lighten($color, $amount)"
+lighten(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color darker.
+snippet darken "darken($color, $amount)"
+darken(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color more saturated.
+snippet saturate "saturate($color, $amount)"
+saturate(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color less saturated.
+snippet desaturate "desaturate($color, $amount)"
+desaturate(${1:$color}, ${2:$amount})
+endsnippet
+
+# Converts a color to grayscale.
+snippet grayscale "grayscale($color)"
+grayscale(${1:$color})
+endsnippet
+
+# Returns the complement of a color.
+snippet complement "complement($color)"
+complement(${1:$color})
+endsnippet
+
+# Returns the inverse of a color.
+snippet invert "invert($color, [$weight])"
+invert(${1:$color}, ${2:[$weight]})
+endsnippet
+
+#
+# Opacity Functions
+#
+# Gets the alpha component (opacity) of a color.
+snippet alpha "alpha($color)"
+alpha(${1:$color})
+endsnippet
+
+# Gets the alpha component (opacity) of a color.
+snippet opacity "opacity($color)"
+opacity(${1:$color})
+endsnippet
+
+# Changes the alpha component for a color.
+snippet rgba "rgba($color, $alpha)"
+rgba(${1:$color}, ${2:$alpha})
+endsnippet
+
+# Makes a color more opaque.
+snippet opacify "opacify($color, $amount)"
+opacify(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color more opaque.
+snippet fade-in "fade-in($color, $amount)"
+fade-in(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color more transparent.
+snippet transparentize "transparentize($color, $amount)"
+transparentize(${1:$color}, ${2:$amount})
+endsnippet
+
+# Makes a color more transparent.
+snippet fade-out "fade-out($color, $amount)"
+fade-out(${1:$color}, ${2:$amount})
+endsnippet
+
+#
+# Other Color Functions
+#
+# Increases or decreases one or more components of a color.
+snippet adjust-color "adjust-color($color, [$red], [$green], [$blue], [$hue], [$saturation], [$lightness], [$alpha])"
+adjust-color(${1:$color}, ${2:[$red]}, ${3:[$green]}, ${4:[$blue]}, ${5:[$hue]}, ${6:[$saturation]}, ${7:[$lightness]}, ${8:[$alpha]})
+endsnippet
+
+# Fluidly scales one or more properties of a color.
+snippet scale-color "scale-color($color, [$red], [$green], [$blue], [$saturation], [$lightness], [$alpha])"
+scale-color(${1:$color}, ${2:[$red]}, ${3:[$green]}, ${4:[$blue]}, ${5:[$saturation]}, ${6:[$lightness]}, ${7:[$alpha]})
+endsnippet
+
+# Changes one or more properties of a color.
+snippet change-color "change-color($color, [$red], [$green], [$blue], [$hue], [$saturation], [$lightness], [$alpha])"
+change-color(${1:$color}, ${2:[$red]}, ${3:[$green]}, ${4:[$blue]}, ${5:[$hue]}, ${6:[$saturation]}, ${7:[$lightness]}, ${8:[$alpha]})
+endsnippet
+
+# Converts a color into the format understood by IE filters.
+snippet ie-hex-str "ie-hex-str($color)"
+ie-hex-str(${1:$color})
+endsnippet
+
+#
+# String Functions
+#
+# Removes quotes from a string.
+snippet unquote "unquote($string)"
+unquote(${1:$string})
+endsnippet
+
+# Adds quotes to a string.
+snippet quote "quote($string)"
+quote(${1:$string})
+endsnippet
+
+# Returns the number of characters in a string.
+snippet str-length "str-length($string)"
+str-length(${1:$string})
+endsnippet
+
+# Inserts $insert into $string at $index.
+snippet str-insert "str-insert($string, $insert, $index)"
+str-insert(${1:$string}, ${2:$insert}, ${3:$index})
+endsnippet
+
+# Returns the index of the first occurrence of $substring in $string.
+snippet str-index "str-index($string, $substring)"
+str-index(${1:$string}, ${2:$substring})
+endsnippet
+
+# Extracts a substring from $string.
+snippet str-slice "str-slice($string, $start-at, [$end-at])"
+str-slice(${1:$string}, ${2:$start-at}, ${2:[$end-at]})
+endsnippet
+
+# Converts a string to upper case.
+snippet to-upper-case "to-upper-case($string)"
+to-upper-case(${1:$string})
+endsnippet
+
+# Converts a string to lower case.
+snippet to-lower-case "to-lower-case($string)"
+to-lower-case(${1:$string})
+endsnippet
+
+#
+# Number Functions
+#
+# Converts a unitless number to a percentage.
+snippet percentage "percentage($number)"
+percentage(${1:$number})
+endsnippet
+
+# Rounds a number to the nearest whole number.
+snippet round "round($number)"
+round(${1:$number})
+endsnippet
+
+# Rounds a number up to the next whole number.
+snippet ceil "ceil($number)"
+ceil(${1:$number})
+endsnippet
+
+# Rounds a number down to the previous whole number.
+snippet floor "floor($number)"
+floor(${1:$number})
+endsnippet
+
+# Returns the absolute value of a number.
+snippet abs "abs($number)"
+abs(${1:$number})
+endsnippet
+
+# Finds the minimum of several numbers.
+snippet min "min($numbers...)"
+min(${1:$numbers...})
+endsnippet
+
+# Finds the maximum of several numbers.
+snippet max "max($numbers...)"
+max(${1:$numbers...})
+endsnippet
+
+# Returns a random number.
+snippet random "random([$limit])"
+random(${1:[$limit]})
+endsnippet
+
+#
+# List Functions
+#
+# Lists in Sass are immutable; all list functions return a new list rather than
+# updating the existing list in-place.
+#
+# All list functions work for maps as well, treating them as lists of pairs.
+# Returns the length of a list.
+snippet length "length($list)"
+length(${1:$list})
+endsnippet
+
+# Returns a specific item in a list.
+snippet nth "nth($list, $n)"
+nth(${1:$list}, ${2:$n})
+endsnippet
+
+# Replaces the nth item in a list.
+snippet set-nth "set-nth($list, $n, $value)"
+set-nth(${1:$list}, ${2:$n}, ${3:$value})
+endsnippet
+
+# Joins together two lists into one.
+snippet join "join($list1, $list2, [$separator, $bracketed])"
+join(${1:$list1}, ${2:$list2}, ${3:[$separator}, ${4:$bracketed]})
+endsnippet
+
+# Appends a single value onto the end of a list.
+snippet append "append($list1, $val, [$separator])"
+append(${1:$list1}, ${2:$val}, ${3:[$separator]})
+endsnippet
+
+# Combines several lists into a single multidimensional list.
+snippet zip "zip($lists...)"
+zip(${1:$lists...})
+endsnippet
+
+# Returns the position of a value within a list.
+snippet index "index($list, $value)"
+index(${1:$list}, ${2:$value})
+endsnippet
+
+# Returns the separator of a list.
+snippet list-separator "list-separator($list)"
+list-separator(${1:$list})
+endsnippet
+
+# Returns whether a list has square brackets.
+snippet is-bracketed "is-bracketed($list)"
+is-bracketed(${1:$list})
+endsnippet
+
+#
+# Map Functions
+#
+# Maps in Sass are immutable; all map functions return a new map rather than
+# updating the existing map in-place.
+#
+# Returns the value in a map associated with a given key.
+snippet map-get "map-get($map, $key)"
+map-get(${1:$map}, ${2:$key})
+endsnippet
+
+# Merges two maps together into a new map.
+snippet map-merge "map-merge($map1, $map2)"
+map-merge(${1:$map1}, ${2:$map2})
+endsnippet
+
+# Returns a new map with keys removed.
+snippet map-remove "map-remove($map, $keys...)"
+map-remove(${1:$map}, ${2:$keys...})
+endsnippet
+
+# Returns a list of all keys in a map.
+snippet map-keys "map-keys($map)"
+map-keys(${1:$map})
+endsnippet
+
+# Returns a list of all values in a map.
+snippet map-values "map-values($map)"
+map-values(${1:$map})
+endsnippet
+
+# Returns whether a map has a value associated with a given key.
+snippet map-has-key "map-has-key($map, $key)"
+map-has-key(${1:$map}, ${2:$key})
+endsnippet
+
+# Returns the keywords passed to a function that takes variable arguments.
+snippet keywords "keywords($args)"
+keywords(${1:$args})
+endsnippet
+
+#
+# Selector Functions
+#
+# Selector functions are very liberal in the formats they support for selector
+# arguments. They can take a plain string, a list of lists as returned by & or
+# anything in between:
+#
+# - A plain string, such as ".foo .bar, .baz .bang".
+# - A space-separated list of strings such as (".foo" ".bar").
+# - A comma-separated list of strings such as (".foo .bar", ".baz .bang").
+# - A comma-separated list of space-separated lists of strings such as ((".foo" ".bar"), (".baz" ".bang")).
+#
+# In general, selector functions allow placeholder selectors (%foo) but
+# disallow parent-reference selectors (&).
+#
+# Nests selector beneath one another like they would be nested in the stylesheet.
+snippet selector-nest "selector-nest($selectors...)"
+selector-nest(${1:$selectors...})
+endsnippet
+
+# Appends selectors to one another without spaces in between.
+snippet selector-append "selector-append($selectors...)"
+selector-append(${1:$selectors...})
+endsnippet
+
+# Extends $extendee with $extender within $selector.
+snippet selector-extend "selector-extend($selector, $extendee, $extender)"
+selector-extend(${1:$selector}, ${2:$extendee}, ${3:$extender})
+endsnippet
+
+# Replaces $original with $replacement within $selector.
+snippet selector-replace "selector-replace($selector, $original, $replacement)"
+selector-replace(${1:$selector}, ${2:$original}, ${3:$replacement})
+endsnippet
+
+# Unifies two selectors to produce a selector that matches elements matched by both.
+snippet selector-unify "selector-unify($selector1, $selector2)"
+selector-unify(${1:$selector1}, ${2:$selector2})
+endsnippet
+
+# Returns whether $super matches all the elements $sub does, and possibly more.
+snippet is-superselector "is-superselector($super, $sub)"
+is-superselector(${1:$super}, ${2:$sub})
+endsnippet
+
+# Returns the simple selectors that comprise a compound selector.
+snippet simple-selectors "simple-selectors($selector)"
+simple-selectors(${1:$selector})
+endsnippet
+
+# Parses a selector into the format returned by &.
+snippet selector-parse "selector-parse($selector)"
+selector-parse(${1:$selector})
+endsnippet
+
+#
+# Introspection Functions
+#
+# Returns whether a feature exists in the current Sass runtime.
+snippet feature-exists "feature-exists($feature)"
+feature-exists(${1:$feature})
+endsnippet
+
+# Returns whether a variable with the given name exists in the current scope.
+snippet variable-exists "variable-exists($name)"
+variable-exists(${1:$name})
+endsnippet
+
+# Returns whether a variable with the given name exists in the global scope.
+snippet global-variable-exists "global-variable-exists($name)"
+global-variable-exists(${1:$name})
+endsnippet
+
+# Returns whether a function with the given name exists.
+snippet function-exists "function-exists($name)"
+function-exists(${1:$name})
+endsnippet
+
+# Returns whether a mixin with the given name exists.
+snippet mixin-exists "mixin-exists($name)"
+mixin-exists(${1:$name})
+endsnippet
+
+# Returns whether the current mixin was passed a content block.
+snippet content-exists "content-exists()"
+content-exists()
+endsnippet
+
+# Returns the string representation of a value as it would be represented in Sass.
+snippet inspect "inspect($value)"
+inspect(${1:$value})
+endsnippet
+
+# Returns the type of a value.
+snippet type-of "type-of($value)"
+type-of(${1:$value})
+endsnippet
+
+# Returns the unit(s) associated with a number.
+snippet unit "unit($number)"
+unit(${1:$number})
+endsnippet
+
+# Returns whether a number has units.
+snippet unitless "unitless($number)"
+unitless(${1:$number})
+endsnippet
+
+# Returns whether two numbers can be added, subtracted, or compared.
+snippet comparable "comparable($number1, $number2)"
+comparable(${1:$number1}, ${2:$number2})
+endsnippet
+
+# Dynamically calls a Sass function reference returned by get-function.
+snippet call "call($function, $args...)"
+call(${1:$function}, ${2:$args...})
+endsnippet
+
+# Looks up a function with the given name in the current lexical scope and returns a reference to it.
+snippet get-function "get-function($name, $css: false)"
+get-function(${1:$name}, $css: ${2:false})
+endsnippet
+
+#
+# Miscellaneous Functions
+#
+# Returns one of two values, depending on whether or not $condition is true.
+snippet if "if($condition, $if-true, $if-false)"
+if(${1:$condition}, ${2:$if-true}, ${3:$if-false})
+endsnippet
+
+# Returns a unique CSS identifier.
+snippet unique-id "unique-id()"
+unique-id()
+endsnippet

@@ -43,6 +43,9 @@ if exists(':Switch')
         \ ]
 endif
 
+let b:surround_{char2nr('p')} = "<?php \r ?>"
+let b:surround_{char2nr('=')} = "<?= \r ?>"
+
 " Function text objects via
 " https://github.com/kana/vim-textobj-function
 let b:textobj_function_select = function('my#php#function_select')

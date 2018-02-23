@@ -289,10 +289,6 @@ endfunction
 augroup init
   autocmd!
 
-  autocmd BufNewFile,BufRead *.snippets set filetype=snippets
-  autocmd BufNewFile,BufRead .env.* setfiletype sh
-  autocmd BufNewFile,BufRead Brewfile setfiletype ruby
-
   autocmd User Composer
         \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
         \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
