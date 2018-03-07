@@ -52,7 +52,8 @@ enum planck_keycodes {
   RAISE,
   PV_EXIT,
   PV_LOOK,
-  SEND_VERSION
+  SEND_VERSION,
+  SEND_MAKE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -191,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Keyboard settings layer
    *                ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-   *    Firmware -- │     │Reset│     │     │     │     │     │     │     │     │Vers │     │
+   *    Firmware -- │     │Reset│Make │     │     │     │     │     │     │     │Vers │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
    *   Set layer -- │     │Qwert│Colem│Steno│     │     │     │     │     │     │     │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
@@ -202,10 +203,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *               Swap GUI/Alt _/________/             \_____________\_ Backlight _/
    */
   [KEYBOARD_LAYER] = {
-    {___x___, RESET,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, SEND_VERSION, ___x___},
-    {___x___, QWERTY,  COLEMAK, STENO,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___,      ___x___},
-    {___x___, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  ___x___, ___x___, AU_ON,   AU_OFF,       ___x___},
-    {___x___, ___x___, AG_SWAP, AG_NORM, LOWER,   BL_TOGG, BL_TOGG, RAISE,   BL_TOGG, BL_DEC,  BL_INC,       ___x___}
+    {___x___, RESET,   SEND_MAKE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, SEND_VERSION, ___x___},
+    {___x___, QWERTY,  COLEMAK,   STENO,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___,      ___x___},
+    {___x___, MUV_DE,  MUV_IN,    MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  ___x___, ___x___, AU_ON,   AU_OFF,       ___x___},
+    {___x___, ___x___, AG_SWAP,   AG_NORM, LOWER,   BL_TOGG, BL_TOGG, RAISE,   BL_TOGG, BL_DEC,  BL_INC,       ___x___}
   }
 };
 
@@ -326,6 +327,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEND_VERSION:
       if (record->event.pressed) {
         SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP "@" QMK_VERSION " (" QMK_BUILDDATE ")");
+      }
+      return false;
+    case SEND_MAKE:
+      if (record->event.pressed) {
+        SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP ":dfu\n");
       }
       return false;
   }
