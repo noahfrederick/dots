@@ -135,6 +135,12 @@ abbr --add lre ledger register
 abbr --add lst ledger stats
 abbr --add lxa ledger xact
 abbr --add n   note
+abbr --add t   task
+abbr --add ta  task add
+abbr --add tc  task context
+abbr --add tl  task log
+abbr --add tp  task rc.context:none projects
+abbr --add tt  task rc.context:none tags
 abbr --add v   nvim
 abbr --add vd  nvim --noplugin -u minimal.vim
 abbr --add vn  nvim -u NONE
