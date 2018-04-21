@@ -1,6 +1,8 @@
 " Plug-ins                                                                     {{{
 " --------------------------------------------------------------------------------
 
+let s:user_runtime = split(&runtimepath, ',')[0]
+
 if has("vim_starting")
   call plug#begin()
 
@@ -100,7 +102,7 @@ if !has("nvim") | runtime! plugin/neovim_defaults.vim | endif
 
 "" Behavior
 set spelllang=en_us             " Language and region to use for spellchecking
-set spellfile=~/.vim/spell/en.utf-8.add,~/.vim/spell/private.utf-8.add
+let &spellfile = join(map(['en', 'private'], {_, val -> s:user_runtime . '/spell/' . val . '.utf-8.add'}), ',')
 set modeline modelines=2        " Look for modeline in first/last n lines of file
 set hidden                      " Do not unload buffers when no longer displayed
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
@@ -691,7 +693,7 @@ let g:UltiSnipsListSnippets = "<C-g><Tab>"
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Right>"
 let g:UltiSnipsJumpBackwardTrigger = "<Left>"
-let g:UltiSnipsSnippetsDir = split(&runtimepath, ',')[0] . '/snips'
+let g:UltiSnipsSnippetsDir = s:user_runtime . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
 
 let g:signify_vcs_list = ['git']
@@ -805,7 +807,7 @@ let g:terminal_color_15 = '#ffffff'
 
 " Include a local configuration file if available. It is sourced at the end so
 " that any local settings override those in this file.
-let s:local = split(&runtimepath, ',')[0] . '/local.vim'
+let s:local = s:user_runtime . '/local.vim'
 if filereadable(s:local) | execute 'source' s:local | endif
 
 " }}}
