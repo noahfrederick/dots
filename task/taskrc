@@ -1,0 +1,103 @@
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+# Always list all projects (including those with no pending tasks)
+list.all.projects=on
+
+# Make search case-insensitive
+search.case.sensitive=no
+
+# Priorities
+# Make low priority less urgent than no priority
+urgency.uda.priority.L.coefficient=-1.8
+
+# Colors
+rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+
+# General decoration
+color.label=
+color.label.sort=
+color.alternate=
+color.header=yellow
+color.footnote=yellow
+color.warning=black on yellow
+color.error=white on red
+color.debug=blue
+
+# Task state
+color.completed=bold color8  # 'bright black' doesn't work here
+color.deleted=
+color.active=black on green
+color.recurring=magenta
+color.scheduled=green
+color.until=
+color.blocked=color8  # 'bright black' doesn't work here
+color.blocking=
+
+# Project
+color.project.none=
+
+# Priority
+color.uda.priority.H=bold white
+color.uda.priority.M=
+color.uda.priority.L=color8  # 'bright black' doesn't work here
+
+# Tags
+color.tag.travel=bold
+color.tag.next=bold blue
+color.tag.none=
+color.tagged=
+
+# Due
+color.due=yellow
+color.due.today=black on yellow
+color.overdue=white on red
+
+# UDA
+#color.uda.X=
+
+# Report: burndown
+color.burndown.done=on green
+color.burndown.pending=on red
+color.burndown.started=on yellow
+
+# Report: history
+color.history.add=black on red
+color.history.delete=black on yellow
+color.history.done=black on green
+
+# Report: summary
+color.summary.background=white on black
+color.summary.bar=black on green
+
+# Command: calendar
+color.calendar.due=white on red
+color.calendar.due.today=bold white on red
+color.calendar.holiday=black on bright yellow
+color.calendar.overdue=black on bright red
+color.calendar.today=bold white on bright blue
+color.calendar.weekend=white on bright black
+color.calendar.weeknumber=bold blue
+
+# Command: sync
+color.sync.added=green
+color.sync.changed=yellow
+color.sync.rejected=red
+
+# Command: undo
+color.undo.after=green
+color.undo.before=red
+
+# Vit
+color.vit.selection=color0 on white

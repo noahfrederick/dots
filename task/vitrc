@@ -1,0 +1,14 @@
+map <Space>=:!r task %TASKID<Space>
+
+map l=:!r task log<Space>
+
+map s=:!r task %TASKID start<Return>
+map S=:!r task %TASKID stop<Return>
+map x=:!r task %TASKID modify +next<Return>
+map X=:!r task %TASKID modify -next<Return>
+
+map <F1>=:!r task context none<Return>
+map <F2>=:!r task context home<Return>
+map <F3>=:!r task context work<Return>
+map <F4>=:!r task context work-focus<Return>
+map <F5>=:!r task context errand<Return>
