@@ -157,6 +157,9 @@ hi markdownOrgDone                  guifg=#cde88a  gui=bold
 hi markdownOrgCanceled              guifg=#888888  gui=bold
 hi markdownOrgWaiting               guifg=#e9d9b3  gui=bold
 
+" Polyglot ftplugin
+hi! link mkdListItem                htmlTagName
+
 "}}}
 " Ruby {{{
 hi! link rubyDefine                 Statement
