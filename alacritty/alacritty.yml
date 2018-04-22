@@ -90,7 +90,7 @@ colors:
   # Default colors
   primary:
     background: '0x0e191b'
-    foreground: '0xf1f1f1'
+    foreground: '0xeeeeee'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
@@ -106,11 +106,11 @@ colors:
     blue:    '0x78c9e9'
     magenta: '0xb88eec'
     cyan:    '0x68a9af'
-    white:   '0xf1f1f1'
+    white:   '0xeeeeee'
 
   # Bright colors
   bright:
-    black:   '0x536B87'
+    black:   '0x5c7897'
     red:     '0xe07689'
     green:   '0xc5fcb8'
     yellow:  '0xddd4c1'
