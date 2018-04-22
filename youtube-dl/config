@@ -1,0 +1,9 @@
+# Configuration for YOUTUBE-DL(1)
+# You can use --ignore-config if you want to disable the configuration file for
+# a particular youtube-dl run.
+
+# Save all videos under Downloads directory.
+--output ~/Downloads/%(title)s.%(ext)s
+
+# Restrict filenames to only ASCII characters, and avoid "&" and spaces.
+--restrict-filenames
