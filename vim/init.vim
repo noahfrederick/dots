@@ -48,7 +48,7 @@ if has("vim_starting")
     Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
   endif
   if has("nvim")
-    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
     Plug 'roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' }
     Plug 'roxma/nvim-completion-manager'
   else
