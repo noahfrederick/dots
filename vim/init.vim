@@ -456,10 +456,13 @@ nnoremap <Leader><Leader> <C-w>p
 
 nnoremap <silent> <CR> :<C-u>call <SID>try('Switch', "\015")<CR>
 
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+nnoremap <silent> <A-h> :call my#window#nav('h')<CR>
+nnoremap <silent> <A-j> :call my#window#nav('j')<CR>
+nnoremap <silent> <A-k> :call my#window#nav('k')<CR>
+nnoremap <silent> <A-l> :call my#window#nav('l')<CR>
+
+nnoremap <A-c> <C-w>c
+nnoremap <A-w> <C-w>w
 
 nnoremap <A-S-h> <C-w>H
 nnoremap <A-S-j> <C-w>J
@@ -467,10 +470,13 @@ nnoremap <A-S-k> <C-w>K
 nnoremap <A-S-l> <C-w>L
 
 if exists(":tnoremap")
-  tnoremap <A-h> <C-\><C-n><C-w>h
-  tnoremap <A-j> <C-\><C-n><C-w>j
-  tnoremap <A-k> <C-\><C-n><C-w>k
-  tnoremap <A-l> <C-\><C-n><C-w>l
+  tnoremap <silent> <A-h> <C-\><C-n>:call my#window#nav('h')<CR>
+  tnoremap <silent> <A-j> <C-\><C-n>:call my#window#nav('j')<CR>
+  tnoremap <silent> <A-k> <C-\><C-n>:call my#window#nav('k')<CR>
+  tnoremap <silent> <A-l> <C-\><C-n>:call my#window#nav('l')<CR>
+
+  tnoremap <A-c> <C-w>c
+  tnoremap <A-w> <C-w>w
 
   tnoremap <A-S-h> <C-\><C-n><C-w>H
   tnoremap <A-S-j> <C-\><C-n><C-w>J
