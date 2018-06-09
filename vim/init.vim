@@ -8,10 +8,11 @@ if has("vim_starting")
 
   " Use GitHub username if local source dir isn't set
   let $PLUG_SRC = exists('$CODE') ? $CODE : 'noahfrederick'
+  command! -nargs=+ -bar MyPlug execute 'Plug' substitute(<q-args>, '^''', ''''.$PLUG_SRC.'/', '')
 
   " Color schemes
-  Plug '$PLUG_SRC/vim-hemisu'
-  Plug '$PLUG_SRC/vim-noctu'
+  MyPlug 'vim-hemisu'
+  MyPlug 'vim-noctu'
 
   " General-purpose utilities
   Plug 'AndrewRadev/sideways.vim'
@@ -43,7 +44,7 @@ if has("vim_starting")
   Plug 'cohama/lexima.vim'
   Plug 'wellle/targets.vim'
   if has("mac")
-    Plug '$PLUG_SRC/vim-codekit',        { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
+    MyPlug 'vim-codekit',                { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
     Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
   endif
   if has("nvim")
@@ -51,7 +52,7 @@ if has("vim_starting")
     Plug 'roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' }
     Plug 'roxma/nvim-completion-manager'
   else
-    Plug '$PLUG_SRC/vim-neovim-defaults'
+    MyPlug 'vim-neovim-defaults'
   endif
 
   " Text objects
@@ -64,10 +65,10 @@ if has("vim_starting")
   Plug 'whatyouhide/vim-textobj-xmlattr'
 
   " Language-/framework-specific utilities
-  Plug '$PLUG_SRC/vim-composer'
-  Plug '$PLUG_SRC/vim-jekyll'
-  Plug '$PLUG_SRC/vim-kohana'
-  Plug '$PLUG_SRC/vim-laravel'
+  MyPlug 'vim-composer'
+  MyPlug 'vim-jekyll'
+  MyPlug 'vim-kohana'
+  MyPlug 'vim-laravel'
   Plug 'ap/vim-css-color'
   Plug 'dbakker/vim-sparkup'
   Plug 'tpope/vim-bundler'
