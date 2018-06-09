@@ -693,6 +693,8 @@ let g:UltiSnipsJumpBackwardTrigger = "<Left>"
 let g:UltiSnipsSnippetsDir = s:user_runtime . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
 
+let g:LanguageClient_diagnosticsList = 'Location'
+
 let g:signify_vcs_list = ['git']
 let s:signify_sign = "\u2502"
 let g:signify_sign_add               = s:signify_sign
