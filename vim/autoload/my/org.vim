@@ -93,7 +93,7 @@ endfunction
 
 function! s:repo_notes(...) dict abort
   let prefix = get(a:000, 0, self.prefix())
-  return map(self.glob('*'), {idx, path -> self.slugify(path, prefix)})
+  return map(self.glob('**/*'), {idx, path -> self.slugify(path, prefix)})
 endfunction
 
 function! s:repo_slugify(path, prefix) dict abort
