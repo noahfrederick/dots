@@ -318,6 +318,7 @@ augroup init_cursorline
         \ endif
   if exists('##TermOpen')
     autocmd TermOpen * set nocursorline
+    autocmd TermOpen * nnoremap <buffer> <CR> i<CR>
   endif
 augroup END
 
