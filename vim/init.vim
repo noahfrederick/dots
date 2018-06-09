@@ -24,7 +24,6 @@ if has("vim_starting")
   Plug 'justinmk/vim-dirvish'
   Plug 'machakann/vim-highlightedyank'
   Plug 'mhinz/vim-signify'
-  Plug 'neomake/neomake'
   Plug 'pgdouyon/vim-evanesco'
   Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
   Plug 'tpope/vim-abolish'
@@ -300,11 +299,6 @@ augroup init
   autocmd QuickFixCmdPost *grep* cwindow
   autocmd WinEnter * if &previewwindow | execute "setlocal statusline=" . repeat("\u2500", winwidth(0)) | endif
   autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", winwidth(0))
-augroup END
-
-augroup init_linter
-  autocmd!
-  autocmd! BufWritePost * Neomake
 augroup END
 
 augroup init_cursorline
