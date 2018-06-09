@@ -365,12 +365,14 @@ key_bindings:
   - { key: F11,      mods: Command, chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Command, chars: "\x1b[24;3~"                  }
   - { key: B,        mods: Alt,     chars: "\x1bb"                       }
+  - { key: C,        mods: Alt,     chars: "\x1bc"                       }
   - { key: F,        mods: Alt,     chars: "\x1bf"                       }
   - { key: G,        mods: Alt,     chars: "\x1bg"                       }
   - { key: H,        mods: Alt,     chars: "\x1bh"                       }
   - { key: J,        mods: Alt,     chars: "\x1bj"                       }
   - { key: K,        mods: Alt,     chars: "\x1bk"                       }
   - { key: L,        mods: Alt,     chars: "\x1bl"                       }
+  - { key: W,        mods: Alt,     chars: "\x1bw"                       }
   - { key: H,        mods: Alt|Shift, chars: "\x1bH"                     }
   - { key: J,        mods: Alt|Shift, chars: "\x1bJ"                     }
   - { key: K,        mods: Alt|Shift, chars: "\x1bK"                     }
