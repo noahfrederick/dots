@@ -331,10 +331,14 @@ augroup END
 augroup init_org
   autocmd!
 
-  if exists('$NOTES')
+  if exists('$NOTES') && filereadable($NOTES.'/.repos.json')
     let g:my#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
+  endif
+
+  if exists('$NOTES') && filereadable($NOTES.'/.capture.json')
     let g:my#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
   endif
+
   autocmd BufReadCmd org://* nested call my#org#protocol#handle(expand('<afile>'))
 augroup END
 
