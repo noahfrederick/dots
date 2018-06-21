@@ -25,6 +25,7 @@ status is-login; or exit
 #
 # PATH
 #
+prepend_to_path $HOME/.rbenv/bin # For non-brew-installed rbenv
 which -s yarn;     and prepend_to_path (yarn global bin)
 which -s rbenv;    and prepend_to_path (rbenv root)/shims
 which -s composer; and prepend_to_path (composer config --global home)/(composer config --global bin-dir)
@@ -34,11 +35,12 @@ prepend_to_path $HOME/bin
 #
 # DIRECTORIES
 #
-set -x DOCS      "$HOME/Documents"
-set -x DROPBOX   "$HOME/Sync"
-set -x NOTES     "$HOME/Notes"
-set -x CODE      "$HOME/src"
-set -x HOMESTEAD "$CODE/homestead"
+test -d "$HOME/Documents"; and set -x DOCS      "$HOME/Documents"
+test -d "$HOME/Sync";      and set -x DROPBOX   "$HOME/Sync"
+test -d "$HOME/Notes";     and set -x NOTES     "$HOME/Notes"
+test -d "$HOME/src";       and set -x CODE      "$HOME/src"
+test -d "$HOME/Code";      and set -x CODE      "$HOME/Code"
+test -d "$CODE/homestead"; and set -x HOMESTEAD "$CODE/homestead"
 
 append_to_cdpath "."
 append_to_cdpath "$CODE"
