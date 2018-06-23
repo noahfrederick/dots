@@ -10,10 +10,6 @@ if has("vim_starting")
   let $PLUG_SRC = exists('$CODE') ? $CODE : 'noahfrederick'
   command! -nargs=+ -bar MyPlug execute 'Plug' substitute(<q-args>, '^''', ''''.$PLUG_SRC.'/', '')
 
-  " Color schemes
-  MyPlug 'vim-hemisu'
-  MyPlug 'vim-noctu'
-
   " General-purpose utilities
   Plug 'AndrewRadev/sideways.vim'
   Plug 'AndrewRadev/splitjoin.vim'
