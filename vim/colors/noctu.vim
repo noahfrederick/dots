@@ -26,7 +26,7 @@ hi PmenuSBar           ctermbg=8
 hi PmenuSel            ctermfg=0     ctermbg=4
 hi ColorColumn         ctermbg=0
 hi EndOfBuffer         ctermfg=0
-hi SpellBad            ctermfg=1     ctermbg=NONE  cterm=underline
+hi SpellBad            ctermfg=9     ctermbg=NONE  cterm=underline
 hi SpellCap            ctermfg=10    ctermbg=NONE  cterm=underline
 hi SpellRare           ctermfg=11    ctermbg=NONE  cterm=underline
 hi SpellLocal          ctermfg=13    ctermbg=NONE  cterm=underline
