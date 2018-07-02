@@ -347,7 +347,7 @@ command! -bang -nargs=? -complete=buffer Bufonly
       \ call my#buffer#only(<q-args>, <q-bang>)
 command! -nargs=0 -bar FollowSymlink call my#path#follow_symlink()
 command! -bang -nargs=? -bar -complete=filetype Scratch
-      \ tabedit [Scratch] | if !empty(<q-bang>) | put | 1delete _ | endif |
+      \ tabedit | if !empty(<q-bang>) | put | 1delete _ | endif |
       \ let &filetype = empty(<q-args>) ? 'markdown' : <q-args> |
       \ setlocal buftype=nofile bufhidden=hide noswapfile
 command! -nargs=0 -bar Unix set fileformat=unix
