@@ -48,13 +48,14 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
   STENO,
-  LOWER,
-  RAISE,
   PV_EXIT,
   PV_LOOK,
   SEND_VERSION,
   SEND_MAKE
 };
+
+#define LOWER MO(LOWER_LAYER)
+#define RAISE MO(RAISE_LAYER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Base layer (Qwerty)
@@ -261,6 +262,10 @@ void plover_lookup(void) {
   unregister_code(PV_RG);
 }
 
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
@@ -271,24 +276,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(BASE_COLEMAK_LAYER);
-      }
-      return false;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(LOWER_LAYER);
-        update_tri_layer(LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
-      } else {
-        layer_off(LOWER_LAYER);
-        update_tri_layer(LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
-      }
-      return false;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(RAISE_LAYER);
-        update_tri_layer(LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
-      } else {
-        layer_off(RAISE_LAYER);
-        update_tri_layer(LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
       }
       return false;
     case STENO:
