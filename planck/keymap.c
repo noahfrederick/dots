@@ -11,14 +11,14 @@ extern keymap_config_t keymap_config;
 
 // Keymap layers
 enum planck_layers {
-  BASE_QWERTY_LAYER,
-  BASE_COLEMAK_LAYER,
+  QWERTY_LAYER,
+  COLEMAK_LAYER,
   LOWER_LAYER,
   RAISE_LAYER,
   NAV_LAYER,
   GUI_LAYER,
   STENO_LAYER,
-  KEYBOARD_LAYER
+  ADJUST_LAYER
 };
 
 // Key aliases for legibility
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                        /                                                     /
    *   Tap for ] [ --------'-----------------------------------------------------'
    */
-  [BASE_QWERTY_LAYER] = {
+  [QWERTY_LAYER] = {
     {KC_TAB,                 KC_Q,           KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,    KC_U,  KC_I,    KC_O,    KC_P,                   KC_QUOT},
     {CTL_T(KC_ESC),          KC_A,           KC_S,    KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,    LT(NAV_LAYER, KC_SCLN), CTL_T(KC_ENT)},
     {KC_LSPO,                KC_Z,           KC_X,    KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT,  KC_SLSH,                KC_RSPC},
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                │     │     │     │     │     │           │     │     │     │     │     │
    *                └─────┴─────┴─────┴─────┴─────┴───────────┴─────┴─────┴─────┴─────┴─────┘
    */
-  [BASE_COLEMAK_LAYER] = {
+  [COLEMAK_LAYER] = {
     {_______, KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,             _______},
     {_______, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    LT(NAV_LAYER, KC_O), _______},
     {_______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    _______, _______, _______,             _______},
@@ -203,7 +203,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                └─────┴─────┴─────┴─────┴─────┴───────────┴─────┴─────┴─────┴─────┴─────┘
    *               Swap GUI/Alt _/________/             \_____________\_ Backlight _/
    */
-  [KEYBOARD_LAYER] = {
+  [ADJUST_LAYER] = {
     {___x___, RESET,   SEND_MAKE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, SEND_VERSION, ___x___},
     {___x___, QWERTY,  COLEMAK,   STENO,   ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___,      ___x___},
     {___x___, MUV_DE,  MUV_IN,    MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  ___x___, ___x___, AU_ON,   AU_OFF,       ___x___},
@@ -263,19 +263,19 @@ void plover_lookup(void) {
 }
 
 uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, KEYBOARD_LAYER);
+  return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, ADJUST_LAYER);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        set_single_persistent_default_layer(BASE_QWERTY_LAYER);
+        set_single_persistent_default_layer(QWERTY_LAYER);
       }
       return false;
     case COLEMAK:
       if (record->event.pressed) {
-        set_single_persistent_default_layer(BASE_COLEMAK_LAYER);
+        set_single_persistent_default_layer(COLEMAK_LAYER);
       }
       return false;
     case STENO:
@@ -286,7 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
         layer_off(RAISE_LAYER);
         layer_off(LOWER_LAYER);
-        layer_off(KEYBOARD_LAYER);
+        layer_off(ADJUST_LAYER);
         layer_on(STENO_LAYER);
         if (!eeconfig_is_enabled()) {
           eeconfig_init();
