@@ -1752,22 +1752,7 @@ Below are our custom agenda commands:
 #+BEGIN_SRC emacs-lisp :tangle no
   (with-eval-after-load 'org-agenda
     (setq org-agenda-custom-commands
-          '(("A" "📆 Agenda"
-             ((agenda "")
-              (tags-todo "/!STARTED"
-                         ((org-agenda-overriding-header "In Progress")
-                          (org-tags-match-list-sublevels nil)
-                          (org-agenda-sorting-strategy '(priority-down
-                                                         category-keep
-                                                         effort-up))))
-              (tags "REFILE"
-                    ((org-agenda-overriding-header "Entries to Refile")
-                     (org-tags-match-list-sublevels nil)))
-              (tags "-REFILE/"
-                    ((org-agenda-overriding-header "Entries to Archive")
-                     (org-agenda-skip-function 'my-skip-non-archivable-tasks)
-                     (org-tags-match-list-sublevels nil)))))
-            ("d" "🕑 Timeline for today"
+          '(("d" "🕑 Timeline for today"
              agenda ""
              ((org-agenda-ndays 1)
               (org-agenda-show-log t)
