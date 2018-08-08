@@ -1412,25 +1412,6 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                "* %^{Title}%^{source}p\n#+CAPTION: %^{Caption text}\n%?"
                :clock-keep t :jump-to-captured t)))
 
-      ;; There is something wrong with this. The capture buffer is not
-      ;; cleaned up using these maps, but it is using the built-in
-      ;; ones. No idea what the difference is.
-      ;;
-      ;; (defun my-make-org-capture-mode-evil ()
-      ;;   "Turn the Org capture buffer evil."
-      ;;   (evil-define-key 'normal org-capture-mode-map "ZZ" 'org-capture-finalize)
-      ;;   (evil-define-key 'normal org-capture-mode-map "ZQ" 'org-capture-kill)
-      ;;   (evil-leader/set-key-for-mode 'org-capture-mode "m m" 'org-capture-finalize)
-      ;;   (evil-leader/set-key-for-mode 'org-capture-mode "m r" 'org-capture-refile)
-
-      ;;   (add-hook 'org-capture-mode-hook
-      ;;             '(lambda ()
-      ;;                (org-set-local
-      ;;                 'header-line-format
-      ;;                 "Capture buffer.  Finish `Z Z', refile `<Leader> m r', abort `Z Q'."))))
-
-      ;; (my-make-org-capture-mode-evil)
-
       (setq org-goto-interface 'outline-path-completion
             org-log-done 'time
             org-log-into-drawer t
@@ -1472,6 +1453,16 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
       (setq org-src-fontify-natively t
             org-src-tab-acts-natively t
             org-confirm-babel-evaluate nil)))
+#+END_SRC
+
+Evil confirm/abort in capture buffers.
+
+#+NAME: org
+#+BEGIN_SRC emacs-lisp :tangle no
+  (with-eval-after-load 'org-capture
+    (define-key org-capture-mode-map [remap evil-save-and-close]          'org-capture-finalize)
+    (define-key org-capture-mode-map [remap evil-save-modified-and-close] 'org-capture-finalize)
+    (define-key org-capture-mode-map [remap evil-quit]                    'org-capture-kill))
 #+END_SRC
 
 ** Lists
