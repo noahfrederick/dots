@@ -276,14 +276,6 @@ window to fill the screen:
   both width and height in one-fell-swoop.
 #+END_QUOTE
 
-Source: http://stackoverflow.com/a/18711628
-
-#+NAME: appearance
-#+BEGIN_SRC emacs-lisp :tangle no
-  (if (fboundp 'toggle-frame-maximized)
-      (add-hook 'emacs-startup-hook 'toggle-frame-maximized))
-#+END_SRC
-
 Suppress the theme's background color and Emacs's menu bar in
 terminal frames:
 
