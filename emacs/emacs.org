@@ -1,5 +1,4 @@
 #+TITLE: Nox's Emacs Configuration
-#+AUTHOR: Noah Frederick
 
 * Usage
 
@@ -84,19 +83,6 @@ let's show the total time in a message:
              (emacs-uptime "%s")))
 
   (add-hook 'emacs-startup-hook 'my-show-startup-time 'append)
-#+END_SRC
-
-[[https://github.com/dholm/benchmark-init-el][Benchmark-init.el]] can give us a breakdown of time spent on ~require~
-and ~load~ calls:
-
-#+NAME: init-before
-#+BEGIN_SRC emacs-lisp :tangle no :tangle no
-  (use-package benchmark-init-loaddefs
-    :ensure benchmark-init
-    :init
-    (progn
-      (benchmark-init/activate)
-      (add-hook 'after-init-hook 'benchmark-init/deactivate)))
 #+END_SRC
 
 ** Platform-specific
@@ -1154,7 +1140,7 @@ Place the point where we left it when last visiting the same file.
       (ido-mode t)
       (ido-everywhere t)
 
-      (use-package ido-ubiquitous
+      (use-package ido-completing-read+
         :ensure t
         :config (ido-ubiquitous-mode t)))
 
@@ -1260,6 +1246,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package guide-key
+    :disabled t
     :ensure t
     :diminish guide-key-mode
     :commands guide-key-mode
@@ -1376,35 +1363,35 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                "* Note taken on %U\n%?"
                :clock-keep t :kill-buffer t :jump-to-captured t)
               ("j" "📆 Journal entry" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               (file+olp+datetree "diary.org")
                "* %?\n%U\n"
-               :clock-keep t :kill-buffer t)
+               :time-prompt t :clock-keep t :kill-buffer t)
               ("e" "🗓️ Calendar event" entry
-               (file+datetree+prompt (expand-file-name "diary.org" org-directory))
+               (file+olp+datetree "diary.org")
                "* %^{Event name}%^{Location}p\n%T\n%?"
-               :clock-keep t :kill-buffer t)
+               :time-prompt t :clock-keep t :kill-buffer t)
               ("f" "🛫️ Flight" entry
                (file+olp+datetree "diary.org")
                "* %^{From} ✈ %^{To}  :flight:\n%T\n%?"
                :time-prompt t :clock-keep t :kill-buffer t)
               ("p" "📓 Phrase" entry
-               (file+headline (expand-file-name "vocabulary.org" org-directory) "Phrases")
+               (file+headline "vocabulary.org" "Phrases")
                "* %?"
                :clock-keep t :kill-buffer t :jump-to-captured t)
               ("c" "👤 Contact" entry
-               (file+headline (expand-file-name "contacts.org" org-directory) "People")
+               (file+headline "contacts.org" "People")
                "* %(org-contacts-template-name)\n:PROPERTIES:\n:EMAIL: %(org-contacts-template-email)\n:END:"
                :clock-keep t :kill-buffer t)
               ("r" "🍲 Recipe" entry
-               (file+headline (expand-file-name "food.org" org-directory) "Recipes")
+               (file+headline "food.org" "Recipes")
                "* %^{Recipe Name}%^{source}p%^{serves}p%^{time}p\n\n** Ingredients\n\n** Preparation"
                :clock-keep t :empty-lines 1 :kill-buffer t)
               ("R" "🍴 Restaurant" entry
-               (file+headline (expand-file-name "food.org" org-directory) "Restaurants")
+               (file+headline "food.org" "Restaurants")
                "* %^{Restaurant Name}\n%u\n"
                :clock-keep t :empty-lines 1 :kill-buffer t)
               ("k" "🔠 Keyboards" entry
-               (file+headline (expand-file-name "keyboards.org" org-directory) "Keyboard Gallery")
+               (file+headline "keyboards.org" "Keyboard Gallery")
                "* %^{Title}%^{source}p\n#+CAPTION: %^{Caption text}\n%?"
                :clock-keep t :jump-to-captured t)))
 
@@ -1439,11 +1426,15 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 
       (setq org-startup-indented t)
 
+      (use-package ob-restclient
+        :ensure t)
+
       ;; Code blocks
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((emacs-lisp . t)
          (ledger . t)
+         (restclient . t)
          (ruby . t)
          (shell . t)))
       (setq org-src-fontify-natively t
@@ -1992,8 +1983,8 @@ Org agenda (as well as other calendar formats).
 
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
-  (use-package calfw-org
-    :ensure calfw
+  (use-package calfw
+    :ensure t
     :config
     (setq cfw:fchar-junction ?╋
           cfw:fchar-vertical-line ?┃
@@ -2003,6 +1994,9 @@ Org agenda (as well as other calendar formats).
           cfw:fchar-top-junction ?┳
           cfw:fchar-top-left-corner ?┏
           cfw:fchar-top-right-corner ?┓))
+
+  (use-package calfw-org
+    :ensure t)
 
   (defun my-open-org-calendar ()
     "Open an org schedule calendar in a new buffer.
@@ -2076,6 +2070,7 @@ saner interface.
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package mu4e
+    :disabled t
     :load-path "~/src/mu/mu4e"
     :commands (mu4e mu4e~start)
     :init
@@ -2215,6 +2210,7 @@ The mu4e-alert package adds alerts and a mode-line indicator for new mail:
 #+NAME: communications
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package mu4e-alert
+    :disabled t
     :ensure t
     :init
     (progn
