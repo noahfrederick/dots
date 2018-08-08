@@ -40,6 +40,7 @@ test -d "$HOME/Sync";      and set -x DROPBOX   "$HOME/Sync"
 test -d "$HOME/Notes";     and set -x NOTES     "$HOME/Notes"
 test -d "$HOME/src";       and set -x CODE      "$HOME/src"
 test -d "$HOME/Code";      and set -x CODE      "$HOME/Code"
+test -d "$HOME/Work";      and set -x WORK      "$HOME/Work"
 test -d "$CODE/homestead"; and set -x HOMESTEAD "$CODE/homestead"
 
 append_to_cdpath "."
