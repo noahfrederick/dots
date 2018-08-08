@@ -642,7 +642,11 @@ nnoremap <expr><silent> ZB ":<C-u>Bdelete" . (v:count ? "!" : "") . "<CR>"
 " Unimpaired.vim-like toggles
 nnoremap <silent> [oo :let &colorcolumn = '+' . join(range(1, 250), ',+')<CR>
 nnoremap <silent> ]oo :set colorcolumn=0<CR>
-nnoremap <silent> coo :let &colorcolumn = (&colorcolumn == '0' ? '+' . join(range(1, 250), ',+') : '0')<CR>
+nnoremap <silent> yoo :let &colorcolumn = (&colorcolumn == '0' ? '+' . join(range(1, 250), ',+') : '0')<CR>
+
+" Undo https://github.com/tpope/vim-unimpaired/commit/3a7759075cca5b0dc29ce81f2747489b6c8e36a7
+" and subsequent change to yo
+nmap co yo
 
 nnoremap [<Tab> :SidewaysLeft<CR>
 nnoremap ]<Tab> :SidewaysRight<CR>
