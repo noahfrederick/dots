@@ -1,0 +1,15 @@
+# yaml.snippets - Snippets for yaml file type
+
+snippet mux "Tmuxinator session definition" b
+# ~/.tmuxinator/{$1:slug}.yml
+
+name: $1
+root: <%= ENV['CODE'] %>/$1
+
+windows:
+	- editor: <%= ENV['EDITOR'] %>
+	- homestead:
+		- homestead up
+		- homestead ssh
+		- cd src/$1
+endsnippet
