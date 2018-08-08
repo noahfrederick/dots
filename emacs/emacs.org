@@ -1519,18 +1519,20 @@ for exported files lives in the =~/.emacs.d= directory.
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq org-hide-emphasis-markers t
         org-export-with-section-numbers nil
+        org-export-with-tags 'not-in-toc
+        org-export-with-toc 1
         org-export-backends '(html
                               latex
                               md
                               icalendar)
-        org-html-htmlize-output-type 'css
+        org-html-htmlize-output-type nil
         org-html-doctype "html5"
         org-html-preamble nil
         org-html-postamble t
-        org-html-postamble-format '(("en" "<div class=\"date\">%T</div>"))
+        org-html-postamble-format '(("en" "<time>%T</time>"))
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
-        org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
+        org-html-head nil
         org-html-text-markup-alist '((bold . "<strong>%s</strong>")
                                      (code . "<code>%s</code>")
                                      (italic . "<em>%s</em>")
@@ -1548,25 +1550,19 @@ you can publish all projects by issuing =M-x org-publish-all RET=.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq org-publish-project-alist
-        '(("emacs-assets"
-           :base-directory "~/.emacs.d/"
-           :recursive nil
-           :base-extension "css\\|js\\|svg"
-           :publishing-directory "~/html/"
-           :publishing-function org-publish-attachment)
-          ("org-assets"
+        '(("org-assets"
            :base-directory "~/org/"
            :recursive t
            :base-extension "jpg"
-           :publishing-directory "~/html/"
+           :publishing-directory "~/Notes/"
            :publishing-function org-publish-attachment)
           ("org-pages"
            :base-directory "~/org/"
+           :recursive t
            :base-extension "org"
-           :auto-sitemap t
-           :publishing-directory "~/html/"
+           :publishing-directory "~/Notes/"
            :publishing-function org-html-publish-to-html)
-          ("org" :components ("emacs-assets" "org-assets" "org-pages"))
+          ("org" :components ("org-assets" "org-pages"))
           ("ledger-assets"
            :base-directory "~/.emacs.d/"
            :recursive nil
@@ -1580,7 +1576,7 @@ you can publish all projects by issuing =M-x org-publish-all RET=.
            :publishing-directory "~/ledger/reports/"
            :publishing-function org-html-publish-to-html
            :headline-levels 9)
-          ("ledger" :components ("emacs-assets" "ledger-assets" "ledger-reports"))))
+          ("ledger" :components ("ledger-assets" "ledger-reports"))))
 #+END_SRC
 
 ** Key Bindings
