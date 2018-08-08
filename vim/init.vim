@@ -46,7 +46,21 @@ if has("vim_starting")
   if has("nvim")
     Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
     Plug 'roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' }
-    Plug 'roxma/nvim-completion-manager'
+
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-cssomni'
+    Plug 'ncm2/ncm2-html-subscope'
+    Plug 'ncm2/ncm2-markdown-subscope'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-ultisnips'
+
+    augroup init_ncm2
+      autocmd!
+      autocmd BufEnter * call ncm2#enable_for_buffer()
+    augroup END
   else
     MyPlug 'vim-neovim-defaults'
   endif
@@ -149,8 +163,9 @@ set wildignore=*.swp,*.bak
 set wildignore+=*.min.*,*.css.map
 set wildignore+=*.jpg,*.png,*.gif
 set suffixes+=.css,.html        " Extensions that get a lower priority when matching wildcards
-set completeopt+=longest        " Only insert longest common string
-set completeopt-=preview        " Don't show the preview window when completing
+set completeopt=menuone         " Display menu when completing, even for only one candidate
+set completeopt+=noselect       " Do not automatically select first item
+set completeopt+=noinsert       " Do not automatically insert first item
 set pumheight=8                 " Limit height of popup menu
 
 if exists("+inccommand")        " Introduced in Nvim 0.1.7
@@ -769,10 +784,6 @@ let g:jekyll_start = 'rake serve'
 " Neomake
 let g:neomake_error_sign = {'text': "\u276f"}
 let g:neomake_warning_sign = {'text': "\u276f"}
-
-" Completion
-" Characters typed to trigger completion menu: [[ min priority, min len ], ...]
-let g:cm_refresh_length = [[1, 3], [7, 2]]
 
 " Prevent csv.vim from setting its own 'foldtext'
 let g:csv_disable_fdt = 1
