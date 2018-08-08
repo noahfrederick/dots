@@ -731,6 +731,15 @@ let g:switch_mapping = ''
 let g:targets_argTrigger = 'A'
 
 let g:projectionist_heuristics = {
+      \   "script/console": {
+      \     "*": {"console": "script/console"},
+      \   },
+      \   "script/server": {
+      \     "*": {"start": "script/server"},
+      \   },
+      \   "script/test": {
+      \     "*": {"dispatch": "script/test"},
+      \   },
       \   "wordpress/|wp-config.php|style.css&header.php": {
       \     "*": { "framework": "wordpress" },
       \     "style.css": {
