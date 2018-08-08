@@ -16,7 +16,7 @@ if has("vim_starting")
   Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
   Plug 'SirVer/ultisnips',               { 'on': [] }
   Plug 'godlygeek/tabular'
-  Plug 'junegunn/fzf',                   { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf',                   { 'dir': '~/.config/fzf', 'do': './install --all --xdg' }
   Plug 'junegunn/gv.vim',                { 'on': 'GV' }
   Plug 'justinmk/vim-dirvish'
   Plug 'machakann/vim-highlightedyank'
