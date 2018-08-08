@@ -67,6 +67,7 @@ if has("vim_starting")
   MyPlug 'vim-laravel'
   Plug 'ap/vim-css-color'
   Plug 'dbakker/vim-sparkup'
+  Plug 'phpactor/phpactor',              { 'for': 'php', 'do': 'composer install' }
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-jdaddy',               { 'for': 'json' }
   Plug 'tpope/vim-rake'

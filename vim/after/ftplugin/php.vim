@@ -59,6 +59,14 @@ let b:accio = ['php', 'phpcs', 'phpmd']
 call my#filetype#make_semicolon_maps()
 call my#filetype#make_sparkup_maps()
 
+nnoremap <buffer> <LocalLeader>r :call phpactor#ContextMenu()<CR>
+nnoremap <buffer> <LocalLeader>t :call phpactor#Transform()<CR>
+nnoremap <buffer> <LocalLeader>n :call phpactor#ClassNew()<CR>
+nnoremap <buffer> <LocalLeader>i :call phpactor#ClassInflect()<CR>
+nnoremap <buffer> <LocalLeader>c :call phpactor#CopyFile()<CR>
+nnoremap <buffer> <LocalLeader>m :call phpactor#MoveFile()<CR>
+xnoremap <buffer> <LocalLeader>e :call phpactor#ExtractMethod()<CR>
+
 command! -buffer -bar -nargs=0 Format call my#format#php_fmt()
 
 if !exists('b:undo_ftplugin')

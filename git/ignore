@@ -3,4 +3,5 @@
 .vimrc
 Session.vim
 config.codekit
+phpactor.log
 tags
