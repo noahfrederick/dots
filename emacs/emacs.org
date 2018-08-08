@@ -1737,6 +1737,17 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
           org-agenda-include-diary t))
 #+END_SRC
 
+*** Holidays
+
+Turn off holidays I don't need.
+
+#+NAME: org
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq holiday-bahai-holidays nil
+        holiday-islamic-holidays nil
+        holiday-oriental-holidays nil)
+#+END_SRC
+
 *** Custom Agenda Commands
 
 Below are our custom agenda commands:
