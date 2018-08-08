@@ -40,6 +40,11 @@ if exists(':Switch')
         \       ')': ']',
         \     },
         \   },
+        \   {
+        \     '\<public\>': 'protected',
+        \     '\<protected\>': 'private',
+        \     '\<private\>': 'public',
+        \   },
         \ ]
 endif
 
