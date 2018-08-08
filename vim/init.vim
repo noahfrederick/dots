@@ -496,7 +496,7 @@ noremap gk k
 noremap gj j
 
 " Clear search highlighting and any message already displayed
-nnoremap <silent> <C-l> :nohlsearch<C-r>=has('diff') ? '<Bar>diffupdate' : ''<CR><C-r>=exists(':SignifyRefresh') ? '<Bar>SignifyRefresh' : ''<CR><CR><C-l>
+nnoremap <silent> <C-l> :call my#display#refresh()<CR>
 
 " Expand %% to directory of current file in command-line mode
 cnoremap %% <C-r>=fnameescape(expand("%:~:h"))<CR>/
