@@ -1383,6 +1383,10 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
                (file+datetree+prompt (expand-file-name "diary.org" org-directory))
                "* %^{Event name}%^{Location}p\n%T\n%?"
                :clock-keep t :kill-buffer t)
+              ("f" "🛫️ Flight" entry
+               (file+olp+datetree "diary.org")
+               "* %^{From} ✈ %^{To}  :flight:\n%T\n%?"
+               :time-prompt t :clock-keep t :kill-buffer t)
               ("p" "📓 Phrase" entry
                (file+headline (expand-file-name "vocabulary.org" org-directory) "Phrases")
                "* %?"
