@@ -3,96 +3,101 @@
 
 let s:user_runtime = split(&runtimepath, ',')[0]
 
-if has("vim_starting")
+if has('vim_starting')
   call plug#begin()
 
-  " Use GitHub username if local source dir isn't set
+  " Use GitHub username unless local source dir is set
   let $PLUG_SRC = exists('$CODE') ? $CODE : 'noahfrederick'
-  command! -nargs=+ -bar MyPlug execute 'Plug' substitute(<q-args>, '^''', ''''.$PLUG_SRC.'/', '')
 
   " General-purpose utilities
-  Plug 'AndrewRadev/sideways.vim'
-  Plug 'AndrewRadev/splitjoin.vim'
-  Plug 'AndrewRadev/switch.vim',         { 'on': 'Switch' }
-  Plug 'SirVer/ultisnips',               { 'on': [] }
-  Plug 'godlygeek/tabular'
-  Plug 'junegunn/fzf',                   { 'dir': '~/.config/fzf', 'do': './install --all --xdg' }
-  Plug 'junegunn/gv.vim',                { 'on': 'GV' }
-  Plug 'justinmk/vim-dirvish'
-  Plug 'machakann/vim-highlightedyank'
-  Plug 'mhinz/vim-signify'
-  Plug 'pgdouyon/vim-evanesco'
-  Plug 'talek/obvious-resize',           { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] }
-  Plug 'tpope/vim-abolish'
-  Plug 'tpope/vim-commentary',           { 'on': ['<Plug>Commentary', '<Plug>CommentaryLine', '<Plug>ChangeCommentary'] }
-  Plug 'tpope/vim-dispatch'
-  Plug 'tpope/vim-endwise'
-  Plug 'tpope/vim-eunuch'
-  Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-obsession'
-  Plug 'tpope/vim-projectionist'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-rhubarb'
-  Plug 'tpope/vim-sleuth'
-  Plug 'tpope/vim-speeddating'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-unimpaired'
-  Plug 'cohama/lexima.vim'
-  Plug 'wellle/targets.vim'
-  if has("mac")
-    MyPlug 'vim-codekit',                { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] }
-    Plug 'rizzatti/dash.vim',            { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
-  endif
-  if has("nvim")
-    Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-    Plug 'roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' }
+  call plug#('AndrewRadev/sideways.vim')
+  call plug#('AndrewRadev/splitjoin.vim')
+  call plug#('AndrewRadev/switch.vim', { 'on': 'Switch' })
+  call plug#('SirVer/ultisnips', { 'on': [] })
+  call plug#('godlygeek/tabular', { 'on': 'Tabularize' })
 
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-cssomni'
-    Plug 'ncm2/ncm2-html-subscope'
-    Plug 'ncm2/ncm2-markdown-subscope'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-ultisnips'
+  augroup init_tabular
+    autocmd!
+    autocmd User tabular call my#tabular#setup()
+  augroup END
+
+  call plug#('junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all --xdg' })
+  call plug#('junegunn/gv.vim', { 'on': 'GV' })
+  call plug#('justinmk/vim-dirvish')
+  call plug#('machakann/vim-highlightedyank')
+  call plug#('mhinz/vim-signify')
+  call plug#('pgdouyon/vim-evanesco')
+  call plug#('talek/obvious-resize', { 'on': ['ObviousResizeUp', 'ObviousResizeDown', 'ObviousResizeLeft', 'ObviousResizeRight'] })
+  call plug#('tpope/vim-abolish')
+  call plug#('tpope/vim-commentary', { 'on': ['<Plug>Commentary', '<Plug>CommentaryLine', '<Plug>ChangeCommentary'] })
+  call plug#('tpope/vim-dispatch')
+  call plug#('tpope/vim-endwise')
+  call plug#('tpope/vim-eunuch')
+  call plug#('tpope/vim-fugitive')
+  call plug#('tpope/vim-obsession')
+  call plug#('tpope/vim-projectionist')
+  call plug#('tpope/vim-repeat')
+  call plug#('tpope/vim-rhubarb')
+  call plug#('tpope/vim-sleuth')
+  call plug#('tpope/vim-speeddating')
+  call plug#('tpope/vim-surround')
+  call plug#('tpope/vim-unimpaired')
+  call plug#('cohama/lexima.vim')
+  call plug#('wellle/targets.vim')
+  if has('mac')
+    call plug#($PLUG_SRC.'/vim-codekit', { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] })
+    call plug#('rizzatti/dash.vim', { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] })
+  endif
+  if has('nvim')
+    call plug#('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
+    call plug#('roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' })
+
+    call plug#('roxma/nvim-yarp')
+    call plug#('ncm2/ncm2')
+    call plug#('ncm2/ncm2-bufword')
+    call plug#('ncm2/ncm2-cssomni')
+    call plug#('ncm2/ncm2-html-subscope')
+    call plug#('ncm2/ncm2-markdown-subscope')
+    call plug#('ncm2/ncm2-path')
+    call plug#('ncm2/ncm2-tmux')
+    call plug#('ncm2/ncm2-ultisnips')
 
     augroup init_ncm2
       autocmd!
       autocmd BufEnter * call ncm2#enable_for_buffer()
     augroup END
   else
-    MyPlug 'vim-neovim-defaults'
+    call plug#($PLUG_SRC.'/vim-neovim-defaults')
   endif
 
   " Text objects
-  Plug 'adriaanzon/vim-textobj-blade-directive', { 'for': 'blade' }
-  Plug 'akiyan/vim-textobj-php',         { 'for': 'php' }
-  Plug 'kana/vim-textobj-function'
-  Plug 'kana/vim-textobj-user'
-  Plug 'mattn/vim-textobj-url'
-  Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-  Plug 'whatyouhide/vim-textobj-xmlattr'
+  call plug#('adriaanzon/vim-textobj-blade-directive', { 'for': 'blade' })
+  call plug#('akiyan/vim-textobj-php', { 'for': 'php' })
+  call plug#('kana/vim-textobj-function')
+  call plug#('kana/vim-textobj-user')
+  call plug#('mattn/vim-textobj-url')
+  call plug#('nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' })
+  call plug#('whatyouhide/vim-textobj-xmlattr')
 
   " Language-/framework-specific utilities
-  MyPlug 'vim-composer'
-  MyPlug 'vim-jekyll'
-  MyPlug 'vim-kohana'
-  MyPlug 'vim-laravel'
-  Plug 'ap/vim-css-color'
-  Plug 'dbakker/vim-sparkup'
-  Plug 'phpactor/phpactor',              { 'for': 'php', 'do': 'composer install' }
-  Plug 'tpope/vim-bundler'
-  Plug 'tpope/vim-jdaddy',               { 'for': 'json' }
-  Plug 'tpope/vim-rake'
-  Plug 'tpope/vim-rbenv'
-  Plug 'tpope/vim-scriptease'
+  call plug#($PLUG_SRC.'/vim-composer')
+  call plug#($PLUG_SRC.'/vim-jekyll')
+  call plug#($PLUG_SRC.'/vim-kohana')
+  call plug#($PLUG_SRC.'/vim-laravel')
+  call plug#('ap/vim-css-color')
+  call plug#('dbakker/vim-sparkup')
+  call plug#('phpactor/phpactor', { 'for': 'php', 'do': 'composer install' })
+  call plug#('tpope/vim-bundler')
+  call plug#('tpope/vim-jdaddy', { 'for': 'json' })
+  call plug#('tpope/vim-rake')
+  call plug#('tpope/vim-rbenv')
+  call plug#('tpope/vim-scriptease')
 
   " File-type runtime files
-  Plug 'blueyed/smarty.vim'
-  Plug 'kana/vim-vspec'
-  Plug 'ledger/vim-ledger'
-  Plug 'sheerun/vim-polyglot'
+  call plug#('blueyed/smarty.vim')
+  call plug#('kana/vim-vspec')
+  call plug#('ledger/vim-ledger')
+  call plug#('sheerun/vim-polyglot')
 
   call plug#end()
 
@@ -656,6 +661,23 @@ xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
 
+nnoremap <Leader>a= :Tabularize /=<CR>
+xnoremap <Leader>a= :Tabularize /=<CR>
+nnoremap <Leader>a: :Tabularize colon<CR>
+xnoremap <Leader>a: :Tabularize colon<CR>
+nnoremap <Leader>a, :Tabularize comma<CR>
+xnoremap <Leader>a, :Tabularize comma<CR>
+nnoremap <Leader>a<Bar> :Tabularize table<CR>
+xnoremap <Leader>a<Bar> :Tabularize table<CR>
+nnoremap <Leader>aa :Tabularize /
+xnoremap <Leader>aa :Tabularize /
+nnoremap <Leader>aw :Tabularize multiple_spaces<CR>
+xnoremap <Leader>aw :Tabularize multiple_spaces<CR>
+nnoremap <Leader>ar :Tabularize rocket<CR>
+xnoremap <Leader>ar :Tabularize rocket<CR>
+nnoremap <Leader>as :Tabularize assignment<CR>
+xnoremap <Leader>as :Tabularize assignment<CR>
+
 " Commentary maps, since it is loaded lazily
 map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
@@ -714,6 +736,14 @@ let g:UltiSnipsJumpForwardTrigger = "<Right>"
 let g:UltiSnipsJumpBackwardTrigger = "<Left>"
 let g:UltiSnipsSnippetsDir = s:user_runtime . '/snips'
 let g:UltiSnipsSnippetDirectories = [g:UltiSnipsSnippetsDir]
+
+augroup init_ultisnips
+  autocmd!
+  autocmd BufNewFile * silent! call my#snippet#insert_skeleton()
+  autocmd BufEnter * execute 'inoremap <silent> '
+        \ . g:UltiSnipsExpandTrigger
+        \ . ' <C-r>=my#snippet#expand_snippet_or_complete_maybe()<CR>'
+augroup END
 
 let g:LanguageClient_diagnosticsList = 'Location'
 
@@ -803,6 +833,9 @@ let g:csv_disable_fdt = 1
 
 " :help ruby.vim
 let g:ruby_no_comment_fold = 1
+
+let g:plug_window = '-tabnew'
+let g:plug_pwindow = 'vsplit'
 
 " :help menu.vim
 let g:did_install_default_menus = 1
