@@ -274,6 +274,9 @@ hi! link NeomakeWarningSign   SyntasticWarningSign
 hi! link NeomakeErrorSign     SyntasticErrorSign
 hi! link NeomakeMessageSign   SyntasticStyleWarningSign
 hi! link NeomakeInfoSign      SyntasticStyleWarningSign
+hi! link ALEWarningSign       SyntasticWarningSign
+hi! link ALEErrorSign         SyntasticErrorSign
+hi! link ALEInfoSign          SyntasticStyleWarningSign
 
 "}}}
 " Netrw {{{
