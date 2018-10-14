@@ -1,6 +1,18 @@
 " autoload/my/filetype.vim - Global helpers for filetype plug-ins
 " Maintainer:   Noah Frederick
 
+" Determine if current 'filetype' contains filetype
+function! my#filetype#(filetype) abort
+  return ('.' . &filetype . '.' =~# '\.' . a:filetype . '\.')
+endfunction
+
+" Append additional file type using dot syntax
+function! my#filetype#append(filetype) abort
+  if !my#filetype#(a:filetype)
+    let &filetype = &filetype . '.' . a:filetype
+  endif
+endfunction
+
 " Append semicolon or comma to end of line in insert mode
 function! my#filetype#make_semicolon_maps()
   call my#filetype#map("inoremap", ";;", "<Esc>A;")

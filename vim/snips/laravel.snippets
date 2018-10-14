@@ -1,0 +1,309 @@
+# laravel.snippets - Snippets for Laravel projects
+
+#
+# Eloquent Relations
+#
+snippet belongsto "Eloquent BelongsTo relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function ${1:relation}(): BelongsTo
+{
+	$this->belongsTo(${2:Model}::class);
+}
+endsnippet
+
+snippet belongstomany "Eloquent BelongsToMany relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function ${1:relation}(): BelongsToMany
+{
+	$this->belongsToMany(${2:Model}::class);
+}
+endsnippet
+
+snippet hasone "Eloquent HasOne relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\HasOne
+ */
+public function ${1:relation}(): HasOne
+{
+	return $this->hasOne(${2:Model}::class);
+}
+endsnippet
+
+snippet hasmany "Eloquent HasMany relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function ${1:relation}(): HasMany
+{
+	return $this->hasMany(${2:Model}::class);
+}
+endsnippet
+
+snippet hasmanythrough "Eloquent HasManyThrough relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+ */
+public function ${1:relation}(): HasManyThrough
+{
+	return $this->hasManyThrough(
+		${2:Model}::class,
+		${2:ThroughModel}::class
+	);
+}
+endsnippet
+
+snippet morphmany "Eloquent MorphMany relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+ */
+public function ${1:relation}(): MorphMany
+{
+	return $this->morphMany(${2:Model}::class, '${3:name}');
+}
+endsnippet
+
+snippet morphtomany "Eloquent MorphToMany relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+ */
+public function ${1:relation}(): MorphToMany
+{
+	return $this->morphToMany(${2:Model}::class, '${3:name}');
+}
+endsnippet
+
+snippet morphedbymany "Eloquent MorphedByMany (MorphToMany) relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+ */
+public function ${1:relation}(): MorphToMany
+{
+	return $this->morphedByMany(${2:Model}::class, '${3:name}');
+}
+endsnippet
+
+snippet morphone "Eloquent MorphOne relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+ */
+public function ${1:relation}(): MorphOne
+{
+	return $this->morphOne(${2:Model}::class, '${3:name}');
+}
+endsnippet
+
+snippet morphto "Eloquent MorphTo relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+ */
+public function ${1:relation}(): MorphTo
+{
+	$this->morphTo();
+}
+endsnippet
+
+snippet with "Eloquent $with attribute" b
+/**
+ * The relations to eager load on every query.
+ *
+ * @var array
+ */
+protected $with = [
+	$0
+];
+endsnippet
+
+snippet touches "Eloquent $touches attribute" b
+/**
+ * All of the relationships to be touched.
+ *
+ * @var array
+ */
+protected $touches = [
+	$0
+];
+endsnippet
+
+#
+# Eloquent Model Attributes
+#
+snippet casts "Eloquent $casts attribute" b
+/**
+ * The attributes that should be cast to native types.
+ *
+ * @var array
+ */
+protected $casts = [
+	$0
+];
+endsnippet
+
+snippet dates "Eloquent $dates attribute" b
+/**
+ * The attributes that should be mutated to dates.
+ *
+ * @var array
+ */
+protected $dates = [
+	'created_at',
+	'updated_at',
+	'deleted_at',
+	$0
+];
+endsnippet
+
+snippet dateformat "Eloquent $dateFormat attribute" b
+/**
+ * The storage format of the model's date columns.
+ *
+ * @var string
+ */
+protected $dateFormat = '${1:U}';
+endsnippet
+
+snippet fillable "Eloquent $fillable attribute" b
+/**
+ * The attributes that are mass assignable.
+ *
+ * @var array
+ */
+protected $fillable = [
+	$0
+];
+endsnippet
+
+snippet guarded "Eloquent $guarded attribute" b
+/**
+ * The attributes that aren't mass assignable.
+ *
+ * @var array
+ */
+protected $guarded = [
+	$0
+];
+endsnippet
+
+snippet hidden "Eloquent $hidden attribute" b
+/**
+ * The attributes that should be hidden for arrays.
+ *
+ * @var array
+ */
+protected $hidden = [
+	$0
+];
+endsnippet
+
+snippet visible "Eloquent $visible attribute" b
+/**
+ * The attributes that should be visible in arrays.
+ *
+ * @var array
+ */
+protected $visible = [
+	$0
+];
+endsnippet
+
+snippet appends "Eloquent $appends attribute" b
+/**
+ * The accessors to append to the model's array form.
+ *
+ * @var array
+ */
+protected $appends = [
+	$0
+];
+endsnippet
+
+#
+# Eloquent Database/Table Configuration
+#
+snippet connection "Eloquent $connection attribute" b
+/**
+ * The connection name for the model.
+ *
+ * @var string
+ */
+protected $connection = '$1';
+endsnippet
+
+snippet keytype "Eloquent $keyType attribute" b
+/**
+ * The "type" of the auto-incrementing ID.
+ *
+ * @var string
+ */
+protected $keyType = '$1';
+endsnippet
+
+snippet incrementing "Eloquent $incrementing attribute" b
+/**
+ * Indicates if the IDs are auto-incrementing.
+ *
+ * @var bool
+ */
+public $incrementing = ${1:false};
+endsnippet
+
+snippet primarykey "Eloquent $primaryKey attribute" b
+/**
+ * The primary key for the model.
+ *
+ * @var string
+ */
+protected $primaryKey = '$1';
+endsnippet
+
+snippet table "Eloquent $table attribute" b
+/**
+ * The table associated with the model.
+ *
+ * @var string
+ */
+protected $table = '$1';
+endsnippet
+
+snippet timestamps "Eloquent $timestamps attribute" b
+/**
+ * Indicates if the model should be timestamped.
+ *
+ * @var bool
+ */
+public $timestamps = ${1:false};
+endsnippet
+
+#
+# Eloquent Routing
+#
+snippet routekey "Eloquent getRouteKeyName() method" b
+/**
+ * Get the route key for the model.
+ *
+ * @return string
+ */
+public function getRouteKeyName(): string
+{
+	return '$1';
+}
+endsnippet
+
+#
+# Eloquent Collections
+#
+snippet newcollection "Eloquent newCollection() method" b
+/**
+ * Create a new Eloquent Collection instance.
+ *
+ * @param  array  $models
+ * @return \Illuminate\Database\Eloquent\Collection
+ */
+public function newCollection(array $models = []): $1
+{
+	return new ${1:CustomCollection}($models);
+}
+endsnippet

@@ -13,7 +13,7 @@ if has('vim_starting')
   call plug#('AndrewRadev/sideways.vim')
   call plug#('AndrewRadev/splitjoin.vim')
   call plug#('AndrewRadev/switch.vim', { 'on': 'Switch' })
-  call plug#('SirVer/ultisnips', { 'on': [] })
+  call plug#('SirVer/ultisnips', { 'on': ['UltiSnipsAddFiletypes', 'UltiSnipsEdit'] })
   call plug#('godlygeek/tabular', { 'on': 'Tabularize' })
 
   augroup init_tabular
@@ -309,6 +309,7 @@ augroup init
   autocmd User Composer
         \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
         \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
+  autocmd User Laravel call my#filetype#append('laravel')
 
   " Never show line numbers in command-line window as they are not useful
   " and take up space (normally it inherits this setting like any other
