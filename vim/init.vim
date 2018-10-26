@@ -839,7 +839,7 @@ let g:csv_disable_fdt = 1
 let g:ruby_no_comment_fold = 1
 
 let g:plug_window = '-tabnew'
-let g:plug_pwindow = 'vsplit'
+let g:plug_pwindow = 'belowright vsplit'
 
 " :help menu.vim
 let g:did_install_default_menus = 1
