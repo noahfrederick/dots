@@ -140,6 +140,7 @@ set linebreak                   " Wrap lines at word boundaries
 if exists("+breakindent")
   set breakindent               " Indent soft-wrapped lines
 endif
+set signcolumn=yes              " Always show sign column to avoid margin jumping about
 
 let &fillchars = "vert:\u2502,diff: "
 let &listchars = "tab:\u25b8 ,extends:\u276f,precedes:\u276e,space:\u00b7,nbsp:\u2334,eol:\u00ac"
