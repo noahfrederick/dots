@@ -79,7 +79,7 @@ hi Type            ctermfg=4
 hi String          ctermfg=11
 hi Keyword         ctermfg=2
 hi Todo            ctermfg=15  ctermbg=NONE     cterm=bold,underline
-hi Function        ctermfg=4
+hi Function        ctermfg=NONE cterm=italic
 hi Identifier      ctermfg=7   cterm=NONE
 hi Statement       ctermfg=2   cterm=bold
 hi Constant        ctermfg=13
@@ -128,12 +128,12 @@ hi! link javaScriptBraces  Delimiter
 
 "}}}
 " PHP {{{
-hi phpSpecialFunction    ctermfg=5
-hi phpIdentifier         ctermfg=13
-hi phpParent             ctermfg=8
-hi! link phpVarSelector  phpIdentifier
-hi! link phpHereDoc      String
-hi! link phpDefine       Statement
+hi phpIdentifier             ctermfg=13
+hi! link phpSpecialFunction  Function
+hi! link phpVarSelector      phpIdentifier
+hi! link phpHereDoc          String
+hi! link phpDefine           Statement
+hi! link phpDocTags          PreProc
 
 "}}}
 " Markdown {{{
