@@ -21,7 +21,7 @@ if has('vim_starting')
     autocmd User tabular call my#tabular#setup()
   augroup END
 
-  call plug#('junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all --xdg' })
+  call plug#('junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all --xdg', 'tag': '*' })
   call plug#('junegunn/gv.vim', { 'on': 'GV' })
   call plug#('justinmk/vim-dirvish')
   call plug#('machakann/vim-highlightedyank')
@@ -49,7 +49,7 @@ if has('vim_starting')
     call plug#('rizzatti/dash.vim', { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] })
   endif
   if has('nvim')
-    call plug#('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
+    call plug#('autozimu/LanguageClient-neovim', { 'branch': 'next', 'tag': '*', 'do': 'bash install.sh' })
     call plug#('roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' })
 
     call plug#('roxma/nvim-yarp')
