@@ -1,10 +1,6 @@
-#include "planck.h"
-#ifdef AUDIO_ENABLE
-#include "audio.h"
-#endif
-#include "eeconfig.h"
+#include QMK_KEYBOARD_H
+#include "my.h"
 #include "keymap_steno.h"
-#include "version.h"
 
 extern keymap_config_t keymap_config;
 
@@ -20,32 +16,12 @@ enum planck_layers {
   ADJUST_LAYER
 };
 
-// Dashes (macOS)
-#define KC_NDSH LALT(KC_MINS)
-#define KC_MDSH S(LALT(KC_MINS))
-
-// Window manager keys
-#define WM_FULL LALT(LGUI(KC_F))
-#define WM_NEXT LCTL(LALT(LGUI(KC_RGHT)))
-#define WM_PREV LCTL(LALT(LGUI(KC_LEFT)))
-#define WM_NW   LCTL(LGUI(KC_LEFT))
-#define WM_N    LALT(LGUI(KC_UP))
-#define WM_NE   LCTL(LGUI(KC_RGHT))
-#define WM_E    LALT(LGUI(KC_RGHT))
-#define WM_SE   S(LCTL(LGUI(KC_RGHT)))
-#define WM_S    LALT(LGUI(KC_DOWN))
-#define WM_SW   S(LCTL(LGUI(KC_LEFT)))
-#define WM_W    LALT(LGUI(KC_LEFT))
-#define WM_CNTR LALT(LGUI(KC_C))
-
 // Custom key codes
 enum planck_keycodes {
-  QWERTY = SAFE_RANGE,
+  QWERTY = NEW_SAFE_RANGE,
   COLEMAK,
   STENO,
-  STN_EXIT,
-  SEND_VERSION,
-  SEND_MAKE
+  STN_EXIT
 };
 
 #define LOWER MO(LOWER_LAYER)
@@ -54,27 +30,16 @@ enum planck_keycodes {
 #define GUI_L LT(GUI_LAYER, KC_LBRC)
 #define GUI_R LT(GUI_LAYER, KC_RBRC)
 
-#define NAV_SCLN LT(NAV_LAYER, KC_SCLN)
-#define NAV_O    LT(NAV_LAYER, KC_O)
-
-#ifdef RGB_MATRIX_ENABLE
-#define LIT_TOG RGB_TOG
-#define LIT_DEC RGB_VAD
-#define LIT_INC RGB_VAI
-#else
-#define LIT_TOG BL_TOGG
-#define LIT_DEC BL_DEC
-#define LIT_INC BL_INC
-#endif
+#define NAV_SLSH LT(NAV_LAYER, KC_SLSH)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Base layer (Qwerty)
    *                ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
    *                │  ⇥  │  Q  │  W  │  E  │  R  │  T  │  Y  │  U  │  I  │  O  │  P  │  '  │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-   * Tap for Esc -- │  ⌃  │  A  │  S  │  D  │  F  │  G  │  H  │  J  │  K  │  L  │; Nav│  ⌃  │ -- Tap for Enter
+   * Tap for Esc -- │  ⌃  │  A  │  S  │  D  │  F  │  G  │  H  │  J  │  K  │  L  │  ;  │  ⌃  │ -- Tap for Enter
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-   *   Tap for ( -- │  ⇧  │  Z  │  X  │  C  │  V  │  B  │  N  │  M  │  ,  │  .  │  /  │  ⇧  │ -- Tap for )
+   *   Tap for ( -- │  ⇧  │  Z  │  X  │  C  │  V  │  B  │  N  │  M  │  ,  │  .  │/ Nav│  ⇧  │ -- Tap for )
    *                ├─────┼─────┼─────┼─────┼─────┼─────┴─────┼─────┼─────┼─────┼─────┼─────┤
    *   Tap for [ -- │ GUI │Hyper│  ⌥  │  ⌘  │  ↓  │   Space   │  ↑  │  ⌘  │  ⌥  │Hyper│ GUI │ -- Tap for ]
    *                └─────┴─────┴─────┴─────┴─────┴───────────┴─────┴─────┴─────┴─────┴─────┘
@@ -83,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [QWERTY_LAYER] = LAYOUT_planck_grid(
     KC_TAB,        KC_Q,           KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,    KC_U,  KC_I,    KC_O,    KC_P,           KC_QUOT,
-    CTL_T(KC_ESC), KC_A,           KC_S,    KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,    NAV_SCLN,       CTL_T(KC_ENT),
-    KC_LSPO,       KC_Z,           KC_X,    KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT,  KC_SLSH,        KC_RSPC,
+    CTL_T(KC_ESC), KC_A,           KC_S,    KC_D,    KC_F,  KC_G,   KC_H,    KC_J,  KC_K,    KC_L,    KC_SCLN,        CTL_T(KC_ENT),
+    KC_LSPO,       KC_Z,           KC_X,    KC_C,    KC_V,  KC_B,   KC_N,    KC_M,  KC_COMM, KC_DOT,  NAV_SLSH,       KC_RSPC,
     GUI_L,         ALL_T(KC_RBRC), KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_BSPC, RAISE, KC_RGUI, KC_RALT, ALL_T(KC_LBRC), GUI_R
   ),
 
@@ -92,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
    *                │     │  Q  │  W  │  F  │  P  │  G  │  J  │  L  │  U  │  Y  │  ;  │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-   *                │     │  A  │  R  │  S  │  T  │  D  │  H  │  N  │  E  │  I  │O Nav│     │
+   *                │     │  A  │  R  │  S  │  T  │  D  │  H  │  N  │  E  │  I  │  O  │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
    *                │     │  Z  │  X  │  C  │  V  │  B  │  K  │  M  │     │     │     │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────┴─────┼─────┼─────┼─────┼─────┼─────┤
@@ -101,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [COLEMAK_LAYER] = LAYOUT_planck_grid(
     _______, KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, _______,
-    _______, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    NAV_O,   _______,
+    _______, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    _______,
     _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
@@ -157,8 +122,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [NAV_LAYER] = LAYOUT_planck_grid(
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-    _______, XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, NAV_SCLN, _______,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  _______,
+    _______, XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,  _______,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, NAV_SLSH, _______,
     _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,  _______
   ),
 
@@ -230,7 +195,7 @@ uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, ADJUST_LAYER);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
@@ -260,16 +225,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         PLAY_SONG(plover_gb_song);
 #endif
         layer_off(STENO_LAYER);
-      }
-      return false;
-    case SEND_VERSION:
-      if (record->event.pressed) {
-        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP "@" QMK_VERSION " (" QMK_BUILDDATE ")");
-      }
-      return false;
-    case SEND_MAKE:
-      if (record->event.pressed) {
-        SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP ":dfu\n");
       }
       return false;
   }
