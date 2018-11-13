@@ -7,6 +7,10 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_record_keymap(keycode, record)) {
+    return false;
+  }
+
   switch (keycode) {
     case SEND_VERSION:
       if (record->event.pressed) {
@@ -28,5 +32,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
   }
 
-  return process_record_keymap(keycode, record);
+  return true;
 }
