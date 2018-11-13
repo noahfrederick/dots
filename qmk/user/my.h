@@ -13,6 +13,8 @@ enum custom_keycodes {
   NEW_SAFE_RANGE
 };
 
+#define DYNAMIC_MACRO_SIZE 256
+
 // Dashes (macOS)
 #define KC_NDSH LALT(KC_MINS)
 #define KC_MDSH S(LALT(KC_MINS))
