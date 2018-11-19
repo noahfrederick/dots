@@ -6,3 +6,4 @@ AUDIO_ENABLE     = yes  # Audio output on port C6
 MIDI_ENABLE      = no
 STENO_ENABLE     = yes  # Be a steno machine
 CONSOLE_ENABLE   = no
+COMBO_ENABLE     = no

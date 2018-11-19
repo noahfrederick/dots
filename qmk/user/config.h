@@ -10,3 +10,8 @@
 #define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
                               SONG(COLEMAK_SOUND) }
 #endif
+
+// Combo feature timeout (defaults to TAPPING_TERM)
+#define COMBO_TERM 200
+// Size of combo_events enum.
+#define COMBO_COUNT 7
