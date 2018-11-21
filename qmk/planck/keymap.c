@@ -1,40 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "my.h"
+#include "my_dynamic_macro.h"
 #include "keymap_steno.h"
 
 extern keymap_config_t keymap_config;
-
-// Keymap layers
-enum planck_layers {
-  QWERTY_LAYER,
-  COLEMAK_LAYER,
-  LOWER_LAYER,
-  RAISE_LAYER,
-  NAV_LAYER,
-  GUI_LAYER,
-  STENO_LAYER,
-  ADJUST_LAYER
-};
-
-// Custom key codes
-enum planck_keycodes {
-  QWERTY = NEW_SAFE_RANGE,
-  COLEMAK,
-  STENO,
-  STN_EXIT,
-  DYNAMIC_MACRO_RANGE
-};
-
-// This must come after keycodes enum.
-#include "dynamic_macro.h"
-
-#define LOWER MO(LOWER_LAYER)
-#define RAISE MO(RAISE_LAYER)
-
-#define GUI_L LT(GUI_LAYER, KC_LBRC)
-#define GUI_R LT(GUI_LAYER, KC_RBRC)
-
-#define NAV_BSPC LT(NAV_LAYER, KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Base layer (Qwerty)
@@ -189,59 +158,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     STENO,   XXXXXXX, AG_SWAP,   AG_NORM,  LOWER,   LIT_TOG, LIT_TOG, RAISE,   LIT_TOG, LIT_DEC, LIT_INC,         DYN_REC_STOP
   )
 };
-
-#ifdef AUDIO_ENABLE
-float plover_song[][2]    = SONG(PLOVER_SOUND);
-float plover_gb_song[][2] = SONG(PLOVER_GOODBYE_SOUND);
-#endif
-
-uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, ADJUST_LAYER);
-}
-
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
-  if (!process_record_dynamic_macro(keycode, record)) {
-    return false;
-  }
-
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(QWERTY_LAYER);
-      }
-      return false;
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(COLEMAK_LAYER);
-      }
-      return false;
-    case STENO:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        stop_all_notes();
-        PLAY_SONG(plover_song);
-#endif
-        layer_off(RAISE_LAYER);
-        layer_off(LOWER_LAYER);
-        layer_off(ADJUST_LAYER);
-        layer_on(STENO_LAYER);
-      }
-      return false;
-    case STN_EXIT:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_SONG(plover_gb_song);
-#endif
-        layer_off(STENO_LAYER);
-      }
-      return false;
-  }
-  return true;
-}
-
-void matrix_init_user() {
-  steno_set_mode(STENO_MODE_GEMINI);
-}
 
 #ifdef RGB_MATRIX_ENABLE
 void rgb_matrix_indicators_user(void) {

@@ -1,6 +1,22 @@
 #include "my.h"
 #include "my_leader.h"
+#include "dynamic_macro.h"
 #include "private.h"
+
+#ifdef AUDIO_ENABLE
+float plover_song[][2]    = SONG(PLOVER_SOUND);
+float plover_gb_song[][2] = SONG(PLOVER_GOODBYE_SOUND);
+#endif
+
+void matrix_init_user() {
+#ifdef STENO_ENABLE
+  steno_set_mode(STENO_MODE_GEMINI);
+#endif
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, LOWER_LAYER, RAISE_LAYER, ADJUST_LAYER);
+}
 
 // Redefine process_record_keymap() in keymap definitions.
 __attribute__ ((weak))
@@ -9,11 +25,45 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_record_dynamic_macro(keycode, record)) {
+    return false;
+  }
+
   if (!process_record_keymap(keycode, record)) {
     return false;
   }
 
   switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(QWERTY_LAYER);
+      }
+      return false;
+    case COLEMAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(COLEMAK_LAYER);
+      }
+      return false;
+    case STENO:
+      if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(plover_song);
+#endif
+        layer_off(RAISE_LAYER);
+        layer_off(LOWER_LAYER);
+        layer_off(ADJUST_LAYER);
+        layer_on(STENO_LAYER);
+      }
+      return false;
+    case STN_EXIT:
+      if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+        PLAY_SONG(plover_gb_song);
+#endif
+        layer_off(STENO_LAYER);
+      }
+      return false;
     case SEND_VERSION:
       if (record->event.pressed) {
         SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP "@" QMK_VERSION " (" QMK_BUILDDATE ")");

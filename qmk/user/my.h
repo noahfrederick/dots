@@ -7,14 +7,38 @@
 #include "rgb_matrix.h"
 #endif
 
-enum custom_keycodes {
-  LEADER = SAFE_RANGE,
-  SEND_MAKE,
-  SEND_VERSION,
-  NEW_SAFE_RANGE
+enum user_layers {
+  QWERTY_LAYER,
+  COLEMAK_LAYER,
+  LOWER_LAYER,
+  RAISE_LAYER,
+  NAV_LAYER,
+  GUI_LAYER,
+  STENO_LAYER,
+  ADJUST_LAYER
 };
 
-#define DYNAMIC_MACRO_SIZE 256
+enum user_keycodes {
+  LEADER = SAFE_RANGE,
+  QWERTY,
+  COLEMAK,
+  STENO,
+  STN_EXIT,
+  SEND_MAKE,
+  SEND_VERSION,
+  DYNAMIC_MACRO_RANGE
+};
+
+// Dynamic macros add additional keycodes.
+#define NEW_SAFE_RANGE (DYNAMIC_MACRO_PLAY2 + 1)
+
+#define LOWER MO(LOWER_LAYER)
+#define RAISE MO(RAISE_LAYER)
+
+#define GUI_L LT(GUI_LAYER, KC_LBRC)
+#define GUI_R LT(GUI_LAYER, KC_RBRC)
+
+#define NAV_BSPC LT(NAV_LAYER, KC_BSPC)
 
 // Dashes (macOS)
 #define KC_NDSH LALT(KC_MINS)
