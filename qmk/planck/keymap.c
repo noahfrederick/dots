@@ -121,14 +121,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
    *                │     │     │ ⌘ ← │ ⌘ ↑ │ ⌘ ↓ │ ⌘ → │ ⌥ ← │ ⌥ ↓ │ ⌥ ↑ │ ⌥ → │     │     │
    *                ├─────┼─────┼─────┼─────┼─────┼─────╆━━━━━╅─────┼─────┼─────┼─────┼─────┤
-   *                │     │     │     │     │     │     ┃     ┃     │     │     │     │     │
+   *                │     │     │     │     │     │Lead ┃     ┃     │     │     │     │     │
    *                └─────┴─────┴─────┴─────┴─────┴─────┺━━━━━┹─────┴─────┴─────┴─────┴─────┘
    */
   [NAV_LAYER] = LAYOUT_planck_grid(
     XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX,     XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX,     XXXXXXX,       XXXXXXX, XXXXXXX,
     _______, XXXXXXX, KC_HOME,       KC_PGUP,     KC_PGDN,       KC_END,        KC_LEFT,       KC_DOWN,       KC_UP,       KC_RGHT,       XXXXXXX, _______,
     _______, XXXXXXX, LGUI(KC_LEFT), LGUI(KC_UP), LGUI(KC_DOWN), LGUI(KC_RGHT), LALT(KC_LEFT), LALT(KC_DOWN), LALT(KC_UP), LALT(KC_RGHT), XXXXXXX, _______,
-    _______, _______, _______,       _______,     XXXXXXX,       XXXXXXX,       NAV_BSPC,      XXXXXXX,       _______,     _______,       _______, _______
+    _______, _______, _______,       _______,     XXXXXXX,       LEADER,        NAV_BSPC,      XXXXXXX,       _______,     _______,       _______, _______
   ),
 
   /* GUI (window management/mouse/media controls) layer

@@ -8,7 +8,8 @@
 #endif
 
 enum custom_keycodes {
-  SEND_MAKE = SAFE_RANGE,
+  LEADER = SAFE_RANGE,
+  SEND_MAKE,
   SEND_VERSION,
   NEW_SAFE_RANGE
 };
