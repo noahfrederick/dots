@@ -29,6 +29,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   }
 
+  if (!process_leader(keycode, record)) {
+    return false;
+  }
+
   if (!process_record_keymap(keycode, record)) {
     return false;
   }
@@ -42,6 +46,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(COLEMAK_LAYER);
+      }
+      return false;
+    case STCH_EX:
+      if (record->event.pressed) {
+        layer_off(CAMEL_LAYER);
+        layer_off(KEBAB_LAYER);
+        layer_off(SNAKE_LAYER);
       }
       return false;
     case STENO:
@@ -82,10 +93,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SS_TAP(X_ENTER));
       }
       return false;
-  }
-
-  if (!process_leader(keycode, record)) {
-    return false;
   }
 
   return true;
@@ -139,6 +146,28 @@ LEADER_DICT {
 
   LEADER(KC_H, KC_X) {
     SEND_STRING("&times;");
+    return leader_terminate();
+  }
+
+  LEADER(KC_SPC, KC_SPC) {
+    layer_off(CAMEL_LAYER);
+    layer_off(KEBAB_LAYER);
+    layer_off(SNAKE_LAYER);
+    return leader_terminate();
+  }
+
+  LEADER(KC_SPC, KC_C) {
+    layer_on(CAMEL_LAYER);
+    return leader_terminate();
+  }
+
+  LEADER(KC_SPC, KC_K) {
+    layer_on(KEBAB_LAYER);
+    return leader_terminate();
+  }
+
+  LEADER(KC_SPC, KC_S) {
+    layer_on(SNAKE_LAYER);
     return leader_terminate();
   }
 

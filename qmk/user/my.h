@@ -11,6 +11,9 @@
 enum user_layers {
   QWERTY_LAYER,
   COLEMAK_LAYER,
+  CAMEL_LAYER,
+  KEBAB_LAYER,
+  SNAKE_LAYER,
   LOWER_LAYER,
   RAISE_LAYER,
   NAV_LAYER,
@@ -23,6 +26,7 @@ enum user_keycodes {
   LEADER = SAFE_RANGE,
   QWERTY,
   COLEMAK,
+  STCH_EX,
   STENO,
   STN_EXIT,
   SEND_MAKE,
@@ -44,6 +48,8 @@ enum user_keycodes {
 
 #define CTL_ESC CTL_T(KC_ESC)
 #define CTL_ENT CTL_T(KC_ENT)
+
+#define CAPITAL OSM(MOD_LSFT)
 
 #define NAV_BSP LT(NAV_LAYER, KC_BSPC)
 
