@@ -1,7 +1,7 @@
 require 'fileutils'
 
 USERNAME  = 'my'
-KEYBOARDS = ['planck']
+KEYBOARDS = ['planck', 'preonic']
 QMK_DIR   = "#{ENV['CODE']}/qmk_firmware"
 USER_DIR  = "#{QMK_DIR}/users/#{USERNAME}"
 

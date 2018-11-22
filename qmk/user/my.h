@@ -80,6 +80,7 @@ enum user_keycodes {
 
 // Alias layout macros that expand groups of keys.
 #define LAYOUT_planck_grid_wrapper(...) LAYOUT_planck_grid(__VA_ARGS__)
+#define LAYOUT_preonic_grid_wrapper(...) LAYOUT_preonic_grid(__VA_ARGS__)
 
 #define _________________QWERTY_L1_________________ KC_Q,    KC_W,    KC_E,    KC_R,    KC_T
 #define _________________QWERTY_L2_________________ KC_A,    KC_S,    KC_D,    KC_F,    KC_G
@@ -142,3 +143,6 @@ enum user_keycodes {
 
 #define __________VOLUME_________ KC_MUTE, KC_VOLD, KC_VOLU
 #define __________MEDIA__________ KC_MPRV, KC_MPLY, KC_MNXT
+
+#define __________________BASE_L0__________________ _________________LOWER_L1__________________
+#define __________________BASE_R0__________________ _________________LOWER_R1__________________
