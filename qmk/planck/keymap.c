@@ -212,7 +212,67 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RGB_MATRIX_ENABLE
 void rgb_matrix_indicators_user(void) {
+  switch (biton32(layer_state)) {
+    case LOWER_LAYER:
+      rgb_matrix_set_color(40, 0xFF, 0xFF, 0xFF); // LOWER
+      break;
+    case RAISE_LAYER:
+      rgb_matrix_set_color(44, 0xFF, 0xFF, 0xFF); // RAISE
+      break;
+    case NAV_LAYER:
+      rgb_matrix_set_color(43, 0xFF, 0xFF, 0xFF); // NAV_BSP
+      break;
+    case GUI_LAYER:
+      rgb_matrix_set_color(36, 0xFF, 0xFF, 0xFF); // GUI_L
+      rgb_matrix_set_color(48, 0xFF, 0xFF, 0xFF); // GUI_R
+      break;
+    case STENO_LAYER:
+      rgb_matrix_set_color(36, 0xFF, 0x30, 0x00); // STN_EXIT
+
+      // Mask out everything but alphabetic steno keys.
+      rgb_matrix_set_color(0, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(1, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(2, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(3, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(4, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(5, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(6, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(7, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(8, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(9, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(10, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(11, 0x00, 0x00, 0x00);
+
+      rgb_matrix_set_color(12, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(17, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(18, 0x00, 0x00, 0x00);
+
+      rgb_matrix_set_color(24, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(29, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(30, 0x00, 0x00, 0x00);
+
+      rgb_matrix_set_color(37, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(38, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(39, 0x00, 0x00, 0x00);
+
+      rgb_matrix_set_color(45, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(46, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(47, 0x00, 0x00, 0x00);
+      rgb_matrix_set_color(48, 0x00, 0x00, 0x00);
+      break;
+    case ADJUST_LAYER:
+      rgb_matrix_set_color(40, 0xFF, 0xFF, 0xFF); // LOWER
+      rgb_matrix_set_color(44, 0xFF, 0xFF, 0xFF); // RAISE
+      break;
+    case CAMEL_LAYER:
+    case KEBAB_LAYER:
+    case SNAKE_LAYER:
+      rgb_matrix_set_color(12, 0xFF, 0x30, 0x00); // STCH_EX
+      rgb_matrix_set_color(41, 0x88, 0xFF, 0x00); // "Space bar"
+      break;
+  }
+
   // Disable middle LED between keys in grid layout.
-  rgb_matrix_set_color(42, 0, 0, 0);
+  rgb_matrix_set_color(42, 0x00, 0x00, 0x00);
 }
 #endif
