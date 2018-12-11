@@ -1,5 +1,6 @@
 fish_history
 fish_read_history
+fish_variables
 fishd.*
 
 # Symlink installed by fzf
