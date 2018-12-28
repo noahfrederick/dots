@@ -147,6 +147,7 @@ abbr --add tc  task context
 abbr --add tl  task log
 abbr --add tp  task rc.context:none projects
 abbr --add tt  task rc.context:none tags
+abbr --add tw  task waiting
 abbr --add v   nvim
 abbr --add vd  nvim --noplugin -u minimal.vim
 abbr --add vn  nvim -u NONE
