@@ -87,72 +87,72 @@ status is-interactive; or exit
 #
 # ABBREVIATIONS
 #
-abbr --add art php artisan
-abbr --add br  brew
-abbr --add bru brew upgrade
-abbr --add c   capture
-abbr --add ca  capture
-abbr --add cap capture
-abbr --add cda composer dump-autoload
-abbr --add cgi composer global install
-abbr --add cgr composer global require
-abbr --add cgu composer global update
-abbr --add ch  composer show
-abbr --add ci  composer install
-abbr --add cm  composer remove
-abbr --add co  composer install
-abbr --add cr  composer require
-abbr --add cs  composer search
-abbr --add cu  composer update
-abbr --add cv  composer validate
-abbr --add e   emacsclient
-abbr --add ee  emacsclient --eval
-abbr --add en  emacsclient --no-wait
-abbr --add et  emacsclient --tty
-abbr --add g   git
-abbr --add ga  git add
-abbr --add gaa git add --all
-abbr --add gb  git branch
-abbr --add gbd git branch --delete
-abbr --add gbm git branch --merged
-abbr --add gc  git commit --verbose
-abbr --add gca git commit --all --verbose
-abbr --add gcb git checkout --branch
-abbr --add gcf git commit --verbose --fixup
-abbr --add gcl git clone
-abbr --add gco git checkout
-abbr --add gd  git diff
-abbr --add gdc git diff --cached
-abbr --add gf  git fetch
-abbr --add gi  git init
-abbr --add gl  git log
-abbr --add gm  git merge
-abbr --add gp  git push
-abbr --add gpu git pull
-abbr --add gr  git rebase
-abbr --add grc git rebase --continue
-abbr --add grs git rebase --skip
-abbr --add gs  git status
-abbr --add gsp git stash pop
-abbr --add gst git stash
-abbr --add lba ledger balance
-abbr --add leq ledger equity
-abbr --add lre ledger register
-abbr --add lst ledger stats
-abbr --add lxa ledger xact
-abbr --add n   note
-abbr --add t   task
-abbr --add ta  task add
-abbr --add tc  task context
-abbr --add tl  task log
-abbr --add tp  task rc.context:none projects
-abbr --add tt  task rc.context:none tags
-abbr --add tw  task waiting
-abbr --add v   nvim
-abbr --add vd  nvim --noplugin -u minimal.vim
-abbr --add vn  nvim -u NONE
-abbr --add vs  nvim -S
-abbr --add we  words --english
-abbr --add wi  words --interactive
-abbr --add wk  webkit2png --fullsize --timestamp
-abbr --add ww  words
+abbr --add --global art php artisan
+abbr --add --global br  brew
+abbr --add --global bru brew upgrade
+abbr --add --global c   capture
+abbr --add --global ca  capture
+abbr --add --global cap capture
+abbr --add --global cda composer dump-autoload
+abbr --add --global cgi composer global install
+abbr --add --global cgr composer global require
+abbr --add --global cgu composer global update
+abbr --add --global ch  composer show
+abbr --add --global ci  composer install
+abbr --add --global cm  composer remove
+abbr --add --global co  composer install
+abbr --add --global cr  composer require
+abbr --add --global cs  composer search
+abbr --add --global cu  composer update
+abbr --add --global cv  composer validate
+abbr --add --global e   emacsclient
+abbr --add --global ee  emacsclient --eval
+abbr --add --global en  emacsclient --no-wait
+abbr --add --global et  emacsclient --tty
+abbr --add --global g   git
+abbr --add --global ga  git add
+abbr --add --global gaa git add --all
+abbr --add --global gb  git branch
+abbr --add --global gbd git branch --delete
+abbr --add --global gbm git branch --merged
+abbr --add --global gc  git commit --verbose
+abbr --add --global gca git commit --all --verbose
+abbr --add --global gcb git checkout --branch
+abbr --add --global gcf git commit --verbose --fixup
+abbr --add --global gcl git clone
+abbr --add --global gco git checkout
+abbr --add --global gd  git diff
+abbr --add --global gdc git diff --cached
+abbr --add --global gf  git fetch
+abbr --add --global gi  git init
+abbr --add --global gl  git log
+abbr --add --global gm  git merge
+abbr --add --global gp  git push
+abbr --add --global gpu git pull
+abbr --add --global gr  git rebase
+abbr --add --global grc git rebase --continue
+abbr --add --global grs git rebase --skip
+abbr --add --global gs  git status
+abbr --add --global gsp git stash pop
+abbr --add --global gst git stash
+abbr --add --global lba ledger balance
+abbr --add --global leq ledger equity
+abbr --add --global lre ledger register
+abbr --add --global lst ledger stats
+abbr --add --global lxa ledger xact
+abbr --add --global n   note
+abbr --add --global t   task
+abbr --add --global ta  task add
+abbr --add --global tc  task context
+abbr --add --global tl  task log
+abbr --add --global tp  task rc.context:none projects
+abbr --add --global tt  task rc.context:none tags
+abbr --add --global tw  task waiting
+abbr --add --global v   nvim
+abbr --add --global vd  nvim --noplugin -u minimal.vim
+abbr --add --global vn  nvim -u NONE
+abbr --add --global vs  nvim -S
+abbr --add --global we  words --english
+abbr --add --global wi  words --interactive
+abbr --add --global wk  webkit2png --fullsize --timestamp
+abbr --add --global ww  words
