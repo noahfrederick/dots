@@ -1,7 +1,7 @@
 require 'fileutils'
 
 USERNAME  = 'my'
-KEYBOARDS = ['planck', 'preonic']
+KEYBOARDS = ['kbd4x', 'planck', 'preonic']
 QMK_DIR   = "#{ENV['CODE']}/qmk_firmware"
 USER_DIR  = "#{QMK_DIR}/users/#{USERNAME}"
 
@@ -36,5 +36,8 @@ end
 
 desc 'Update QMK firmware'
 task :pull do
-  Dir.chdir(QMK_DIR) { sh 'git pull --ff-only' }
+  Dir.chdir(QMK_DIR) do
+    sh 'git pull --ff-only'
+    sh 'make git-submodule'
+  end
 end

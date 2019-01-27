@@ -90,7 +90,7 @@ enum user_keycodes {
 #define WM_CNTR LALT(LGUI(KC_C))
 
 // Unify backlight controls
-#ifdef RGB_MATRIX_ENABLE
+#if defined(RGB_MATRIX_ENABLE) || defined(RGBLIGHT_ENABLE)
 #define LIT_TOG RGB_TOG
 #define LIT_DEC RGB_VAD
 #define LIT_INC RGB_VAI
@@ -102,6 +102,7 @@ enum user_keycodes {
 
 // Alias layout macros that expand groups of keys.
 #define LAYOUT_planck_grid_wrapper(...) LAYOUT_planck_grid(__VA_ARGS__)
+#define LAYOUT_planck_mit_wrapper(...) LAYOUT_planck_mit(__VA_ARGS__)
 #define LAYOUT_preonic_grid_wrapper(...) LAYOUT_preonic_grid(__VA_ARGS__)
 
 #define _________________QWERTY_L1_________________ KC_Q,    KC_W,    KC_E,    KC_R,    KC_T
