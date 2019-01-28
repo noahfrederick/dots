@@ -38,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_MUTE, __________________BASE_L0__________________, __________________BASE_R0__________________, XXXXXXX,
     KC_TAB,  _________________QWERTY_L1_________________, _________________QWERTY_R1_________________, KC_QUOT,
     CTL_ESC, _________________QWERTY_L2_________________, _________________QWERTY_R2_________________, CTL_ENT,
-    KC_LSPO, _________________QWERTY_L2_________________, _________________QWERTY_R3_________________, KC_RSPC,
+    KC_LSPO, _________________QWERTY_L3_________________, _________________QWERTY_R3_________________, KC_RSPC,
     GUI_L,   HYPER_L, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  NAV_BSP, RAISE,   KC_RGUI, KC_RALT, HYPER_R, GUI_R
   ),
 
