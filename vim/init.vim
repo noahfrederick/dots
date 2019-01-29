@@ -821,6 +821,7 @@ let g:sparkupDoMaps = 0
 let g:ledger_fold_blanks = 1
 
 let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_auto_insert_bullets = 0
 
 " Specify syntaxes to import for Markdown code blocks
 let g:markdown_fenced_languages = ["sh", "vim", "ruby"]

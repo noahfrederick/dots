@@ -41,6 +41,11 @@ function! my#markdown#open_line(trigger)
   let l:line = getline('.')
 
   if a:trigger !=? 'o'
+    if pumvisible()
+      " Just pass <CR> through to accept the completion.
+      return "\<CR>"
+    endif
+
     let l:normal = 0
   else
     let l:normal = 1

@@ -2,6 +2,7 @@
 
 if &modifiable
   setlocal spell
+  setlocal comments=
 
   " Smart <Enter> in insert mode
   inoremap <buffer><expr> <CR> my#markdown#open_line("\<CR>")
