@@ -27,7 +27,7 @@
                               SONG(COLEMAK_SOUND) }
 #endif
 
-#define DYNAMIC_MACRO_SIZE 256
+#define DYNAMIC_MACRO_SIZE 128
 
 // Combo feature timeout (defaults to TAPPING_TERM)
 #define COMBO_TERM 200
