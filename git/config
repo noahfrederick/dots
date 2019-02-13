@@ -1,0 +1,24 @@
+[color]
+ui = auto
+
+[alias]
+graph = log --graph --oneline --decorate
+ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
+
+[core]
+whitespace = trailing-space,space-before-tab
+
+[init]
+templateDir = ~/.config/git/template
+
+[hub]
+protocol = https
+
+[push]
+default = simple
+
+[rebase]
+autosquash = true
+
+[include]
+path = ./private
