@@ -10,7 +10,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/.task
+data.location=~/.local/share/task
 
 # Always list all projects (including those with no pending tasks)
 list.all.projects=on
