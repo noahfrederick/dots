@@ -6,6 +6,10 @@ function `!v expand('%:t:r')` --description ''
 end
 endsnippet
 
-snippet ab "abbreviation" b
-abbr --add ${1:trigger} ${2:expansion}
+snippet ! "fish shebang" b
+#!/usr/bin/env fish
+endsnippet
+
+snippet abbr "abbreviation" b
+abbr --add --global ${1:trigger} ${2:expansion}
 endsnippet
