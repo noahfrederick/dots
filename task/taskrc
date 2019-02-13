@@ -21,6 +21,12 @@ search.case.sensitive=no
 # Priorities
 # Make low priority less urgent than no priority
 urgency.uda.priority.L.coefficient=-1.8
+urgency.user.tag.wishlist.coefficient=-5.0
+urgency.user.tag.unplanned.coefficient=-5.0
+
+# Reports
+report.next.filter=+PENDING or (+COMPLETED and end:today)
+report.next.sort=status-,start-,urgency-,project+
 
 # Colors
 rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
@@ -36,13 +42,13 @@ color.error=white on red
 color.debug=blue
 
 # Task state
-color.completed=bold color8  # 'bright black' doesn't work here
+color.completed=color8  # 'bright black' doesn't work here
 color.deleted=
 color.active=black on green
 color.recurring=magenta
 color.scheduled=green
 color.until=
-color.blocked=color8  # 'bright black' doesn't work here
+color.blocked=blue
 color.blocking=
 
 # Project
@@ -51,7 +57,7 @@ color.project.none=
 # Priority
 color.uda.priority.H=bold white
 color.uda.priority.M=
-color.uda.priority.L=color8  # 'bright black' doesn't work here
+color.uda.priority.L=
 
 # Tags
 color.tag.travel=bold
