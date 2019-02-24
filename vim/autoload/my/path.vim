@@ -2,9 +2,9 @@
 " Maintainer:   Noah Frederick
 
 let g:compiled_file_locations = {
-      \ 'less':   [['.', '.css'],    ['../css', '.css'],  ['.', 'bootstrap.css'],   ['..', 'style.css']],
-      \ 'sass':   [['.', '.css'],    ['../css', '.css'],  ['.', 'application.css'], ['..', 'application.css']],
-      \ 'scss':   [['.', '.css'],    ['../css', '.css'],  ['.', 'application.css'], ['..', 'application.css']],
+      \ 'less':   [['.', '.css'],    ['../css', '.css'], ['.', 'all.css'], ['.', 'bootstrap.css'], ['..', 'style.css']],
+      \ 'sass':   [['.', '.css'],    ['../css', '.css'], ['.', 'all.css'], ['.', 'app.css'],       ['..', 'app.css']],
+      \ 'scss':   [['.', '.css'],    ['../css', '.css'], ['.', 'all.css'], ['.', 'app.css'],       ['..', 'app.css']],
       \ 'jade':   [['.', '.html'],   ['..', '.html']],
       \ 'haml':   [['.', '.html'],   ['..', '.html']],
       \ 'js':     [['.', '.min.js']],
