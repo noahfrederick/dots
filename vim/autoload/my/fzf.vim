@@ -467,7 +467,7 @@ endfunction
 " Ledger
 " ------------------------------------------------------------------
 function! s:ledger_accounts() abort
-  return systemlist('ledger accounts')
+  return systemlist('ledger accounts --permissive')
 endfunction
 
 function! my#fzf#ledger_accounts(opts, bang) abort
@@ -477,7 +477,7 @@ function! my#fzf#ledger_accounts(opts, bang) abort
 endfunction
 
 function! s:ledger_payees() abort
-  return systemlist('ledger payees')
+  return systemlist('ledger payees --permissive')
 endfunction
 
 function! my#fzf#ledger_payees(opts, bang) abort
