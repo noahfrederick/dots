@@ -21,7 +21,7 @@ if has('vim_starting')
     autocmd User tabular call my#tabular#setup()
   augroup END
 
-  call plug#('junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all --xdg', 'tag': '*' })
+  call plug#('junegunn/fzf', { 'do': './install --all --xdg', 'tag': '*' })
   call plug#('junegunn/gv.vim', { 'on': 'GV' })
   call plug#('justinmk/vim-dirvish')
   call plug#('machakann/vim-highlightedyank')
