@@ -146,6 +146,7 @@ abbr --add --global ta  task add
 abbr --add --global tc  task context
 abbr --add --global tl  task log
 abbr --add --global tp  task rc.context:none projects
+abbr --add --global ts  task show
 abbr --add --global tt  task rc.context:none tags
 abbr --add --global tw  task waiting
 abbr --add --global v   nvim
