@@ -38,8 +38,16 @@ inoremap <buffer> <C-g>! [<C-r>=strftime("%Y-%m-%d %a %H:%M")<CR>]
 nnoremap <buffer> g<Left> :call my#markdown#promote_heading()<CR>
 nnoremap <buffer> g<Right> :call my#markdown#demote_heading()<CR>
 
-" Follow link under cursor
+" Navigate links
+nnoremap <buffer> <C-n> :call my#markdown#next_link()<CR>
+nnoremap <buffer> <C-p> :call my#markdown#previous_link()<CR>
 nnoremap <buffer> gx :call my#markdown#follow_link_under_cursor()<CR>
+
+" Insert links
+nnoremap <buffer> gl "lciw[<C-r>l]()<Left>
+inoremap <buffer> <C-l> <Esc>"lciw[<C-r>l]()<Left>
+xnoremap <buffer> <C-l> "lc[<C-r>l]()<Left>
+xmap <buffer> gl <C-l>
 
 " Smart dashes
 iabbrev <buffer><expr> --- my#markdown#insert_dashes()

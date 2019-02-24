@@ -109,13 +109,23 @@ function! my#markdown#insert_dashes()
   return "\<Esc>kyypVr-a"
 endfunction
 
+let s:link_pattern = '\[.\{-}\](.\{-})'
+
+function! my#markdown#next_link() abort
+  call search(s:link_pattern)
+endfunction
+
+function! my#markdown#previous_link() abort
+  call search(s:link_pattern, 'b')
+endfunction
+
 " The gx mapping provided by the Netrw plug-in only works on WORDS. This
 " provides support for opening links under the cursor:
 function! my#markdown#follow_link_under_cursor()
   let l:saved_reg = @t
   let l:saved_pos = getpos('.')
 
-  normal! Bf("tyib
+  normal! Bf]f("tyib
   let l:url = @t
   call netrw#BrowseX(url, 0)
 
