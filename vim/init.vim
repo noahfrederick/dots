@@ -749,6 +749,9 @@ augroup init_ultisnips
         \ . ' <C-r>=my#snippet#expand_snippet_or_complete_maybe()<CR>'
 augroup END
 
+" Default priority for UltiSnips is 7.
+call ncm2#override_source('ultisnips', {'priority': 10})
+
 let g:LanguageClient_diagnosticsList = 'Location'
 
 let g:signify_vcs_list = ['git']
