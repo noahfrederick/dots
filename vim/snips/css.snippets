@@ -100,6 +100,10 @@ snippet b "border"
 border: ${1:solid} ${2}px #${3};
 endsnippet
 
+snippet b0 "border: 0"
+border: 0;
+endsnippet
+
 snippet bt "border-top"
 border-top: ${1:solid} ${2}px #${3};
 endsnippet
@@ -244,8 +248,12 @@ snippet dn "display: none"
 display: none;
 endsnippet
 
+snippet f "flex"
+flex: ${1:1};
+endsnippet
+
 snippet fs "font-size"
-font-size: ${1}px;
+font-size: ${1};
 endsnippet
 
 snippet fst "font-style"
@@ -310,6 +318,26 @@ endsnippet
 
 snippet mr "margin-right"
 margin-right: ${1}${2:px};
+endsnippet
+
+snippet mx "margin-{left,right}" b
+margin-left: $1;
+margin-right: $1;
+endsnippet
+
+snippet my "margin-{top,bottom}" b
+margin-top: $1;
+margin-bottom: $1;
+endsnippet
+
+snippet mx0 "margin-{left,right}: 0" b
+margin-left: 0;
+margin-right: 0;
+endsnippet
+
+snippet my0 "margin-{top,bottom}: 0" b
+margin-top: 0;
+margin-bottom: 0;
 endsnippet
 
 snippet m0 "margin: 0"
@@ -414,6 +442,26 @@ endsnippet
 
 snippet pr "padding-right"
 padding-right: ${1}${2:px};
+endsnippet
+
+snippet px "padding-{left,right}" b
+padding-left: $1;
+padding-right: $1;
+endsnippet
+
+snippet py "padding-{top,bottom}" b
+padding-top: $1;
+padding-bottom: $1;
+endsnippet
+
+snippet px0 "padding-{left,right}: 0" b
+padding-left: 0;
+padding-right: 0;
+endsnippet
+
+snippet py0 "padding-{top,bottom}: 0" b
+padding-top: 0;
+padding-bottom: 0;
 endsnippet
 
 snippet p0 "padding: 0"
