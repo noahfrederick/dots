@@ -32,22 +32,22 @@ of packages that might otherwise slow down Emacs's startup.
 #+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
 
-  (use-package use-package
-    :config
-    (setq use-package-always-pin "melpa-stable"))
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package paradox
     :ensure t
-    :commands paradox-list-packages)
+    :general
+    (my-leader-def "P" 'paradox-list-packages))
 #+END_SRC
 
 * Emacs Initialization
