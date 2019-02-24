@@ -173,7 +173,8 @@ hi! link gitCommitFile           Directory
 hi! link gitCommitUntrackedFile  gitCommitUnmergedFile
 hi! link gitCommitDiscardedType  gitCommitUnmergedType
 hi! link gitCommitDiscardedFile  gitCommitUnmergedFile
-hi gvSha                         ctermfg=8
+hi fugitiveHash                  ctermfg=8
+hi! link gvSha                   fugitiveHash
 
 "}}}
 " Vim {{{
