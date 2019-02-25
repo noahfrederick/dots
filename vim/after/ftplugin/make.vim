@@ -2,6 +2,8 @@
 " Maintainer: Noah Frederick
 
 if exists(':Switch')
+  call plug#load('switch.vim')
+
   let b:switch_custom_definitions = [
         \   switch#NormalizedCase(['yes', 'no'])
         \ ]
