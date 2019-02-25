@@ -33,6 +33,19 @@ public function ${1:relation}(): HasOne
 }
 endsnippet
 
+snippet hasonethrough "Eloquent HasOneThrough relation" b
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+ */
+public function ${1:relation}(): HasOneThrough
+{
+	return $this->hasOneThrough(
+		${2:Model}::class,
+		${3:ThroughModel}::class
+	);
+}
+endsnippet
+
 snippet hasmany "Eloquent HasMany relation" b
 /**
  * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -51,7 +64,7 @@ public function ${1:relation}(): HasManyThrough
 {
 	return $this->hasManyThrough(
 		${2:Model}::class,
-		${2:ThroughModel}::class
+		${3:ThroughModel}::class
 	);
 }
 endsnippet
