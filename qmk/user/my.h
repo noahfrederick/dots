@@ -18,7 +18,10 @@
 
 #include "quantum.h"
 #include "version.h"
+
+#ifdef STENO_ENABLE
 #include "keymap_steno.h"
+#endif
 
 #ifdef RGB_MATRIX_ENABLE
 #include "rgb_matrix.h"
@@ -153,6 +156,7 @@ enum user_keycodes {
 #define __________________GUI_R2___________________ XXXXXXX, WM_FULL, WM_W,    WM_CNTR, WM_E
 #define __________________GUI_R3___________________ XXXXXXX, WM_NEXT, WM_SW,   WM_S,    WM_SE
 
+#ifdef STENO_ENABLE
 #define _________________STENO_L1__________________ STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6
 #define _________________STENO_L2__________________ STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1
 #define _________________STENO_L3__________________ STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2
@@ -163,6 +167,7 @@ enum user_keycodes {
 
 #define ____STENO_AO____ STN_A, STN_O
 #define ____STENO_EU____ STN_E, STN_U
+#endif
 
 #define __________VOLUME_________ KC_MUTE, KC_VOLD, KC_VOLU
 #define __________MEDIA__________ KC_MPRV, KC_MPLY, KC_MNXT

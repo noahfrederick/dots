@@ -71,6 +71,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(SNAKE_LAYER);
       }
       return false;
+#ifdef STENO_ENABLE
     case STENO:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
@@ -91,6 +92,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(STENO_LAYER);
       }
       return false;
+#endif
     case SEND_VERSION:
       if (record->event.pressed) {
         SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP "@" QMK_VERSION " (" QMK_BUILDDATE ")");

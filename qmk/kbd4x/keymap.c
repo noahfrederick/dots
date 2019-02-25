@@ -188,6 +188,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, __________MEDIA__________, KC_BRID, KC_SLEP,          KC_BRIU, __________VOLUME_________, _______
   ),
 
+#ifdef STENO_ENABLE
   /* Stenography layer
    *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
    *                 │  ⇥  │  #  │  #  │  #  │  #  │  #  │  #  │  #  │  #  │  #  │  #  │  #  │
@@ -205,6 +206,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     STN_RES2,_________________STENO_L3__________________, _________________STENO_R3___________________________,
     STN_EXIT,XXXXXXX, KC_LALT, ____STENO_AO____, KC_LGUI,          ____STENO_EU____, KC_RALT, STN_PWR, STN_FN
   ),
+#endif
 
   /* Keyboard settings layer
    *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
