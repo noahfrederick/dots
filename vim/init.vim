@@ -199,6 +199,10 @@ else
   "                  `----------- Search directories recursively
 endif
 
+" Always :grep silently to suppress output in echo area.
+cnoreabbrev <expr> grep  (getcmdtype() == ':' && getcmdline() =~# '^grep')  ? 'silent grep'  : 'grep'
+cnoreabbrev <expr> lgrep (getcmdtype() == ':' && getcmdline() =~# '^lgrep') ? 'silent lgrep' : 'lgrep'
+
 "" Status line
 let &statusline  = ' %2*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), "[".StatuslineProject()."]"):""}'
 let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
