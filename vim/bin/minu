@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+#
+# minu.vim - Minimalistic, dark color scheme
+#
+
+require_relative 'colorscheme'
+
+colorscheme 'minu' do
+  section 'Vim UI' do
+    hi :Normal,       fg: foreground, bg: background
+    hi :Cursor,       fg: white, bg: red
+    hi :CursorLine,   bg: black
+    hi :MatchParen,   fg: black, bg: magenta
+    hi :Pmenu,        fg: bright_white, bg: black
+    hi :PmenuThumb,   bg: white
+    hi :PmenuSBar,    bg: bright_black
+    hi :PmenuSel,     fg: black, bg: blue
+    hi :ColorColumn,  bg: black
+    hi :EndOfBuffer,  fg: black
+    hi :SpellBad,     fg: bright_red, bg: NONE, underline: true
+    hi :SpellCap,     fg: bright_green, bg: NONE, underline: true
+    hi :SpellRare,    fg: bright_yellow, bg: NONE, underline: true
+    hi :SpellLocal,   fg: bright_magenta, bg: NONE, underline: true
+    hi :NonText,      fg: bright_black
+    hi :LineNr,       fg: bright_black, bg: NONE
+    hi :CursorLineNr, fg: bright_yellow, bg: black
+    hi :Visual,       fg: black, bg: bright_blue
+    hi :IncSearch,    fg: black, bg: bright_magenta
+    hi :Search,       fg: black, bg: bright_green
+    hi :StatusLine,   fg: white, bg: black, bold: true
+    hi :StatusLineNC, fg: bright_black, bg: black, bold: true
+    hi :VertSplit,    fg: black, bg: black
+    hi :TabLine,      fg: bright_black, bg: black, bold: true
+    hi :TabLineSel,   fg: black, bg: white, bold: true
+    hi :Folded,       fg: bright_black, bg: black, bold: true
+    hi :Conceal,      fg: cyan, bg: NONE
+    hi :Directory,    fg: bright_blue
+    hi :Title,        fg: yellow, bold: true
+    hi :ErrorMsg,     fg: bright_white, bg: red
+    hi :WarningMsg,   fg: bright_white, bg: yellow
+    hi :DiffAdd,      fg: black, bg: green
+    hi :DiffChange,   fg: black, bg: yellow
+    hi :DiffDelete,   fg: black, bg: red
+    hi :DiffText,     fg: black, bg: bright_yellow, bold: true
+    hi :User1,        fg: red, bg: black
+    hi :User2,        fg: blue, bg: black
+    hi :User3,        fg: green, bg: black
+    hi :User4,        fg: yellow, bg: black
+    hi :User5,        fg: magenta, bg: black
+    hi :User6,        fg: cyan, bg: black
+    hi :User7,        fg: white, bg: black
+    hi :User8,        fg: bright_black, bg: black
+    hi :User9,        fg: bright_white, bg: magenta
+    hl :CursorColumn, :CursorLine
+    hl :SignColumn,   :LineNr
+    hl :WildMenu,     :Visual
+    hl :FoldColumn,   :SignColumn
+    hl :MoreMsg,      :Title
+    hl :Question,     :MoreMsg
+    hl :ModeMsg,      :NonText
+    hl :TabLineFill,  :StatusLineNC
+    hl :SpecialKey,   :NonText
+  end
+
+  section 'Generic Syntax' do
+    hi :Comment,    fg: bright_black, italic: true
+    hi :Keyword,    fg: white, bold: true
+    hi :Todo,       fg: bright_white, bg: NONE, bold: true, underline: true
+    hi :Function,   fg: white, italic: true
+    hi :Constant,   fg: blue
+    hi :Special,    fg: bright_magenta
+    hi :Ignore,     fg: black
+    hi :PreProc,    fg: bright_black, bold: true
+    hl :Delimiter,  :Normal
+    hl :Identifier, :Normal
+    hl :Operator,   :Normal
+    hl :Error,      :ErrorMsg
+    hl :Statement,  :Keyword
+    hl :Type,       :Keyword
+    hl :String,     :Constant
+    hl :Number,     :Constant
+    hl :Boolean,    :Constant
+  end
+
+  section 'Diff' do
+    hi :diffAdded,   fg: green
+    hi :diffRemoved, fg: red
+    hl :diffFile,    :PreProc
+    hl :diffLine,    :Title
+
+    hi :SignifySignAdd,             fg: green, bg: NONE
+    hi :SignifySignChange,          fg: yellow, bg: NONE
+    hi :SignifySignDelete,          fg: red, bg: NONE
+    hl :SignifySignChangeDelete,    :SignifySignChange
+    hl :SignifySignDeleteFirstLine, :SignifySignDelete
+  end
+end

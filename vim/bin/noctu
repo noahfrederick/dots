@@ -1,0 +1,274 @@
+#!/usr/bin/env ruby
+#
+# noctu.vim - Dark color scheme for 16-color terminals
+#
+
+require_relative 'colorscheme'
+
+colorscheme 'noctu' do
+  section 'Vim UI' do
+    hi :Normal,       fg: foreground, bg: background
+    hi :Cursor,       fg: black, bg: white
+    hi :CursorLine,   bg: black
+    hi :MatchParen,   fg: black, bg: magenta
+    hi :Pmenu,        fg: bright_white, bg: black
+    hi :PmenuThumb,   bg: white
+    hi :PmenuSBar,    bg: bright_black
+    hi :PmenuSel,     fg: black, bg: blue
+    hi :ColorColumn,  bg: black
+    hi :EndOfBuffer,  fg: black
+    hi :SpellBad,     fg: bright_red, bg: NONE, underline: true
+    hi :SpellCap,     fg: bright_green, bg: NONE, underline: true
+    hi :SpellRare,    fg: bright_yellow, bg: NONE, underline: true
+    hi :SpellLocal,   fg: bright_magenta, bg: NONE, underline: true
+    hi :NonText,      fg: bright_black
+    hi :LineNr,       fg: bright_black, bg: NONE
+    hi :CursorLineNr, fg: bright_yellow, bg: black
+    hi :Visual,       fg: black, bg: bright_blue
+    hi :IncSearch,    fg: black, bg: bright_magenta
+    hi :Search,       fg: black, bg: bright_green
+    hi :StatusLine,   fg: white, bg: black, bold: true
+    hi :StatusLineNC, fg: bright_black, bg: black, bold: true
+    hi :VertSplit,    fg: black, bg: black
+    hi :TabLine,      fg: bright_black, bg: black, bold: true
+    hi :TabLineSel,   fg: black, bg: white, bold: true
+    hi :Folded,       fg: bright_black, bg: black, bold: true
+    hi :Conceal,      fg: cyan, bg: NONE
+    hi :Directory,    fg: bright_blue
+    hi :Title,        fg: yellow, bold: true
+    hi :ErrorMsg,     fg: bright_white, bg: red
+    hi :WarningMsg,   fg: bright_white, bg: yellow
+    hi :DiffAdd,      fg: black, bg: green
+    hi :DiffChange,   fg: black, bg: yellow
+    hi :DiffDelete,   fg: black, bg: red
+    hi :DiffText,     fg: black, bg: bright_yellow, bold: true
+    hl :CursorColumn, :CursorLine
+    hl :SignColumn,   :LineNr
+    hl :WildMenu,     :Visual
+    hl :FoldColumn,   :SignColumn
+    hl :MoreMsg,      :Title
+    hl :Question,     :MoreMsg
+    hl :ModeMsg,      :NonText
+    hl :TabLineFill,  :StatusLineNC
+    hl :SpecialKey,   :NonText
+  end
+
+  section 'User' do
+    hi :User1, fg: red, bg: black
+    hi :User2, fg: blue, bg: black
+    hi :User3, fg: green, bg: black
+    hi :User4, fg: yellow, bg: black
+    hi :User5, fg: magenta, bg: black
+    hi :User6, fg: cyan, bg: black
+    hi :User7, fg: white, bg: black
+    hi :User8, fg: bright_black, bg: black
+    hi :User9, fg: bright_white, bg: magenta
+  end
+
+  section 'Generic Syntax' do
+    hi :Comment,    fg: bright_black, italic: true
+    hi :Constant,   fg: bright_magenta
+    hi :Function,   fg: NONE, italic: true
+    hi :Ignore,     fg: black
+    hi :Keyword,    fg: green
+    hi :Number,     fg: bright_blue
+    hi :PreProc,    fg: bright_black, bold: true
+    hi :Statement,  fg: green, bold: true
+    hi :String,     fg: bright_yellow
+    hi :Todo,       fg: bright_white, bg: NONE, bold: true, underline: true
+    hi :Type,       fg: blue
+    hi :Underlined, fg: blue, underline: true
+    hl :Boolean,    :Type
+    hl :Delimiter,  :Normal
+    hl :Error,      :ErrorMsg
+    hl :Identifier, :Normal
+    hl :Operator,   :Delimiter
+    hl :Special,    :Constant
+  end
+
+  section 'Diff' do
+    hi :diffAdded,   fg: green
+    hi :diffRemoved, fg: red
+    hl :diffFile,    :PreProc
+    hl :diffLine,    :Title
+
+    hi :SignifySignAdd,             fg: green, bg: NONE
+    hi :SignifySignChange,          fg: yellow, bg: NONE
+    hi :SignifySignDelete,          fg: red, bg: NONE
+    hl :SignifySignChangeDelete,    :SignifySignChange
+    hl :SignifySignDeleteFirstLine, :SignifySignDelete
+  end
+
+  section 'Quickfix Window' do
+    hl :qfSeparator,     :PreProc
+    hl :qfRedundantPath, :Delimiter
+  end
+
+  section 'HTML' do
+    hi :htmlTagName,              fg: green
+    hi :htmlTag,                  fg: green
+    hi :htmlArg,                  fg: bright_green
+    hi :htmlH1,                   bold: true
+    hi :htmlBold,                 bold: true
+    hi :htmlItalic,               italic: true
+    hi :htmlUnderline,            underline: true
+    hi :htmlBoldItalic,           bold: true, italic: true
+    hi :htmlBoldUnderline,        bold: true, underline: true
+    hi :htmlUnderlineItalic,      underline: true, italic: true
+    hi :htmlBoldUnderlineItalic,  bold: true, underline: true, italic: true
+    hl :htmlLink,   :Underlined
+    hl :htmlEndTag, :htmlTag
+  end
+
+  section 'XML' do
+    hi :xmlTagName, fg: blue
+    hi :xmlTag,     fg: bright_blue
+    hl :xmlString, :xmlTagName
+    hl :xmlAttrib, :xmlTag
+    hl :xmlEndTag, :xmlTag
+    hl :xmlEqual,  :xmlTag
+  end
+
+  section 'JavaScript' do
+    hl :javaScript,       :Normal
+    hl :javaScriptBraces, :Delimiter
+  end
+
+  section 'PHP' do
+    hi :phpIdentifier,      fg: bright_yellow
+    hl :phpSpecialFunction, :Function
+    hl :phpVarSelector,     :phpIdentifier
+    hl :phpHereDoc,         :String
+    hl :phpDefine,          :Statement
+    hl :phpDocTags,         :PreProc
+  end
+
+  section 'Markdown' do
+    hl :markdownHeadingRule,       :NonText
+    hl :markdownHeadingDelimiter,  :markdownHeadingRule
+    hl :markdownLinkDelimiter,     :Delimiter
+    hl :markdownURLDelimiter,      :Delimiter
+    hl :markdownCodeDelimiter,     :NonText
+    hl :markdownLinkTextDelimiter, :markdownLinkDelimiter
+    hl :markdownUrl,               :markdownLinkText
+    hl :markdownAutomaticLink,     :markdownLinkText
+    hl :markdownCodeBlock,         :String
+    hl :markdownCode,              :String
+    hi :markdownBold,              bold: true
+    hi :markdownItalic,            italic: true
+    # Polyglot ftplugin
+    hl :mkdListItem,               :htmlTagName
+  end
+
+  section 'Ruby' do
+    hl :rubyDefine,                :Statement
+    hl :rubyLocalVariableOrMethod, :Identifier
+    hl :rubyConstant,              :Constant
+    hl :rubyInstanceVariable,      :Number
+    hl :rubyStringDelimiter,       :rubyString
+    hl :yardGenericTag,            :PreProc
+    hl :yardGenericDirective,      :yardGenericTag
+  end
+
+  section 'Git' do
+    hi :gitCommitBranch,        fg: blue
+    hi :gitCommitSelectedType,  fg: bright_green
+    hi :gitCommitSelectedFile,  fg: green
+    hi :gitCommitUnmergedType,  fg: bright_red
+    hi :gitCommitUnmergedFile,  fg: red
+    hl :gitCommitFile,          :Directory
+    hl :gitCommitUntrackedFile, :gitCommitUnmergedFile
+    hl :gitCommitDiscardedType, :gitCommitUnmergedType
+    hl :gitCommitDiscardedFile, :gitCommitUnmergedFile
+    hi :fugitiveHash,           fg: bright_black
+    hl :gvSha,                  :fugitiveHash
+  end
+
+  section 'Vim' do
+    hl :vimSetSep,   :Delimiter
+    hl :vimContinue, :Delimiter
+    hl :vimHiAttrib, :Constant
+  end
+
+  section 'CSS' do
+    hi :cssIdentifier,               fg: bright_red
+    hl :cssBraces,                   :Delimiter
+    hl :cssProperty,                 :Normal
+    hl :cssAnimationProp,            :cssProperty
+    hl :cssBackgroundProp,           :cssProperty
+    hl :cssBorderOutlineProp,        :cssProperty
+    hl :cssBorderProp,               :cssProperty
+    hl :cssBoxProp,                  :cssProperty
+    hl :cssColorProp,                :cssProperty
+    hl :cssContentForPagedMediaProp, :cssProperty
+    hl :cssDimensionProp,            :cssProperty
+    hl :cssFlexibleBoxProp,          :cssProperty
+    hl :cssFontProp,                 :cssProperty
+    hl :cssGeneratedContentProp,     :cssProperty
+    hl :cssGridProp,                 :cssProperty
+    hl :cssHyerlinkProp,             :cssProperty
+    hl :cssLineboxProp,              :cssProperty
+    hl :cssListProp,                 :cssProperty
+    hl :cssMarginProp,               :cssProperty
+    hl :cssMarqueeProp,              :cssProperty
+    hl :cssMultiColumnProp,          :cssProperty
+    hl :cssPaddingProp,              :cssProperty
+    hl :cssPagedMediaProp,           :cssProperty
+    hl :cssPageProp,                 :cssProperty
+    hl :cssPositioningProp,          :cssProperty
+    hl :cssPrintProp,                :cssProperty
+    hl :cssRubyProp,                 :cssProperty
+    hl :cssSpeechProp,               :cssProperty
+    hl :cssTableProp,                :cssProperty
+    hl :cssTextProp,                 :cssProperty
+    hl :cssTransformProp,            :cssProperty
+    hl :cssTransitionProp,           :cssProperty
+    hl :cssUIProp,                   :cssProperty
+    # LESS syntax file uses cssUIAttr instead of cssUIProp
+    hl :cssUIAttr,                   :cssProperty
+    hl :cssAuralProp,                :cssProperty
+    hl :cssRenderProp,               :cssProperty
+  end
+
+  section 'Help' do
+    hl :helpExample,        :String
+    hl :helpHeadline,       :Title
+    hl :helpSectionDelim,   :Comment
+    hl :helpHyperTextEntry, :Statement
+    hl :helpHyperTextJump,  :Underlined
+    hl :helpURL,            :Underlined
+  end
+
+  section 'Mustache' do
+    hi :mustacheSection,    fg: bright_magenta, bold: true
+    hi :mustacheUnescape,   fg: bright_red
+    hi :mustachePartial,    fg: bright_magenta
+    hi :mustacheHandlebars, fg: magenta
+  end
+
+  section 'Shell' do
+    hl :shDerefSimple, :String
+    hl :shDerefVar, :shDerefSimple
+  end
+
+  section 'Ledger' do
+    hl :ledgerAccount, :String
+    hl :ledgerMetadata, :Comment
+    hl :ledgerTransactionStatus, :Statement
+  end
+
+  section 'Plug' do
+    hl :plugSha, :fugitiveHash
+  end
+
+  section 'Blade' do
+    hl :bladeStructure, :PreProc
+    hl :bladeParen,     :phpParent
+    hl :bladeEchoDelim, :PreProc
+  end
+
+  section 'YAML' do
+    hl :yamlPlainScalar, :String
+    hl :yamlConstant,    :Constant
+  end
+end

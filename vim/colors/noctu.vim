@@ -1,14 +1,11 @@
-" noctu.vim - Vim color scheme for 16-color terminals
-" --------------------------------------------------------------
-" Author:   Noah Frederick (https://noahfrederick.com/)
-" Version:  2.0.0
-" --------------------------------------------------------------
+" noctu.vim - Vim color scheme
+"
+" This is a generated file. See colorscheme.rb.
 
-" Scheme setup {{{
-set background=dark
-hi! clear
+" Setup {{{
+highlight! clear
 
-if exists('syntax_on')
+if exists('g:syntax_on')
   syntax reset
 endif
 
@@ -16,307 +13,266 @@ let g:colors_name = 'noctu'
 
 "}}}
 " Vim UI {{{
-hi Normal              ctermfg=NONE
-hi Cursor              ctermfg=15    ctermbg=1
-hi CursorLine          ctermbg=0     cterm=NONE
-hi MatchParen          ctermfg=0     ctermbg=5
-hi Pmenu               ctermfg=NONE  ctermbg=0
-hi PmenuThumb          ctermbg=7
-hi PmenuSBar           ctermbg=8
-hi PmenuSel            ctermfg=0     ctermbg=4
-hi ColorColumn         ctermbg=0
-hi EndOfBuffer         ctermfg=0
-hi SpellBad            ctermfg=9     ctermbg=NONE  cterm=underline
-hi SpellCap            ctermfg=10    ctermbg=NONE  cterm=underline
-hi SpellRare           ctermfg=11    ctermbg=NONE  cterm=underline
-hi SpellLocal          ctermfg=13    ctermbg=NONE  cterm=underline
-hi NonText             ctermfg=8
-hi LineNr              ctermfg=8     ctermbg=NONE
-hi CursorLineNr        ctermfg=11    ctermbg=0
-hi Visual              ctermfg=0     ctermbg=12
-hi IncSearch           ctermfg=0     ctermbg=13    cterm=NONE
-hi Search              ctermfg=0     ctermbg=10
-hi StatusLine          ctermfg=NONE  ctermbg=0     cterm=bold
-hi StatusLineNC        ctermfg=8     ctermbg=0     cterm=bold
-hi VertSplit           ctermfg=0     ctermbg=0     cterm=NONE
-hi TabLine             ctermfg=8     ctermbg=0     cterm=bold
-hi TabLineSel          ctermfg=0     ctermbg=7     cterm=bold
-hi Folded              ctermfg=8     ctermbg=0     cterm=bold
-hi Conceal             ctermfg=6     ctermbg=NONE
-hi Directory           ctermfg=12
-hi Title               ctermfg=3     cterm=bold
-hi ErrorMsg            ctermfg=15    ctermbg=1
-hi WarningMsg          ctermfg=15    ctermbg=3
-hi DiffAdd             ctermfg=0     ctermbg=2
-hi DiffChange          ctermfg=0     ctermbg=3
-hi DiffDelete          ctermfg=0     ctermbg=1
-hi DiffText            ctermfg=0     ctermbg=11    cterm=bold
-hi User1               ctermfg=1     ctermbg=0
-hi User2               ctermfg=2     ctermbg=0
-hi User3               ctermfg=3     ctermbg=0
-hi User4               ctermfg=4     ctermbg=0
-hi User5               ctermfg=5     ctermbg=0
-hi User6               ctermfg=6     ctermbg=0
-hi User7               ctermfg=7     ctermbg=0
-hi User8               ctermfg=8     ctermbg=0
-hi User9               ctermfg=15    ctermbg=5
-hi! link CursorColumn  CursorLine
-hi! link SignColumn    LineNr
-hi! link WildMenu      Visual
-hi! link FoldColumn    SignColumn
-hi! link MoreMsg       Title
-hi! link Question      MoreMsg
-hi! link ModeMsg       NonText
-hi! link TabLineFill   StatusLineNC
-hi! link SpecialKey    NonText
+highlight Normal guifg=#eeeeee ctermfg=NONE guibg=#0e191b ctermbg=NONE gui=NONE cterm=NONE
+highlight Cursor guifg=#090e12 ctermfg=0 guibg=#eeeeee ctermbg=7 gui=NONE cterm=NONE
+highlight CursorLine guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight MatchParen guifg=#090e12 ctermfg=0 guibg=#b88eec ctermbg=5 gui=NONE cterm=NONE
+highlight Pmenu guifg=#ffffff ctermfg=15 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight PmenuThumb guibg=#eeeeee ctermbg=7 gui=NONE cterm=NONE
+highlight PmenuSBar guibg=#5c7897 ctermbg=8 gui=NONE cterm=NONE
+highlight PmenuSel guifg=#090e12 ctermfg=0 guibg=#78c9e9 ctermbg=4 gui=NONE cterm=NONE
+highlight ColorColumn guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight EndOfBuffer guifg=#090e12 ctermfg=0 gui=NONE cterm=NONE
+highlight SpellBad guifg=#fdc2bd ctermfg=9 guibg=NONE ctermbg=NONE gui=underline cterm=underline
+highlight SpellCap guifg=#c5fcb8 ctermfg=10 guibg=NONE ctermbg=NONE gui=underline cterm=underline
+highlight SpellRare guifg=#ddd4c1 ctermfg=11 guibg=NONE ctermbg=NONE gui=underline cterm=underline
+highlight SpellLocal guifg=#ebd0ea ctermfg=13 guibg=NONE ctermbg=NONE gui=underline cterm=underline
+highlight NonText guifg=#5c7897 ctermfg=8 gui=NONE cterm=NONE
+highlight LineNr guifg=#5c7897 ctermfg=8 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CursorLineNr guifg=#ddd4c1 ctermfg=11 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight Visual guifg=#090e12 ctermfg=0 guibg=#addbeb ctermbg=12 gui=NONE cterm=NONE
+highlight IncSearch guifg=#090e12 ctermfg=0 guibg=#ebd0ea ctermbg=13 gui=NONE cterm=NONE
+highlight Search guifg=#090e12 ctermfg=0 guibg=#c5fcb8 ctermbg=10 gui=NONE cterm=NONE
+highlight StatusLine guifg=#eeeeee ctermfg=7 guibg=#090e12 ctermbg=0 gui=bold cterm=bold
+highlight StatusLineNC guifg=#5c7897 ctermfg=8 guibg=#090e12 ctermbg=0 gui=bold cterm=bold
+highlight VertSplit guifg=#090e12 ctermfg=0 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight TabLine guifg=#5c7897 ctermfg=8 guibg=#090e12 ctermbg=0 gui=bold cterm=bold
+highlight TabLineSel guifg=#090e12 ctermfg=0 guibg=#eeeeee ctermbg=7 gui=bold cterm=bold
+highlight Folded guifg=#5c7897 ctermfg=8 guibg=#090e12 ctermbg=0 gui=bold cterm=bold
+highlight Conceal guifg=#68a9af ctermfg=6 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight Directory guifg=#addbeb ctermfg=12 gui=NONE cterm=NONE
+highlight Title guifg=#bcaa85 ctermfg=3 gui=bold cterm=bold
+highlight ErrorMsg guifg=#ffffff ctermfg=15 guibg=#ff2b68 ctermbg=1 gui=NONE cterm=NONE
+highlight WarningMsg guifg=#ffffff ctermfg=15 guibg=#bcaa85 ctermbg=3 gui=NONE cterm=NONE
+highlight DiffAdd guifg=#090e12 ctermfg=0 guibg=#beda3f ctermbg=2 gui=NONE cterm=NONE
+highlight DiffChange guifg=#090e12 ctermfg=0 guibg=#bcaa85 ctermbg=3 gui=NONE cterm=NONE
+highlight DiffDelete guifg=#090e12 ctermfg=0 guibg=#ff2b68 ctermbg=1 gui=NONE cterm=NONE
+highlight DiffText guifg=#090e12 ctermfg=0 guibg=#ddd4c1 ctermbg=11 gui=bold cterm=bold
+highlight! link CursorColumn CursorLine
+highlight! link SignColumn LineNr
+highlight! link WildMenu Visual
+highlight! link FoldColumn SignColumn
+highlight! link MoreMsg Title
+highlight! link Question MoreMsg
+highlight! link ModeMsg NonText
+highlight! link TabLineFill StatusLineNC
+highlight! link SpecialKey NonText
 
 "}}}
-" Generic syntax {{{
-hi Delimiter       ctermfg=7
-hi Comment         ctermfg=8   cterm=italic
-hi Underlined      ctermfg=4   cterm=underline
-hi Type            ctermfg=4
-hi String          ctermfg=11
-hi Keyword         ctermfg=2
-hi Todo            ctermfg=15  ctermbg=NONE     cterm=bold,underline
-hi Function        ctermfg=NONE cterm=italic
-hi Identifier      ctermfg=7   cterm=NONE
-hi Statement       ctermfg=2   cterm=bold
-hi Constant        ctermfg=13
-hi Number          ctermfg=12
-hi Boolean         ctermfg=4
-hi Special         ctermfg=13
-hi Ignore          ctermfg=0
-hi PreProc         ctermfg=8   cterm=bold
-hi! link Operator  Delimiter
-hi! link Error     ErrorMsg
+" User {{{
+highlight User1 guifg=#ff2b68 ctermfg=1 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User2 guifg=#78c9e9 ctermfg=4 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User3 guifg=#beda3f ctermfg=2 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User4 guifg=#bcaa85 ctermfg=3 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User5 guifg=#b88eec ctermfg=5 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User6 guifg=#68a9af ctermfg=6 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User7 guifg=#eeeeee ctermfg=7 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User8 guifg=#5c7897 ctermfg=8 guibg=#090e12 ctermbg=0 gui=NONE cterm=NONE
+highlight User9 guifg=#ffffff ctermfg=15 guibg=#b88eec ctermbg=5 gui=NONE cterm=NONE
 
 "}}}
-" Quickfix Window {{{
-hi! link qfSeparator        PreProc
-hi! link qfRedundantPath    Delimiter
-
-"}}}
-" HTML {{{
-hi htmlTagName              ctermfg=2
-hi htmlTag                  ctermfg=2
-hi htmlArg                  ctermfg=10
-hi htmlH1                   cterm=bold
-hi htmlBold                 cterm=bold
-hi htmlItalic               cterm=italic
-hi htmlUnderline            cterm=underline
-hi htmlBoldItalic           cterm=bold,underline
-hi htmlBoldUnderline        cterm=bold,underline
-hi htmlUnderlineItalic      cterm=underline
-hi htmlBoldUnderlineItalic  cterm=bold,underline
-hi! link htmlLink           Underlined
-hi! link htmlEndTag         htmlTag
-
-"}}}
-" XML {{{
-hi xmlTagName       ctermfg=4
-hi xmlTag           ctermfg=12
-hi! link xmlString  xmlTagName
-hi! link xmlAttrib  xmlTag
-hi! link xmlEndTag  xmlTag
-hi! link xmlEqual   xmlTag
-
-"}}}
-" JavaScript {{{
-hi! link javaScript        Normal
-hi! link javaScriptBraces  Delimiter
-
-"}}}
-" PHP {{{
-hi phpIdentifier             ctermfg=13
-hi! link phpSpecialFunction  Function
-hi! link phpVarSelector      phpIdentifier
-hi! link phpHereDoc          String
-hi! link phpDefine           Statement
-hi! link phpDocTags          PreProc
-
-"}}}
-" Markdown {{{
-hi! link markdownHeadingRule        NonText
-hi! link markdownHeadingDelimiter   markdownHeadingRule
-hi! link markdownLinkDelimiter      Delimiter
-hi! link markdownURLDelimiter       Delimiter
-hi! link markdownCodeDelimiter      NonText
-hi! link markdownLinkTextDelimiter  markdownLinkDelimiter
-hi! link markdownUrl                markdownLinkText
-hi! link markdownAutomaticLink      markdownLinkText
-hi! link markdownCodeBlock          String
-hi! link markdownCode               String
-hi markdownBold                     cterm=bold
-hi markdownItalic                   cterm=italic
-" Polyglot ftplugin
-hi! link mkdListItem                htmlTagName
-
-"}}}
-" Ruby {{{
-hi! link rubyDefine                 Statement
-hi! link rubyLocalVariableOrMethod  Identifier
-hi! link rubyConstant               Constant
-hi! link rubyInstanceVariable       Number
-hi! link rubyStringDelimiter        rubyString
-hi! link yardGenericTag             PreProc
-hi! link yardGenericDirective       yardGenericTag
-
-"}}}
-" Git {{{
-hi gitCommitBranch               ctermfg=3
-hi gitCommitSelectedType         ctermfg=10
-hi gitCommitSelectedFile         ctermfg=2
-hi gitCommitUnmergedType         ctermfg=9
-hi gitCommitUnmergedFile         ctermfg=1
-hi! link gitCommitFile           Directory
-hi! link gitCommitUntrackedFile  gitCommitUnmergedFile
-hi! link gitCommitDiscardedType  gitCommitUnmergedType
-hi! link gitCommitDiscardedFile  gitCommitUnmergedFile
-hi fugitiveHash                  ctermfg=8
-hi! link gvSha                   fugitiveHash
-
-"}}}
-" Vim {{{
-hi! link vimSetSep    Delimiter
-hi! link vimContinue  Delimiter
-hi! link vimHiAttrib  Constant
-
-"}}}
-" CSS {{{
-hi       cssIdentifier                ctermfg=9
-hi! link cssBraces                    Delimiter
-hi! link cssProperty                  Normal
-hi! link cssAnimationProp             cssProperty
-hi! link cssBackgroundProp            cssProperty
-hi! link cssBorderOutlineProp         cssProperty
-hi! link cssBorderProp                cssProperty
-hi! link cssBoxProp                   cssProperty
-hi! link cssColorProp                 cssProperty
-hi! link cssContentForPagedMediaProp  cssProperty
-hi! link cssDimensionProp             cssProperty
-hi! link cssFlexibleBoxProp           cssProperty
-hi! link cssFontProp                  cssProperty
-hi! link cssGeneratedContentProp      cssProperty
-hi! link cssGridProp                  cssProperty
-hi! link cssHyerlinkProp              cssProperty
-hi! link cssLineboxProp               cssProperty
-hi! link cssListProp                  cssProperty
-hi! link cssMarginProp                cssProperty
-hi! link cssMarqueeProp               cssProperty
-hi! link cssMultiColumnProp           cssProperty
-hi! link cssPaddingProp               cssProperty
-hi! link cssPagedMediaProp            cssProperty
-hi! link cssPageProp                  cssProperty
-hi! link cssPositioningProp           cssProperty
-hi! link cssPrintProp                 cssProperty
-hi! link cssRubyProp                  cssProperty
-hi! link cssSpeechProp                cssProperty
-hi! link cssTableProp                 cssProperty
-hi! link cssTextProp                  cssProperty
-hi! link cssTransformProp             cssProperty
-hi! link cssTransitionProp            cssProperty
-hi! link cssUIProp                    cssProperty
-" LESS syntax file uses cssUIAttr instead of cssUIProp
-hi! link cssUIAttr                    cssProperty
-hi! link cssAuralProp                 cssProperty
-hi! link cssRenderProp                cssProperty
-
-"}}}
-" LESS {{{
-hi lessVariable             ctermfg=11
-hi! link lessVariableValue  Normal
-
-"}}}
-" NERDTree {{{
-hi! link NERDTreeHelp      Comment
-hi! link NERDTreeExecFile  String
-
-"}}}
-" Vimwiki {{{
-hi! link VimwikiHeaderChar  markdownHeadingDelimiter
-hi! link VimwikiList        markdownListMarker
-hi! link VimwikiCode        markdownCode
-hi! link VimwikiCodeChar    markdownCodeDelimiter
-
-"}}}
-" Help {{{
-hi! link helpExample         String
-hi! link helpHeadline        Title
-hi! link helpSectionDelim    Comment
-hi! link helpHyperTextEntry  Statement
-hi! link helpHyperTextJump   Underlined
-hi! link helpURL             Underlined
-
-"}}}
-" CtrlP {{{
-hi! link CtrlPMatch    String
-hi! link CtrlPLinePre  Comment
-
-"}}}
-" Mustache {{{
-hi mustacheSection           ctermfg=13  cterm=bold
-hi mustacheUnescape          ctermfg=9
-hi mustachePartial           ctermfg=13
-hi mustacheHandlebars        ctermfg=5
-
-"}}}
-" Shell {{{
-hi shDerefSimple     ctermfg=11
-hi! link shDerefVar  shDerefSimple
-
-"}}}
-" Syntastic / Neomake {{{
-hi SyntasticWarningSign       ctermfg=3  ctermbg=NONE
-hi SyntasticErrorSign         ctermfg=1  ctermbg=NONE
-hi SyntasticStyleWarningSign  ctermfg=4  ctermbg=NONE
-hi SyntasticStyleErrorSign    ctermfg=4  ctermbg=NONE
-hi! link NeomakeWarningSign   SyntasticWarningSign
-hi! link NeomakeErrorSign     SyntasticErrorSign
-hi! link NeomakeMessageSign   SyntasticStyleWarningSign
-hi! link NeomakeInfoSign      SyntasticStyleWarningSign
-hi! link ALEWarningSign       SyntasticWarningSign
-hi! link ALEErrorSign         SyntasticErrorSign
-hi! link ALEInfoSign          SyntasticStyleWarningSign
-
-"}}}
-" Netrw {{{
-hi netrwExe       ctermfg=9
-hi netrwClassify  ctermfg=8  cterm=bold
-
-"}}}
-" Ledger {{{
-hi ledgerAccount  ctermfg=11
-hi! link ledgerMetadata  Comment
-hi! link ledgerTransactionStatus  Statement
+" Generic Syntax {{{
+highlight Comment guifg=#5c7897 ctermfg=8 gui=italic cterm=italic
+highlight Constant guifg=#ebd0ea ctermfg=13 gui=NONE cterm=NONE
+highlight Function guifg=NONE ctermfg=NONE gui=italic cterm=italic
+highlight Ignore guifg=#090e12 ctermfg=0 gui=NONE cterm=NONE
+highlight Keyword guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight Number guifg=#addbeb ctermfg=12 gui=NONE cterm=NONE
+highlight PreProc guifg=#5c7897 ctermfg=8 gui=bold cterm=bold
+highlight Statement guifg=#beda3f ctermfg=2 gui=bold cterm=bold
+highlight String guifg=#ddd4c1 ctermfg=11 gui=NONE cterm=NONE
+highlight Todo guifg=#ffffff ctermfg=15 guibg=NONE ctermbg=NONE gui=bold,underline cterm=bold,underline
+highlight Type guifg=#78c9e9 ctermfg=4 gui=NONE cterm=NONE
+highlight Underlined guifg=#78c9e9 ctermfg=4 gui=underline cterm=underline
+highlight! link Boolean Type
+highlight! link Delimiter Normal
+highlight! link Error ErrorMsg
+highlight! link Identifier Normal
+highlight! link Operator Delimiter
+highlight! link Special Constant
 
 "}}}
 " Diff {{{
-hi diffAdded  ctermfg=2
-hi diffRemoved  ctermfg=1
-hi! link diffFile  PreProc
-hi! link diffLine  Title
+highlight diffAdded guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight diffRemoved guifg=#ff2b68 ctermfg=1 gui=NONE cterm=NONE
+highlight! link diffFile PreProc
+highlight! link diffLine Title
+highlight SignifySignAdd guifg=#beda3f ctermfg=2 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight SignifySignChange guifg=#bcaa85 ctermfg=3 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight SignifySignDelete guifg=#ff2b68 ctermfg=1 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight! link SignifySignChangeDelete SignifySignChange
+highlight! link SignifySignDeleteFirstLine SignifySignDelete
 
-hi SignifySignAdd                   ctermfg=2 ctermbg=NONE
-hi SignifySignChange                ctermfg=3 ctermbg=NONE
-hi SignifySignDelete                ctermfg=1 ctermbg=NONE
-hi! link SignifySignChangeDelete    SignifySignChange
-hi! link SignifySignDeleteFirstLine SignifySignDelete
+"}}}
+" Quickfix Window {{{
+highlight! link qfSeparator PreProc
+highlight! link qfRedundantPath Delimiter
+
+"}}}
+" HTML {{{
+highlight htmlTagName guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight htmlTag guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight htmlArg guifg=#c5fcb8 ctermfg=10 gui=NONE cterm=NONE
+highlight htmlH1 gui=bold cterm=bold
+highlight htmlBold gui=bold cterm=bold
+highlight htmlItalic gui=italic cterm=italic
+highlight htmlUnderline gui=underline cterm=underline
+highlight htmlBoldItalic gui=bold,italic cterm=bold,italic
+highlight htmlBoldUnderline gui=bold,underline cterm=bold,underline
+highlight htmlUnderlineItalic gui=underline,italic cterm=underline,italic
+highlight htmlBoldUnderlineItalic gui=bold,underline,italic cterm=bold,underline,italic
+highlight! link htmlLink Underlined
+highlight! link htmlEndTag htmlTag
+
+"}}}
+" XML {{{
+highlight xmlTagName guifg=#78c9e9 ctermfg=4 gui=NONE cterm=NONE
+highlight xmlTag guifg=#addbeb ctermfg=12 gui=NONE cterm=NONE
+highlight! link xmlString xmlTagName
+highlight! link xmlAttrib xmlTag
+highlight! link xmlEndTag xmlTag
+highlight! link xmlEqual xmlTag
+
+"}}}
+" JavaScript {{{
+highlight! link javaScript Normal
+highlight! link javaScriptBraces Delimiter
+
+"}}}
+" PHP {{{
+highlight phpIdentifier guifg=#ddd4c1 ctermfg=11 gui=NONE cterm=NONE
+highlight! link phpSpecialFunction Function
+highlight! link phpVarSelector phpIdentifier
+highlight! link phpHereDoc String
+highlight! link phpDefine Statement
+highlight! link phpDocTags PreProc
+
+"}}}
+" Markdown {{{
+highlight! link markdownHeadingRule NonText
+highlight! link markdownHeadingDelimiter markdownHeadingRule
+highlight! link markdownLinkDelimiter Delimiter
+highlight! link markdownURLDelimiter Delimiter
+highlight! link markdownCodeDelimiter NonText
+highlight! link markdownLinkTextDelimiter markdownLinkDelimiter
+highlight! link markdownUrl markdownLinkText
+highlight! link markdownAutomaticLink markdownLinkText
+highlight! link markdownCodeBlock String
+highlight! link markdownCode String
+highlight markdownBold gui=bold cterm=bold
+highlight markdownItalic gui=italic cterm=italic
+highlight! link mkdListItem htmlTagName
+
+"}}}
+" Ruby {{{
+highlight! link rubyDefine Statement
+highlight! link rubyLocalVariableOrMethod Identifier
+highlight! link rubyConstant Constant
+highlight! link rubyInstanceVariable Number
+highlight! link rubyStringDelimiter rubyString
+highlight! link yardGenericTag PreProc
+highlight! link yardGenericDirective yardGenericTag
+
+"}}}
+" Git {{{
+highlight gitCommitBranch guifg=#78c9e9 ctermfg=4 gui=NONE cterm=NONE
+highlight gitCommitSelectedType guifg=#c5fcb8 ctermfg=10 gui=NONE cterm=NONE
+highlight gitCommitSelectedFile guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight gitCommitUnmergedType guifg=#fdc2bd ctermfg=9 gui=NONE cterm=NONE
+highlight gitCommitUnmergedFile guifg=#ff2b68 ctermfg=1 gui=NONE cterm=NONE
+highlight! link gitCommitFile Directory
+highlight! link gitCommitUntrackedFile gitCommitUnmergedFile
+highlight! link gitCommitDiscardedType gitCommitUnmergedType
+highlight! link gitCommitDiscardedFile gitCommitUnmergedFile
+highlight fugitiveHash guifg=#5c7897 ctermfg=8 gui=NONE cterm=NONE
+highlight! link gvSha fugitiveHash
+
+"}}}
+" Vim {{{
+highlight! link vimSetSep Delimiter
+highlight! link vimContinue Delimiter
+highlight! link vimHiAttrib Constant
+
+"}}}
+" CSS {{{
+highlight cssIdentifier guifg=#fdc2bd ctermfg=9 gui=NONE cterm=NONE
+highlight! link cssBraces Delimiter
+highlight! link cssProperty Normal
+highlight! link cssAnimationProp cssProperty
+highlight! link cssBackgroundProp cssProperty
+highlight! link cssBorderOutlineProp cssProperty
+highlight! link cssBorderProp cssProperty
+highlight! link cssBoxProp cssProperty
+highlight! link cssColorProp cssProperty
+highlight! link cssContentForPagedMediaProp cssProperty
+highlight! link cssDimensionProp cssProperty
+highlight! link cssFlexibleBoxProp cssProperty
+highlight! link cssFontProp cssProperty
+highlight! link cssGeneratedContentProp cssProperty
+highlight! link cssGridProp cssProperty
+highlight! link cssHyerlinkProp cssProperty
+highlight! link cssLineboxProp cssProperty
+highlight! link cssListProp cssProperty
+highlight! link cssMarginProp cssProperty
+highlight! link cssMarqueeProp cssProperty
+highlight! link cssMultiColumnProp cssProperty
+highlight! link cssPaddingProp cssProperty
+highlight! link cssPagedMediaProp cssProperty
+highlight! link cssPageProp cssProperty
+highlight! link cssPositioningProp cssProperty
+highlight! link cssPrintProp cssProperty
+highlight! link cssRubyProp cssProperty
+highlight! link cssSpeechProp cssProperty
+highlight! link cssTableProp cssProperty
+highlight! link cssTextProp cssProperty
+highlight! link cssTransformProp cssProperty
+highlight! link cssTransitionProp cssProperty
+highlight! link cssUIProp cssProperty
+highlight! link cssUIAttr cssProperty
+highlight! link cssAuralProp cssProperty
+highlight! link cssRenderProp cssProperty
+
+"}}}
+" Help {{{
+highlight! link helpExample String
+highlight! link helpHeadline Title
+highlight! link helpSectionDelim Comment
+highlight! link helpHyperTextEntry Statement
+highlight! link helpHyperTextJump Underlined
+highlight! link helpURL Underlined
+
+"}}}
+" Mustache {{{
+highlight mustacheSection guifg=#ebd0ea ctermfg=13 gui=bold cterm=bold
+highlight mustacheUnescape guifg=#fdc2bd ctermfg=9 gui=NONE cterm=NONE
+highlight mustachePartial guifg=#ebd0ea ctermfg=13 gui=NONE cterm=NONE
+highlight mustacheHandlebars guifg=#b88eec ctermfg=5 gui=NONE cterm=NONE
+
+"}}}
+" Shell {{{
+highlight! link shDerefSimple String
+highlight! link shDerefVar shDerefSimple
+
+"}}}
+" Ledger {{{
+highlight! link ledgerAccount String
+highlight! link ledgerMetadata Comment
+highlight! link ledgerTransactionStatus Statement
 
 "}}}
 " Plug {{{
-hi plugSha  ctermfg=3
+highlight! link plugSha fugitiveHash
 
 "}}}
 " Blade {{{
-hi! link bladeStructure  PreProc
-hi! link bladeParen      phpParent
-hi! link bladeEchoDelim  PreProc
+highlight! link bladeStructure PreProc
+highlight! link bladeParen phpParent
+highlight! link bladeEchoDelim PreProc
 
 "}}}
 " YAML {{{
-hi! link yamlPlainScalar  String
-hi! link yamlConstant     Constant
+highlight! link yamlPlainScalar String
+highlight! link yamlConstant Constant
 
 "}}}
 
