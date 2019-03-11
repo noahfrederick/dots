@@ -500,8 +500,8 @@ if exists(":tnoremap")
   tnoremap <silent> <A-k> <C-\><C-n>:call my#window#nav('k')<CR>
   tnoremap <silent> <A-l> <C-\><C-n>:call my#window#nav('l')<CR>
 
-  tnoremap <A-c> <C-w>c
-  tnoremap <A-w> <C-w>w
+  tnoremap <A-c> <C-\><C-n><C-w>c
+  tnoremap <A-w> <C-\><C-n><C-w>w
 
   tnoremap <A-S-h> <C-\><C-n><C-w>H
   tnoremap <A-S-j> <C-\><C-n><C-w>J
