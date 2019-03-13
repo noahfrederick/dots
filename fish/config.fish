@@ -17,6 +17,82 @@ set fish_pager_color_completion  white
 set fish_pager_color_description purple
 
 #
+# ABBREVIATIONS
+#
+if status is-interactive
+	abbr --add --global art php artisan
+	abbr --add --global br  brew
+	abbr --add --global bru brew upgrade
+	abbr --add --global c   capture
+	abbr --add --global ca  capture
+	abbr --add --global cap capture
+	abbr --add --global cda composer dump-autoload
+	abbr --add --global cgi composer global install
+	abbr --add --global cgr composer global require
+	abbr --add --global cgu composer global update
+	abbr --add --global ch  composer show
+	abbr --add --global ci  composer install
+	abbr --add --global cm  composer remove
+	abbr --add --global co  composer install
+	abbr --add --global cr  composer require
+	abbr --add --global cs  composer search
+	abbr --add --global cu  composer update
+	abbr --add --global cv  composer validate
+	abbr --add --global e   emacsclient
+	abbr --add --global ee  emacsclient --eval
+	abbr --add --global en  emacsclient --no-wait
+	abbr --add --global et  emacsclient --tty
+	abbr --add --global g   git
+	abbr --add --global ga  git add
+	abbr --add --global gaa git add --all
+	abbr --add --global gb  git branch
+	abbr --add --global gbd git branch --delete
+	abbr --add --global gbm git branch --merged
+	abbr --add --global gc  git commit --verbose
+	abbr --add --global gca git commit --all --verbose
+	abbr --add --global gcb git checkout --branch
+	abbr --add --global gcf git commit --verbose --fixup
+	abbr --add --global gcl git clone
+	abbr --add --global gco git checkout
+	abbr --add --global gd  git diff
+	abbr --add --global gdc git diff --cached
+	abbr --add --global gf  git fetch
+	abbr --add --global gi  git init
+	abbr --add --global gl  git log
+	abbr --add --global gm  git merge
+	abbr --add --global gp  git push
+	abbr --add --global gpu git pull
+	abbr --add --global gr  git rebase
+	abbr --add --global grc git rebase --continue
+	abbr --add --global grs git rebase --skip
+	abbr --add --global gs  git status
+	abbr --add --global gsp git stash pop
+	abbr --add --global gst git stash
+	abbr --add --global lba ledger balance
+	abbr --add --global leq ledger equity
+	abbr --add --global lre ledger register
+	abbr --add --global lst ledger stats
+	abbr --add --global lxa ledger xact
+	abbr --add --global n   note
+	abbr --add --global t   task
+	abbr --add --global ta  task add
+	abbr --add --global tc  task context
+	abbr --add --global tl  task log
+	abbr --add --global tp  task rc.context:none projects
+	abbr --add --global ts  task show
+	abbr --add --global tt  task rc.context:none tags
+	abbr --add --global tw  task waiting
+	abbr --add --global v   nvim
+	abbr --add --global vd  nvim --noplugin -u minimal.vim
+	abbr --add --global vn  nvim -u NONE
+	abbr --add --global vs  nvim -S
+	abbr --add --global we  words --english
+	abbr --add --global wi  words --interactive
+	abbr --add --global wk  webkit2png --fullsize --timestamp
+	abbr --add --global ww  words
+end
+
+#
 # LOGIN SHELL
 #
 status is-login; or exit
@@ -77,82 +153,3 @@ set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --bind=change:top,ctrl-n:preview-down
 # GPG
 #
 set -x GPG_TTY (tty)
-
-#
-# INTERACTIVE LOGIN SHELL
-#
-status is-interactive; or exit
-
-#
-# ABBREVIATIONS
-#
-abbr --add --global art php artisan
-abbr --add --global br  brew
-abbr --add --global bru brew upgrade
-abbr --add --global c   capture
-abbr --add --global ca  capture
-abbr --add --global cap capture
-abbr --add --global cda composer dump-autoload
-abbr --add --global cgi composer global install
-abbr --add --global cgr composer global require
-abbr --add --global cgu composer global update
-abbr --add --global ch  composer show
-abbr --add --global ci  composer install
-abbr --add --global cm  composer remove
-abbr --add --global co  composer install
-abbr --add --global cr  composer require
-abbr --add --global cs  composer search
-abbr --add --global cu  composer update
-abbr --add --global cv  composer validate
-abbr --add --global e   emacsclient
-abbr --add --global ee  emacsclient --eval
-abbr --add --global en  emacsclient --no-wait
-abbr --add --global et  emacsclient --tty
-abbr --add --global g   git
-abbr --add --global ga  git add
-abbr --add --global gaa git add --all
-abbr --add --global gb  git branch
-abbr --add --global gbd git branch --delete
-abbr --add --global gbm git branch --merged
-abbr --add --global gc  git commit --verbose
-abbr --add --global gca git commit --all --verbose
-abbr --add --global gcb git checkout --branch
-abbr --add --global gcf git commit --verbose --fixup
-abbr --add --global gcl git clone
-abbr --add --global gco git checkout
-abbr --add --global gd  git diff
-abbr --add --global gdc git diff --cached
-abbr --add --global gf  git fetch
-abbr --add --global gi  git init
-abbr --add --global gl  git log
-abbr --add --global gm  git merge
-abbr --add --global gp  git push
-abbr --add --global gpu git pull
-abbr --add --global gr  git rebase
-abbr --add --global grc git rebase --continue
-abbr --add --global grs git rebase --skip
-abbr --add --global gs  git status
-abbr --add --global gsp git stash pop
-abbr --add --global gst git stash
-abbr --add --global lba ledger balance
-abbr --add --global leq ledger equity
-abbr --add --global lre ledger register
-abbr --add --global lst ledger stats
-abbr --add --global lxa ledger xact
-abbr --add --global n   note
-abbr --add --global t   task
-abbr --add --global ta  task add
-abbr --add --global tc  task context
-abbr --add --global tl  task log
-abbr --add --global tp  task rc.context:none projects
-abbr --add --global ts  task show
-abbr --add --global tt  task rc.context:none tags
-abbr --add --global tw  task waiting
-abbr --add --global v   nvim
-abbr --add --global vd  nvim --noplugin -u minimal.vim
-abbr --add --global vn  nvim -u NONE
-abbr --add --global vs  nvim -S
-abbr --add --global we  words --english
-abbr --add --global wi  words --interactive
-abbr --add --global wk  webkit2png --fullsize --timestamp
-abbr --add --global ww  words
