@@ -30,7 +30,7 @@ type -fq yarn;     and prepend_to_path (yarn global bin)
 type -fq composer; and prepend_to_path (composer config --global home)/(composer config --global bin-dir)
 type -fq rbenv;    and source (rbenv init - | psub)
 prepend_to_path $HOME/.cargo/bin
-prepend_to_path $HOME/bin
+prepend_to_path $HOME/.local/bin
 
 #
 # DIRECTORIES

@@ -7,7 +7,7 @@ function pathadd () {
 	fi
 }
 
-pathadd ~/bin
+pathadd ~/.local/bin
 
 #
 # DIRECTORIES

@@ -25,7 +25,7 @@ function words --description "Convenience wrapper for Whitaker's Words"
 end
 
 function _words_exec
-	pushd ~/bin/words >/dev/null
+	pushd ~/.local/bin/words >/dev/null
 	./words $argv
 	popd >/dev/null
 end
