@@ -21,4 +21,4 @@ default = simple
 autosquash = true
 
 [include]
-path = ./private
+path = ./config.local
