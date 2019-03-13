@@ -12,7 +12,6 @@ set fish_color_error             normal
 set fish_color_escape            purple
 set fish_color_param             green
 set fish_color_quote             yellow
-set fish_color_valid_path        blue    --underline
 set fish_pager_color_prefix      yellow
 set fish_pager_color_completion  white
 set fish_pager_color_description purple
