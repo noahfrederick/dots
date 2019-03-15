@@ -25,7 +25,7 @@ endsnippet
 # Selectors
 #
 snippet sel "selector { }" b
-${1} {
+$1 {
 	${0:${VISUAL}}
 }
 endsnippet
@@ -61,7 +61,7 @@ endsnippet
 # Properties
 #
 snippet a "animation"
-animation: ${1};
+animation: $1;
 endsnippet
 
 snippet an "animation-name"
@@ -97,7 +97,7 @@ animation-play-state: ${1:running};
 endsnippet
 
 snippet b "border"
-border: ${1:solid} ${2}px #${3};
+border: ${1:solid} $2;
 endsnippet
 
 snippet b0 "border: 0"
@@ -105,23 +105,23 @@ border: 0;
 endsnippet
 
 snippet bt "border-top"
-border-top: ${1:solid} ${2}px #${3};
+border-top: ${1:solid} $2;
 endsnippet
 
 snippet br "border-right"
-border-right: ${1:solid} ${2}px #${3};
+border-right: ${1:solid} $2;
 endsnippet
 
 snippet bb "border-bottom"
-border-bottom: ${1:solid} ${2}px #${3};
+border-bottom: ${1:solid} $2;
 endsnippet
 
 snippet bl "border-left"
-border-left: ${1:solid} ${2}px #${3};
+border-left: ${1:solid} $2;
 endsnippet
 
 snippet bg "background"
-background: ${1};
+background: $1;
 endsnippet
 
 snippet bga "background-attachment"
@@ -129,7 +129,7 @@ background-attachment: ${1:fixed};
 endsnippet
 
 snippet bgc "background-color"
-background-color: #${1};
+background-color: $1;
 endsnippet
 
 snippet bgi "background-image"
@@ -141,7 +141,7 @@ background-repeat: ${1:no-repeat};
 endsnippet
 
 snippet bgp "background-position"
-background-position: ${1};
+background-position: $1;
 endsnippet
 
 snippet bgs "background-size"
@@ -161,47 +161,47 @@ box-shadow: ${1:inset }${2:5px} $2 ${3:10px} rgba(${4:0}, $4, $4, ${5:0.5});
 endsnippet
 
 snippet br "border-radius"
-border-radius: ${1}${2:px};
+border-radius: $1;
 endsnippet
 
 snippet brt "border-top-radius"
-border-top-left-radius: ${1}${2:px};
-border-top-right-radius: $1$2;
+border-top-left-radius: $1;
+border-top-right-radius: $1;
 endsnippet
 
 snippet brtl "border-top-left-radius"
-border-top-left-radius: ${1}${2:px};
+border-top-left-radius: $1;
 endsnippet
 
 snippet brtr "border-top-right-radius"
-border-top-right-radius: ${1}${2:px};
+border-top-right-radius: $1;
 endsnippet
 
 snippet brb "border-bottom-radius"
-border-bottom-left-radius: ${1}${2:px};
-border-bottom-right-radius: $1$2;
+border-bottom-left-radius: $1;
+border-bottom-right-radius: $1;
 endsnippet
 
 snippet brbr "border-bottom-right-radius"
-border-bottom-right-radius: ${1}${2:px};
+border-bottom-right-radius: $1;
 endsnippet
 
 snippet brbl "border-bottom-left-radius"
-border-bottom-left-radius: ${1}${2:px};
+border-bottom-left-radius: $1;
 endsnippet
 
 snippet brl "border-left-radius"
-border-top-left-radius: ${1}${2:px};
-border-bottom-left-radius: $1$2;
+border-top-left-radius: $1;
+border-bottom-left-radius: $1;
 endsnippet
 
 snippet brr "border-right-radius"
-border-top-right-radius: ${1}${2:px};
-border-bottom-right-radius: $1$2;
+border-top-right-radius: $1;
+border-bottom-right-radius: $1;
 endsnippet
 
 snippet co "color"
-color: #${1};
+color: $1;
 endsnippet
 
 snippet c "clear"
@@ -253,7 +253,7 @@ flex: ${1:1};
 endsnippet
 
 snippet fs "font-size"
-font-size: ${1};
+font-size: $1;
 endsnippet
 
 snippet fst "font-style"
@@ -285,7 +285,7 @@ float: ${1:left};
 endsnippet
 
 snippet h "height"
-height: ${1}${2:px};
+height: $1;
 endsnippet
 
 snippet lh "line-height"
@@ -293,7 +293,7 @@ line-height: ${1:normal};
 endsnippet
 
 snippet ls "letter-spacing"
-letter-spacing: ${1}px;
+letter-spacing: $1;
 endsnippet
 
 snippet lst "list-style-type"
@@ -301,23 +301,23 @@ list-style-type: ${1:none};
 endsnippet
 
 snippet m "margin"
-margin: ${1}${2:px};
+margin: $1;
 endsnippet
 
 snippet mt "margin-top"
-margin-top: ${1}${2:px};
+margin-top: $1;
 endsnippet
 
 snippet mb "margin-bottom"
-margin-bottom: ${1}${2:px};
+margin-bottom: $1;
 endsnippet
 
 snippet ml "margin-left"
-margin-left: ${1}${2:px};
+margin-left: $1;
 endsnippet
 
 snippet mr "margin-right"
-margin-right: ${1}${2:px};
+margin-right: $1;
 endsnippet
 
 snippet mx "margin-{left,right}" b
@@ -349,11 +349,11 @@ margin: 0 auto;
 endsnippet
 
 snippet mh "max-height"
-max-height: ${1}${2:px};
+max-height: $1;
 endsnippet
 
 snippet mw "max-width"
-max-width: ${1}${2:px};
+max-width: $1;
 endsnippet
 
 snippet op "opaciy"
@@ -425,23 +425,23 @@ overflow-y: auto;
 endsnippet
 
 snippet p "padding"
-padding: ${1}${2:px};
+padding: $1;
 endsnippet
 
 snippet pt "padding-top"
-padding-top: ${1}${2:px};
+padding-top: $1;
 endsnippet
 
 snippet pb "padding-bottom"
-padding-bottom: ${1}${2:px};
+padding-bottom: $1;
 endsnippet
 
 snippet pl "padding-left"
-padding-left: ${1}${2:px};
+padding-left: $1;
 endsnippet
 
 snippet pr "padding-right"
-padding-right: ${1}${2:px};
+padding-right: $1;
 endsnippet
 
 snippet px "padding-{left,right}" b
@@ -574,24 +574,28 @@ snippet vv "visibility: visible"
 visibility: visible;
 endsnippet
 
+snippet va "vertical-align"
+vertical-align: $1;
+endsnippet
+
 snippet w "width"
-width: ${1}${2:px};
+width: $1;
 endsnippet
 
 snippet l "left"
-left: ${1}${2:px};
+left: $1;
 endsnippet
 
 snippet r "right"
-right: ${1}${2:px};
+right: $1;
 endsnippet
 
 snippet top "top"
-top: ${1}${2:px};
+top: $1;
 endsnippet
 
 snippet bot "bottom"
-bottom: ${1}${2:px};
+bottom: $1;
 endsnippet
 
 snippet ws "white-space"
@@ -599,7 +603,7 @@ white-space: ${1:nowrap};
 endsnippet
 
 snippet z "z-index"
-z-index: ${1:1};
+z-index: $1;
 endsnippet
 
 snippet /z([0-9]+)/ "z-index" r
