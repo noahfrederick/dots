@@ -1,5 +1,5 @@
 function words --description "Convenience wrapper for Whitaker's Words"
-	set -l interactive ''
+	set -l interactive
 	set -l english
 	set -l query
 
@@ -15,21 +15,21 @@ function words --description "Convenience wrapper for Whitaker's Words"
 	end
 
 	if test -n $interactive
-		while read --prompt=_words_prompt query
+		while read --prompt=__words_prompt query
 			set_color normal
-			_words_exec $english $query
+			__words_exec $english $query
 		end
 	else
-		_words_exec $english $query
+		__words_exec $english $query
 	end
 end
 
-function _words_exec
+function __words_exec
 	pushd ~/.local/bin/words >/dev/null
 	./words $argv
 	popd >/dev/null
 end
 
-function _words_prompt
-	set_color blue --bold; echo -n "> "
+function __words_prompt
+	set_color blue --bold; echo -n '> '
 end

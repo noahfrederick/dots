@@ -1,5 +1,5 @@
 function fish_prompt --description 'Write out the prompt'
-	if jobs > /dev/null
+	if jobs --quiet
 		set_color green --bold
 	else
 		set_color brgrey --bold
