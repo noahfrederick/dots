@@ -2,6 +2,9 @@
 graph = log --graph --oneline --decorate
 ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
 
+[commit]
+verbose = true
+
 [init]
 templateDir = ~/.config/git/template
 
