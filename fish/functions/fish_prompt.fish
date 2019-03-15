@@ -8,7 +8,11 @@ function fish_prompt --description 'Write out the prompt'
 	set -l level $SHLVL
 
 	if test -n "$TMUX"
-		set level (math $SHLVL - 2) # fish -> tmux -> fish
+		set level (math $level - 2) # fish -> tmux -> fish
+	end
+
+	if test -n "$NVIM_LISTEN_ADDRESS"
+		set level (math $level - 2) # nvim -> 'shell' -> fish
 	end
 
 	string repeat --no-newline --count $level '> '
