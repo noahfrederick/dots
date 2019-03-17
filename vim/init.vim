@@ -121,6 +121,7 @@ set spelllang=en_us             " Language and region to use for spellchecking
 let &spellfile = join(map(['en', 'private'], {_, val -> s:user_runtime . '/spell/' . val . '.utf-8.add'}), ',')
 set modeline modelines=2        " Look for modeline in first/last n lines of file
 set hidden                      " Do not unload buffers when no longer displayed
+set mouse=a                     " Enable mouse input
 set foldnestmax=3               " Limit depth of nested syntax/indent folds to n
 set foldopen-=block             " Do not open folds on '(', '{', etc.
 set foldtext=my#folding#text()
