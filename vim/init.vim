@@ -152,8 +152,8 @@ augroup init_colorscheme
   autocmd! ColorScheme * highlight VertSplit ctermbg=NONE guibg=NONE
 augroup END
 
-if has("vim_starting") && &t_Co >= 16
-  silent! colorscheme noctu     " Set color scheme for 16-color+ terminals
+if has("vim_starting")
+  silent! colorscheme noctu
 endif
 
 "" Clipboard
