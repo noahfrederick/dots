@@ -21,6 +21,8 @@ set fish_pager_color_description purple
 #
 if status is-interactive
 	abbr --add --global art php artisan
+	abbr --add --global bk  brew cask
+	abbr --add --global bku brew cask upgrade
 	abbr --add --global br  brew
 	abbr --add --global bru brew upgrade
 	abbr --add --global c   capture
@@ -68,6 +70,11 @@ if status is-interactive
 	abbr --add --global gs  git status
 	abbr --add --global gsp git stash pop
 	abbr --add --global gst git stash
+	abbr --add --global h   homestead
+	abbr --add --global he  homestead edit
+	abbr --add --global hh  homestead halt
+	abbr --add --global hs  homestead ssh
+	abbr --add --global hu  homestead up
 	abbr --add --global lba ledger balance
 	abbr --add --global leq ledger equity
 	abbr --add --global lre ledger register
