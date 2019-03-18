@@ -11,6 +11,9 @@ templateDir = ~/.config/git/template
 [hub]
 protocol = https
 
+[pull]
+ff = only
+
 [rebase]
 autosquash = true
 
