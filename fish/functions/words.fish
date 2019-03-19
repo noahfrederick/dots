@@ -14,7 +14,7 @@ function words --description "Convenience wrapper for Whitaker's Words"
 		end
 	end
 
-	if test -n $interactive
+	if test -n "$interactive"
 		while read --prompt=__words_prompt query
 			set_color normal
 			__words_exec $english $query
