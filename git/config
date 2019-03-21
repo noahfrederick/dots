@@ -17,5 +17,10 @@ ff = only
 [rebase]
 autosquash = true
 
+[status]
+branch = true
+short = true
+showStash = true
+
 [include]
 path = ./config.local
