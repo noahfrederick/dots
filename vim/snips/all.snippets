@@ -8,6 +8,10 @@ snippet email "Author's email"
 `!v my#project#get("email")`
 endsnippet
 
+snippet "copy(right)?" "Copyright notice" r
+`!v my#project#get("copyright")`
+endsnippet
+
 snippet date "Current date (%Y-%m-%d)"
 `!v strftime('%Y-%m-%d')`
 endsnippet
@@ -16,7 +20,10 @@ snippet Date "Current date (%B %e, %Y)"
 `!v strftime('%B %e, %Y')`
 endsnippet
 
-snippet "copy(right)?" "Copyright notice" r
-`!v my#project#get("copyright")`
+snippet now "Current date and time (%Y-%m-%d %H:%M:%S)"
+`!v strftime('%Y-%m-%d %H:%M:%S')`
 endsnippet
 
+snippet time "Current time (%H:%M:%S)"
+`!v strftime('%H:%M:%S')`
+endsnippet
