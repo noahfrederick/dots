@@ -4,7 +4,6 @@ runtime! after/ftplugin/text.vim
 
 " Turn on concealing of bold, italic markers
 setlocal conceallevel=2
-setlocal concealcursor=nc
 
 " Org-mode-like extensions to Markdown
 
