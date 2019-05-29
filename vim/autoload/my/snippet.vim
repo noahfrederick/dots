@@ -8,10 +8,16 @@ function! my#snippet#title(basename)
     unlet g:template_title
     return title
   endif
+
   if exists("b:template_title")
     " Setting b:template_title also lets us override the title
     return b:template_title
   endif
+
+  if a:basename =~# '\v\.(n?vimrc|exrc)$'
+    return 'Local configuration'
+  end
+
   " Otherwise derive from file's basename
   let title = substitute(a:basename, '\C\(\l\)\(\u\|\d\)', '\1_\l\2', 'g')
   let title = substitute(title, '^.', '\u&', 'g')
