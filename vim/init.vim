@@ -475,12 +475,10 @@ nnoremap <silent> S :<C-u>call <SID>try('SplitjoinSplit', "r\015")<CR>
 nnoremap         gJ J
 nnoremap         gS r<CR>
 
-" The arrow keys are suitable for window resizing since it's not a common
-" action and they can be mashed, unlike <C-w>+ etc.
-nnoremap <silent>    <Up> :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
-nnoremap <silent>  <Down> :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
-nnoremap <silent>  <Left> :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
-nnoremap <silent> <Right> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
+nnoremap <silent>    <A-Up> :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
+nnoremap <silent>  <A-Down> :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
+nnoremap <silent>  <A-Left> :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
+nnoremap <silent> <A-Right> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
 
 nnoremap <Leader><Leader> <C-w>p
 
