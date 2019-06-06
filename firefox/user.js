@@ -106,8 +106,3 @@ user_pref("browser.safebrowsing.blockedURIs.enabled", false);
 // Disable some built-in extensions
 user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.screenshots.disabled", true);
-
-// VimFx Preferences
-user_pref("extensions.VimFx.commands.close_tab.keys", ["x"]);
-user_pref("extensions.VimFx.commands.scroll_half_page_down.keys", ["d"]);
-user_pref("extensions.VimFx.hints.chars", "asdfghjkl;");
