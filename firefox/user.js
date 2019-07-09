@@ -129,6 +129,9 @@ user_pref("extensions.getAddons.cache.enabled", false);
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.webservice.discoverURL", "");
 
+// Disable recommended extensions spam in about:addons
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+
 // Disable back door that allows Mozilla to push experimental changes
 user_pref("app.shield.optoutstudies.enabled", false);
 user_pref("experiments.activeExperiment", false);
