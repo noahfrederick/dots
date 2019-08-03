@@ -8,7 +8,7 @@ endfunction
 
 " Append additional file type using dot syntax
 function! my#filetype#append(filetype) abort
-  if !my#filetype#(a:filetype)
+  if !my#filetype#(a:filetype) && !my#filetype#('gitcommit') && !my#filetype#('fugitive')
     let &filetype = &filetype . '.' . a:filetype
   endif
 endfunction
