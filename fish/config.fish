@@ -48,11 +48,11 @@ if status is-interactive
 	abbr --add --global ga  git add
 	abbr --add --global gaa git add --all
 	abbr --add --global gb  git branch
-	abbr --add --global gbd git branch --delete
+	abbr --add --global gbd git branch -d
 	abbr --add --global gbm git branch --merged
 	abbr --add --global gc  git commit
 	abbr --add --global gca git commit --all
-	abbr --add --global gcb git checkout --branch
+	abbr --add --global gcb git checkout -b
 	abbr --add --global gcf git commit --fixup
 	abbr --add --global gcl git clone
 	abbr --add --global gco git checkout
