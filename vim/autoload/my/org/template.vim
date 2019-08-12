@@ -87,19 +87,6 @@ function! g:my#org#template#replacements.ledger_status(context, args) abort
         \ ? ' *' : ''
 endfunction
 
-function! g:my#org#template#replacements.ledger_comment(context, args) abort
-  let prompt = get(a:args, 0, 'comment')
-  let default = get(a:args, 1, '')
-  let args = [prompt, default]
-  let val = g:my#org#template#replacements.input(a:context, args)
-
-  if empty(val)
-    return ''
-  else
-    return printf('  ;%s', val)
-  endif
-endfunction
-
 function! g:my#org#template#replacements.ledger_date(context, args) abort
   let args = ['%Y/%m/%d']
   return g:my#org#template#replacements.datetime(a:context, args)
@@ -156,6 +143,11 @@ endfunction
 function! g:my#org#template#filters.width(input, args) abort
   let width = get(a:args, 0, '')
   return printf('%'.width.'s', a:input)
+endfunction
+
+function! g:my#org#template#filters.prefix(input, args) abort
+  let prefix = get(a:args, 0, '')
+  return a:input ==# '' ? a:input : prefix.a:input
 endfunction
 
 ""
