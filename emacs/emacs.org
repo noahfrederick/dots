@@ -321,14 +321,6 @@ Never require full word answers to yes/no prompts:
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-Use a line number format that allows for five digits with some padding
-to the right of the numbers.
-
-#+NAME: appearance
-#+BEGIN_SRC emacs-lisp :tangle no
-  (setq linum-format "%5d ")
-#+END_SRC
-
 ** Popwin
 
 [[https://github.com/m2ym/popwin-el][Popwin]] forces certain buffers into a temporary window with fixed
