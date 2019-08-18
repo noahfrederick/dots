@@ -97,14 +97,20 @@ There are a few settings that are only relevant to OS X (Darwin):
          ;; BSD ls does not support --dired. Use GNU core-utils: brew install coreutils
          (when (executable-find "gls")
            (setq insert-directory-program "gls"))
-         ;; Derive PATH by running a shell so that GUI Emacs sessions have access to it
-         (use-package exec-path-from-shell
-           :ensure t
-           :config
-           (exec-path-from-shell-initialize))
          ;; Point Org to LibreOffice executable
          (when (file-exists-p "/Applications/LibreOffice.app/Contents/MacOS/soffice")
            (setq org-export-odt-convert-processes '(("LibreOffice" "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to %f%x --outdir %d %i"))))))
+#+END_SRC
+
+Derive PATH by running a shell so that GUI Emacs sessions have access to it.
+
+#+NAME: init-before
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package exec-path-from-shell
+    :ensure t
+    :if (memq window-system '(mac ns))
+    :config
+    (exec-path-from-shell-initialize))
 #+END_SRC
 
 ** Start Server
