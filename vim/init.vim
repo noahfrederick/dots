@@ -796,18 +796,28 @@ let g:projectionist_heuristics = {
       \       "skeleton": "wordpress_theme_style",
       \     },
       \   },
-      \   "gulpfile.js": {
-      \     "*.css": {
+      \   "gulpfile.js|Gulpfile.js": {
+      \     "*": {
       \       "dispatch": "gulp",
       \       "start": "gulp watch",
+      \     },
+      \     "*.css": {
+      \       "dispatch": "gulp styles",
       \     },
       \     "*.less": {
-      \       "dispatch": "gulp",
-      \       "start": "gulp watch",
+      \       "dispatch": "gulp styles",
+      \     },
+      \     "*.scss": {
+      \       "dispatch": "gulp styles",
       \     },
       \     "*.js": {
-      \       "dispatch": "gulp",
-      \       "start": "gulp watch",
+      \       "dispatch": "gulp scripts",
+      \     },
+      \     "*.html": {
+      \       "dispatch": "gulp templates",
+      \     },
+      \     "*.pug": {
+      \       "dispatch": "gulp templates",
       \     },
       \   },
       \   "addon-info.json": {
