@@ -491,6 +491,7 @@ nnoremap <silent> <A-k> :call my#window#nav('k')<CR>
 nnoremap <silent> <A-l> :call my#window#nav('l')<CR>
 
 nnoremap <A-c> <C-w>c
+nnoremap <A-q> <C-w>q
 nnoremap <A-w> <C-w>w
 
 nnoremap <A-S-h> <C-w>H
@@ -505,6 +506,7 @@ if exists(":tnoremap")
   tnoremap <silent> <A-l> <C-\><C-n>:call my#window#nav('l')<CR>
 
   tnoremap <A-c> <C-\><C-n><C-w>c
+  tnoremap <A-q> <C-\><C-n><C-w>q
   tnoremap <A-w> <C-\><C-n><C-w>w
 
   tnoremap <A-S-h> <C-\><C-n><C-w>H
