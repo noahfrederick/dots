@@ -824,6 +824,12 @@ let g:projectionist_heuristics = {
       \     "doc/*.txt":      {"type": "doc"},
       \     "README.md":      {"type": "doc"},
       \   },
+      \   "mkdocs.yml": {
+      \     "*": {
+      \       "dispatch": "mkdocs build",
+      \       "start": "mkdocs serve",
+      \     },
+      \   },
       \ }
 
 " Sparkup shadows the very useful <C-e> as well as <C-n>/<C-p>
