@@ -70,6 +70,10 @@ if status is-interactive
 	abbr --add --global gs  git status
 	abbr --add --global gsp git stash pop
 	abbr --add --global gst git stash
+	abbr --add --global gw  git switch
+	abbr --add --global gw- git switch -
+	abbr --add --global gwc git switch --create
+	abbr --add --global gwm git switch --merge
 	abbr --add --global h   homestead
 	abbr --add --global he  homestead edit
 	abbr --add --global hh  homestead halt
