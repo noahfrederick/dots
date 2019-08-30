@@ -180,7 +180,7 @@ endfunction
 
 let s:template_prototype.repo = 'default'
 let s:template_prototype.title = '{input:note name > }'
-let s:template_prototype.path = '{repo:{repo}:{title|slugify}}'
+let s:template_prototype.path = '{note:{repo}:{title|slugify}}'
 let s:template_prototype.template = []
 let s:template_prototype.edit_command = '-tabedit'
 let s:template_prototype.append = '$'

@@ -55,7 +55,7 @@ function! g:my#org#template#replacements.appendfile(context, args) abort
   return filereadable(a:context.path) ? output : ''
 endfunction
 
-function! g:my#org#template#replacements.repo(context, args) abort
+function! g:my#org#template#replacements.note(context, args) abort
   let repo = get(a:args, 0, '')
   let slug = get(a:args, 1, '')
   return my#org#repo(repo).note(slug)
