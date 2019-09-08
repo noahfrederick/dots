@@ -322,7 +322,8 @@ augroup init
   " and take up space (normally it inherits this setting like any other
   " window)
   autocmd CmdwinEnter * set nonumber
-  autocmd QuickFixCmdPost *grep* cwindow
+  autocmd QuickFixCmdPost [^l]* cwindow
+  autocmd QuickFixCmdPost l* lwindow
   autocmd WinEnter * if &previewwindow | execute "setlocal statusline=" . repeat("\u2500", winwidth(0)) | endif
   autocmd FileType fzf execute "setlocal statusline=%2*" . repeat("\u2500", winwidth(0))
 augroup END
