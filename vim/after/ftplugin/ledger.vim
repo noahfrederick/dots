@@ -63,12 +63,6 @@ function! ledger#split_prompt(...) abort
   call ledger#split(account2, amount)
 endfunction
 
-function! ledger#sort() abort
-  let view = winsaveview()
-  0/\d\{4}/,$!ledger print --sort d
-  call winrestview(view)
-endfunction
-
 function! ledger#insert_entry() abort
   call my#org#capture#it({
         \   'path': '%',
@@ -88,7 +82,6 @@ nnoremap <silent> <Plug>(ledger-toggle-state) :call ledger#transaction_state_tog
 nnoremap <silent> <Plug>(ledger-align) :LedgerAlign<CR>
 inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_cursor()<CR>
 nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
-nnoremap <silent> <Plug>(ledger-sort) :call ledger#sort()<CR>
 nnoremap <silent> <Plug>(ledger-insert-entry) :call ledger#insert_entry()<CR>
 inoremap <silent> <Plug>(ledger-insert-entry) <Esc>:call ledger#insert_entry()<CR>
 
@@ -100,8 +93,8 @@ nnoremap <buffer> <LocalLeader>a :'{,'}LedgerAlign<CR>
 xmap <buffer> <LocalLeader>a <Plug>(ledger-align)
 imap <buffer> <C-l>          <Plug>(ledger-align-amount)
 nmap <buffer> <LocalLeader>e <Plug>(ledger-entry)
-nmap <buffer> <LocalLeader>= <Plug>(ledger-sort)
-nmap <buffer> <Leader>=      <Plug>(ledger-sort)
+nnoremap <buffer> <LocalLeader>= gg:/\d\{4}/,$Sort<CR>
+nmap <buffer> <Leader>=      <LocalLeader>=
 nmap <buffer> <LocalLeader>_ <Plug>(ledger-insert-entry)
 nmap <buffer> <LocalLeader>. <Plug>(ledger-insert-entry)
 
@@ -113,6 +106,7 @@ nnoremap <C-k> zMzkzv[zzz
 nnoremap <C-j> zMzjzvzz
 
 command! -buffer -nargs=* Entry put ='' | execute 'read !ledger entry' escape(<q-args>, '$~*%') '2>/dev/null'
+command! -buffer -nargs=0 -range=% -bar Sort <line1>,<line2>!ledger -f - print --sort d
 
 let b:interesting_lines_filter = '\v^\d{4}'
 let b:accio = ['ledger']
