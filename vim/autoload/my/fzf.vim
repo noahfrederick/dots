@@ -466,13 +466,14 @@ endfunction
 " ------------------------------------------------------------------
 " Ledger
 " ------------------------------------------------------------------
-function! s:ledger_accounts() abort
-  return systemlist('ledger accounts --permissive')
+function! s:ledger_accounts(...) abort
+  let filter = get(a:000, 0, '')
+  return systemlist('ledger accounts --permissive ' . filter)
 endfunction
 
-function! my#fzf#ledger_accounts(opts, bang) abort
+function! my#fzf#ledger_accounts(filter, opts, bang) abort
   call s:fzf(extend({
-        \   'source': s:ledger_accounts(),
+        \   'source': s:ledger_accounts(a:filter),
         \ }, a:opts), a:bang)
 endfunction
 
@@ -488,7 +489,8 @@ endfunction
 
 function! my#fzf#ledger_choose_account(...) abort
   let prompt = get(a:000, 0, 'account')
-  call my#fzf#ledger_accounts({
+  let filter = get(a:000, 1, '')
+  call my#fzf#ledger_accounts(filter, {
         \ 'sink*': function('my#fzf#ledger_choose_account_callback'),
         \ 'options': '--expect=tab,ctrl-y --print-query --prompt='.shellescape(prompt.' > '),
         \ }, 0)
