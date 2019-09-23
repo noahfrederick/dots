@@ -26,7 +26,7 @@ urgency.user.tag.unplanned.coefficient=-5.0
 
 # Reports
 report.next.filter=+PENDING or (+COMPLETED and end:today)
-report.next.sort=status-,start-,urgency-,project+
+report.next.sort=status-,start+,urgency-,project+
 
 # Colors
 rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
