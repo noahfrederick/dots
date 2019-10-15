@@ -872,6 +872,9 @@ let g:ruby_no_comment_fold = 1
 let g:plug_window = '-tabnew'
 let g:plug_pwindow = 'belowright vsplit'
 
+" :help fzf
+let g:fzf_layout = {'down': '~30%'}
+
 " :help menu.vim
 let g:did_install_default_menus = 1
 let g:did_install_syntax_menu = 1

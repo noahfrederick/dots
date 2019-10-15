@@ -29,20 +29,16 @@ function! s:buflisted()
   return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
 
-function! s:fzf(opts, fullscreen)
-  return fzf#run(extend(a:opts, a:fullscreen ? {} : {'down': '~30%'}))
-endfunction
-
 let s:default_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
 
-function! s:wrap(opts)
-  return extend(copy(a:opts), {
+function! s:fzf(opts, bang)
+  return fzf#run(fzf#wrap(extend(copy(a:opts), {
         \ 'options': get(a:opts, 'options', '').s:expect(),
-        \ 'sink*':   get(a:opts, 'sink*', function('s:common_sink'))})
+        \ 'sink*':   get(a:opts, 'sink*', function('s:common_sink'))}), a:bang))
 endfunction
 
 function! s:expect()
@@ -98,7 +94,7 @@ function! my#fzf#files(dir, bang)
   let args.options .= ' --ansi --prompt '.shellescape(pathshorten(dir))
   let args.dir = dir
 
-  call s:fzf(s:wrap(args), a:bang)
+  call s:fzf(args, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -239,11 +235,11 @@ function! my#fzf#tags(bang)
     let copt = '--ansi '
   endif
 
-  call s:fzf(s:wrap({
+  call s:fzf({
         \ 'source':  proc.shellescape(fnamemodify(tagfile, ':t')),
         \ 'sink*':   function('s:tags_sink'),
         \ 'dir':     fnamemodify(tagfile, ':h'),
-        \ 'options': copt.'-m --tiebreak=begin'}), a:bang)
+        \ 'options': copt.'-m --tiebreak=begin'}, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
@@ -399,13 +395,13 @@ function! s:ag_handler(lines)
 endfunction
 
 function! my#fzf#grep(query, bang)
-  call s:fzf(s:wrap({
+  call s:fzf({
         \ 'source':  printf('ag --nogroup --column --color "%s"',
         \                   escape(empty(a:query) ? '^(?=.)' : a:query, '"\-')),
         \ 'sink*':   function('s:ag_handler'),
         \ 'options': '--ansi --delimiter : --nth 4..,.. '.
         \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
-        \            '--color hl:68,hl+:110'}), a:bang)
+        \            '--color hl:68,hl+:110'}, a:bang)
 endfunction
 
 " ------------------------------------------------------------------
