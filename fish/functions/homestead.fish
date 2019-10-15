@@ -41,7 +41,7 @@ function homestead --description 'Laravel Homestead utility'
 end
 
 function __homestead_edit
-	eval $EDITOR "$HOMESTEAD/$argv[1]"
+	__homestead_do $EDITOR $argv
 end
 
 function __homestead_do
