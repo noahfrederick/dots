@@ -22,6 +22,7 @@ function homestead --description 'Laravel Homestead utility'
 		case install
 			vagrant box add laravel/homestead
 			and git clone https://github.com/laravel/homestead.git "$HOMESTEAD"
+			and __homestead_do git checkout release
 			and __homestead_do bash init.sh
 		case update
 			__homestead_do vagrant box update
