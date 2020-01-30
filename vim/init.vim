@@ -168,8 +168,6 @@ endif
 set wildmode=full               " 'wildchar' completes first match, no extra line of candidates shown
 set wildcharm=<C-z>             " Trigger for completion in macros
 set wildignore=*.swp,*.bak
-set wildignore+=*.min.*,*.css.map
-set wildignore+=*.jpg,*.png,*.gif,*.svg
 set suffixes+=.css,.html        " Extensions that get a lower priority when matching wildcards
 set completeopt=menuone         " Display menu when completing, even for only one candidate
 set completeopt+=noselect       " Do not automatically select first item
