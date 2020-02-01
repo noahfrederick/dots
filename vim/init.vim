@@ -46,7 +46,6 @@ if has('vim_starting')
   call plug#('wellle/targets.vim', { 'tag': '*' })
   if has('mac')
     call plug#($PLUG_SRC.'/vim-codekit', { 'on': ['CKadd', 'CKfocus', 'CKpreview', 'CKpause', 'CKunpause'] })
-    call plug#('rizzatti/dash.vim', { 'on': ['Dash', '<Plug>DashSearch', '<Plug>DashGlobalSearch'] })
   endif
   if has('nvim')
     call plug#('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
@@ -546,17 +545,6 @@ cnoremap <expr> <Tab> getcmdtype() =~# '[/?]' ? "\<C-r>\<C-w>" : "\<C-z>"
 "     habēre
 nnoremap <expr> <Plug>NormalModeDigraph my#editing#normal_mode_digraph(nr2char(getchar()))
 nmap <Leader><C-k> <Plug>NormalModeDigraph
-
-" Look up documentation with Dash.app
-function! s:doc(cmd)
-  if &keywordprg =~? '^:\?man'
-    return a:cmd
-  endif
-  return "K"
-endfunction
-
-nmap <expr> K  <SID>doc("\<Plug>DashSearch")
-nmap <expr> gK <SID>doc("\<Plug>DashGlobalSearch")
 
 " Remove the last character on current line:
 " This is something I find myself doing often, but I find it difficult to hit
