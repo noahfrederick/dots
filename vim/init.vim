@@ -205,7 +205,7 @@ cnoreabbrev <expr> lgrep (getcmdtype() == ':' && getcmdline() =~# '^lgrep') ? 's
 "" Status line
 let &statusline  = ' %2*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), "[".StatuslineProject()."]"):""}'
 let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
-let &statusline .= "%*%{empty(expand('%'))?'':expand('%')}"
+let &statusline .= "%*%{empty(expand('%'))?'':&buftype==#'help'?expand('%:t'):expand('%')}"
 let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
 let &statusline .= '%1*%{&modified && !&readonly?"\u25cf ":""}%*'
 let &statusline .= '%1*%{&modified && &readonly?"\u25cb ":""}%*'
@@ -248,7 +248,7 @@ function! StatuslineIndent()
 endfunction
 
 function! StatuslineProject()
-  if empty(expand('%'))
+  if empty(expand('%')) || &buftype ==# 'help'
     return ''
   endif
   let dir = getcwd() == $HOME ? '~' : fnamemodify(getcwd(), ':t')
