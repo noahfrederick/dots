@@ -356,11 +356,11 @@ snippet mw "max-width"
 max-width: $1;
 endsnippet
 
-snippet op "opaciy"
+snippet op "opacity"
 opacity: ${1:0};
 endsnippet
 
-snippet /op([0-9]+)/ "opaciy" r
+snippet /op([0-9]+)/ "opacity" r
 opacity: 0.`!p snip.rv = match.group(1)`;
 endsnippet
 
