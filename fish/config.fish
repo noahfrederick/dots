@@ -113,7 +113,7 @@ status is-login; or exit
 #
 prepend_to_path $HOME/.rbenv/bin # For non-brew-installed rbenv
 type -fq composer; and prepend_to_path (composer config --global home)/(composer config --global bin-dir)
-type -fq rbenv;    and source (rbenv init - | psub)
+type -fq rbenv;    and rbenv init - | source
 prepend_to_path $HOME/.cargo/bin
 prepend_to_path $HOME/.local/bin
 
