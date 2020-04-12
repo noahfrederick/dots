@@ -30,7 +30,7 @@ function! ledger#split(...) abort
   if a:0 >= 1
     let account2 = a:1
   else
-    let account2 = g:LEDGER_DEFAULT_SPLIT_ACCOUNT
+    let account2 = $LEDGER_DEFAULT_SPLIT_ACCOUNT
   endif
 
   let account1 = matchstr(getline('.'), '    \zs.\+  ')
@@ -49,7 +49,7 @@ function! ledger#split_prompt(...) abort
   if a:0 >= 1
     let account2 = a:1
   else
-    let account2 = g:LEDGER_DEFAULT_SPLIT_ACCOUNT
+    let account2 = $LEDGER_DEFAULT_SPLIT_ACCOUNT
   endif
 
   let amount = input('Amount ($): ')

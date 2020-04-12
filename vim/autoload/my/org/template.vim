@@ -82,8 +82,8 @@ function! g:my#org#template#replacements.ledger_status(context, args) abort
   let to_key = get(a:args, 0, 'xact_to_account')
   let from_account = a:context.prop(from_key)
   let to_account = a:context.prop(to_key)
-  return (from_account =~# g:LEDGER_AUTO_RECONCILE_ACCOUNTS &&
-        \ (to_account !~# '^Assets:' || to_account =~# g:LEDGER_AUTO_RECONCILE_ACCOUNTS))
+  return (from_account =~# $LEDGER_AUTO_RECONCILE_ACCOUNTS &&
+        \ (to_account !~# '^Assets:' || to_account =~# $LEDGER_AUTO_RECONCILE_ACCOUNTS))
         \ ? ' *' : ''
 endfunction
 
