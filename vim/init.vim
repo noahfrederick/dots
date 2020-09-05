@@ -49,7 +49,6 @@ if has('vim_starting')
   endif
   if has('nvim')
     call plug#('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
-    call plug#('roxma/LanguageServer-php-neovim', { 'do': 'composer install && composer run-script parse-stubs' })
 
     call plug#('roxma/nvim-yarp')
     call plug#('ncm2/ncm2')
@@ -85,8 +84,7 @@ if has('vim_starting')
   call plug#($PLUG_SRC.'/vim-laravel')
   call plug#('ap/vim-css-color')
   call plug#('dbakker/vim-sparkup')
-  call plug#('phpactor/phpactor', { 'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o' })
-  call plug#('phpactor/ncm2-phpactor', { 'for': 'php' })
+  call plug#('phpactor/phpactor', { 'for': 'php', 'do': 'composer install --no-dev -o' })
   call plug#('tpope/vim-bundler')
   call plug#('tpope/vim-jdaddy', { 'for': 'json' })
   call plug#('tpope/vim-rake')
@@ -313,7 +311,6 @@ augroup init
   autocmd User Composer
         \ nmap <buffer> <LocalLeader>f <Plug>(composer-find) |
         \ nmap <buffer> <LocalLeader>u <Plug>(composer-use)
-  autocmd User Laravel call my#filetype#append('laravel')
 
   " Never show line numbers in command-line window as they are not useful
   " and take up space (normally it inherits this setting like any other
@@ -746,6 +743,9 @@ augroup END
 call ncm2#override_source('ultisnips', {'priority': 10})
 
 let g:LanguageClient_diagnosticsList = 'Location'
+let g:LanguageClient_serverCommands = {
+      \   'php': [g:plug_home..'/phpactor/bin/phpactor', 'language-server']
+      \ }
 
 let g:signify_vcs_list = ['git']
 let s:signify_sign = "\u2502"
