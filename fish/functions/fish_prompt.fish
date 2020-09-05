@@ -15,6 +15,12 @@ function fish_prompt --description 'Write out the prompt'
 		set level (math $level - 2) # nvim -> 'shell' -> fish
 	end
 
+	# Guard against negative value in certain situations (i.e., in Neovim
+	# terminal spawned outside a shell session on GNU/Linux).
+	if test $level -lt 1
+		set level 1
+	end
+
 	string repeat --no-newline --count $level '> '
 
 	set_color normal
