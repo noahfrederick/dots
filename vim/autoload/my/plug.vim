@@ -2,7 +2,7 @@
 " Maintainer: Noah Frederick
 
 function! my#plug#load_insert_mode()
-  call plug#load('ultisnips', 'lexima.vim')
+  call plug#load('lexima.vim')
 
   if &modifiable
     doautocmd FileType

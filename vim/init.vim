@@ -13,7 +13,7 @@ if has('vim_starting')
   call plug#('AndrewRadev/sideways.vim')
   call plug#('AndrewRadev/splitjoin.vim')
   call plug#('AndrewRadev/switch.vim', { 'on': 'Switch' })
-  call plug#('SirVer/ultisnips', { 'on': ['UltiSnipsAddFiletypes', 'UltiSnipsEdit'] })
+  call plug#('SirVer/ultisnips')
   call plug#('godlygeek/tabular', { 'on': 'Tabularize' })
 
   augroup init_tabular
