@@ -144,7 +144,7 @@ set -x EDITOR nvim
 #
 # MAN
 #
-set -x MANPAGER 'nvim -c "set filetype=man" -'
+set -x MANPAGER 'nvim +Man!'
 
 #
 # COLORS
