@@ -1,4 +1,5 @@
 API
+APIs
 APK
 AWS
 AdWords
@@ -23,6 +24,7 @@ DVDs
 Dropbox
 EC2
 ERB
+Emacsen
 FZF
 Firefox
 GPG
@@ -33,6 +35,7 @@ HSTS
 HTTPS
 Hammerspoon
 Homebrew
+IMAP
 IP
 IRC
 ISP
@@ -59,6 +62,7 @@ PHPUnit
 PNG
 POSIX
 Posix
+Preonic
 PrestaShop
 QuickBooks
 README
@@ -110,10 +114,13 @@ auth
 backlighting
 blog
 blogging
+build's
 characterwise
 checkbox
 checkboxes
+classified
 cleartext
+clicky
 config
 configurability
 deniability
@@ -137,12 +144,14 @@ jQuery
 jank
 karabiner
 keymap
+keymaps
 kyriarchy
 libre
 linewise
 linting
 localhost
 malware
+mana
 meetup
 metadata
 microcontroller
@@ -177,6 +186,7 @@ refactor
 sandboxing
 screenshot
 screenshots
+sigil
 sororophobia
 spacebar
 spellchecking
@@ -196,11 +206,13 @@ tmux
 toolbar
 tradeoff
 uncheck
+unhandled
 uninstall
 uninstalled
 uninstalling
 unshifted
 updatable
+username
 versioned
 viewport
 virtualization
