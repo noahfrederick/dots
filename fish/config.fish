@@ -109,6 +109,11 @@ end
 status is-login; or exit
 
 #
+# LOCALE
+#
+set -gx LANG en_US.UTF-8
+
+#
 # PATH
 #
 prepend_to_path $HOME/.rbenv/bin # For non-brew-installed rbenv
