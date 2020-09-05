@@ -711,11 +711,7 @@ nnoremap <Leader>K :Bufonly<CR>
 nnoremap <Leader>M :edit Makefile<CR>
 nnoremap <Leader>R :edit Rakefile<CR>
 nnoremap <Leader>U :edit Guardfile<CR>
-if has('nvim')
-  nnoremap <Leader>X :edit .nvimrc<CR>
-else
-  nnoremap <Leader>X :edit .vimrc<CR>
-endif
+nnoremap <Leader>X :edit .init.vim<CR>
 nnoremap <Leader>b :Zbuffers<CR>
 nnoremap <Leader>d :Zfiles $CODE/dots<CR>
 nnoremap <Leader>e :Zfiles <C-r>=expand('%:h')<CR><CR>
@@ -885,13 +881,17 @@ let g:terminal_color_14 = '#c2e6eb'
 let g:terminal_color_15 = '#ffffff'
 
 " }}}
-" Local vimrc                                                                  {{{
+" Local Configuration                                                          {{{
 " --------------------------------------------------------------------------------
 
-" Include a local configuration file if available. It is sourced at the end so
-" that any local settings override those in this file.
+" Load machine-local configuration file if available.
 let s:local = s:user_runtime . '/local.vim'
 if filereadable(s:local) | execute 'source' s:local | endif
+
+" Prompt to load directory-local configuration file if available.
+if filereadable('.init.vim') && input('Load local init file? (y/N) ') =~? '\v^y%[es]$'
+  source .init.vim
+endif
 
 " }}}
 " vim: fdm=marker:sw=2:sts=2:et
