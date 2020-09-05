@@ -42,7 +42,7 @@ color.error=white on red
 color.debug=blue
 
 # Task state
-color.completed=color8  # 'bright black' doesn't work here
+color.completed=cyan
 color.deleted=
 color.active=black on green
 color.recurring=magenta
