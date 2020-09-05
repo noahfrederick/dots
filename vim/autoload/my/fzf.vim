@@ -464,7 +464,7 @@ endfunction
 " ------------------------------------------------------------------
 function! s:ledger_accounts(...) abort
   let filter = get(a:000, 0, '')
-  return systemlist('ledger accounts --permissive ' . filter)
+  return systemlist('ledger accounts --real --permissive ' . filter)
 endfunction
 
 function! my#fzf#ledger_accounts(filter, opts, bang) abort
