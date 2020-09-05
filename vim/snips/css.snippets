@@ -49,6 +49,12 @@ snippet media "@media ... { }" b
 }
 endsnippet
 
+snippet scheme "@media (prefers-color-scheme: ...) { }" b
+@media (prefers-color-scheme: ${1:dark}) {
+	${0:${VISUAL}}
+}
+endsnippet
+
 snippet clearfix ".clearfix ... { }" b
 .clearfix::after {
 	content: "";
