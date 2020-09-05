@@ -836,7 +836,7 @@ let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_auto_insert_bullets = 0
 
 " Specify syntaxes to import for Markdown code blocks
-let g:markdown_fenced_languages = ["sh", "vim", "ruby"]
+let g:markdown_fenced_languages = ["sh", "vim", "ruby", "json"]
 
 let g:jekyll_dispatch = 'rake build'
 let g:jekyll_start = 'rake serve'
