@@ -25,6 +25,22 @@ if &modifiable
     Abolish -buffer {is,was,do,does,did,would,could,should,wo,ca}nt {}n't
     Abolish -buffer {you,they}re {}'re
   endif
+
+  command! -nargs=0 -range -bang Quote
+        \ if <bang>0 |
+        \   silent <line1>,<line2>substitute/^> //e |
+        \ else |
+        \   silent <line1>,<line2>substitute/^/> /e | silent <line1>,<line2>substitute/>\zs\s\+$//e |
+        \ endif
+
+  nnoremap <buffer><silent> <A-'> :Quote<CR>
+  nnoremap <buffer><silent> <A-"> :Quote!<CR>
+
+  xnoremap <buffer><silent> <A-'> :Quote<CR>gv
+  xnoremap <buffer><silent> <A-"> :Quote!<CR>gv
+
+  " Paste as block quote
+  nnoremap <buffer><silent> <LocalLeader>p :put<Bar>:'[,']Quote<CR>
 endif
 
 command! -nargs=+ -range=% Count <line1>,<line2>substitute/<args>//ng
