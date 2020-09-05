@@ -22,8 +22,8 @@ for [s:c, s:a] in items({'black': 30, 'red': 31, 'green': 32, 'yellow': 33, 'blu
         \ "endfunction"
 endfor
 
-function! s:fzf(opts, fullscreen) abort
-  return fzf#run(extend(a:opts, a:fullscreen ? {} : {'up': '~30%'}))
+function! s:fzf(opts, bang) abort
+  return fzf#run(fzf#wrap(a:opts, a:bang))
 endfunction
 
 let s:actions = {

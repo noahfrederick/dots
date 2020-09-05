@@ -859,7 +859,7 @@ let g:plug_window = '-tabnew'
 let g:plug_pwindow = 'belowright vsplit'
 
 " :help fzf
-let g:fzf_layout = {'down': '~30%'}
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 " :help menu.vim
 let g:did_install_default_menus = 1
