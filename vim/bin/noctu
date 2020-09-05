@@ -158,6 +158,10 @@ colorscheme 'noctu' do
     hi :markdownItalic,            italic: true
     # Polyglot ftplugin
     hl :mkdListItem,               :htmlTagName
+    # Custom extension
+    hi :markdownBlockquoteLevel1,  fg: blue
+    hi :markdownBlockquoteLevel2,  fg: green
+    hi :markdownBlockquoteLevel3,  fg: magenta
   end
 
   section 'Ruby' do

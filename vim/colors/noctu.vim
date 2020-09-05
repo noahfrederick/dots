@@ -162,6 +162,9 @@ highlight! link markdownCode String
 highlight markdownBold gui=bold cterm=bold
 highlight markdownItalic gui=italic cterm=italic
 highlight! link mkdListItem htmlTagName
+highlight markdownBlockquoteLevel1 guifg=#78c9e9 ctermfg=4 gui=NONE cterm=NONE
+highlight markdownBlockquoteLevel2 guifg=#beda3f ctermfg=2 gui=NONE cterm=NONE
+highlight markdownBlockquoteLevel3 guifg=#b88eec ctermfg=5 gui=NONE cterm=NONE
 
 "}}}
 " Ruby {{{
