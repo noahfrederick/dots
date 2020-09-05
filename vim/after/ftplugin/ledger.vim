@@ -84,6 +84,10 @@ inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_curso
 nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
 nnoremap <silent> <Plug>(ledger-insert-entry) :call ledger#insert_entry()<CR>
 inoremap <silent> <Plug>(ledger-insert-entry) <Esc>:call ledger#insert_entry()<CR>
+nmap <silent> <Plug>(ledger-reconcile-put) <Plug>(ledger-toggle-state)<C-w>wdap<C-w>w
+nmap <silent> <Plug>(ledger-reconcile-get) <C-w>wdap<C-w>wp<Plug>(ledger-toggle-state)
+nnoremap <silent> <Plug>(ledger-reconcile-discard) <C-w>wdap<C-w>w
+nnoremap <silent> <Plug>(ledger-fixme) :put='    ;:fixme:'<CR>
 
 nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
@@ -97,6 +101,10 @@ nnoremap <buffer> <LocalLeader>= gg:/\d\{4}/,$Sort<CR>
 nmap <buffer> <Leader>=      <LocalLeader>=
 nmap <buffer> <LocalLeader>_ <Plug>(ledger-insert-entry)
 nmap <buffer> <LocalLeader>. <Plug>(ledger-insert-entry)
+nmap <buffer> <LocalLeader>] <Plug>(ledger-reconcile-put)
+nmap <buffer> <LocalLeader>[ <Plug>(ledger-reconcile-get)
+nmap <buffer> <LocalLeader><BS> <Plug>(ledger-reconcile-discard)
+nmap <buffer> <LocalLeader>f <Plug>(ledger-fixme)
 
 cnoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
 inoremap <buffer> <C-g><C-t> <C-r>=strftime('%Y/%m/%d')<CR>
