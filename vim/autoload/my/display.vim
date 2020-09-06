@@ -14,6 +14,7 @@ function! my#display#refresh() abort
 
   redraw!
   syntax sync fromstart
+  echo
 endfunction
 
 " vim: fdm=marker:sw=2:sts=2:et
