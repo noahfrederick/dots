@@ -436,6 +436,8 @@ else
   command! -nargs=0 -bar Shell shell
 endif
 
+command! -nargs=? -range=% Pup execute '<line1>,<line2>!pup' '--indent' shiftwidth() empty(<q-args>) ? '' : shellescape(<q-args>)
+
 " }}}
 " Mappings                                                                     {{{
 " --------------------------------------------------------------------------------
