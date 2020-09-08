@@ -10,6 +10,8 @@ if has('vim_starting')
   let $PLUG_SRC = exists('$CODE') ? $CODE : 'noahfrederick'
 
   " General-purpose utilities
+  call plug#($PLUG_SRC.'/vim-notes')
+  " call plug#($PLUG_SRC.'/notes')
   call plug#('AndrewRadev/sideways.vim')
   call plug#('AndrewRadev/splitjoin.vim')
   call plug#('AndrewRadev/switch.vim', { 'on': 'Switch' })
@@ -350,24 +352,6 @@ augroup init_whitespace
   autocmd FileType vim-plug silent! call matchdelete(1)
 augroup END
 
-augroup init_org
-  autocmd!
-
-  if exists('$NOTES') && filereadable($NOTES.'/.repos.json')
-    let g:my#org#repos = json_decode(readfile($NOTES.'/.repos.json'))
-
-    if filereadable($NOTES.'/.capture.json')
-      let g:my#org#capture#templates = json_decode(readfile($NOTES.'/.capture.json'))
-
-      execute 'autocmd BufWritePost'
-            \ join([g:my#org#repos.journal.'/*.md', g:my#org#repos.default.'/.agenda.html.erb'], ',')
-            \ 'Dispatch mkagenda --agent nvim'
-    endif
-  endif
-
-  autocmd BufReadCmd capture://* nested call my#org#protocol#capture(expand('<afile>'))
-augroup END
-
 " }}}
 " User-Defined Commands                                                        {{{
 " --------------------------------------------------------------------------------
@@ -385,20 +369,6 @@ command! -bang -nargs=0 -bar Cd cd<bang> .
 command! -bang -nargs=0 -bar -count=8 Indent call my#editing#set_indent_style(<count>, <bang>0)
 command! -bang -nargs=1 -bar -complete=help Help <mods> help<bang> <args> |
       \ let @* = printf('[`:help %s`](https://vimhelp.appspot.com/%s.html#%s)', escape(<q-args>, '`[]'), expand('%:t'), escape(<q-args>, '()'))
-
-command! -bar -bang -nargs=? -complete=customlist,my#org#complete_repos
-      \ Notes call my#org#fzf#notes(<q-args>, <bang>0)
-command! -bar -bang -nargs=? -complete=customlist,my#org#complete_repos
-      \ NoteGrep call my#org#fzf#grep(<q-args>, <bang>0)
-command! -bar -bang -nargs=? -complete=customlist,my#org#capture#complete_templates -range
-      \ Capture if empty(<q-args>) |
-      \              call my#org#fzf#capture(<q-bang>) |
-      \            elseif <bang>0 |
-      \              call my#org#capture#it(<q-args>, {'edit_command': 'edit'}) |
-      \            else |
-      \              call my#org#capture#it(<q-args>) |
-      \            endif
-command! -bang -bar -nargs=0 ShoppingList call my#org#shopping#list(<bang>0)
 
 " See the difference between the current buffer and the file it was loaded
 " from, thus the changes you made.
@@ -733,7 +703,7 @@ nnoremap <Leader>s :Scratch<CR>
 
 nnoremap <Leader>n  :Notes<CR>
 nnoremap <Leader>c  :Capture<CR>
-xnoremap <Leader>c  :Capture<Space>
+nnoremap <Leader>.  :.Capture<CR>
 
 " }}}
 " Plug-in Settings                                                             {{{

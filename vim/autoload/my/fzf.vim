@@ -505,7 +505,7 @@ function! my#fzf#ledger_choose_account_callback(lines) abort
     let account = a:lines[0]
   endif
 
-  return my#org#capture#resume(account)
+  return notes#capture#resume(account)
 endfunction
 
 function! my#fzf#ledger_choose_payee(...) abort
@@ -529,7 +529,7 @@ function! my#fzf#ledger_choose_payee_callback(lines) abort
     let payee = a:lines[0]
   endif
 
-  return my#org#capture#resume(payee)
+  return notes#capture#resume(payee)
 endfunction
 
 " vim:set et sw=2:
