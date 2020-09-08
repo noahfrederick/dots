@@ -195,12 +195,19 @@ bottom of the window. This defines a custom mode line format:
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package powerline
-	:ensure t
+    :ensure t
     :config
-    (progn
-      (setq-default powerline-default-separator
-                    (if (display-graphic-p) 'wave 'utf-8))
-      (powerline-default-theme)))
+    (setq-default powerline-default-separator
+                  (if (display-graphic-p) 'wave 'utf-8))
+    (powerline-default-theme))
+#+END_SRC
+
+Hide select minor modes from mode-line:
+
+#+NAME: init-before
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package diminish
+    :ensure t)
 #+END_SRC
 
 ** UI
@@ -228,7 +235,7 @@ so that it doesn't leave stray customizations behind.
 #+NAME: appearance
 #+BEGIN_SRC emacs-lisp :tangle no
   (defadvice load-theme (before theme-dont-propagate activate)
-   (mapc #'disable-theme custom-enabled-themes))
+    (mapc #'disable-theme custom-enabled-themes))
 #+END_SRC
 
 We also set the font while specifying a couple fallbacks. The last
@@ -333,12 +340,9 @@ height that spans the entire width of the frame.
     :commands popwin-mode
     :defer 2
     :config
-    (progn
-      (popwin-mode 1)
-      (push '("*Org Agenda*" :width 82 :position right :dedicated t :stick t) popwin:special-display-config)
-      (push '("*helm*" :height 20) popwin:special-display-config)
-      (push '("^\*helm .+\*$" :regexp t :height 20) popwin:special-display-config)
-      (push '("*Compile-Log*" :height 20 :noselect t) popwin:special-display-config)))
+    (popwin-mode 1)
+    (push '("*Org Agenda*" :width 82 :position right :dedicated t :stick t) popwin:special-display-config)
+    (push '("*Compile-Log*" :height 20 :noselect t) popwin:special-display-config))
 #+END_SRC
 
 ** Delimiters
@@ -351,9 +355,7 @@ Lisp's parenthesis-heavy syntax.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package rainbow-delimiters
     :ensure t
-    :commands rainbow-delimiters-mode
-    :init
-    (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode))
+    :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 #+END_SRC
 
 Highlight matching parenthesis, brace, etc.
@@ -372,9 +374,7 @@ corresponding colored background.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package rainbow-mode
     :ensure t
-    :commands rainbow-turn-on
-    :init
-    (add-hook 'prog-mode-hook 'rainbow-turn-on)
+    :hook (prog-mode . rainbow-turn-on)
     :config
     (setq rainbow-x-colors nil))
 #+END_SRC
@@ -383,18 +383,40 @@ corresponding colored background.
 
 ** General
 
-Instantly display current key sequence in mini buffer:
+General.el is an abstraction layer over ~define-key~ and related APIs
+with Evil-mode support.
 
-#+NAME: evil
+#+NAME: init-before
 #+BEGIN_SRC emacs-lisp :tangle no
-  (setq echo-keystrokes 0.02)
+  (use-package general
+    :ensure t
+    :init
+    (general-create-definer my-leader-def
+      :states '(normal motion)
+      :keymaps 'override
+      :prefix "SPC")
+    (general-create-definer my-local-leader-def
+      :states '(normal motion)
+      :keymaps 'normal
+      :prefix "m")
+    :config
+    (my-leader-def
+      "" '(nil :which-key "leader prefix")
+      "=" 'my-indent-buffer
+      "k" 'kill-this-buffer
+      "T" 'my-write-timestamped-current-file-copy
+      "w" 'whitespace-cleanup
+      "y" 'my-yank-buffer
+      "z" 'my-narrow-or-widen)
+    (my-local-leader-def
+      "" '(nil :which-key "local leader prefix")))
 #+END_SRC
 
 When opening a new line with =RET=, indent it appropriately:
 
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
-  (global-set-key (kbd "RET") 'newline-and-indent)
+  (general-def 'insert "RET" 'newline-and-indent)
 #+END_SRC
 
 ** Evil
@@ -402,143 +424,96 @@ When opening a new line with =RET=, indent it appropriately:
 Evil mode is a minor mode providing Vim emulation for Emacs. It
 reproduces Vim's modal editing and even certain Ex commands.
 
-Evil Leader mode provides something like Vim's =<Leader>=, which is
-set to =SPC= below. Here are the conventions used throughout the
-configuration around "namespacing" sets of commands bound to the
-leader key:
+General provides something like Vim's =<Leader>=, which is set to =SPC=
+above. Here are the conventions used throughout the configuration
+around "namespacing" sets of commands bound to the leader key:
 
 | Key | Description                 |
 |-----+-----------------------------|
 | =g=   | Git functions (via Magit)   |
-| =o=   | Option (minor-mode) toggles |
 | =r=   | Global Org mode functions   |
-
-(Evil Leader mode has to be initialized before Evil mode to work
-around [[https://github.com/cofi/evil-leader/issues/10][a limitation]].)
 
 #+NAME: evil
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package evil
     :ensure t
     :init
-    (progn
-      (setq evil-want-C-w-in-emacs-state t)
-      (use-package evil-leader
-        :ensure t
-        :config
-        (progn
-          (evil-leader/set-leader "<SPC>")
-          (global-evil-leader-mode 1)
-
-          (defun my-declare-prefix (prefix name)
-            "Declare a prefix PREFIX. PREFIX is a string describing
-  a key sequence. NAME is a symbol name used as the prefix command."
-            (let ((command (intern (concat "group:" name))))
-              ;; Define the prefix command only if it does not already exist
-              (unless (lookup-key evil-leader--default-map prefix)
-                (define-prefix-command command)
-                (evil-leader/set-key prefix command))))
-
-          ;; Define prefix commands for the sake of guide-key
-          (setq my-key-binding-prefixes '(("g" . "git")
-                                           ("m" . "mode")
-                                           ("o" . "toggle")
-                                           ("r" . "org")))
-
-          (mapc (lambda (x) (my-declare-prefix (car x) (cdr x)))
-                my-key-binding-prefixes)
-
-          (evil-leader/set-key
-            "SPC" 'smex
-            "m SPC" 'smex-major-mode-commands
-            "=" 'my-indent-buffer
-            "b" 'ido-switch-buffer
-            "B" 'ibuffer
-            "d" 'projectile-find-dir
-            "D" 'dired
-            "e" 'ido-find-file
-            "f" 'projectile-find-file
-            "k" 'kill-this-buffer
-            "K" 'dash-at-point
-            "p" 'projectile-switch-project
-            "P" 'paradox-list-packages
-            "s" 'ansi-term
-            "T" 'my-write-timestamped-current-file-copy
-            "u" 'undo-tree-visualize
-            "w" 'whitespace-cleanup
-            "y" 'my-yank-buffer
-            "z" 'my-narrow-or-widen
-            ;; Option toggle
-            "o l" 'whitespace-mode
-            "o n" 'linum-mode
-            "o q" 'auto-fill-mode
-            "o w" 'visual-line-mode)))
-
-      (use-package evil-numbers
-        :ensure t
-        :config
-        (progn
-          (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
-          (define-key evil-normal-state-map "_" 'evil-numbers/dec-at-pt))))
+    (setq evil-want-C-w-in-emacs-state t)
     :config
-    (progn
-      (setq evil-default-cursor '("DodgerBlue1" box)
-            evil-normal-state-cursor '("orange" box)
-            evil-emacs-state-cursor '("pink" box)
-            evil-motion-state-cursor '("SeaGreen1" box)
-            evil-insert-state-cursor '("orange" bar)
-            evil-visual-state-cursor '("orange" hbar)
-            evil-replace-state-cursor '("orange" hbar))
+    (setq evil-default-cursor '("DodgerBlue1" box)
+          evil-normal-state-cursor '("orange" box)
+          evil-emacs-state-cursor '("pink" box)
+          evil-motion-state-cursor '("SeaGreen1" box)
+          evil-insert-state-cursor '("orange" bar)
+          evil-visual-state-cursor '("orange" hbar)
+          evil-replace-state-cursor '("orange" hbar))
 
-      (evil-mode 1)
+    (evil-mode 1)
 
-      ;; Override the starting state in a few major modes
-      (evil-set-initial-state 'magit-mode 'emacs)
-      (evil-set-initial-state 'org-agenda-mode 'emacs)
-      (evil-set-initial-state 'package-menu-mode 'motion)
-      (evil-set-initial-state 'paradox-menu-mode 'motion)
-      (evil-set-initial-state 'mu4e-main-mode 'motion)
-      (evil-set-initial-state 'mu4e-view-mode 'motion)
-      (evil-set-initial-state 'mu4e-headers-mode 'motion)
-      (evil-set-initial-state 'elfeed-search-mode 'motion)
-      (evil-set-initial-state 'elfeed-show-mode 'motion)
+    ;; Override the starting state in a few major modes
+    (evil-set-initial-state 'magit-mode 'emacs)
+    (evil-set-initial-state 'org-agenda-mode 'emacs)
+    (evil-set-initial-state 'package-menu-mode 'motion)
+    (evil-set-initial-state 'paradox-menu-mode 'motion)
+    (evil-set-initial-state 'mu4e-main-mode 'motion)
+    (evil-set-initial-state 'mu4e-view-mode 'motion)
+    (evil-set-initial-state 'mu4e-headers-mode 'motion)
+    (evil-set-initial-state 'elfeed-search-mode 'motion)
+    (evil-set-initial-state 'elfeed-show-mode 'motion)
 
-      ;; Reclaim useful keys from evil-motion-state-map
-      (define-key evil-motion-state-map (kbd "RET") nil)
-      (define-key evil-motion-state-map (kbd "TAB") nil)
+    ;; Reclaim useful keys from evil-motion-state-map
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil)
 
-      (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+    (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
 
-      (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-      (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-      (define-key evil-normal-state-map "Y" (kbd "y$"))
+    (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+    (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+    (define-key evil-normal-state-map "Y" (kbd "y$"))
 
-      ;; Experimental alternative to C-d, C-u
-      (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-up)
-      (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-down)
-      (define-key evil-motion-state-map (kbd "C-k") 'evil-scroll-up)
-      (define-key evil-motion-state-map (kbd "C-j") 'evil-scroll-down)
+    ;; Experimental alternative to C-d, C-u
+    (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-up)
+    (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-down)
+    (define-key evil-motion-state-map (kbd "C-k") 'evil-scroll-up)
+    (define-key evil-motion-state-map (kbd "C-j") 'evil-scroll-down)
 
-      ;; Commentary.vim
-      (use-package evil-operator-comment
-        :config
-        (global-evil-operator-comment-mode 1))
+    ;; Vinegar.vim
+    (autoload 'dired-jump "dired-x"
+      "Jump to Dired buffer corresponding to current buffer." t)
+    (define-key evil-normal-state-map "-" 'dired-jump)
+    (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 
-      ;; Vinegar.vim
-      (autoload 'dired-jump "dired-x"
-        "Jump to Dired buffer corresponding to current buffer." t)
-      (define-key evil-normal-state-map "-" 'dired-jump)
-      (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
+    ;; Unimpaired.vim
+    (define-key evil-normal-state-map (kbd "[ SPC")
+      (lambda () (interactive) (evil-insert-newline-above) (forward-line)))
+    (define-key evil-normal-state-map (kbd "] SPC")
+      (lambda () (interactive) (evil-insert-newline-below) (forward-line -1)))
+    (define-key evil-normal-state-map (kbd "[ e") (kbd "ddkP"))
+    (define-key evil-normal-state-map (kbd "] e") (kbd "ddp"))
+    (define-key evil-normal-state-map (kbd "[ b") 'previous-buffer)
+    (define-key evil-normal-state-map (kbd "] b") 'next-buffer))
+#+END_SRC
 
-      ;; Unimpaired.vim
-      (define-key evil-normal-state-map (kbd "[ SPC")
-        (lambda () (interactive) (evil-insert-newline-above) (forward-line)))
-      (define-key evil-normal-state-map (kbd "] SPC")
-        (lambda () (interactive) (evil-insert-newline-below) (forward-line -1)))
-      (define-key evil-normal-state-map (kbd "[ e") (kbd "ddkP"))
-      (define-key evil-normal-state-map (kbd "] e") (kbd "ddp"))
-      (define-key evil-normal-state-map (kbd "[ b") 'previous-buffer)
-      (define-key evil-normal-state-map (kbd "] b") 'next-buffer)))
+Evil-numbers implements Vim's =<C-a>= / =<C-x>=:
+
+#+NAME: evil
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package evil-numbers
+    :ensure t
+    :requires evil
+    :general
+    (general-def 'normal "+" 'evil-numbers/inc-at-pt)
+    (general-def 'normal "_" 'evil-numbers/dec-at-pt))
+#+END_SRC
+
+Evil-operator-comment implements commentary.vim:
+
+#+NAME: evil
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package evil-operator-comment
+    :requires evil
+    :config
+    (global-evil-operator-comment-mode 1))
 #+END_SRC
 
 Additionally, let's make =ESC= work more or less like it does in
@@ -605,37 +580,37 @@ These packages provide various conveniences for editing.
     :commands smartparens-global-mode
     :defer 2
     :config
-    (progn
-      (smartparens-global-mode t)
+    (smartparens-global-mode t)
+
+    ;; Fix handling of {} and [] when hitting RET inside
+    (defun my-sp/pair-on-newline (id action context)
+      "Put trailing pair on newline and return to point."
+      (save-excursion
+        (newline)
+        (indent-according-to-mode)))
+
+    (defun my-sp/pair-on-newline-and-indent (id action context)
+      "Open a new brace or bracket expression, with relevant newlines and indent."
+      (my-sp/pair-on-newline id action context)
+      (indent-according-to-mode))
+
+    (sp-pair "{" nil :post-handlers
+             '(:add ((lambda (id action context)
+                       (my-sp/pair-on-newline-and-indent id action context)) "RET")))
+    (sp-pair "[" nil :post-handlers
+             '(:add ((lambda (id action context)
+                       (my-sp/pair-on-newline-and-indent id action context)) "RET")))
+    :general
+    (general-def 'normal emacs-lisp-mode-map
       ;; Smartparens manipulations
       ;; See all of them here:
       ;; https://github.com/Fuco1/smartparens/wiki/Working-with-expressions
-      (evil-define-key 'normal emacs-lisp-mode-map
-        (kbd "C-S-k") 'sp-split-sexp
-        (kbd "C-S-j") 'sp-join-sexp
-        (kbd "C-S-l") 'sp-forward-slurp-sexp
-        (kbd "C-S-h") 'sp-backward-slurp-sexp
-        (kbd "C-M-l") 'sp-forward-barf-sexp
-        (kbd "C-M-h") 'sp-backward-barf-sexp)
-
-      ;; Fix handling of {} and [] when hitting RET inside
-      (defun my-sp/pair-on-newline (id action context)
-        "Put trailing pair on newline and return to point."
-        (save-excursion
-          (newline)
-          (indent-according-to-mode)))
-
-      (defun my-sp/pair-on-newline-and-indent (id action context)
-        "Open a new brace or bracket expression, with relevant newlines and indent."
-        (my-sp/pair-on-newline id action context)
-        (indent-according-to-mode))
-
-      (sp-pair "{" nil :post-handlers
-               '(:add ((lambda (id action context)
-                         (my-sp/pair-on-newline-and-indent id action context)) "RET")))
-      (sp-pair "[" nil :post-handlers
-               '(:add ((lambda (id action context)
-                         (my-sp/pair-on-newline-and-indent id action context)) "RET")))))
+      "C-S-k" 'sp-split-sexp
+      "C-S-j" 'sp-join-sexp
+      "C-S-l" 'sp-forward-slurp-sexp
+      "C-S-h" 'sp-backward-slurp-sexp
+      "C-M-l" 'sp-forward-barf-sexp
+      "C-M-h" 'sp-backward-barf-sexp))
 #+END_SRC
 
 When proper source control isn't an option, it's useful to be able
@@ -689,7 +664,6 @@ works like that from [[https://github.com/tpope/vim-eunuch][eunuch.vim]].
       (when current
         (delete-file current))))
 
-
   (with-eval-after-load 'evil
     (evil-ex-define-cmd "R[emove]" 'my-delete-current-file))
 #+END_SRC
@@ -716,12 +690,12 @@ accomplishes.
                move-border-right
                move-border-up
                move-border-down)
-    :init
-    (progn
-      (define-key evil-normal-state-map (kbd "<left>") 'move-border-left)
-      (define-key evil-normal-state-map (kbd "<right>") 'move-border-right)
-      (define-key evil-normal-state-map (kbd "<up>") 'move-border-up)
-      (define-key evil-normal-state-map (kbd "<down>") 'move-border-down)))
+    :general
+    (general-def 'normal
+      "<left>"  'move-border-left
+      "<right>" 'move-border-right
+      "<up>"    'move-border-up
+      "<down>"  'move-border-down))
 #+END_SRC
 
 Here we create a mapping to narrow the buffer in an intelligent way
@@ -760,13 +734,9 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq-default indent-tabs-mode nil)
 
-  (defun my-indent-use-tabs ()
-    (setq indent-tabs-mode t))
-  (add-hook 'markdown-mode-hook 'my-indent-use-tabs)
-  (add-hook 'web-mode-hook 'my-indent-use-tabs)
-
   (use-package dtrt-indent
     :ensure t
+    :diminish dtrt-indent-mode
     :config (dtrt-indent-mode 1))
 #+END_SRC
 
@@ -779,30 +749,29 @@ based on the concept in [[http://endlessparentheses.com/emacs-narrow-or-widen-dw
     :commands (whitespace-cleanup
                whitespace-mode)
     :config
-    (progn
-      (setq whitespace-line-column nil) ; Use value of fill-column
-      (setq whitespace-style '(face
-                               tabs
-                               spaces
-                               trailing
-                               lines-tail
-                               space-before-tab
-                               newline
-                               indentation
-                               empty
-                               space-after-tab
-                               space-mark
-                               tab-mark
-                               newline-mark))))
+    (setq whitespace-line-column nil) ; Use value of fill-column
+    (setq whitespace-style '(face
+                             tabs
+                             spaces
+                             trailing
+                             lines-tail
+                             space-before-tab
+                             newline
+                             indentation
+                             empty
+                             space-after-tab
+                             space-mark
+                             tab-mark
+                             newline-mark)))
 
   (defun my-indent-buffer ()
-          (interactive)
-          (save-excursion
-                  (indent-region (point-min) (point-max) nil)))
+    (interactive)
+    (save-excursion
+      (indent-region (point-min) (point-max) nil)))
 
   (defun my-show-trailing-whitespace ()
-          (interactive)
-          (setq show-trailing-whitespace t))
+    (interactive)
+    (setq show-trailing-whitespace t))
 
   (add-hook 'prog-mode-hook
             'my-show-trailing-whitespace)
@@ -813,9 +782,11 @@ is 80. We adjust this value for specific modes as needed.
 
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
-  (setq comment-auto-fill-only-comments t)
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
-  (add-hook 'prog-mode-hook 'turn-on-auto-fill)
+  (use-package auto-fill-mode
+    :hook ((text-mode . turn-on-auto-fill)
+           (prog-mode . turn-on-auto-fill))
+    :init
+    (setq comment-auto-fill-only-comments t))
 #+END_SRC
 
 ** Spelling
@@ -827,15 +798,10 @@ Use aspell for spell checking: =brew install aspell --lang=en=
   (use-package flyspell
     :ensure t
     :defer 2
-    :init
-    (defun my-flyspell-setup ()
-      "Setup of flyspell-mode."
-      (add-hook 'text-mode-hook 'flyspell-mode)
-      (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+    :hook ((text-mode . flyspell-mode)
+           (prog-mode . flyspell-prog-mode))
     :config
-    (progn
-      (setq ispell-program-name "aspell")
-      (my-flyspell-setup)))
+    (setq ispell-program-name "aspell"))
 #+END_SRC
 
 ** Syntax Checking
@@ -849,9 +815,8 @@ Use [[https://github.com/flycheck/flycheck][Flycheck]] to validate syntax on the
     :commands global-flycheck-mode
     :defer 2
     :config
-    (progn
-      (global-flycheck-mode 1)
-      (setq-default flycheck-disabled-checkers '(html-tidy emacs-lisp-checkdoc))))
+    (global-flycheck-mode 1)
+    (setq-default flycheck-disabled-checkers '(html-tidy emacs-lisp-checkdoc)))
 #+END_SRC
 
 ** Version Control and History
@@ -866,7 +831,9 @@ visualized and traversed in another window.
     :diminish undo-tree-mode
     :config
     (setq undo-tree-visualizer-diff t
-          undo-tree-visualizer-timestamps t))
+          undo-tree-visualizer-timestamps t)
+    :general
+    (my-leader-def "u" 'undo-tree-visualize))
 #+END_SRC
 
 Magit provides featureful Git integration.
@@ -875,21 +842,20 @@ Magit provides featureful Git integration.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package magit
     :ensure t
-    :commands (magit-status magit-diff magit-log magit-blame-mode)
-    :init
-    (evil-leader/set-key
+    :general
+    (general-def 'normal magit-mode-map
+      "\C-w" 'evil-window-map)
+    (general-def 'emacs magit-mode-map
+      "j" 'magit-goto-next-section
+      "k" 'magit-goto-previous-section
+      "K" 'magit-discard-item) ; k
+    (my-leader-def
+      "g" '(nil :which-key "git")
       "g s" 'magit-status
       "g b" 'magit-blame-mode
       "g l" 'magit-log
       "g d" 'magit-diff
-      "g r" 'vc-revert)
-    :config
-    (progn
-      (evil-make-overriding-map magit-mode-map 'emacs)
-      (define-key magit-mode-map "\C-w" 'evil-window-map)
-      (evil-define-key 'emacs magit-mode-map "j" 'magit-goto-next-section)
-      (evil-define-key 'emacs magit-mode-map "k" 'magit-goto-previous-section)
-      (evil-define-key 'emacs magit-mode-map "K" 'magit-discard-item))) ; k
+      "g r" 'vc-revert))
 #+END_SRC
 
 [[https://github.com/syohex/emacs-git-gutter-fringe][git-gutter-fringe]] shows the version control status of lines in the
@@ -901,12 +867,10 @@ use the fringe (and don't work in a terminal).
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package git-gutter-fringe
     :ensure t
-    :diminish git-gutter-mode
-    :config
-    (progn
-      (global-git-gutter-mode t)
-
-      (evil-leader/set-key "g u u" 'global-git-gutter-mode)))
+    :init
+    (global-git-gutter-mode t)
+    :general
+    (my-leader-def "g u" 'global-git-gutter-mode))
 #+END_SRC
 
 ** Languages
@@ -916,19 +880,17 @@ use the fringe (and don't work in a terminal).
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package emacs-lisp-mode
-    :init
-    (progn
-      (evil-leader/set-key-for-mode 'emacs-lisp-mode
-        "m C" 'byte-compile-file
-        "m e" 'eval-defun
-        "m E" 'eval-buffer
-        "m x" 'eval-last-sexp
-        "m X" 'eval-print-last-sexp)
+    :mode ("Cask" . emacs-lisp-mode)
+    :general
+    (my-local-leader-def emacs-lisp-mode
+      "C" 'byte-compile-file
+      "e" 'eval-defun
+      "E" 'eval-buffer
+      "x" 'eval-last-sexp
+      "X" 'eval-print-last-sexp))
 
-      (use-package eldoc
-        :commands turn-on-eldoc-mode
-        :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)))
-    :mode ("Cask" . emacs-lisp-mode))
+  (use-package eldoc
+    :hook (emacs-lisp-mode . turn-on-eldoc-mode))
 
   (defun my-byte-recompile ()
     "`byte-compile' every .el file under `user-emacs-directory' recursively"
@@ -960,24 +922,24 @@ command-line accounting program.
     :ensure t
     :mode (("\\.ledger\\'" . ledger-mode))
     :config
-    (progn
-      (setq ledger-post-use-completion-engine :ido)
-      (evil-leader/set-key-for-mode 'ledger-mode
-        "m a" 'ledger-add-transaction
-        "m b" 'ledger-post-edit-amount
-        "m c" 'ledger-toggle-current
-        "m D" 'ledger-delete-current-transaction
-        "m p" 'ledger-display-balance-at-point
-        "m q" 'ledger-post-align-xact
-        "m Q" 'ledger-mode-clean-buffer
-        "m r" 'ledger-report
-        "m R" 'ledger-reconcile
-        "m /" 'my-ledger-post-split-evenly
-        "m ?" 'my-ledger-post-split
-        "m s" 'ledger-display-ledger-stats
-        "m t" 'ledger-insert-effective-date
-        "m y" 'ledger-set-year
-        "m m" 'ledger-set-month)))
+    (setq ledger-post-use-completion-engine :ido)
+    :general
+    (my-local-leader-def ledger-mode
+      "a" 'ledger-add-transaction
+      "b" 'ledger-post-edit-amount
+      "c" 'ledger-toggle-current
+      "D" 'ledger-delete-current-transaction
+      "p" 'ledger-display-balance-at-point
+      "q" 'ledger-post-align-xact
+      "Q" 'ledger-mode-clean-buffer
+      "r" 'ledger-report
+      "R" 'ledger-reconcile
+      "/" 'my-ledger-post-split-evenly
+      "?" 'my-ledger-post-split
+      "s" 'ledger-display-ledger-stats
+      "t" 'ledger-insert-effective-date
+      "y" 'ledger-set-year
+      "m" 'ledger-set-month))
 #+END_SRC
 
 These are helper functions I use to manage my ledger file.
@@ -1039,12 +1001,11 @@ requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode
   (use-package restclient
     :ensure t
     :mode ("\\.http\\'" . restclient-mode)
-    :config
-    (progn
-      (evil-leader/set-key-for-mode 'restclient-mode
-        "m m" 'restclient-http-send-current-stay-in-window
-        "m s" 'restclient-http-send-current-stay-in-window
-        "m S" 'restclient-http-send-current)))
+    :general
+    (my-local-leader-def restclient-mode
+      "m" 'restclient-http-send-current-stay-in-window
+      "s" 'restclient-http-send-current-stay-in-window
+      "S" 'restclient-http-send-current))
 #+END_SRC
 
 *** Ruby
@@ -1061,10 +1022,8 @@ requests. Also there's an [[http://emacsrocks.com/e15.html][Emacs Rocks! episode
            ("Capfile\\'" . enh-ruby-mode)
            ("Puppetfile\\'" . enh-ruby-mode)
            ("Guardfile\\'" . enh-ruby-mode))
-    :init
-    (progn
-      (add-hook 'enh-ruby-mode-hook 'robe-mode)
-      (add-hook 'robe-mode-hook 'ac-robe-setup)))
+    :hook ((enh-ruby-mode . robe-mode)
+           (robe-mode . ac-robe-setup)))
 #+END_SRC
 
 *** Web
@@ -1098,12 +1057,11 @@ Use [[https://github.com/capitaomorte/yasnippet][YASnippet]] for snippets:
     :diminish yas-minor-mode
     :defer 2
     :config
-    (progn
-      ;; Suppress excessive log messages
-      (setq yas-verbosity 1
-            yas-prompt-functions '(yas-ido-prompt)
-            yas-snippet-dir (expand-file-name "snippets" user-emacs-directory))
-      (yas-global-mode t)))
+    ;; Suppress excessive log messages
+    (setq yas-verbosity 1
+          yas-prompt-functions '(yas-ido-prompt)
+          yas-snippet-dir (expand-file-name "snippets" user-emacs-directory))
+    (yas-global-mode t))
 #+END_SRC
 
 ** Expansion
@@ -1112,7 +1070,7 @@ Use [[http://www.gnu.org/software/emacs/manual/html_node/autotype/Hippie-Expand.
 
 #+NAME: editing
 #+BEGIN_SRC emacs-lisp :tangle no
-  (global-set-key (kbd "M-/") 'hippie-expand)
+  (general-def 'insert "M-/" 'hippie-expand)
 #+END_SRC
 
 * Navigation and Completion
@@ -1134,33 +1092,38 @@ Place the point where we left it when last visiting the same file.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ido
     :config
-    (progn
-      (ido-mode t)
-      (ido-everywhere t)
+    (ido-mode t)
+    (ido-everywhere t)
 
-      (use-package ido-completing-read+
-        :ensure t
-        :config (ido-ubiquitous-mode t)))
+    (setq ido-enable-flex-matching t
+          ido-use-virtual-buffers t
+          ido-create-new-buffer 'always) ; Do not prompt when creating new file
 
-      (setq ido-enable-flex-matching t
-            ido-use-virtual-buffers t
-            ido-create-new-buffer 'always) ; Do not prompt when creating new file
-      (add-to-list 'ido-ignore-files "\\.DS_Store")
+    (add-hook 'ido-setup-hook #'my-make-ido-evil)
 
-      (add-hook 'ido-setup-hook 'my-ido-setup)
+    (defun my-make-ido-evil ()
+      (general-def ido-completion-map
+        "C-j" 'ido-next-match
+        "C-k" 'ido-prev-match)
+      (general-def ido-buffer-completion-map
+        "C-d" 'ido-kill-buffer-at-head) ; Originally C-k
+      (general-def ido-file-completion-map
+        "C-d" 'ido-delete-file-at-head
+        "C--" 'ido-enter-dired)) ; Originally C-d
 
-      (defun my-ido-setup ()
-        "Add Evil-mode-like key bindings for ido."
-        (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
-        (define-key ido-completion-map (kbd "C-k") 'ido-prev-match)
-        (define-key ido-buffer-completion-map (kbd "C-d") 'ido-kill-buffer-at-head) ; Originally C-k
-        (define-key ido-file-completion-map (kbd "C-d") 'ido-delete-file-at-head)
-        (define-key ido-file-completion-map (kbd "C--") 'ido-enter-dired)) ; Originally C-d
+    (add-to-list 'ido-ignore-files "\\.DS_Store")
+    :general
+    (my-leader-def
+      "b" 'ido-switch-buffer
+      "e" 'ido-find-file))
 
-      (use-package ido-vertical-mode
-        :ensure t
-        :config
-        (ido-vertical-mode)))
+  (use-package ido-completing-read+
+    :ensure t
+    :config (ido-ubiquitous-mode t))
+
+  (use-package ido-vertical-mode
+    :ensure t
+    :config (ido-vertical-mode))
 #+END_SRC
 
 ** Smex
@@ -1171,13 +1134,16 @@ Smex provides Ido completion for =M-x=.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package smex
     :ensure t
-    :bind (("M-x" . smex)
-           ("M-X" . smex-major-mode-commands))
     :config
-    (progn
-      (setq smex-history-length 10)
-      (setq smex-flex-matching t)
-      (smex-initialize)))
+    (setq smex-history-length 10
+          smex-flex-matching t)
+    (smex-initialize)
+    :general
+    (general-def
+     "M-x" 'smex
+     "M-X" 'smex-major-mode-commands)
+    (my-leader-def "SPC" 'smex)
+    (my-local-leader-def "SPC" 'smex-major-mode-commands))
 #+END_SRC
 
 ** Find in Project
@@ -1194,10 +1160,14 @@ Projectile's bindings start with =C-c p=.
   (use-package projectile
     :ensure t
     :config
-    (progn
-      (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
-      (add-to-list 'projectile-globally-ignored-files ".DS_Store") ; FIXME: Only works for file in root
-      (projectile-global-mode)))
+    (setq projectile-show-paths-function 'projectile-hashify-with-relative-paths)
+    (add-to-list 'projectile-globally-ignored-files ".DS_Store") ; FIXME: Only works for file in root
+    (projectile-global-mode)
+    :general
+    (my-leader-def
+      "d" 'projectile-find-dir
+      "f" 'projectile-find-file
+      "p" 'projectile-switch-project))
 #+END_SRC
 
 ** Auto-completion
@@ -1206,87 +1176,48 @@ Use [[http://cx4a.org/software/auto-complete/index.html][Auto Complete Mode]] fo
 
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
+  (use-package pos-tip
+    :ensure t)
+
   (use-package auto-complete-config
     :ensure auto-complete
+    :requires pos-tip
     :diminish auto-complete-mode
     :commands ac-config-default
     :defer 2
     :init
-    (progn
-      ;; The default value of ac-sources is
-      ;; '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers)
-      ;; and then this is overridden for a handful of major modes.
-      ;;
-      ;; Add a couple of non-default sources to ac-sources for all buffers
-      ;; by redefining this function called from (ac-config-default):
-      (defun ac-common-setup ()
-        (setq ac-sources (append ac-sources '(ac-source-yasnippet
-                                              ac-source-filename))))
+    ;; The default value of ac-sources is
+    ;; '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers)
+    ;; and then this is overridden for a handful of major modes.
+    ;;
+    ;; Add a couple of non-default sources to ac-sources for all buffers
+    ;; by redefining this function called from (ac-config-default):
+    (defun ac-common-setup ()
+      (setq ac-sources (append ac-sources '(ac-source-yasnippet
+                                            ac-source-filename))))
 
-      (setq ac-auto-start 1)) ; Number of characters typed before completion starts
+    (setq ac-auto-start 1) ; Number of characters typed before completion starts
     :config
-    (progn
-      (ac-config-default)
-      (use-package pos-tip
-        :ensure t)
+    (ac-config-default)
 
-      (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
-      ;; User-defined dictionary goes in "~/.dict" by default.
+    (add-to-list 'ac-dictionary-directories (expand-file-name "ac-dict" user-emacs-directory))
+    ;; User-defined dictionary goes in "~/.dict" by default.
 
-      (ac-flyspell-workaround)
-      (ac-linum-workaround)))
+    (ac-flyspell-workaround))
 #+END_SRC
 
 ** Key Bindings
 
-Completion of sorts for key sequences is provided by [[https://github.com/kbkbkbkb1/guide-key][guide-key]]:
+Completion of sorts for key sequences is provided by [[https://github.com/justbur/emacs-which-key][which-key]]:
 
 #+NAME: navigation-completion
 #+BEGIN_SRC emacs-lisp :tangle no
-  (use-package guide-key
-    :disabled t
+  (use-package which-key
     :ensure t
-    :diminish guide-key-mode
-    :commands guide-key-mode
     :defer 2
+    :diminish which-key-mode
     :config
-    (progn
-      (setq guide-key/recursive-key-sequence-flag t
-            guide-key/align-command-by-space-flag t
-            guide-key/popup-window-position 'bottom)
-
-      (setq guide-key/highlight-command-regexp
-            '("group:" . guide-key/prefix-command-face))
-
-      ;; Sequences of interest globally
-      (setq guide-key/guide-key-sequence '("SPC"     ; Evil leader key
-                                           "\["
-                                           "\]"
-                                           "g"
-                                           "z"
-                                           "C-h"     ; Help commands
-                                           "C-x r"   ; Register commands
-                                           "C-x 4"   ; Other window commands
-                                           "C-x 5"   ; Other frame commands
-                                           "C-x c"   ; Helm prefix
-                                           "C-c"))   ; Mode commands
-
-      ;; Sequences of interest for specific modes
-      (defun guide-key/my-hook-function-for-org-mode ()
-        (guide-key/add-local-highlight-command-regexp "org-"))
-      (add-hook 'org-mode-hook #'guide-key/my-hook-function-for-org-mode)
-
-      (defun guide-key/my-hook-function-for-markdown-mode ()
-        (guide-key/add-local-highlight-command-regexp "markdown-\\|outline-"))
-      (add-hook 'markdown-mode-hook #'guide-key/my-hook-function-for-markdown-mode)
-
-      (defun guide-key/my-hook-function-for-mail-modes ()
-        (guide-key/add-local-highlight-command-regexp "message-\\|mail-\\|mml-"))
-      (add-hook 'mu4e-compose-mode-hook #'guide-key/my-hook-function-for-mail-modes)
-      (add-hook 'mu4e-headers-mode-hook #'guide-key/my-hook-function-for-mail-modes)
-      (add-hook 'mu4e-view-mode-hook #'guide-key/my-hook-function-for-mail-modes)
-
-      (guide-key-mode 1)))
+    (which-key-mode))
 #+END_SRC
 
 * Org
@@ -1306,6 +1237,7 @@ Completion of sorts for key sequences is provided by [[https://github.com/kbkbkb
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org
     :ensure org-plus-contrib
+    :diminish org-indent-mode
     :config
     (progn
       (use-package evil-org
@@ -1445,9 +1377,10 @@ Evil confirm/abort in capture buffers.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   (with-eval-after-load 'org-capture
-    (define-key org-capture-mode-map [remap evil-save-and-close]          'org-capture-finalize)
-    (define-key org-capture-mode-map [remap evil-save-modified-and-close] 'org-capture-finalize)
-    (define-key org-capture-mode-map [remap evil-quit]                    'org-capture-kill))
+    (general-def org-capture-mode-map
+     [remap evil-save-and-close]          'org-capture-finalize
+     [remap evil-save-modified-and-close] 'org-capture-finalize
+     [remap evil-quit]                    'org-capture-kill))
 #+END_SRC
 
 ** Lists
@@ -1460,10 +1393,7 @@ not presently work with Evil's =o= and =O=.
   (use-package org-autolist
     :ensure t
     :diminish org-autolist-mode
-    :commands org-autolist-mode
-    :init
-    (progn
-      (add-hook 'org-mode-hook #'org-autolist-mode)))
+    :hook (org-mode . org-autolist-mode))
 #+END_SRC
 
 ** Templates
@@ -1517,7 +1447,7 @@ for exported files lives in the =~/.emacs.d= directory.
         org-html-postamble-format '(("en" "<time>%T</time>"))
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
-        org-html-head nil
+        org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
         org-html-text-markup-alist '((bold . "<strong>%s</strong>")
                                      (code . "<code>%s</code>")
                                      (italic . "<em>%s</em>")
@@ -1644,26 +1574,26 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
 #+NAME: org
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; Org mode - http://orgmode.org/guide/Activation.html#Activation
-  (evil-leader/set-key
+  (my-leader-def
     "a"   'org-agenda
     "c"   'org-capture
+    "r"   '(nil :which-key "org")
     "r b" 'org-iswitchb
-    "r c" 'my-open-org-calendar
     "r l" 'org-store-link)
 
-  (evil-leader/set-key-for-mode 'org-mode
-    "m A" 'org-archive-subtree-default
-    "m a" 'org-archive-subtree-default-with-confirmation
-    "m d" 'org-deadline
-    "m e" 'org-export-dispatch
-    "m g" 'org-goto
-    "m m" 'org-ctrl-c-ctrl-c
-    "m P" 'org-set-property-and-value
-    "m p" 'org-set-property
-    "m q" 'org-set-tags-command
-    "m r" 'org-refile
-    "m s" 'org-schedule
-    "m t" 'org-todo)
+  (my-local-leader-def org-mode
+    "A" 'org-archive-subtree-default
+    "a" 'org-archive-subtree-default-with-confirmation
+    "d" 'org-deadline
+    "e" 'org-export-dispatch
+    "g" 'org-goto
+    "m" 'org-ctrl-c-ctrl-c
+    "P" 'org-set-property-and-value
+    "p" 'org-set-property
+    "q" 'org-set-tags-command
+    "r" 'org-refile
+    "s" 'org-schedule
+    "t" 'org-todo)
 
   (with-eval-after-load 'org-agenda
     ;; Use the standard Org agenda bindings as a base
@@ -1680,21 +1610,18 @@ Note: The clock is automatically stopped on tasks when you mark them as DONE.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package org-clock
     :config
-    (progn
-      (setq org-clock-persist t
-            ;; Do not prompt to resume an active clock
-            ;org-clock-persist-query-resume nil
-            ;; Resume clocking task on clock-in if the clock line is open
-            org-clock-in-resume t
-            org-clock-in-switch-to-state "STARTED"
-            org-clock-out-remove-zero-time-clocks t
-            org-clock-out-when-done t
-            org-clock-idle-time 20
-            ;; Include current clocking task in clock reports
-            org-clock-report-include-clocking-task t)
+    (setq org-clock-persist t
+          ;; Resume clocking task on clock-in if the clock line is open
+          org-clock-in-resume t
+          org-clock-in-switch-to-state "STARTED"
+          org-clock-out-remove-zero-time-clocks t
+          org-clock-out-when-done t
+          org-clock-idle-time 20
+          ;; Include current clocking task in clock reports
+          org-clock-report-include-clocking-task t)
 
-      ;; Resume clocking tasks when emacs is restarted
-      (org-clock-persistence-insinuate)))
+    ;; Resume clocking tasks when Emacs is restarted
+    (org-clock-persistence-insinuate))
 #+END_SRC
 
 ** Agenda
@@ -1818,13 +1745,13 @@ list.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package appt
     :config
-    (progn
-      (run-at-time "24:01" 3600 'org-agenda-to-appt)           ; Update appt list hourly
-      (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ; Update appt list on agenda view
+    (run-at-time "24:01" 3600 'org-agenda-to-appt)           ; Update appt list hourly
 
-      (setq appt-message-warning-time '60) ; Send first warning 30 minutes before appointment
-      (setq appt-display-interval '30)     ; Warn every 15 minutes from appt-message-warning-time
-      (appt-activate 1)))                  ; Activate appointment notification
+    (setq appt-message-warning-time '60) ; Send first warning 30 minutes before appointment
+    (setq appt-display-interval '30)     ; Warn every 15 minutes from appt-message-warning-time
+    (appt-activate 1)                    ; Activate appointment notification
+    :hook
+    ((org-finalize-agenda-hook . org-agenda-to-appt))) ; Update appt list on agenda view
 #+END_SRC
 
 ** Mobile
@@ -1834,38 +1761,37 @@ list.
   (use-package org-mobile
     :disabled t
     :config
-    (progn
-      ;; Set to the name of the file where new notes will be stored
-      (setq org-mobile-inbox-for-pull (expand-file-name "mobile-flagged.org" org-directory)
-            org-mobile-directory "~/Dropbox/Apps/MobileOrg"
-            org-mobile-agendas '("a")
-            org-mobile-force-id-on-agenda-items nil
-            ;; org-mobile-encryption-password is set in private.el
-            org-mobile-use-encryption t)
+    ;; Set to the name of the file where new notes will be stored
+    (setq org-mobile-inbox-for-pull (expand-file-name "mobile-flagged.org" org-directory)
+          org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+          org-mobile-agendas '("a")
+          org-mobile-force-id-on-agenda-items nil
+          ;; org-mobile-encryption-password is set in private.el
+          org-mobile-use-encryption t)
 
-      (defvar my-org-mobile-sync-timer nil)
-      (defvar my-org-mobile-sync-secs (* 60 45))
+    (defvar my-org-mobile-sync-timer nil)
+    (defvar my-org-mobile-sync-secs (* 60 45))
 
-      (defun my-org-mobile-sync-pull-and-push ()
-        (org-mobile-pull)
-        (org-mobile-push)
-        (when (fboundp 'sauron-add-event)
-          (sauron-add-event 'org-mobile 2 "Finished MobileOrg sync")))
+    (defun my-org-mobile-sync-pull-and-push ()
+      (org-mobile-pull)
+      (org-mobile-push)
+      (when (fboundp 'sauron-add-event)
+        (sauron-add-event 'org-mobile 2 "Finished MobileOrg sync")))
 
-      (defun my-org-mobile-sync-start ()
-        "Start automated `org-mobile-push'"
-        (interactive)
-        (setq my-org-mobile-sync-timer
-              (run-with-idle-timer my-org-mobile-sync-secs t
-                                   'my-org-mobile-sync-pull-and-push)))
+    (defun my-org-mobile-sync-start ()
+      "Start automated `org-mobile-push'"
+      (interactive)
+      (setq my-org-mobile-sync-timer
+            (run-with-idle-timer my-org-mobile-sync-secs t
+                                 'my-org-mobile-sync-pull-and-push)))
 
-      (defun my-org-mobile-sync-stop ()
-        "Stop automated `org-mobile-push'"
-        (interactive)
-        (cancel-timer my-org-mobile-sync-timer))
+    (defun my-org-mobile-sync-stop ()
+      "Stop automated `org-mobile-push'"
+      (interactive)
+      (cancel-timer my-org-mobile-sync-timer))
 
-      (add-hook 'after-init-hook 'my-org-mobile-sync-start)
-      (add-hook 'kill-emacs-hook 'org-mobile-push)))
+    (add-hook 'after-init-hook 'my-org-mobile-sync-start)
+    (add-hook 'kill-emacs-hook 'org-mobile-push))
 #+END_SRC
 
 ** External Capture
@@ -1994,21 +1920,24 @@ Org agenda (as well as other calendar formats).
           cfw:fchar-top-right-corner ?┓))
 
   (use-package calfw-org
-    :ensure t)
-
-  (defun my-open-org-calendar ()
-    "Open an org schedule calendar in a new buffer.
+    :ensure t
+    :requires calfw
+    :config
+    (defun my-open-org-calendar ()
+      "Open an org schedule calendar in a new buffer.
 
   This function is adapted from cfw:open-org-calendar."
-    (interactive)
-    (save-excursion
-      (let* ((source1 (cfw:org-create-source "SkyBlue"))
-             (cp (cfw:create-calendar-component-buffer
-                  :view 'month
-                  :contents-sources (list source1)
-                  :custom-map cfw:org-schedule-map
-                  :sorter 'cfw:org-schedule-sorter)))
-        (switch-to-buffer (cfw:cp-get-buffer cp)))))
+      (interactive)
+      (save-excursion
+        (let* ((source1 (cfw:org-create-source "SkyBlue"))
+               (cp (cfw:create-calendar-component-buffer
+                    :view 'month
+                    :contents-sources (list source1)
+                    :custom-map cfw:org-schedule-map
+                    :sorter 'cfw:org-schedule-sorter)))
+          (switch-to-buffer (cfw:cp-get-buffer cp)))))
+    :general
+    (my-leader-def "r c" #'my-open-org-calendar))
 #+END_SRC
 
 ** Invoicing
@@ -2072,133 +2001,111 @@ saner interface.
     :load-path "~/src/mu/mu4e"
     :commands (mu4e mu4e~start)
     :init
-    (progn
-      (evil-leader/set-key "M" #'my-mu4e-view-today)
-
-      (defun my-mu4e-view-today ()
-        "Invoke mu4e and jump directly to the today bookmark."
-        (interactive)
-        (mu4e~start)
-        (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t))))
+    (defun my-mu4e-view-today ()
+      "Invoke mu4e and jump directly to the today bookmark."
+      (interactive)
+      (mu4e~start)
+      (mu4e-headers-search-bookmark (mu4e-get-bookmark-query ?t)))
     :config
-    (progn
-      (setq mu4e-sent-folder "/Sent"
-            mu4e-drafts-folder "/Drafts"
-            mu4e-trash-folder "/Trash"
-            mu4e-refile-folder "/Archive"
-            mu4e-attachment-dir "~/Downloads"
-            mu4e-maildir-shortcuts '(("/INBOX"    . ?i)
-                                     ("/Drafts"   . ?D)
-                                     ("/Domestic" . ?d)
-                                     ("/GitHub"   . ?g)
-                                     ("/Hello"    . ?h)
-                                     ("/Domains"  . ?m)
-                                     ("/Receipts" . ?r)
-                                     ("/Sent"     . ?s)
-                                     ("/Trash"    . ?T)
-                                     ("/Big Tech/Logs"       . ?l)
-                                     ("/Big Tech/TeamworkPM" . ?t))
-            mu4e-update-interval 60 ; seconds
-            mu4e-hide-index-messages t
-            mu4e-use-fancy-chars t
-            mu4e-headers-seen-mark      '("S" . "✔")
-            mu4e-headers-unread-mark    '("u" . "●")
-            mu4e-headers-new-mark       '("N" . "○")
-            mu4e-headers-replied-mark   '("R" . "←")
-            mu4e-headers-passed-mark    '("P" . "→")
-            mu4e-headers-flagged-mark   '("F" . "⚑")
-            mu4e-headers-draft-mark     '("D" . "⚒")
-            mu4e-headers-encrypted-mark '("x" . "e")
-            mu4e-headers-signed-mark    '("s" . "s")
-            mu4e-headers-trashed-mark   '("T" . "×")
-            mu4e-headers-attach-mark    '("a" . "⚓︎")
-            mu4e-headers-visible-flags  '(draft flagged passed replied unread)
-            mu4e-headers-default-prefix     '("|" . "│")
-            mu4e-headers-has-child-prefix   '("+" . "└")
-            mu4e-headers-first-child-prefix '("\\" . "└")
-            mu4e-headers-include-related nil
-            mu4e-headers-date-format    "%F %R"
-            mu4e-headers-fields         '((:human-date .  16)
-                                          (:flags      .   6)
-                                          (:from       .  24)
-                                          (:subject    . nil))
-            mu4e-bookmarks '(("date:today..now" "Today's messages" ?t)
-                             ("date:7d..now" "Last 7 days" ?w)
-                             ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-                             ("flag:flagged" "Flagged messages" ?f)
-                             ("to:*bigtech.com AND NOT flag:trashed" "Work-related messages" ?W))
-            mu4e-compose-signature-auto-include nil
-            mu4e-view-prefer-html t
-            mu4e-html2text-command "elinks -dump"
-            mu4e-alert-title "Mail"
-            mail-user-agent 'mu4e-user-agent)
+    (setq mu4e-sent-folder "/Sent"
+          mu4e-drafts-folder "/Drafts"
+          mu4e-trash-folder "/Trash"
+          mu4e-refile-folder "/Archive"
+          mu4e-attachment-dir "~/Downloads"
+          mu4e-update-interval 60 ; seconds
+          mu4e-hide-index-messages t
+          mu4e-use-fancy-chars t
+          mu4e-headers-seen-mark      '("S" . "✔")
+          mu4e-headers-unread-mark    '("u" . "●")
+          mu4e-headers-new-mark       '("N" . "○")
+          mu4e-headers-replied-mark   '("R" . "←")
+          mu4e-headers-passed-mark    '("P" . "→")
+          mu4e-headers-flagged-mark   '("F" . "⚑")
+          mu4e-headers-draft-mark     '("D" . "⚒")
+          mu4e-headers-encrypted-mark '("x" . "e")
+          mu4e-headers-signed-mark    '("s" . "s")
+          mu4e-headers-trashed-mark   '("T" . "×")
+          mu4e-headers-attach-mark    '("a" . "⚓︎")
+          mu4e-headers-visible-flags  '(draft flagged passed replied unread)
+          mu4e-headers-default-prefix     '("|" . "│")
+          mu4e-headers-has-child-prefix   '("+" . "└")
+          mu4e-headers-first-child-prefix '("\\" . "└")
+          mu4e-headers-include-related nil
+          mu4e-headers-date-format    "%F %R"
+          mu4e-headers-fields         '((:human-date .  16)
+                                        (:flags      .   6)
+                                        (:from       .  24)
+                                        (:subject    . nil))
+          mu4e-bookmarks '(("date:today..now" "Today's messages" ?t)
+                           ("date:7d..now" "Last 7 days" ?w)
+                           ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+                           ("flag:flagged" "Flagged messages" ?f))
+          mu4e-compose-signature-auto-include nil
+          mu4e-view-prefer-html t
+          mu4e-html2text-command "elinks -dump"
+          mu4e-alert-title "Mail"
+          mail-user-agent 'mu4e-user-agent)
 
-      (defun my-mu4e-action-view-in-browser (msg)
-        "View the body of the message in a web browser."
-        (interactive)
-        (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-              (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-          (unless html (error "No html part for this message"))
-          (with-temp-file tmpfile
-            (insert html))
-          (browse-url (concat "file://" tmpfile))))
+    (defun my-mu4e-action-view-in-browser (msg)
+      "View the body of the message in a web browser."
+      (interactive)
+      (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+            (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+        (unless html (error "No html part for this message"))
+        (with-temp-file tmpfile
+          (insert html))
+        (browse-url (concat "file://" tmpfile))))
 
-      (add-to-list 'mu4e-view-actions
-                   '("browser" . my-mu4e-action-view-in-browser) t)
+    (add-to-list 'mu4e-view-actions
+                 '("browser" . my-mu4e-action-view-in-browser) t)
 
-      (add-hook 'mu4e-view-mode-hook 'epa-mail-mode)
-      (add-hook 'mu4e-compose-mode-hook 'epa-mail-mode)
+    (defun my-insert-contact (&optional start)
+      (interactive)
+      (let ((mail-abbrev-mode-regexp mu4e~compose-address-fields-regexp)
+            (eoh ;; end-of-headers
+             (save-excursion
+               (goto-char (point-min))
+               (search-forward-regexp mail-header-separator nil t))))
+        (when (and eoh (> eoh (point)) (mail-abbrev-in-expansion-header-p))
+          (let* ((end (point))
+                 (start
+                  (or start
+                      (save-excursion
+                        (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
+                        (goto-char (match-end 0))
+                        (point))))
+                 (contact
+                  (ido-completing-read "Contact: "
+                                       mu4e~contacts-for-completion
+                                       nil
+                                       nil
+                                       (buffer-substring-no-properties start end))))
+            (unless (equal contact "")
+              (kill-region start end)
+              (insert contact))))))
 
-      (defun my-insert-contact (&optional start)
-        (interactive)
-        (let ((mail-abbrev-mode-regexp mu4e~compose-address-fields-regexp)
-              (eoh ;; end-of-headers
-               (save-excursion
-                 (goto-char (point-min))
-                 (search-forward-regexp mail-header-separator nil t))))
-          (when (and eoh (> eoh (point)) (mail-abbrev-in-expansion-header-p))
-            (let* ((end (point))
-                   (start
-                    (or start
-                        (save-excursion
-                          (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
-                          (goto-char (match-end 0))
-                          (point))))
-                   (contact
-                    (ido-completing-read "Contact: "
-                                         mu4e~contacts-for-completion
-                                         nil
-                                         nil
-                                         (buffer-substring-no-properties start end))))
-              (unless (equal contact "")
-                (kill-region start end)
-                (insert contact))))))
+    (defun my-make-mu4e-mode-evil ()
+      "Turn mu4e buffers evil."
+      (evil-make-overriding-map mu4e-main-mode-map 'motion)
+      (evil-define-key 'motion mu4e-main-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
 
-      (defun my-make-mu4e-mode-evil ()
-        "Turn mu4e buffers evil."
-        (evil-make-overriding-map mu4e-main-mode-map 'motion)
-        (evil-define-key 'motion mu4e-main-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
+      (evil-make-overriding-map mu4e-headers-mode-map 'motion)
+      (evil-define-key 'motion mu4e-headers-mode-map "h" #'mu4e~headers-jump-to-maildir) ; Was j
+      (evil-define-key 'motion mu4e-headers-mode-map "j" #'mu4e-headers-next)
 
-        (evil-make-overriding-map mu4e-headers-mode-map 'motion)
-        (evil-define-key 'motion mu4e-headers-mode-map "h" #'mu4e~headers-jump-to-maildir) ; Was j
-        (evil-define-key 'motion mu4e-headers-mode-map "j" #'mu4e-headers-next)
+      (evil-make-overriding-map mu4e-view-mode-map 'motion)
+      (evil-define-key 'motion mu4e-view-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
+      (evil-define-key 'motion mu4e-view-mode-map "j" #'mu4e-view-headers-next)
+      (evil-define-key 'motion mu4e-view-mode-map "k" #'mu4e-view-headers-prev)
 
-        (evil-make-overriding-map mu4e-view-mode-map 'motion)
-        (evil-define-key 'motion mu4e-view-mode-map "h" #'mu4e~headers-jump-to-maildir)    ; Was j
-        (evil-define-key 'motion mu4e-view-mode-map "j" #'mu4e-view-headers-next)
-        (evil-define-key 'motion mu4e-view-mode-map "k" #'mu4e-view-headers-prev)
+      (evil-define-key 'insert mu4e-compose-mode-map (kbd "C-l") #'my-insert-contact))
 
-        (evil-define-key 'insert mu4e-compose-mode-map (kbd "C-l") #'my-insert-contact)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m m" #'message-send-and-exit)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "k" #'message-kill-buffer)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m e" #'mml-secure-message-sign-encrypt)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m c" #'mml-secure-message-encrypt)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m s" #'mml-secure-message-sign)
-        (evil-leader/set-key-for-mode 'mu4e-compose-mode "m f" #'mml-attach-file)
-        (evil-leader/set-key-for-mode 'epa-mail-mode "m d" #'epa-mail-decrypt)
-        (evil-leader/set-key-for-mode 'epa-mail-mode "m v" #'epa-mail-verify))
-
-      (my-make-mu4e-mode-evil)))
+    (my-make-mu4e-mode-evil)
+    :hook
+    ((mu4e-view-mode-hook . epa-mail-mode)
+     (mu4e-compose-mode-hook . epa-mail-mode))
+    :general
+    (my-leader-def "M" #'my-mu4e-view-today))
 #+END_SRC
 
 Start mu4e by issuing =M-x mu4e RET=. The interface is fairly self-explanatory.
@@ -2210,10 +2117,8 @@ The mu4e-alert package adds alerts and a mode-line indicator for new mail:
   (use-package mu4e-alert
     :disabled t
     :ensure t
-    :init
-    (progn
-      (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-      (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)))
+    :hook ((after-init . mu4e-alert-enable-notifications)
+           (after-init . mu4e-alert-enable-mode-line-display)))
 #+END_SRC
 
 ** RSS
@@ -2257,17 +2162,16 @@ Open the Elfeed buffer by issuing =M-x elfeed RET=.
   (use-package alert
     :ensure t
     :config
-    (progn
-      (setq alert-default-style 'terminal-notifier)
+    (setq alert-default-style 'terminal-notifier)
 
-      (alert-define-style 'terminal-notifier
-                          :title "Terminal Notifier"
-                          :notifier
-                          (lambda (info)
-                            (my-send-notification
-                             (plist-get info :title)
-                             (plist-get info :message)
-                             (plist-get info :category))))))
+    (alert-define-style 'terminal-notifier
+                        :title "Terminal Notifier"
+                        :notifier
+                        (lambda (info)
+                          (my-send-notification
+                           (plist-get info :title)
+                           (plist-get info :message)
+                           (plist-get info :category)))))
 #+END_SRC
 
 ** Sauron
@@ -2279,17 +2183,16 @@ Open the Elfeed buffer by issuing =M-x elfeed RET=.
   (use-package sauron
     :ensure t
     :config
-    (progn
-      ;; Pass notifications through to alert.el
-      (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter)
+    (setq sauron-hide-mode-line t
+          sauron-modules '(sauron-org
+                           sauron-notifications))
 
-      (setq sauron-hide-mode-line t
-            sauron-modules '(sauron-org
-                             sauron-notifications))
-
-      (evil-leader/set-key "s" 'sauron-toggle-hide-show)
-
-      (sauron-start-hidden)))
+    (sauron-start-hidden)
+    :hook
+    ;; Pass notifications through to alert.el
+    ((sauron-event-added-functions . sauron-alert-el-adapter))
+    :general
+    (my-leader-def "s" #'sauron-toggle-hide-show))
 #+END_SRC
 
 * Configuration Layout
