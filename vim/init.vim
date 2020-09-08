@@ -684,6 +684,19 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 
+" Language client
+nmap <Leader>lm <Plug>(lcn-menu)
+nmap <Leader>lh <Plug>(lcn-hover)
+nmap <Leader>lR <Plug>(lcn-rename)
+nmap <Leader>ld <Plug>(lcn-definition)
+nmap <Leader>lt <Plug>(lcn-type-definition)
+nmap <Leader>lr <Plug>(lcn-references)
+nmap <Leader>li <Plug>(lcn-implementation)
+nmap <Leader>ls <Plug>(lcn-symbols)
+nmap <Leader>lH <Plug>(lcn-highlight)
+nmap <Leader>le <Plug>(lcn-explain-error)
+nmap <Leader>lF <Plug>(lcn-format)
+
 " Force a file type
 nnoremap _cs :set filetype=css<CR>
 nnoremap _er :set filetype=eruby<CR>
