@@ -87,7 +87,8 @@ if has('vim_starting')
   call plug#('ap/vim-css-color')
   call plug#('dbakker/vim-sparkup')
   call plug#('junegunn/vader.vim')
-  call plug#('phpactor/phpactor', { 'for': 'php', 'do': 'composer install --no-dev -o' })
+  call plug#('phpactor/phpactor', { 'for': 'php',
+        \ 'do': { info -> my#plug#install_phpactor(info) } })
   call plug#('tpope/vim-bundler')
   call plug#('tpope/vim-jdaddy', { 'for': 'json' })
   call plug#('tpope/vim-rake')
@@ -730,7 +731,7 @@ call ncm2#override_source('ultisnips', {'priority': 10})
 
 let g:LanguageClient_diagnosticsList = 'Location'
 let g:LanguageClient_serverCommands = {
-      \   'php': [g:plug_home..'/phpactor/bin/phpactor', 'language-server']
+      \   'php': ['phpactor', 'language-server']
       \ }
 
 let g:signify_vcs_list = ['git']
