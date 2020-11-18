@@ -1,12 +1,34 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
+
+# Import additional configuration files
+#
+# These configuration files will be loaded in order, replacing values in files
+# loaded earlier with those loaded later in the chain. The file itself will
+# always be loaded last.
+#import:
+#  - /path/to/alacritty.yml
+
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+#env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  #TERM: alacritty
+
 window:
   # Window dimensions (changes require restart)
   #
-  # Specified in number of columns/lines, not pixels.
-  # If both are `0`, this setting is ignored.
-  dimensions:
-    columns: 0
-    lines: 0
+  # Number of lines/columns (not pixels) in the terminal. The number of columns
+  # must be at least `2`, while using a value of `0` for columns and lines will
+  # fall back to the window manager's recommended size.
+  #dimensions:
+  #  columns: 0
+  #  lines: 0
 
   # Window position (changes require restart)
   #
@@ -20,15 +42,12 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  padding:
-    x: 8
-    y: 6
+  #padding:
+  #  x: 0
+  #  y: 0
 
   # Spread additional padding evenly around the terminal content.
-  dynamic_padding: false
-
-  # Allow terminal applications to change Alacritty's window title.
-  dynamic_title: true
+  #dynamic_padding: false
 
   # Window decorations
   #
@@ -38,8 +57,8 @@ window:
   #
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
-  #     - buttonless: Title bar, transparent background, but no title bar buttons
-  decorations: full
+  #     - buttonless: Title bar, transparent background and no title bar buttons
+  #decorations: full
 
   # Startup Mode (changes require restart)
   #
@@ -55,19 +74,31 @@ window:
   # Window title
   #title: Alacritty
 
-  # Window class (Linux only):
-  #class: Alacritty
+  # Allow terminal applications to change Alacritty's window title.
+  #dynamic_title: true
+
+  # Window class (Linux/BSD only):
+  #class:
+    # Application instance name
+    #instance: Alacritty
+    # General application class
+    #general: Alacritty
+
+  # GTK theme variant (Linux/BSD only)
+  #
+  # Override the variant of the GTK theme. Commonly supported values are `dark`
+  # and `light`. Set this to `None` to use the default theme variant.
+  #gtk_theme_variant: None
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
   history: 0
 
-  # Number of lines the viewport will move for every line scrolled when
-  # scrollback is enabled (history > 0).
+  # Scrolling distance multiplier.
   multiplier: 1
 
-# Font configuration (changes require restart)
+# Font configuration
 font:
   # Normal (roman) font face
   normal:
@@ -75,7 +106,7 @@ font:
     #
     # Default:
     #   - (macOS) Menlo
-    #   - (Linux) monospace
+    #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     family: Source Code Pro
 
@@ -104,18 +135,30 @@ font:
     # The `style` can be specified to pick a specific face.
     style: Medium Italic
 
+  # Bold italic font face
+  #bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold Italic
+
   # Point size
   size: 13.0
 
-  # Offset is the extra space around each character. `offset.y` can be thought of
-  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  # Offset is the extra space around each character. `offset.y` can be thought
+  # of as modifying the line spacing, and `offset.x` as modifying the letter
+  # spacing.
   offset:
     x: 0
     y: 4
 
   # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increasing `x` moves the glyph to the right,
-  # increasing `y` moves the glyph upwards.
+  # the default being at the bottom. Increasing `x` moves the glyph to the
+  # right, increasing `y` moves the glyph upward.
   glyph_offset:
     x: 0
     y: 2
@@ -123,89 +166,110 @@ font:
   # Thin stroke font rendering (macOS only)
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
-  # it is recommended to set `use_thin_strokes` to `false`
-  #
-  # macOS >= 10.14.x:
-  #
-  # If the font quality on non-retina display looks bad then set
-  # `use_thin_strokes` to `true` and enable font smoothing by running the
-  # following command:
-  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
-  #
-  # This is a global setting and will require a log out or restart to take
-  # effect.
+  # it is recommended to set `use_thin_strokes` to `false`.
   use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: false
 
-# Colors (Tomorrow Night Bright)
+# Colors (Tomorrow Night)
 colors:
   # Default colors
   primary:
-    background: '0x0e191b'
-    foreground: '0xeeeeee'
+    background: '#0e191b'
+    foreground: '#eeeeee'
 
     # Bright and dim foreground colors
     #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    #dim_foreground: '0x9a9a9a'
-    #bright_foreground: '0xffffff'
+    # The dimmed foreground color is calculated automatically if it is not
+    # present. If the bright foreground color is not set, or
+    # `draw_bold_text_with_bright_colors` is `false`, the normal foreground
+    # color will be used.
+    #dim_foreground: '#9a9a9a'
+    #bright_foreground: '#ffffff'
 
   # Cursor colors
   #
-  # Colors which should be used to draw the terminal cursor. If these are unset,
-  # the cursor color will be the inverse of the cell color.
+  # Colors which should be used to draw the terminal cursor.
+  #
+  # Allowed values are CellForeground and CellBackground, which reference the
+  # affected cell, or hexadecimal colors like #ff00ff.
   cursor:
-    text: '0x000000'
-    cursor: '0xffffff'
+    text: '#000000'
+    cursor: '#ffffff'
+
+  # Vi mode cursor colors
+  #
+  # Colors for the cursor when the vi mode is active.
+  #
+  # Allowed values are CellForeground and CellBackground, which reference the
+  # affected cell, or hexadecimal colors like #ff00ff.
+  #vi_mode_cursor:
+  #  text: CellBackground
+  #  cursor: CellForeground
 
   # Selection colors
   #
-  # Colors which should be used to draw the selection area. If selection
-  # background is unset, selection color will be the inverse of the cell colors.
-  # If only text is unset the cell text color will remain the same.
+  # Colors which should be used to draw the selection area.
+  #
+  # Allowed values are CellForeground and CellBackground, which reference the
+  # affected cell, or hexadecimal colors like #ff00ff.
   #selection:
-  #  text: '0xeaeaea'
-  #  background: '0x404040'
+  #  text: CellBackground
+  #  background: CellForeground
+
+  # Search colors
+  #
+  # Colors used for the search bar and match highlighting.
+  #search:
+    # Allowed values are CellForeground and CellBackground, which reference the
+    # affected cell, or hexadecimal colors like #ff00ff.
+    #matches:
+    #  foreground: '#000000'
+    #  background: '#ffffff'
+    #focused_match:
+    #  foreground: CellBackground
+    #  background: CellForeground
+
+    #bar:
+    #  background: '#c5c8c6'
+    #  foreground: '#1d1f21'
 
   # Normal colors
   normal:
-    black:   '0x090e12'
-    red:     '0xff2b68'
-    green:   '0xbeda3f'
-    yellow:  '0xbcaa85'
-    blue:    '0x78c9e9'
-    magenta: '0xb88eec'
-    cyan:    '0x68a9af'
-    white:   '0xeeeeee'
+    black:   '#090e12'
+    red:     '#ff2b68'
+    green:   '#beda3f'
+    yellow:  '#bcaa85'
+    blue:    '#78c9e9'
+    magenta: '#b88eec'
+    cyan:    '#68a9af'
+    white:   '#eeeeee'
 
   # Bright colors
   bright:
-    black:   '0x5c7897'
-    red:     '0xfdc2bd'
-    green:   '0xc5fcb8'
-    yellow:  '0xddd4c1'
-    blue:    '0xaddbeb'
-    magenta: '0xebd0ea'
-    cyan:    '0xc2e6eb'
-    white:   '0xffffff'
+    black:   '#5c7897'
+    red:     '#fdc2bd'
+    green:   '#c5fcb8'
+    yellow:  '#ddd4c1'
+    blue:    '#addbeb'
+    magenta: '#ebd0ea'
+    cyan:    '#c2e6eb'
+    white:   '#ffffff'
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
   dim:
-    black:   '0x333333'
-    red:     '0xf2777a'
-    green:   '0x99cc99'
-    yellow:  '0xffcc66'
-    blue:    '0x6699cc'
-    magenta: '0xcc99cc'
-    cyan:    '0x66cccc'
-    white:   '0xdddddd'
+    black:   '#333333'
+    red:     '#f2777a'
+    green:   '#99cc99'
+    yellow:  '#ffcc66'
+    blue:    '#6699cc'
+    magenta: '#cc99cc'
+    cyan:    '#66cccc'
+    white:   '#dddddd'
 
   # Indexed Colors
   #
@@ -213,99 +277,64 @@ colors:
   # When these are not set, they're filled with sensible defaults.
   #
   # Example:
-  #   `- { index: 16, color: '0xff00ff' }`
+  #   `- { index: 16, color: '#ff00ff' }`
   #
-  indexed_colors: []
+  #indexed_colors: []
 
-# Visual Bell
+# Bell
 #
-# Any time the BEL code is received, Alacritty "rings" the visual bell. Once
-# rung, the terminal background will be set to white and transition back to the
-# default background color. You can control the rate of this transition by
-# setting the `duration` property (represented in milliseconds). You can also
-# configure the transition function by setting the `animation` property.
-#
-# Values for `animation`:
-#   - Ease
-#   - EaseOut
-#   - EaseOutSine
-#   - EaseOutQuad
-#   - EaseOutCubic
-#   - EaseOutQuart
-#   - EaseOutQuint
-#   - EaseOutExpo
-#   - EaseOutCirc
-#   - Linear
-#
-# Specifying a `duration` of `0` will disable the visual bell.
-bell:
-  animation: EaseOutExpo
-  duration: 0
-  color: '0xffffff'
+# The bell is rung every time the BEL control character is received.
+#bell:
+  # Visual Bell Animation
+  #
+  # Animation effect for flashing the screen when the visual bell is rung.
+  #
+  # Values for `animation`:
+  #   - Ease
+  #   - EaseOut
+  #   - EaseOutSine
+  #   - EaseOutQuad
+  #   - EaseOutCubic
+  #   - EaseOutQuart
+  #   - EaseOutQuint
+  #   - EaseOutExpo
+  #   - EaseOutCirc
+  #   - Linear
+  #animation: EaseOutExpo
+
+  # Duration of the visual bell flash in milliseconds. A `duration` of `0` will
+  # disable the visual bell animation.
+  #duration: 0
+
+  # Visual bell animation color.
+  #color: '#ffffff'
+
+  # Bell Command
+  #
+  # This program is executed whenever the bell is rung.
+  #
+  # When set to `command: None`, no command will be executed.
+  #
+  # Example:
+  #   command:
+  #     program: notify-send
+  #     args: ["Hello, World!"]
+  #
+  #command: None
 
 # Background opacity
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 1.0
+#background_opacity: 1.0
 
-# Mouse bindings
-#
-# Available fields:
-#   - mouse
-#   - action
-#   - mods (optional)
-#
-# Values for `mouse`:
-#   - Middle
-#   - Left
-#   - Right
-#   - Numeric identifier such as `5`
-#
-# All available `mods` and `action` values are documented in the key binding
-# section.
-mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
-
-mouse:
-  # Click settings
-  #
-  # The `double_click` and `triple_click` settings control the time
-  # alacritty should wait for accepting multiple clicks as one double
-  # or triple click.
-  double_click: { threshold: 300 }
-  triple_click: { threshold: 300 }
-
-  # If this is `true`, the cursor is temporarily hidden when typing.
-  hide_when_typing: false
-
-  url:
-    # URL launcher
-    #
-    # This program is executed when clicking on a text which is recognized as a URL.
-    # The URL is always added to the command as the last parameter.
-    #
-    # When set to `None`, URL launching will be disabled completely.
-    #
-    # Default:
-    #   - (macOS) open
-    #   - (Linux) xdg-open
-    #   - (Windows) explorer
-    #launcher:
-    #  program: xdg-open
-    #  args: []
-
-    # URL modifiers
-    #
-    # These are the modifiers that need to be held down for opening URLs when clicking
-    # on them. The available modifiers are documented in the key binding section.
-    modifiers: None
-
-selection:
-  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+#selection:
+  # This string contains all characters that are used as separators for
+  # "semantic words" in Alacritty.
+  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  save_to_clipboard: false
+  #save_to_clipboard: false
 
 cursor:
   # Cursor style
@@ -316,20 +345,34 @@ cursor:
   #   - | Beam
   style: Block
 
+  # Vi mode cursor style
+  #
+  # If the vi mode cursor style is `None` or not specified, it will fall back to
+  # the style of the active value of the normal cursor.
+  #
+  # See `cursor.style` for available options.
+  #vi_mode_style: None
+
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
   unfocused_hollow: true
+
+  # Thickness of the cursor relative to the cell width as floating point number
+  # from `0.0` to `1.0`.
+  #thickness: 0.15
 
 # Live config reload (changes require restart)
 live_config_reload: true
 
 # Shell
 #
-# You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
-# Entries in `shell.args` are passed unmodified as arguments to the shell.
+# You can set `shell.program` to the path of your favorite shell, e.g.
+# `/bin/fish`. Entries in `shell.args` are passed unmodified as arguments to the
+# shell.
 #
 # Default:
-#   - (Linux/macOS) /bin/bash --login
+#   - (macOS) /bin/bash --login
+#   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
   program: /usr/local/bin/fish
@@ -341,138 +384,269 @@ shell:
 #
 # Directory the shell is started in. If this is unset, or `None`, the working
 # directory of the parent process will be used.
-working_directory: None
+#working_directory: None
 
-# Windows 10 ConPTY backend (Windows only)
+# WinPTY backend (Windows only)
 #
-# This will enable better color support and may resolve other issues,
-# however this API and its implementation is still young and so is
-# disabled by default, as stability may not be as good as the winpty
-# backend.
+# Alacritty defaults to using the newer ConPTY backend if it is available,
+# since it resolves a lot of bugs and is quite a bit faster. If it is not
+# available, the WinPTY backend will be used instead.
 #
-# Alacritty will fall back to the WinPTY automatically if the ConPTY
-# backend cannot be initialized.
-enable_experimental_conpty_backend: false
+# Setting this option to `true` makes Alacritty use the legacy WinPTY backend,
+# even if the ConPTY backend is available.
+#winpty_backend: false
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: false
 
-debug:
-  # Display the time it takes to redraw each frame.
-  render_timer: false
-
-  # Keep the log file after quitting Alacritty.
-  persistent_logging: false
-
-  # Log level
+#mouse:
+  # Click settings
   #
-  # Values for `log_level`:
-  #   - None
-  #   - Error
-  #   - Warn
-  #   - Info
-  #   - Debug
-  #   - Trace
-  log_level: Warn
+  # The `double_click` and `triple_click` settings control the time
+  # alacritty should wait for accepting multiple clicks as one double
+  # or triple click.
+  #double_click: { threshold: 300 }
+  #triple_click: { threshold: 300 }
 
-  # Print all received window events.
-  print_events: false
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  #hide_when_typing: false
 
-  # Record all characters and escape sequences as test data.
-  ref_test: false
+  #url:
+    # URL launcher
+    #
+    # This program is executed when clicking on a text which is recognized as a
+    # URL. The URL is always added to the command as the last parameter.
+    #
+    # When set to `launcher: None`, URL launching will be disabled completely.
+    #
+    # Default:
+    #   - (macOS) open
+    #   - (Linux/BSD) xdg-open
+    #   - (Windows) explorer
+    #launcher:
+    #  program: xdg-open
+    #  args: []
+
+    # URL modifiers
+    #
+    # These are the modifiers that need to be held down for opening URLs when
+    # clicking on them. The available modifiers are documented in the key
+    # binding section.
+    #modifiers: None
+
+# Mouse bindings
+#
+# Mouse bindings are specified as a list of objects, much like the key
+# bindings further below.
+#
+# To trigger mouse bindings when an application running within Alacritty
+# captures the mouse, the `Shift` modifier is automatically added as a
+# requirement.
+#
+# Each mouse binding will specify a:
+#
+# - `mouse`:
+#
+#   - Middle
+#   - Left
+#   - Right
+#   - Numeric identifier such as `5`
+#
+# - `action` (see key bindings)
+#
+# And optionally:
+#
+# - `mods` (see key bindings)
+#mouse_bindings:
+#  - { mouse: Middle, action: PasteSelection }
 
 # Key bindings
 #
-# Key bindings are specified as a list of objects. Each binding will specify a
-# key and modifiers required to trigger it, terminal modes where the binding is
-# applicable, and what should be done when the key binding fires. It can either
-# send a byte sequence to the running application (`chars`), execute a
-# predefined action (`action`) or fork and execute a specified command plus
-# arguments (`command`).
+# Key bindings are specified as a list of objects. For example, this is the
+# default paste binding:
 #
-# Bindings are always filled by default, but will be replaced when a new binding
-# with the same triggers is defined. To unset a default binding, it can be
-# mapped to the `None` action.
+# `- { key: V, mods: Control|Shift, action: Paste }`
 #
-# Example:
-#   `- { key: V, mods: Control|Shift, action: Paste }`
+# Each key binding will specify a:
 #
-# Available fields:
-#   - key
-#   - mods (optional)
-#   - chars | action | command (exactly one required)
-#   - mode (optional)
+# - `key`: Identifier of the key pressed
 #
-# Values for `key`:
-#   - `A` -> `Z`
-#   - `F1` -> `F12`
-#   - `Key1` -> `Key0`
+#    - A-Z
+#    - F1-F24
+#    - Key0-Key9
 #
-#   A full list with available key codes can be found here:
-#   https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
+#    A full list with available key codes can be found here:
+#    https://docs.rs/glutin/*/glutin/event/enum.VirtualKeyCode.html#variants
 #
-#   Instead of using the name of the keys, the `key` field also supports using
-#   the scancode of the desired key. Scancodes have to be specified as a
-#   decimal number.
-#   This command will allow you to display the hex scancodes for certain keys:
-#     `showkey --scancodes`
+#    Instead of using the name of the keys, the `key` field also supports using
+#    the scancode of the desired key. Scancodes have to be specified as a
+#    decimal number. This command will allow you to display the hex scancodes
+#    for certain keys:
 #
-# Values for `mods`:
-#   - Command
-#   - Control
-#   - Option
-#   - Super
-#   - Shift
-#   - Alt
+#       `showkey --scancodes`.
 #
-#   Multiple `mods` can be combined using `|` like this: `mods: Control|Shift`.
-#   Whitespace and capitalization is relevant and must match the example.
+# Then exactly one of:
 #
-# Values for `chars`:
-#   The `chars` field writes the specified string to the terminal. This makes
-#   it possible to pass escape sequences.
-#   To find escape codes for bindings like `PageUp` ("\x1b[5~"), you can run
-#   the command `showkey -a` outside of tmux.
-#   Note that applications use terminfo to map escape sequences back to
-#   keys. It is therefore required to update the terminfo when
-#   changing an escape sequence.
+# - `chars`: Send a byte sequence to the running application
 #
-# Values for `action`:
-#   - Paste
-#   - PasteSelection
+#    The `chars` field writes the specified string to the terminal. This makes
+#    it possible to pass escape sequences. To find escape codes for bindings
+#    like `PageUp` (`"\x1b[5~"`), you can run the command `showkey -a` outside
+#    of tmux. Note that applications use terminfo to map escape sequences back
+#    to keys. It is therefore required to update the terminfo when changing an
+#    escape sequence.
+#
+# - `action`: Execute a predefined action
+#
+#   - ToggleViMode
+#   - SearchForward
+#       Start searching toward the right of the search origin.
+#   - SearchBackward
+#       Start searching toward the left of the search origin.
 #   - Copy
+#   - Paste
 #   - IncreaseFontSize
 #   - DecreaseFontSize
 #   - ResetFontSize
 #   - ScrollPageUp
 #   - ScrollPageDown
+#   - ScrollHalfPageUp
+#   - ScrollHalfPageDown
 #   - ScrollLineUp
 #   - ScrollLineDown
 #   - ScrollToTop
 #   - ScrollToBottom
 #   - ClearHistory
+#       Remove the terminal's scrollback history.
 #   - Hide
+#       Hide the Alacritty window.
+#   - Minimize
+#       Minimize the Alacritty window.
 #   - Quit
-#   - ClearLogNotice
-#   - SpawnNewInstance
+#       Quit Alacritty.
 #   - ToggleFullscreen
+#   - SpawnNewInstance
+#       Spawn a new instance of Alacritty.
+#   - ClearLogNotice
+#       Clear Alacritty's UI warning and error notice.
+#   - ClearSelection
+#       Remove the active selection.
+#   - ReceiveChar
 #   - None
 #
-# Values for `action` (macOS only):
-#   - ToggleSimpleFullscreen: Enters fullscreen without occupying another space
+# - Vi mode exclusive actions:
 #
-# Values for `command`:
-#   The `command` field must be a map containing a `program` string and
-#   an `args` array of command line parameter strings.
+#   - Open
+#       Open URLs at the cursor location with the launcher configured in
+#       `url.launcher`.
+#   - ToggleNormalSelection
+#   - ToggleLineSelection
+#   - ToggleBlockSelection
+#   - ToggleSemanticSelection
+#       Toggle semantic selection based on `selection.semantic_escape_chars`.
 #
-#   Example:
-#       `command: { program: "alacritty", args: ["-e", "vttest"] }`
+# - Vi mode exclusive cursor motion actions:
 #
-# Values for `mode`:
-#   - ~AppCursor
-#   - AppCursor
-#   - ~AppKeypad
-#   - AppKeypad
+#   - Up
+#       One line up.
+#   - Down
+#       One line down.
+#   - Left
+#       One character left.
+#   - Right
+#       One character right.
+#   - First
+#       First column, or beginning of the line when already at the first column.
+#   - Last
+#       Last column, or beginning of the line when already at the last column.
+#   - FirstOccupied
+#       First non-empty cell in this terminal row, or first non-empty cell of
+#       the line when already at the first cell of the row.
+#   - High
+#       Top of the screen.
+#   - Middle
+#       Center of the screen.
+#   - Low
+#       Bottom of the screen.
+#   - SemanticLeft
+#       Start of the previous semantically separated word.
+#   - SemanticRight
+#       Start of the next semantically separated word.
+#   - SemanticLeftEnd
+#       End of the previous semantically separated word.
+#   - SemanticRightEnd
+#       End of the next semantically separated word.
+#   - WordLeft
+#       Start of the previous whitespace separated word.
+#   - WordRight
+#       Start of the next whitespace separated word.
+#   - WordLeftEnd
+#       End of the previous whitespace separated word.
+#   - WordRightEnd
+#       End of the next whitespace separated word.
+#   - Bracket
+#       Character matching the bracket at the cursor's location.
+#   - SearchNext
+#       Beginning of the next match.
+#   - SearchPrevious
+#       Beginning of the previous match.
+#   - SearchStart
+#       Start of the match to the left of the vi mode cursor.
+#   - SearchEnd
+#       End of the match to the right of the vi mode cursor.
+#
+# - macOS exclusive actions:
+#   - ToggleSimpleFullscreen
+#       Enter fullscreen without occupying another space.
+#
+# - Linux/BSD exclusive actions:
+#
+#   - CopySelection
+#       Copy from the selection buffer.
+#   - PasteSelection
+#       Paste from the selection buffer.
+#
+# - `command`: Fork and execute a specified command plus arguments
+#
+#    The `command` field must be a map containing a `program` string and an
+#    `args` array of command line parameter strings. For example:
+#       `{ program: "alacritty", args: ["-e", "vttest"] }`
+#
+# And optionally:
+#
+# - `mods`: Key modifiers to filter binding actions
+#
+#    - Command
+#    - Control
+#    - Option
+#    - Super
+#    - Shift
+#    - Alt
+#
+#    Multiple `mods` can be combined using `|` like this:
+#       `mods: Control|Shift`.
+#    Whitespace and capitalization are relevant and must match the example.
+#
+# - `mode`: Indicate a binding for only specific terminal reported modes
+#
+#    This is mainly used to send applications the correct escape sequences
+#    when in different modes.
+#
+#    - AppCursor
+#    - AppKeypad
+#    - Alt
+#    - Vi
+#
+#    A `~` operator can be used before a mode to apply the binding whenever
+#    the mode is *not* active, e.g. `~Alt`.
+#
+# Bindings are always filled by default, but will be replaced when a new
+# binding with the same triggers is defined. To unset a default binding, it can
+# be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
+# a no-op if you do not wish to receive input characters for that binding.
+#
+# If the same trigger is assigned to multiple actions, all of them are executed
+# in the order they were defined in.
 key_bindings:
   - { key: Key0,     mods: Command, action: ResetFontSize                }
   - { key: Equals,   mods: Command, action: IncreaseFontSize             }
