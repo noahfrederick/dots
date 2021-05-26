@@ -11,7 +11,9 @@ function! s:format_posting(account, value)
 endfunction
 
 function! s:dollar_operate(operator, a, b)
-  let result = systemlist(printf('echo "scale = 2; %s %s %s" | bc', a:a, a:operator, a:b))
+  let a = substitute(a:a, ',', '', 'g')
+  let b = substitute(a:b, ',', '', 'g')
+  let result = systemlist(printf('echo "scale = 2; %s %s %s" | bc', a, a:operator, b))
   return result[0]
 endfunction
 
@@ -19,7 +21,7 @@ endfunction
 " Split the posting on the current line between the listed account and
 " [account2] with [amount2] being alloted to the second account.
 function! ledger#split(...) abort
-  let total = matchstr(getline('.'), '[+-]\?\d\+\.\d\+$')
+  let total = matchstr(getline('.'), '[+-]\?[0-9,]\+\.\d\+$')
 
   if a:0 >= 2
     let amount2 = a:2
@@ -63,8 +65,8 @@ function! ledger#split_prompt(...) abort
   call ledger#split(account2, amount)
 endfunction
 
-function! ledger#insert_entry() abort
-  call my#org#capture#it({
+function! ledger#insert_posting() abort
+  call notes#capture({
         \   'path': '%',
         \   'append': '.',
         \   'xact_account': '{ledger_account}',
@@ -82,12 +84,12 @@ nnoremap <silent> <Plug>(ledger-toggle-state) :call ledger#transaction_state_tog
 nnoremap <silent> <Plug>(ledger-align) :LedgerAlign<CR>
 inoremap <silent> <Plug>(ledger-align-amount) <C-r>=ledger#align_amount_at_cursor()<CR>
 nnoremap <silent> <Plug>(ledger-entry) :call ledger#entry()<CR>
-nnoremap <silent> <Plug>(ledger-insert-entry) :call ledger#insert_entry()<CR>
-inoremap <silent> <Plug>(ledger-insert-entry) <Esc>:call ledger#insert_entry()<CR>
-nmap <silent> <Plug>(ledger-reconcile-put) <Plug>(ledger-toggle-state)<C-w>wdap<C-w>w
-nmap <silent> <Plug>(ledger-reconcile-get) <C-w>wdap<C-w>wp<Plug>(ledger-toggle-state)
-nnoremap <silent> <Plug>(ledger-reconcile-discard) <C-w>wdap<C-w>w
-nnoremap <silent> <Plug>(ledger-fixme) :put='    ;:fixme:'<CR>
+nnoremap <silent> <Plug>(ledger-insert-posting) :call ledger#insert_posting()<CR>
+inoremap <silent> <Plug>(ledger-insert-posting) <Esc>:call ledger#insert_posting()<CR>
+nnoremap <silent> <Plug>(ledger-reconcile-discard) <C-w>wggdap<C-w>w
+nmap <silent> <Plug>(ledger-reconcile-put) <Plug>(ledger-toggle-state)<Plug>(ledger-reconcile-discard)
+nmap <silent> <Plug>(ledger-reconcile-get) <Plug>(ledger-reconcile-discard)p<Plug>(ledger-toggle-state)
+nnoremap <silent> <Plug>(ledger-fixme) :put='    ; :Fixme:'<CR>
 
 nmap <buffer> <LocalLeader>s <Plug>(ledger-split)
 nmap <buffer> <LocalLeader>S <Plug>(ledger-split-prompt)
@@ -97,10 +99,11 @@ nnoremap <buffer> <LocalLeader>a :'{,'}LedgerAlign<CR>
 xmap <buffer> <LocalLeader>a <Plug>(ledger-align)
 imap <buffer> <C-l>          <Plug>(ledger-align-amount)
 nmap <buffer> <LocalLeader>e <Plug>(ledger-entry)
-nnoremap <buffer> <LocalLeader>= gg:/\d\{4}/,$Sort<CR>
+nnoremap <buffer> <LocalLeader>= :Sort<CR>
+xnoremap <buffer> = :Sort<CR>
 nmap <buffer> <Leader>=      <LocalLeader>=
-nmap <buffer> <LocalLeader>_ <Plug>(ledger-insert-entry)
-nmap <buffer> <LocalLeader>. <Plug>(ledger-insert-entry)
+nmap <buffer> <LocalLeader>_ <Plug>(ledger-insert-posting)
+nmap <buffer> <LocalLeader>. <Plug>(ledger-insert-posting)
 nmap <buffer> <LocalLeader>] <Plug>(ledger-reconcile-put)
 nmap <buffer> <LocalLeader>[ <Plug>(ledger-reconcile-get)
 nmap <buffer> <LocalLeader><BS> <Plug>(ledger-reconcile-discard)
@@ -114,7 +117,7 @@ nnoremap <C-k> zMzkzv[zzz
 nnoremap <C-j> zMzjzvzz
 
 command! -buffer -nargs=* Entry put ='' | execute 'read !ledger entry' escape(<q-args>, '$~*%') '2>/dev/null'
-command! -buffer -nargs=0 -range=% -bar Sort <line1>,<line2>!ledger -f - print --sort d
+command! -buffer -nargs=0 -range=% -bar Sort <line1>,<line2>!ledger --file - print --permissive --sort d
 
 let b:interesting_lines_filter = '\v^\d{4}'
 let b:accio = ['ledger']
