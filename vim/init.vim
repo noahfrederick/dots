@@ -402,6 +402,13 @@ augroup init_fzf
         \ call my#fzf#use(<bang>0)
   autocmd User Laravel nnoremap <buffer> <LocalLeader>A :Zartisan<CR>
   autocmd User Laravel nnoremap <buffer> <LocalLeader>U :Zuse<CR>
+  autocmd User ProjectionistDetect
+        \ if exists('b:laravel_root') |
+        \   call projectionist#append(b:laravel_root, {
+        \     'storage/logs/*.log': { 'type': 'log' },
+        \     'storage/logs/laravel.log': { 'type': 'log' }
+        \   }) |
+        \ endif
 augroup END
 
 if executable('osascript')
