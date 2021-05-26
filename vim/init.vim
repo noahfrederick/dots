@@ -585,15 +585,14 @@ nnoremap <silent> <Leader>= :call my#editing#reindent_buffer()<CR>
 nnoremap <silent> <Leader>y :call my#editing#yank_buffer()<CR>
 
 nnoremap <Leader>g<Space> :Git<Space>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gc :Git commit<CR>
+nnoremap <Leader>gl :Git log<CR>
+nnoremap <Leader>gb :Git blame<CR>
+xnoremap <Leader>gb :Git blame<CR>
+nnoremap <Leader>gd :Gdiffsplit<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gl :Glog<CR>
-nnoremap <Leader>gb :Gblame<CR>
-xnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>g/ :Ggrep<Space>
 nnoremap <Leader>gv :GV<CR>
 xnoremap <Leader>gv :GV<CR>
