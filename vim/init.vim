@@ -350,8 +350,14 @@ augroup init_whitespace
   autocmd InsertEnter * if &modifiable | match TrailingWhitespace /\s\+\%#\@<!$/ | endif
   autocmd InsertLeave * if &modifiable | match TrailingWhitespace /\s\+$/ | endif
   autocmd BufWinLeave * if &modifiable | silent! call matchdelete(1) | endif
-  autocmd FileType GV silent! call matchdelete(1)
-  autocmd FileType vim-plug silent! call matchdelete(1)
+  if exists('##OptionSet')
+    autocmd OptionSet modifiable
+          \ if v:option_new |
+          \   match TrailingWhitespace /\s\+$/ |
+          \ else |
+          \   silent! call matchdelete(1) |
+          \ endif
+  endif
 augroup END
 
 " }}}
